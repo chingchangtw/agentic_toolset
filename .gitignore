@@ -39,3 +39,8 @@ Thumbs.db
 # Temporary files
 tmp/
 temp/
+
+# AI and related
+.ai
+.claude
+.github
