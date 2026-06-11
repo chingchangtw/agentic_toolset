@@ -9,3 +9,4 @@ Load with: registry/index.md
 | e2e-qa         | rec  | user-facing change         | e2e suite                                   | -     |
 | perf-qa        | rec  | perf-sensitive change      | load/perf (addyosmani/agent-skills)         | -     |
 | a11y-audit     | rec  | user-facing/public product | addyosmani/agent-skills:accessibility-audit | -     |
+| query_graph    | rec  | dependency/flow analysis   | mcp:codebase-tools                          | -     |
