@@ -8,6 +8,8 @@
 
 - - init in repo level : curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash -s -- --with-init
 
+Windows : npx -y github:JuliusBrussee/caveman -- --with-init
+
 
 
 - - every project needs to run

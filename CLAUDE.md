@@ -1,47 +1,90 @@
-# CLAUDE.md — Project Brief
+# CLAUDE.md
 
-Project-specific. Owns: stack, architecture, file structure, project-scoped hard rules.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+<!-- SPECTRA:START v1.0.2 -->
+
+# Spectra Instructions
+
+This project uses Spectra for Spec-Driven Development(SDD). Specs live in `openspec/specs/`, change proposals in `openspec/changes/`.
+
+## Use `/spectra-*` skills when:
+
+- A discussion needs structure before coding → `/spectra-discuss`
+- User wants to plan, propose, or design a change → `/spectra-propose`
+- Tasks are ready to implement → `/spectra-apply`
+- There's an in-progress change to continue → `/spectra-ingest`
+- User asks about specs or how something works → `/spectra-ask`
+- Implementation is done → `/spectra-archive`
+- Commit only files related to a specific change → `/spectra-commit`
+
+## Workflow
+
+discuss? → propose → apply ⇄ ingest → archive
+
+- `discuss` is optional — skip if requirements are clear
+- Requirements change mid-work? Plan mode → `ingest` → resume `apply`
+
+## Parked Changes
+
+Changes can be parked（暫存）— temporarily moved out of `openspec/changes/`. Parked changes won't appear in `spectra list` but can be found with `spectra list --parked`. To restore: `spectra unpark <name>`. The `/spectra-apply` and `/spectra-ingest` skills handle parked changes automatically.
+
+<!-- SPECTRA:END -->
+
+# CLAUDE.md — Project Brief
 
 **See also**
 - `.claude/CLAUDE.md` — universal behaviour, anti-slop guardrail, core principles, communication style, mandatory prompt rule.
 - `.claude/goverance_CLAUDE.md` — Definition of Done, Release Readiness, registries, agent roles, implementation workflow, self-reflection cadence.
 
-> **Template usage:** Replace every `<FILL IN: ...>` placeholder. Delete sections that do not apply. Keep this file under ~150 lines. Deletion test on every line: "Would removing this cause a specific mistake? If no → delete."
-
 ## Project
-<FILL IN: one line — what this project does and who uses it.>
-<FILL IN: business / domain context — constraints, regulatory posture, primary user.>
+
+Framework for building and hosting AI agent skills, plugins, and MCP (Model Context Protocol) artifacts. Primary user: AI agent developers building Claude Code skills and tools.
 
 ## Stack
-- Language: <FILL IN, e.g. TypeScript 5.x>
-- Framework: <FILL IN, e.g. Next.js 14 App Router>
-- Data layer: <FILL IN, e.g. Postgres via Drizzle ORM>
-- Deployment: <FILL IN, e.g. Vercel static export>
-- Key dependencies: <FILL IN, e.g. Zod, TanStack Query, shadcn/ui>
+
+- Language: TypeScript 5.x (strict mode, ES2020, ESM `"type": "module"`)
+- Runtime: Node.js with `ts-node/esm` loader for dev
+- Test: Vitest 1.x
+- Build output: `./dist` with declarations + source maps
+- Path aliases: `@skills/*`, `@plugins/*`, `@mcp/*`, `@utils/*`, `@types/*` → map to `src/` subdirs
+
+## Specs
+Change proposals and specs live in `openspec/`. Read `openspec/specs/` for capability specs, `openspec/changes/` for active change proposals before implementing.
 
 ## Commands
+
 ```
-Dev:        <FILL IN, e.g. npm run dev>
-Build:      <FILL IN, e.g. npm run build>
-Test file:  <FILL IN, e.g. npm test -- path/to/file>
-Test all:   <FILL IN, e.g. npm test>
-Lint:       <FILL IN, e.g. npm run lint:fix>
-Types:      <FILL IN, e.g. npx tsc --noEmit>
+Dev:        npm run dev
+Build:      npm run build
+Test file:  npm test -- <path>
+Test all:   npm test
+Test watch: npm run test:watch
+Lint:       npm run lint
+Lint fix:   npm run lint:fix
+Types:      npm run type-check
 ```
 
-## Architecture Map
-Directory roles:
-- `<FILL IN: src/lib/services/>` — <FILL IN: business logic>
-- `<FILL IN: src/components/>` — <FILL IN: stateless UI only>
-- `<FILL IN: src/lib/store/>` — <FILL IN: global state>
-- `<FILL IN: src/app/api/>` — <FILL IN: API routes, no business logic>
+## Architecture
 
-Cross-boundary rules:
-- <FILL IN: e.g. Data access only through Server Actions or repository layer — no direct DB calls from components.>
-- <FILL IN: e.g. No business logic in UI components.>
-- <FILL IN: e.g. Static export only — no SSR.>
+- `src/skills/` — self-contained skill modules; each skill is independently deployable
+- `src/plugins/` — plugin modules extending core functionality
+- `src/mcp/` — MCP server implementations
+- `src/core/` — base classes and framework interfaces (exported via `src/index.ts`)
+- `src/types/` — shared TypeScript definitions (exported via `src/index.ts`)
+- `src/utils/` — reusable helpers
+
+Skills are isolated by directory. Each skill owns its own submodules (e.g., `lifecycle-router/` contains registry, state, phases, security-gates). `src/index.ts` exports only `core` and `types` — skills/plugins are not re-exported from root.
+
+## Hard Rules
+
+1. Run `npm run type-check` after every code change.
+2. Skills and plugins must be self-contained — no cross-skill imports.
+3. Use path aliases (`@skills/*`, `@utils/*`, etc.) — no `../../` cross-boundary relative paths.
+4. `src/index.ts` exports only core and types; do not add skill/plugin exports there.
 
 ## Project File Structure
+
 ```text
 project-root/
 ├── CLAUDE.md                  → this file (project brief)
@@ -53,56 +96,66 @@ project-root/
 │   ├── build-test-validate.md → build / test / validate recipes
 │   └── standards.md           → project-specific standards
 ├── .claude/
-│   ├── CLAUDE.md       → universal agent behaviour
+│   ├── CLAUDE.md              → universal agent behaviour
 │   ├── goverance_CLAUDE.md    → DoD, registries, agent roles, workflow
 │   ├── hooks/                 → deterministic enforcement
 │   ├── commands/              → slash-command flows
 │   ├── skills/                → model-invokable, on-demand
 │   ├── agents/                → subagents with isolated context
-│   ├── rules/                 → path-scoped rules (loaded on glob match)
 │   ├── settings.json          → permissions, model, hook registry
 │   └── settings.local.json    → personal settings, gitignored
 ├── docs/
-│   └── architecture.md        → architecture deep-dive (optional)
+│   └── architecture.md        → architecture deep-dive
 ├── src/                       → application source
 ├── tests/                     → test source
-└── tasks/
-	├── todo.md                → current plan, checkable items
-	└── checkpoint.md          → state persisted across compactions
+└── openspec/                  → Spectra specs and change proposals
 ```
 
-## Hard Rules (project-scoped, ≤15, one line each)
-Deletion test: if removing the line would not cause a specific mistake, drop it.
-
-1. <FILL IN, e.g. All async calls must use try/catch with structured logging.>
-2. <FILL IN, e.g. Functional components only — no class components.>
-3. <FILL IN, e.g. Run `npx tsc --noEmit` after every code change.>
-4. <FILL IN, e.g. PRs must pass `npm test` and `npm run lint` before merge.>
-5. <FILL IN, e.g. No direct `fetch` in components — go through the API client layer.>
-6. <FILL IN, e.g. Migrations are forward-only; rollback via new migration, never edit in place.>
-7. <FILL IN: add project-specific rule>
-8. <FILL IN: add project-specific rule>
-9. <FILL IN: add project-specific rule>
-10. <FILL IN: add project-specific rule>
-11. <FILL IN: add project-specific rule>
-12. <FILL IN: add project-specific rule>
-13. <FILL IN: add project-specific rule>
-14. <FILL IN: add project-specific rule>
-15. <FILL IN: add project-specific rule>
-
-## Workflow (project pointer)
-Plan → implement → verify → document.
-Detailed 7-step workflow, Definition of Done, and Release Readiness gates live in `.claude/goverance_CLAUDE.md`.
-
 ## Out of Scope
-- <FILL IN: files manually maintained — do not touch.>
-- <FILL IN: integrations the agent should not modify.>
-- <FILL IN: vendored or generated code paths, e.g. `dist/`, `gen/`.>
-- <FILL IN: legacy directories scheduled for removal.>
+
+- `dist/` — generated, do not edit
+- `.env` — local only, gitignored
 
 ## Maintenance Checklist
-- Review monthly. Drop rules that haven't prevented a specific mistake in 90 days.
-- After every user correction → add a lesson to `.ai/LESSONS_LEARNED.md` (see `.claude/goverance_CLAUDE.md`).
-- Promote stable lessons into a Hard Rule above when the pattern recurs.
-- Owner: <FILL IN: name / team responsible for this file.>
-- Last reviewed: <FILL IN: YYYY-MM-DD>.
+
+- Owner: tlchang
+- Last reviewed: 2026-06-10
+
+<!-- code-review-graph MCP tools -->
+## MCP Tools: code-review-graph
+
+**IMPORTANT: This project has a knowledge graph. ALWAYS use the
+code-review-graph MCP tools BEFORE using Grep/Glob/Read to explore
+the codebase.** The graph is faster, cheaper (fewer tokens), and gives
+you structural context (callers, dependents, test coverage) that file
+scanning cannot.
+
+### When to use graph tools FIRST
+
+- **Exploring code**: `semantic_search_nodes` or `query_graph` instead of Grep
+- **Understanding impact**: `get_impact_radius` instead of manually tracing imports
+- **Code review**: `detect_changes` + `get_review_context` instead of reading entire files
+- **Finding relationships**: `query_graph` with callers_of/callees_of/imports_of/tests_for
+- **Architecture questions**: `get_architecture_overview` + `list_communities`
+
+Fall back to Grep/Glob/Read **only** when the graph doesn't cover what you need.
+
+### Key Tools
+
+| Tool | Use when |
+| ------ | ---------- |
+| `detect_changes` | Reviewing code changes — gives risk-scored analysis |
+| `get_review_context` | Need source snippets for review — token-efficient |
+| `get_impact_radius` | Understanding blast radius of a change |
+| `get_affected_flows` | Finding which execution paths are impacted |
+| `query_graph` | Tracing callers, callees, imports, tests, dependencies |
+| `semantic_search_nodes` | Finding functions/classes by name or keyword |
+| `get_architecture_overview` | Understanding high-level codebase structure |
+| `refactor_tool` | Planning renames, finding dead code |
+
+### Workflow
+
+1. The graph auto-updates on file changes (via hooks).
+2. Use `detect_changes` for code review.
+3. Use `get_affected_flows` to understand impact.
+4. Use `query_graph` pattern="tests_for" to check coverage.

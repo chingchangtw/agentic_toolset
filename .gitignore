@@ -44,3 +44,7 @@ temp/
 .ai
 .claude
 .github
+.spectra/
+openspec/.vector-search.db*
+# Added by code-review-graph
+.code-review-graph/
