@@ -11,7 +11,7 @@ Pass condition: `status = signed_off` AND every item `true` AND `signed_by` + `s
 
 ## G1 — threat-model (end of Think)
 - [ ] STRIDE applied per identified data flow.
-- [ ] Privacy data inventory: collected/stored/transmitted; retention per class.
+- [ ] Privacy data inventory: collected/stored/transmitted; retention per class. (Surfaces unresolved linked Discovery ideas; resolve or accept risk in state.gates.G1.notes)
 - [ ] Authentication/authorization model documented.
 - [ ] Never-automate list: explicit, enumerated irreversible operations.
 - [ ] Blast-radius bounds: rate limits + scope limits stated.

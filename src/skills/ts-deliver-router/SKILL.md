@@ -1,9 +1,9 @@
 ---
-name: lifecycle-router
+name: ts-deliver-router
 description: >
   Thin coordinator over verified state. Drives gstack 7-phase flow (Think→Plan→
   Build→Review→Test→Ship→Reflect) with Spectra BDD skills (discuss/propose/apply/
-  ingest/archive) nested inside specific phases. Reads .router/state.json as truth
+  ingest/archive) nested inside specific phases. Reads .ai/ts-deliver-router/state.json as truth
   (never infers phase from artifacts), enforces named security-gate checklists, and
   routes via the DIAL, CHECKS REGISTRY, and DRY-RUN primitives. Activate when user
   builds or refactors software with agents and asks "what next", "which skill",
@@ -11,9 +11,9 @@ description: >
   or starts/resumes a project. Not for one-off lookups.
 ---
 
-# lifecycle-router (core)
+# ts-deliver-router (core)
 
-Thin coordinator. Reads `.router/state.json` as truth (NEVER infers phase from artifacts),
+Thin coordinator. Reads `.ai/ts-deliver-router/state.json` as truth (NEVER infers phase from artifacts),
 runs registry checks for the current phase, blocks on named security gates before anything
 irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 
@@ -39,7 +39,7 @@ On "what's next": load state.md first, then registry/index.md + registry-<phase>
 Do not load all registry-phase files at once.
 
 ## PRIMITIVE INTERFACES
-- **DIAL** — HIGH(auto) / MID(recommend, DEFAULT) / LOW(suggest). Read `.router/autonomy`;
+- **DIAL** — HIGH(auto) / MID(recommend, DEFAULT) / LOW(suggest). Read `.ai/ts-deliver-router/autonomy`;
   ask+save on first use. Gates ALWAYS pause for human even in HIGH; HIGH never auto-signs.
   Switch: "go auto" / "recommend" / "suggestions only".
 - **CHECKS REGISTRY** — one row per check (always/gate/rec). Add activity = append 1 row
@@ -54,12 +54,16 @@ Do not load all registry-phase files at once.
 on invoke:
 0 if dry-run on: prefix [DRY-RUN]; state.json read-only; announce side effects;
    refuse sign-offs; emit DRY-RUN REPORT on session end.        [→ state.md]
-1 autonomy = read .router/autonomy || ask+save (DIAL).
-2 state = read .router/state.json.                              [→ state.md]
+1 autonomy = read .ai/ts-deliver-router/autonomy || ask+save (DIAL).
+2 state = read .ai/ts-deliver-router/state.json.                              [→ state.md]
    missing|invalid-schema|stale → "phase unclear, manual review" + reason. STOP.
 3 P = current_phase. verify artifacts.P pass min-schema.        [→ edge-tests.md]
    any fail → "phase unclear, manual review" + specific failure. STOP.
+   if P == Think: evaluate new assumptions against hook criteria (a) blocks G1/G2,
+   (b) affects >1 epic scope, (c) new external dep. If met, call `/ts-discover idea --from-router`;
+   continue regardless of outcome.
 4 consult CHECKS REGISTRY for P: run always, surface rec.       [→ registry/index.md + registry/registry-P.md]
+   if P == Build: run same hook gating check for unknowns surfaced in always-checks.
 5 before exit P: every gate passed|signed_off;
    security gate: signed_off + 100% checklist; human even in HIGH. [→ security-gates.md]
 6 on exit: PHASE EXIT CONTRACT (atomic state.json write).       [→ state.md]

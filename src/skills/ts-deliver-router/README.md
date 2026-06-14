@@ -1,4 +1,4 @@
-# lifecycle-router
+# ts-deliver-router
 
 **The GPS layer for agentic software development.** It reads the current state of a Spectra spec-driven (BDD) project and tells the operator **where they are** in the lifecycle and **what to do next** — at a chosen autonomy level.
 
@@ -21,17 +21,17 @@ Why a router and not a fixed pipeline: the operator isn't a craft agentic-coding
 
 ## Install
 
-Place the skill folder at **`.claude/skills/lifecycle-router/`** in your repo. That single path is read by all three tools:
+Place the skill folder at **`.claude/skills/ts-deliver-router/`** in your repo. That single path is read by all three tools:
 
 | Tool | Reads from | Notes |
 |---|---|---|
 | **Claude Code** | `.claude/skills/` (project) or `~/.claude/skills/` (personal) | Loads on session start. |
-| **Copilot CLI** | `.github/skills`, `.claude/skills`, `.agents/skills` (project); `~/.copilot/skills`, `~/.agents/skills` (personal) | Run `/skills reload`, then `/skills info lifecycle-router` to confirm. Use latest CLI. |
+| **Copilot CLI** | `.github/skills`, `.claude/skills`, `.agents/skills` (project); `~/.copilot/skills`, `~/.agents/skills` (personal) | Run `/skills reload`, then `/skills info ts-deliver-router` to confirm. Use latest CLI. |
 | **VS Code** | same project paths, **agent mode** | Stable support since early 2026. |
 
-Trigger by asking naturally ("what's next?", "where am I?", "which skill?") or explicitly with `/lifecycle-router`. Matching is driven by the `description` in the YAML frontmatter — identical mechanism across all three tools.
+Trigger by asking naturally ("what's next?", "where am I?", "which skill?") or explicitly with `/ts-deliver-router`. Matching is driven by the `description` in the YAML frontmatter — identical mechanism across all three tools.
 
-> **Cross-tool state:** Claude Code and Copilot keep separate sessions and don't share chat history. They stay consistent by reading the same on-disk autonomy file (`openspec/.router/autonomy`).
+> **Cross-tool state:** Claude Code and Copilot keep separate sessions and don't share chat history. They stay consistent by reading the same on-disk autonomy file (`.ai/ts-deliver-router/autonomy`).
 
 ---
 
@@ -46,7 +46,7 @@ The same SOP drives all three levels — only how much the router *does for you 
 | **LOW** | Suggest | Names the **lifecycle stage only** — no skill names. Pure "you are here." |
 
 - **Asks** on first use in a project (no saved preference).
-- **Remembers** by writing `HIGH`/`MID`/`LOW` to `openspec/.router/autonomy`.
+- **Remembers** by writing `HIGH`/`MID`/`LOW` to `.ai/ts-deliver-router/autonomy`.
 - **Switches** anytime: "go auto" → HIGH, "recommend mode" → MID, "suggestions only" → LOW. Downshift to LOW always allowed; upshift to HIGH re-confirms before the next destructive/security step.
 - **Safety override:** the two security gates pause for human sign-off **regardless of level**, even HIGH. The dial controls convenience, never safety.
 

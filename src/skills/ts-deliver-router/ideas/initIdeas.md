@@ -1,6 +1,6 @@
 # Ideas — Agentic Dev Workflow Design Session
 
-Reference record of the Six Thinking Hats session that produced the `lifecycle-router` skill. Kept so the *reasoning* behind the design survives, not just the artifact.
+Reference record of the Six Thinking Hats session that produced the `ts-deliver-router` skill. Kept so the *reasoning* behind the design survives, not just the artifact.
 
 ---
 
@@ -75,10 +75,10 @@ Atlassian-admin productivity tool:
 ## Open items / next actions
 
 1. Codify SOP as one page (`SKILL.md` / `README.md`). — done in this package.
-2. Build `lifecycle-router` skill, **MID mode first**; add HIGH/LOW after it proves out.
+2. Build `ts-deliver-router` skill, **MID mode first**; add HIGH/LOW after it proves out.
 3. Smallest experiment this week: run the Atlassian pilot through **only `discuss` + Security Gate #1** on one real function (the REST-API-from-CSV piece). Prove the front of the pipe before building the whole factory.
 4. Decide the **privacy-review** skill: build vs fold into `/cso` + `critical-thinker`.
-5. Cross-tool portability confirmed: same `SKILL.md` runs in Claude Code, Copilot CLI, and VS Code agent mode — place at `.claude/skills/lifecycle-router/SKILL.md`.
+5. Cross-tool portability confirmed: same `SKILL.md` runs in Claude Code, Copilot CLI, and VS Code agent mode — place at `.claude/skills/ts-deliver-router/SKILL.md`.
 
 ---
 

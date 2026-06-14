@@ -1,8 +1,8 @@
 # module: state (truth, not inference)
 
-Loaded when: reading/verifying/writing `.router/state.json` (algo steps 0,2,6).
+Loaded when: reading/verifying/writing `.ai/ts-deliver-router/state.json` (algo steps 0,2,6).
 
-`.router/state.json` is written by each phase on exit, read by the router every invoke.
+`.ai/ts-deliver-router/state.json` is written by each phase on exit, read by the router every invoke.
 The router NEVER infers phase from artifacts on disk.
 
 ## Schema (v1)
@@ -43,7 +43,7 @@ Every phase on exit MUST:
 2. Set `artifacts.<phase>.complete = true` ONLY after min-schema passes (edge-tests.md).
 3. Update `gates.<id>.status` + `checklist_results` for every gate in that phase.
 4. Set `current_phase = <next>`, append `phase_history`, set `phase_entered_at`.
-5. Atomically replace `.router/state.json` (write tmp → rename).
+5. Atomically replace `.ai/ts-deliver-router/state.json` (write tmp → rename).
 No exit if any phase-gate is not `passed` or `signed_off`.
 
 ## Staleness rule

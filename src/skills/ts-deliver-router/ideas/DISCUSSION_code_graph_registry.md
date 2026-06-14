@@ -1,7 +1,7 @@
 # Discussion — code-review-graph integration & registry changes
 
 Reference record of the design session exploring how to incorporate
-code-review-graph's ideas into the lifecycle-router flow, and the
+code-review-graph's ideas into the ts-deliver-router flow, and the
 registry changes that emerged.
 
 ---
@@ -21,7 +21,7 @@ Two ideas proposed by operator:
 
 ### Idea A: Phase-branch/tag strategy
 
-**What it solves:** Reproducibility and rollback. `.router/state.json` is
+**What it solves:** Reproducibility and rollback. `.ai/ts-deliver-router/state.json` is
 truth but it's a single mutable file. A phase-tag gives a hard checkpoint
 you can `git checkout` to reconstruct the entire working tree as it was when
 that phase exited. Also gives Copilot/Gemini a clean isolation surface.
@@ -103,7 +103,7 @@ Question asked: *"Is there any open source / plug-in / skills in place?"*
 - About enriched commits, not phase tags — reinforces the same principle.
 
 **Gap identified:** Nobody writes a git tag at *lifecycle phase exit*
-specifically. Small, fillable inside the lifecycle-router's phase exit contract.
+specifically. Small, fillable inside the ts-deliver-router's phase exit contract.
 
 ---
 
@@ -154,7 +154,7 @@ first step.
 
 | Idea | What exists | Gap |
 |---|---|---|
-| Phase-level git tags as checkpoints | GCC (agent memory COMMIT/BRANCH), GNAP (task board in git) | Nobody writes a tag at lifecycle phase exit specifically. Small, fillable inside lifecycle-router's exit contract. |
+| Phase-level git tags as checkpoints | GCC (agent memory COMMIT/BRANCH), GNAP (task board in git) | Nobody writes a tag at lifecycle phase exit specifically. Small, fillable inside ts-deliver-router's exit contract. |
 | Development-graph (query lifecycle state structurally) | codegraph, Graphify, code-review-graph, Codebase-Memory — all for *code* graphs | No tool graphs the workflow DAG itself. Novel. Derivable from state.json as a first step. |
 | Replace code-review-graph in registry | codegraph or Graphify are stronger candidates today | Worth evaluating as a registry swap — both have wider language support and better token numbers. |
 
@@ -289,5 +289,5 @@ Design record only. Changes are **not active** until merged into
 `SKILL.md` + `SKILL_caveman.md` in the same session, after open questions
 Q1–Q3 are resolved.
 
-Previous design records: `Ideas.md` (lifecycle-router design session).
+Previous design records: `Ideas.md` (ts-deliver-router design session).
 Previous registry export: `REGISTRY_CHANGES.md`.

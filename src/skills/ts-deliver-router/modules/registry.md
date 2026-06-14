@@ -10,7 +10,7 @@ Loaded when: listing checks for a phase, adding a check, or resolving autonomy b
 | LOW | Suggest | Name the phase only — no skill names. |
 
 First use, no saved pref → ask `"Autonomy? HIGH/MID/LOW"`, wait, persist to
-`.router/autonomy`. Switch anytime (update file): "go auto"/"full auto"/"just run
+`.ai/ts-deliver-router/autonomy`. Switch anytime (update file): "go auto"/"full auto"/"just run
 it"→HIGH; "recommend"/"ask me each step"→MID; "suggestions only"/"just tell me
 where i am"/"stop naming skills"→LOW. Downshift LOW always ok; upshift HIGH
 re-confirms before next destructive/security step. Dial = convenience, never safety.
