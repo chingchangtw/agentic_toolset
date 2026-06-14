@@ -74,7 +74,7 @@ Types:      npm run type-check
 - `src/types/` — shared TypeScript definitions (exported via `src/index.ts`)
 - `src/utils/` — reusable helpers
 
-Skills are isolated by directory. Each skill owns its own submodules (e.g., `lifecycle-router/` contains registry, state, phases, security-gates). `src/index.ts` exports only `core` and `types` — skills/plugins are not re-exported from root.
+Skills are isolated by directory. Each skill owns its own submodules (e.g., `ts-deliver-router/` contains registry, state, phases, security-gates). `src/index.ts` exports only `core` and `types` — skills/plugins are not re-exported from root.
 
 ## Hard Rules
 
