@@ -13,3 +13,4 @@ Load with: registry/index.md
 | get_architecture_overview | rec  | before plan/design           | mcp:codebase-tools                       | -     |
 | get_impact_radius         | rec  | before touching shared code  | mcp:codebase-tools                       | -     |
 | query_graph               | rec  | dependency/caller analysis   | mcp:codebase-tools                       | -     |
+| github-branch             | rec  | when github-mcp active       | references/github-mcp.md (create_branch) | -     |

@@ -51,6 +51,16 @@ Triggered from Build/Review/Test when reality forces a spec change:
 4. Append entry to `state.ingest_log[]`.
 5. Resume triggering phase. Prevents scope drift.
 
+## Discovery feedback hook detail
+When Think or Build surfaces unresolved assumptions, trigger
+`/ts-discover idea --from-router` only if one criterion matches:
+1. blocks G1/G2 sign-off
+2. affects more than one epic scope
+3. introduces a new external dependency
+
+Hook is non-blocking. Continue phase regardless; record outcome in state notes.
+Minor single-epic implementation details do not trigger this hook.
+
 ## Refactor entry (feeds Plan)
 1. code-review-graph maps codebase (MCP — surface as setup gap if not configured).
 2. Gather product/function description from operator.

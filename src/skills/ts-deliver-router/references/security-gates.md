@@ -32,3 +32,5 @@ Pass condition: `status = signed_off` AND every item `true` AND `signed_by` + `s
 ## Known gap
 No dedicated privacy skill. Checklist items carry the load. Open decision:
 build `privacy-review` check vs. fold into gstack:/cso + critical-thinker.
+
+Full checklist detail and sign-off shape: `references/gate-checklists.md`.

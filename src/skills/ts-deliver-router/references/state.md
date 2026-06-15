@@ -46,6 +46,8 @@ Every phase on exit MUST:
 5. Atomically replace `.ai/ts-deliver-router/state.json` (write tmp → rename).
 No exit if any phase-gate is not `passed` or `signed_off`.
 
+Expanded examples aligned to this schema: `references/phase-exit-contracts.md`.
+
 ## Staleness rule
 STALE if any declared artifact mtime > state.json mtime →
 `"phase unclear, manual review: <artifact> changed after last state write"`. STOP.

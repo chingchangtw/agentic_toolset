@@ -12,3 +12,5 @@ Load with: registry/index.md
 | get_affected_flows  | rec  | any review                 | mcp:codebase-tools      | -     |
 | code-review-deep    | rec  | deeper review before exit  | gstack:/code-review     | -     |
 | security-review     | gate | before leave review        | gstack:/security-review | yes   |
+| ts-ddd-tactical-validator | rec | domain model drift risk | references/sub-agents.md | - |
+| github-pr-review    | rec  | when github-mcp active     | references/github-mcp.md (create_pull_request/create_review_comment) | - |

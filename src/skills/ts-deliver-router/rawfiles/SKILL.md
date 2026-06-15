@@ -3,9 +3,10 @@ name: ts-deliver-router
 description: >
   Thin coordinator over verified state. Drives gstack 7-phase flow (Think→Plan→
   Build→Review→Test→Ship→Reflect) with Spectra BDD skills (discuss/propose/apply/
-  ingest/archive) nested inside specific phases. `.ai/ts-deliver-router/state.json` as truth, 
-  enforces named security-gate checklists, and
-  routes via various primitives. Activate when user works with agents and asks "what next", "which skill",
+  ingest/archive) nested inside specific phases. Reads .ai/ts-deliver-router/state.json as truth
+  (never infers phase from artifacts), enforces named security-gate checklists, and
+  routes via the DIAL, CHECKS REGISTRY, and DRY-RUN primitives. Activate when user
+  builds or refactors software with agents and asks "what next", "which skill",
   "where am I", "what phase", "run the checks", "simulate this", "dry-run on/off",
   or starts/resumes a project. Not for one-off lookups.
 ---
@@ -13,7 +14,7 @@ description: >
 # ts-deliver-router (core)
 
 Thin coordinator. Reads `.ai/ts-deliver-router/state.json` as truth (NEVER infers phase from artifacts),
-runs registry checks for current phase, blocks on named security gates before anything
+runs registry checks for the current phase, blocks on named security gates before anything
 irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 
 ## Model
@@ -21,7 +22,7 @@ irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 - BDD = Spectra nested: discuss(Think), propose(Plan), apply(Build), archive(Ship);
   ingest = cross-cutting sub-loop (not a phase).
 - Hub = Claude Code (orchestrate/judge/gates). Muscle = Copilot/Gemini (cheap impl/docs/git).
-  Never run competing spine.
+  Never run a competing spine.
 - 3 PRIMITIVES: DIAL · CHECKS REGISTRY · DRY-RUN (detail in modules).
 
 ## LOAD INDEX (lazy — load only what current step needs)
@@ -44,7 +45,7 @@ irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 | full phase-exit examples aligned to state schema v1 | `references/phase-exit-contracts.md` |
 | shared `.ai/` workspace contract and cross-skill boundaries | `references/workspace.md` |
 
-On "what's next": load state.md first, then registry/index.md + registry-<phase>.md for active phase.
+On "what's next": load state.md first, then registry/index.md + registry-<phase>.md for the active phase.
 Do not load all registry-phase files at once.
 
 ## PRIMITIVE INTERFACES
@@ -105,6 +106,4 @@ G1/G2: 100% checklist + human sign-off; HIGH never auto-signs.
 
 ## Maintenance
 Review spine + registry + state schema + gate checklists monthly.
-Reflect (phase 7) refinements feed directly into registry.
-
-"Ask me clarifying questions first."
+Reflect (phase 7) refinements feed directly into the registry.

@@ -7,3 +7,4 @@ Load with: registry/index.md
 | sec-review   | gate | before release (G2)    | NAMED CHECKLIST (security-gates.md) | yes* |
 | notes-tone   | rec  | external release notes | adaptive-communication-architect | -     |
 | notes-polish | rec  | external release notes | business-english-enhancer        | -     |
+| github-release | rec | when github-mcp active | references/github-mcp.md (merge_pull_request/create_release) | - |

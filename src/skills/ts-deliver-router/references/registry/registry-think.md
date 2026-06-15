@@ -9,4 +9,5 @@ Load with: registry/index.md
 | frame-hats    | rec  | ambiguous/multi-stakeholder  | six-thinking-hats-coach                 | -     |
 | first-princ   | rec  | novel/contested problem      | first-principles-agent                  | -     |
 | strat-fit     | rec  | portfolio/product scope      | tows-strategy-analyst                   | -     |
+| ts-event-storming-facilitator | rec | domain model unclear | references/sub-agents.md | - |
 | threat-model  | gate | before any spec (G1)         | NAMED CHECKLIST (security-gates.md)     | yes*  |

@@ -1,0 +1,16 @@
+## 1. Core contract preservation and reference surfacing
+
+- [x] 1.1 Deliver requirement "Backfill reference package SHALL preserve core router structure" by adding only additive LOAD INDEX/pointer updates in `src/skills/ts-deliver-router/SKILL.md` so core frontmatter, header hierarchy, phase spine, and primitive naming stay unchanged; verify by manual diff review that only additive pointer/index lines changed.
+- [x] 1.2 Implement decision "Keep core router minimal and expand via new references" by creating the reference package files under `src/skills/ts-deliver-router/references/` with durable contracts for commands, sub-agents, phase exits, setup gaps, ACPL, GitHub MCP, workspace, and expanded checklists; verify by content review that each required artifact path exists and contains non-placeholder guidance.
+
+## 2. Primitive semantics and registry ownership
+
+- [x] 2.1 Deliver requirement "Project registry semantics SHALL extend CHECKS REGISTRY without introducing a new primitive" by documenting project-registry behavior as CHECKS REGISTRY extension in `references/project-registry.md` and core interface pointers, preserving primitive set as DIAL/CHECKS REGISTRY/DRY-RUN; verify by manual assertion that no artifact describes PROJECT REGISTRY as primitive four.
+- [x] 2.2 Implement decision "Use template-vs-project split for registry source of truth" by defining template registry ownership (`modules/registry/registry-<phase>.md`) versus project activation/threshold ownership in project-registry and registry-schema references; verify by content review that ownership boundaries are explicit and non-conflicting.
+- [x] 2.3 Implement decision "Preserve primitive semantics and map project registry under CHECKS REGISTRY" by adding or updating phase-level `rec` entries for ACPL, GitHub MCP, and sub-agent guidance in `modules/registry/registry-think.md`, `modules/registry/registry-plan.md`, `modules/registry/registry-build.md`, `modules/registry/registry-review.md`, `modules/registry/registry-test.md`, and `modules/registry/registry-ship.md`; verify by table-row review that each new row is parseable and mapped to intended phase.
+
+## 3. Security/state alignment and change quality gates
+
+- [x] 3.1 Deliver requirement "Expanded operational guidance SHALL be available through explicit reference artifacts" by wiring cross-links from module surfaces (`modules/security-gates.md`, `modules/phases.md`, and relevant pointers) to all new references so guidance is discoverable through documented paths; verify by manual link/path traversal from LOAD INDEX and module pointers.
+- [x] 3.2 Deliver requirement "Security and state guidance SHALL remain schema-aligned and token-efficient" and decision "Keep security gates terse in module, full detail in reference" by keeping concise gate contract in `modules/security-gates.md`, linking to `references/gate-checklists.md`, and aligning `references/phase-exit-contracts.md` with `modules/state.md` schema v1 semantics; verify by schema/content review that gate and state shapes are consistent.
+- [x] 3.3 Run quality gates for this change by executing `spectra analyze wise-snacking-fountain --json` and fixing all Critical/Warning findings, then run `spectra validate wise-snacking-fountain`; verify completion when analyze has no Critical/Warning and validate exits successfully.

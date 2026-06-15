@@ -17,3 +17,5 @@ Load with: registry/index.md
 | get_impact_radius     | rec    | before touching shared code | mcp:codebase-tools                      | -     |
 | code-review           | always | each change                 | gstack:/code-review                     | -     |
 | simplify              | rec    | after logical change unit   | gstack:/simplify                        | -     |
+| ts-acpl               | rec    | domain-heavy implementation | references/acpl-integration.md          | -     |
+| github-push           | rec    | when github-mcp active      | references/github-mcp.md (push_files)   | -     |

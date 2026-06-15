@@ -13,7 +13,7 @@ description: >
 # ts-deliver-router (core)
 
 Thin coordinator. Reads `.ai/ts-deliver-router/state.json` as truth (NEVER infers phase from artifacts),
-runs registry checks for current phase, blocks on named security gates before anything
+runs registry checks for the current phase, blocks on named security gates before anything
 irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 
 ## Model
@@ -21,7 +21,7 @@ irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 - BDD = Spectra nested: discuss(Think), propose(Plan), apply(Build), archive(Ship);
   ingest = cross-cutting sub-loop (not a phase).
 - Hub = Claude Code (orchestrate/judge/gates). Muscle = Copilot/Gemini (cheap impl/docs/git).
-  Never run competing spine.
+  Never run a competing spine.
 - 3 PRIMITIVES: DIAL · CHECKS REGISTRY · DRY-RUN (detail in modules).
 
 ## LOAD INDEX (lazy — load only what current step needs)
@@ -44,7 +44,7 @@ irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 | full phase-exit examples aligned to state schema v1 | `references/phase-exit-contracts.md` |
 | shared `.ai/` workspace contract and cross-skill boundaries | `references/workspace.md` |
 
-On "what's next": load state.md first, then registry/index.md + registry-<phase>.md for active phase.
+On "what's next": load state.md first, then registry/index.md + registry-<phase>.md for the active phase.
 Do not load all registry-phase files at once.
 
 ## PRIMITIVE INTERFACES
@@ -105,6 +105,4 @@ G1/G2: 100% checklist + human sign-off; HIGH never auto-signs.
 
 ## Maintenance
 Review spine + registry + state schema + gate checklists monthly.
-Reflect (phase 7) refinements feed directly into registry.
-
-"Ask me clarifying questions first."
+Reflect (phase 7) refinements feed directly into the registry.
