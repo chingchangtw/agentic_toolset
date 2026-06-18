@@ -1,6 +1,6 @@
 ---
 name: ts-project-planner
-description: "Dual-track agile orchestrator. Layer D (Discovery) - Layer 0 (Backlog) - Layer 1 (Delivery)"
+description: "Dual-track agile orchestrator. Layer D (Discovery) - Layer 0 (Backlog) - Layer 1 (Delivery) - Layer 2 (ts-deliver-router skill)."
 ---
 <!--
  Three-layer dual-track agile orchestrator. Layer D (Discovery): Idea→Explore→Validate→Decide. Layer 0 (Backlog): sync ready items to release map. Layer 1 (Delivery): sequence epics, drive ts-deliver-router per epic. Activate for large project planning, idea validation, MVP breakdown, epic backlog management, or release coordination. Works WITH ts-deliver-router — does NOT replace it.
@@ -54,32 +54,7 @@ All artifacts follow the `.ai/` workspace convention defined in
 
 ## Architecture
 
-```
-Layer D — Discovery (this skill)
-  /ts-discover:idea "<desc>"        → seed discovery.json, status=idea
-  /ts-discover:explore <id>         → Problem Understanding + Solution Exploration
-  /ts-discover:validate <id>        → Validation (council-advisor, tows-strategy-analyst)
-  /ts-discover:decide <id> [...]    → build|kill|keep-learning|reduce-scope
-  /ts-discover:status               → kanban view of discovery backlog
-  /ts-discover:idea --from-router   → feedback intake from ts-deliver-router
-
-         status=ready items
-              │
-              ▼
-Layer 0 — Backlog (this skill)
-  /ts-project:plan --new   → vision interview → seed Discovery with candidate ideas
-  /ts-project:plan --sync  → pull status=ready items → .ai/ts-project-planner/plan.json
-  /ts-project:status       → cross-iteration progress
-  /ts-project:refine       → update backlog after each iteration
-
-Layer 1 — Delivery (this skill, orchestrates Layer 2)
-  /ts-iteration:start <release>  → load epics → .ai/iteration.json
-  /ts-iteration:next             → advance to next epic → /ts-deliver:init
-  /ts-iteration:close            → release tag + retro + promote next
-
-Layer 2 — ts-deliver-router (separate skill, called per epic)
-  /ts-deliver:init  →  ...7-phase spine...  →  /ts-deliver:refine
-```
+Reference `references/architecture.md` for a diagram and command flow.
 
 ---
 
