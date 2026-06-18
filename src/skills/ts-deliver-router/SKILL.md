@@ -1,6 +1,6 @@
 ---
 name: ts-deliver-router
-description: "6-phase flow (Think→Plan→Build→Review→Test→Ship→Reflect) with Spectra BDD skills (discuss/propose/apply/ingest/archive) nested inside specific phases."
+description: "6-phase flow (Think→Plan→Build→Review→Test→Ship→Reflect) with Spectra BDD skills (discuss/propose/apply/ingest/archive) nested inside specific phases. "
 ---
 <!--
 Thin coordinator over verified state with 6-phase flow (Think→Plan→
@@ -42,7 +42,7 @@ irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 | min-schema per artifact, debug mis-route, edge tests | `references/edge-tests.md` |
 | project-level check activation tiers and thresholds | `references/project-registry.md` |
 | full project registry schema and registry.log format | `references/registry-schema.md` |
-| `/ts-deliver:init`, `/ts-deliver:refine`, `/ts-deliver:status` command contracts | `references/commands.md` |
+| `/ts-deliver:init`, `/ts-deliver:refine`, `/ts-deliver:status`, `/ts-deliver:jump` command contracts | `references/commands.md` |
 | detailed gate checklists and sign-off record shapes | `references/gate-checklists.md` |
 | setup guidance for pending-setup tools | `references/setup-gaps.md` |
 | phase-by-phase ACPL integration and mutation loop | `references/acpl-integration.md` |
@@ -91,7 +91,7 @@ Do not load all registry-phase files at once.
 - Dry-run cannot bypass min-schema; cannot persist.
 
 ## Quick reference
-commands: `/ts-deliver:init` / `/ts-deliver:refine` / `/ts-deliver:status` (colon syntax, Claude Code slash commands).
+commands: `/ts-deliver:init` / `/ts-deliver:refine` / `/ts-deliver:status` / `/ts-deliver:jump` (colon syntax, Claude Code slash commands).
 where am i / empty → bracketed flow + phase skills + active checks (step 7).
 autonomy → "go auto" / "recommend" / "suggestions only".
 dry-run → "dry-run on/off" / "dry-run" / "simulate this".

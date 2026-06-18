@@ -48,6 +48,35 @@ Must show:
 - pending setup gaps
 - next gate
 
+## `/ts-deliver jump`
+
+Jump to a target phase, replaying gate checks as required.
+
+Syntax: `/ts-deliver jump <phase>`
+Valid phases: `Think | Plan | Build | Review | Test | Ship | Reflect` (case-insensitive)
+
+Validation:
+- Invalid phase name → list valid phases, STOP.
+- Same phase as current → no-op, show phase status.
+
+Forward jump (target ahead of current):
+- Replay every gate between current phase and target in sequential order.
+- Any gate not passed → report which gate blocked and what is missing, STOP. Do not partial-advance state.json.
+- G1 and G2 still require 100% checklist + human sign-off even in HIGH autonomy.
+
+Backward jump (target behind current):
+- Allowed without gate replay — re-entering an earlier phase is valid (rework, pivot).
+- Warn: "Jumping back to <phase>. Advancing forward again will require gate re-checks."
+
+Writes (on success):
+- `.ai/ts-deliver-router/state.json` — updates `current_phase` to target
+
+Required output:
+- Gate replay summary (each gate checked: ✓ pass / ✗ blocked)
+- Confirmation: "Jumped to <phase>." + active checks for that phase
+
+Dry-run: describes gate replay and state.json write without executing either. Prefixes output `[DRY-RUN]`.
+
 ## `/ts-deliver dry-run [on|off]`
 
 Toggles simulation mode.
