@@ -1,6 +1,6 @@
 # reference: router commands
 
-## `/ts-router init`
+## `/ts-deliver init`
 
 Initializes project router state and project registry.
 
@@ -14,7 +14,12 @@ Required outputs:
 - active/optional/pending-setup tools
 - gate thresholds
 
-## `/ts-router refine`
+Interview question — muscle agents:
+Ask: "Muscle agents? (copilot / codex / antigravity / none)"
+- Named agent(s) → set `"extensions": { "agent_scaffold": true }` in `registry.json`; load `references/agent-scaffold.md`; generate initial `.agent/` scaffold.
+- "none" → set `"extensions": { "agent_scaffold": false }`; skip scaffold generation.
+
+## `/ts-deliver refine`
 
 Refines project registry based on phase history and gate outcomes.
 
@@ -27,7 +32,12 @@ Required prompts:
 - adjust thresholds
 - lifecycle stage update
 
-## `/ts-router status`
+Agent scaffold detection:
+If `collection[]` contains any `type="agent"` entry without a corresponding `.agent/<id>/` directory AND `extensions.agent_scaffold` is currently `false`, prompt: "Enable agent scaffold? Y/N".
+- Y → set `extensions.agent_scaffold: true`; load `references/agent-scaffold.md`; generate missing `.agent/<id>/` directories.
+- N → leave `agent_scaffold: false`; skip scaffold generation.
+
+## `/ts-deliver status`
 
 Read-only summary, no phase transition.
 
@@ -38,7 +48,7 @@ Must show:
 - pending setup gaps
 - next gate
 
-## `/ts-router dry-run [on|off]`
+## `/ts-deliver dry-run [on|off]`
 
 Toggles simulation mode.
 

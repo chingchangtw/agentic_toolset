@@ -7,12 +7,12 @@
 | Field | Type | Description |
 |---|---|---|
 | `project` | string | Project name/identifier |
-| `initialized` | ISO date | When `/ts-router init` was first run |
+| `initialized` | ISO date | When `/ts-deliver init` was first run |
 | `lifecycle_stage` | enum | `early` / `active` / `stabilizing` / `maintenance` |
 | `core` | object | Core 4 invariant tools (never change) |
 | `collection` | array | Project-specific tool entries |
 | `gates` | object | Gate definitions with required checks |
-| `refinement_count` | int | How many times `/ts-router refine` has run |
+| `refinement_count` | int | How many times `/ts-deliver refine` has run |
 | `next_refinement_trigger` | string | Phase that auto-triggers next refine |
 
 ### `collection[]` entry fields

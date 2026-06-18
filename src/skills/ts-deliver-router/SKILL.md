@@ -1,13 +1,20 @@
 ---
 name: ts-deliver-router
-description: >
-  Thin coordinator over verified state. Drives gstack 7-phase flow (Think→Plan→
+description: "6-phase flow (Think→Plan→Build→Review→Test→Ship→Reflect) with Spectra BDD skills (discuss/propose/apply/ingest/archive) nested inside specific phases."
+---
+<!--
+Thin coordinator over verified state with 6-phase flow (Think→Plan→
   Build→Review→Test→Ship→Reflect) with Spectra BDD skills (discuss/propose/apply/
   ingest/archive) nested inside specific phases. `.ai/ts-deliver-router/state.json` as truth, 
   enforces named security-gate checklists, and
   routes via various primitives. Activate when user works with agents and asks "what next", "which skill",
   "where am I", "what phase", "run the checks", "simulate this", "dry-run on/off",
-  or starts/resumes a project. Not for one-off lookups.
+  or starts/resumes a project. Not for one-off lookups
+-->
+
+## On First Use 
+See 'reference/on-first-use.md' for first-use initialization steps.
+
 ---
 
 # ts-deliver-router (core)
@@ -30,12 +37,12 @@ irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 | read/verify/write state, schema, staleness, exit contract | `references/state.md` |
 | exiting Think (G1) or entering Ship (G2); any sign-off | `references/security-gates.md` |
 | phase map, skills+artifacts per phase, ingest, refactor | `references/phases.md` |
-| DIAL behavior / check types / add-recipe / exclusions | `references/registry/index.md` |
-| checks for current phase P | `references/registry/index.md` + `references/registry/registry-<P>.md` |
+| DIAL behavior / check types / add-recipe / exclusions | `references/registry-index.md` |
+| checks for current phase P | `references/registry-index.md` + `references/registry-<P>.md` |
 | min-schema per artifact, debug mis-route, edge tests | `references/edge-tests.md` |
 | project-level check activation tiers and thresholds | `references/project-registry.md` |
 | full project registry schema and registry.log format | `references/registry-schema.md` |
-| `/ts-router init|refine|status` command contracts | `references/commands.md` |
+| `/ts-deliver:init`, `/ts-deliver:refine`, `/ts-deliver:status` command contracts | `references/commands.md` |
 | detailed gate checklists and sign-off record shapes | `references/gate-checklists.md` |
 | setup guidance for pending-setup tools | `references/setup-gaps.md` |
 | phase-by-phase ACPL integration and mutation loop | `references/acpl-integration.md` |
@@ -43,6 +50,7 @@ irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 | sub-agent build specs | `references/sub-agents.md` |
 | full phase-exit examples aligned to state schema v1 | `references/phase-exit-contracts.md` |
 | shared `.ai/` workspace contract and cross-skill boundaries | `references/workspace.md` |
+| on first use initialization steps | `references/on-first-use.md` |
 
 On "what's next": load state.md first, then registry/index.md + registry-<phase>.md for active phase.
 Do not load all registry-phase files at once.
@@ -53,39 +61,28 @@ Do not load all registry-phase files at once.
   Switch: "go auto" / "recommend" / "suggestions only".
 - **CHECKS REGISTRY** — one row per check (always/gate/rec). Add activity = append 1 row
   to matching `registry-<phase>.md`; never edit spine or router.
-  DIAL + types + recipe → `references/registry/index.md`. Rows → `references/registry/registry-<phase>.md`.
+  DIAL + types + recipe → `references/registry-index.md`. Rows → `references/registry-<phase>.md`.
   Project-specific check activation/tier/threshold model → `references/project-registry.md`.
 - **DRY-RUN** — session-scoped, defaults OFF, NOT persisted. ON: prefix all output `[DRY-RUN]`,
   state.json read-only, side effects announced, sign-offs refused.
   Switch: "dry-run on/off" / "dry-run" / "simulate this".
+- **REGISTRY EXTENSIONS** — `.ai/ts-deliver-router/registry.json` MAY include an `extensions`
+  object. Supported extension: `"extensions": { "agent_scaffold": false }` (default).
+  If `extensions.agent_scaffold = true`, load `references/agent-scaffold.md` before executing
+  any phase. Full schema → `references/registry-schema.md`.
 
 ## Router algorithm
-```
-on invoke:
-0 if dry-run on: prefix [DRY-RUN]; state.json read-only; announce side effects;
-   refuse sign-offs; emit DRY-RUN REPORT on session end.        [→ state.md]
-1 autonomy = read .ai/ts-deliver-router/autonomy || ask+save (DIAL).
-2 state = read .ai/ts-deliver-router/state.json.                              [→ state.md]
-   missing|invalid-schema|stale → "phase unclear, manual review" + reason. STOP.
-3 P = current_phase. verify artifacts.P pass min-schema.        [→ edge-tests.md]
-   any fail → "phase unclear, manual review" + specific failure. STOP.
-   if P == Think: evaluate new assumptions against hook criteria (a) blocks G1/G2,
-   (b) affects >1 epic scope, (c) new external dep. If met, call `/ts-discover idea --from-router`;
-   continue regardless of outcome.
-4 consult CHECKS REGISTRY for P: run always, surface rec.       [→ registry/index.md + registry/registry-P.md]
-   if P == Build: run same hook gating check for unknowns surfaced in always-checks.
-5 before exit P: every gate passed|signed_off;
-   security gate: signed_off + 100% checklist; human even in HIGH. [→ security-gates.md]
-6 on exit: PHASE EXIT CONTRACT (atomic state.json write).       [→ state.md]
-   dry-run → simulate only.
-7 WHERE-AM-I (on "where am I", empty input, any status query):  [→ phases.md + registry.md]
-   LINE 1  bracketed flow:
-           Think → [ Plan ] → Build → Review → Test → Ship → Reflect
-   LINE 2  phase primary skills (phases.md Map for P).
-   LINE 3  active checks: always-on | gates (status) | rec (surfaced).
-   → continue with DIAL-level next-step.
-8 honor switch phrases (DIAL or DRY-RUN) before act.
-```
+0 if dry-run: read-only, announce side effects, block sign-offs.
+1 autonomy = read `.ai/ts-deliver-router/autonomy` || ask.
+2 state = read `.ai/ts-deliver-router/state.json`. fail/stale → STOP.
+3 P = current_phase. verify artifacts.
+  if P == Think: check unknowns for hook criteria (a) blocks G1/G2, (b) affects >1 epic, (c) new external dep. If met, call `/ts-discover idea --from-router` (non-blocking).
+4 consult registry for P: run always, suggest rec.
+  if P == Build: check unknowns surfaced in always-checks against same hook criteria.
+5 before exit P: all gates signed; G1/G2 require 100% check + human.
+6 on exit: atomic state write.
+7 where am i: show bracketed flow + active checks.
+8 honor switches.
 **RULE: never infer phase from artifacts. state.json is truth. Unsure → manual review.**
 
 ## Hard safety (in core — never deferred to save tokens)
@@ -94,10 +91,11 @@ on invoke:
 - Dry-run cannot bypass min-schema; cannot persist.
 
 ## Quick reference
+commands: `/ts-deliver:init` / `/ts-deliver:refine` / `/ts-deliver:status` (colon syntax, Claude Code slash commands).
 where am i / empty → bracketed flow + phase skills + active checks (step 7).
 autonomy → "go auto" / "recommend" / "suggestions only".
 dry-run → "dry-run on/off" / "dry-run" / "simulate this".
-add check → 1 row in registry/registry-<phase>.md (+ registry/index.md for context).
+add check → 1 row in registry-<phase>.md (+ registry-index.md for context).
 greenfield: think→plan→build→review→test→ship→reflect.
 refactor: map→reverse-spec→plan→…
 spec change mid-flow → INGEST sub-loop → Plan delta.

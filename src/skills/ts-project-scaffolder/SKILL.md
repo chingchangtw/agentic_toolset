@@ -1,6 +1,6 @@
 ---
 name: ts-project-scaffolder
-description: "Scaffold a new project with Tony's architecture and conventions."
+description: "Scaffold a new project with architecture and conventions."
 compatibility: Requires spectra CLI.
 metadata:
   author: Taco

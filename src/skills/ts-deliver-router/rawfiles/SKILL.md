@@ -36,7 +36,7 @@ irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 | min-schema per artifact, debug mis-route, edge tests | `references/edge-tests.md` |
 | project-level check activation tiers and thresholds | `references/project-registry.md` |
 | full project registry schema and registry.log format | `references/registry-schema.md` |
-| `/ts-router init|refine|status` command contracts | `references/commands.md` |
+| `/ts-deliver init|refine|status` command contracts | `references/commands.md` |
 | detailed gate checklists and sign-off record shapes | `references/gate-checklists.md` |
 | setup guidance for pending-setup tools | `references/setup-gaps.md` |
 | phase-by-phase ACPL integration and mutation loop | `references/acpl-integration.md` |

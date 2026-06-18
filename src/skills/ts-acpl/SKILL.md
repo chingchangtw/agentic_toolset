@@ -1,17 +1,10 @@
 ---
 name: ts-acpl
-description: >
-  A structured pattern library that guides AI code generation to produce clean,
-  testable, mutation-resistant code from Problem Frame specifications. Activate this
-  skill whenever a user wants to generate code from a spec or requirement, write
-  production-quality code with AI, ensure AI output is testable or mutation-resistant,
-  apply coding patterns to a feature or module, translate Problem Frames / BDD scenarios
-  into code, or ask "how should AI write this code?". Also trigger when the user
-  mentions patterns like Guard Clause, Pure Function, Strategy, Policy Object, or when
-  they describe a coding task and want structured, principled output. Do NOT wait for the
-  user to say "pattern language" — if they want better AI-generated code, activate this
-  skill.
+description: "Pattern library bridging Problem Frame specs"
 ---
+<!--
+Pattern library bridging Problem Frame specs → AI-generated code → mutation-resistant output. Activate when generating code from a spec, applying coding patterns (Guard Clause, Pure Function, Strategy, Policy Object, etc.), or writing mutation-resistant code for BDD scenarios. Do NOT wait for \"pattern language\" — activate on any structured coding task.
+-->
 
 # AI Coding Pattern Language (ACPL)
 
@@ -150,54 +143,7 @@ For a detailed mapping table, see `references/problem-frame-map.md`.
 ---
 
 ## Worked Example: BDD Scenario → ACPL Code
-
-**Scenario** (Spectra BDD format):
-```gherkin
-Given a bulk Jira REST request list with 3 entries
-When one entry has an invalid issue key format
-Then the executor rejects that entry with a typed ValidationError
-  And the remaining 2 entries are processed
-```
-
-**Pattern selection**: Guard Clause + Result/Either + Repository Interface
-
-**Generated code skeleton** (TypeScript):
-```typescript
-// Value Object: IssueKey — enforces format at construction
-class IssueKey {
-  private constructor(readonly value: string) {}
-  static create(raw: string): Result<IssueKey, ValidationError> {
-    if (!ISSUE_KEY_REGEX.test(raw))
-      return Err(new ValidationError(`Invalid issue key: ${raw}`));
-    return Ok(new IssueKey(raw));
-  }
-}
-
-// Pure Function: partitionRequests — no side effects
-function partitionRequests(
-  raw: string[]
-): { valid: IssueKey[]; errors: ValidationError[] } {
-  return raw.reduce(
-    (acc, r) => {
-      const result = IssueKey.create(r);
-      result.isOk()
-        ? acc.valid.push(result.value)
-        : acc.errors.push(result.error);
-      return acc;
-    },
-    { valid: [] as IssueKey[], errors: [] as ValidationError[] }
-  );
-}
-
-// Seam: BulkExecutor receives its Jira client via DI
-class BulkExecutor {
-  constructor(private readonly jira: JiraClient) {}
-  async execute(keys: IssueKey[]): Promise<ExecutionSummary> { ... }
-}
-```
-
-**Mutation targets covered**: boundary (regex guard), deletion (reduce returns
-accumulator), return value (Result shape), method removal (jira client injected).
+See `references/patterns.md` → "Worked Examples" section for full BDD scenario → code walkthroughs. 
 
 ---
 

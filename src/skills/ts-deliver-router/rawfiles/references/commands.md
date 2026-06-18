@@ -1,6 +1,6 @@
 # reference: router commands
 
-## `/ts-router init`
+## `/ts-deliver init`
 
 Initializes project router state and project registry.
 
@@ -14,7 +14,7 @@ Required outputs:
 - active/optional/pending-setup tools
 - gate thresholds
 
-## `/ts-router refine`
+## `/ts-deliver refine`
 
 Refines project registry based on phase history and gate outcomes.
 
@@ -27,7 +27,7 @@ Required prompts:
 - adjust thresholds
 - lifecycle stage update
 
-## `/ts-router status`
+## `/ts-deliver status`
 
 Read-only summary, no phase transition.
 
@@ -38,7 +38,7 @@ Must show:
 - pending setup gaps
 - next gate
 
-## `/ts-router dry-run [on|off]`
+## `/ts-deliver dry-run [on|off]`
 
 Toggles simulation mode.
 

@@ -1,6 +1,6 @@
 # Setup Gaps — Installation Instructions
 
-When `/ts-router status` or routing logic detects a `tier=pending-setup` tool,
+When `/ts-deliver status` or routing logic detects a `tier=pending-setup` tool,
 direct the user here for setup steps.
 
 ---

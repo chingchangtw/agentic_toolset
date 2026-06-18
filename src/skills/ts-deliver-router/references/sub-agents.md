@@ -14,7 +14,7 @@ hand to Claude Code as a build task.
 extract the domain model, and output an ACPL Problem Frame classification with
 recommended pattern groups.
 
-**Input:** Project description (from `/ts-router init` answers or free text)
+**Input:** Project description (from `/ts-deliver init` answers or free text)
 
 **Output:**
 ```

@@ -294,7 +294,6 @@ The backfill SHALL keep `modules/security-gates.md` concise with a pointer to fu
 
 ## Requirements
 
-
 <!-- @trace
 source: wise-snacking-fountain
 updated: 2026-06-15
@@ -426,3 +425,63 @@ The backfill SHALL keep `modules/security-gates.md` concise with a pointer to fu
 #### Scenario: Phase-exit examples align to state schema
 - **WHEN** phase-exit examples are reviewed against state schema v1 fields
 - **THEN** examples use compatible shape for current phase, gate checklist results, and ingest log contract
+
+---
+### Requirement: ts-deliver-router command prefix SHALL be /ts-deliver
+The ts-deliver-router skill's user-facing command prefix SHALL be `/ts-deliver` (not `/ts-router`).
+All references to `/ts-router init`, `/ts-router refine`, and `/ts-router status` in skill files
+SHALL be updated to `/ts-deliver init`, `/ts-deliver refine`, and `/ts-deliver status` respectively.
+The skill name `ts-deliver-router`, directory paths, and state path `.ai/ts-deliver-router/` are NOT renamed.
+
+#### Scenario: Quick reference uses /ts-deliver prefix
+
+- **WHEN** a user reads the Quick Reference or Architecture section of ts-deliver-router SKILL.md
+- **THEN** all command examples SHALL use `/ts-deliver:init`, `/ts-deliver:refine`, `/ts-deliver:status` (no occurrences of `/ts-router`)
+
+#### Scenario: ts-project-planner integration references use /ts-deliver
+
+- **WHEN** a user reads Layer 2 in ts-project-planner SKILL.md or router-integration.md
+- **THEN** references to the ts-deliver-router command SHALL show `/ts-deliver:init` and `/ts-deliver:refine`
+
+#### Scenario: No residual /ts-router occurrences in skill files
+
+- **WHEN** a developer runs `grep -r "/ts-router " src/skills/ .agents/skills/`
+- **THEN** the command SHALL return zero matches
+
+<!-- @trace
+source: fix-ts-slash-command-system
+updated: 2026-06-18
+code:
+  - .agents/skills/caveman-compress/scripts/__pycache__/__main__.cpython-314.pyc
+  - .agents/skills/caveman-compress/scripts/__pycache__/detect.cpython-314.pyc
+  - src/skills/ts-deliver-router/rawfiles/references/registry-schema.md
+  - src/skills/ts-project-planner/references/work-unit-profiles.md
+  - src/skills/ts-deliver-router/SKILL.md
+  - src/skills/ts-project-planner/SKILL.md
+  - .agents/skills/caveman-compress/scripts/__pycache__/__init__.cpython-314.pyc
+  - src/skills/ts-project-planner/references/commands.md
+  - src/skills/ts-deliver-router/PROJECT_SETUP.md
+  - src/skills/ts-deliver-router/rawfiles/references/sub-agents.md
+  - src/skills/ts-project-planner/raw/references/commands.md
+  - .agents/skills/caveman-compress/scripts/__pycache__/cli.cpython-314.pyc
+  - src/skills/ts-deliver-router/SKILL.original.md
+  - src/skills/ts-project-planner/raw/SKILL.md
+  - src/skills/ts-deliver-router/references/registry-schema.md
+  - src/skills/ts-deliver-router/references/workspace.md
+  - src/skills/ts-deliver-router/rawfiles/references/setup-gaps.md
+  - src/skills/ts-project-planner/raw/references/router-integration.md
+  - .agents/skills/caveman-compress/scripts/__pycache__/compress.cpython-314.pyc
+  - src/skills/ts-deliver-router/references/setup-gaps.md
+  - src/skills/ts-project-planner/README.md
+  - src/skills/ts-deliver-router/references/commands.md
+  - src/skills/ts-project-planner/references/iteration-schema.md
+  - src/skills/ts-project-planner/references/router-integration.md
+  - docs/agent-scaffold-proposal.md
+  - .agents/skills/caveman-compress/scripts/__pycache__/validate.cpython-314.pyc
+  - src/skills/ts-deliver-router/references/agent-scaffold.md
+  - src/skills/ts-project-planner/raw/references/work-unit-profiles.md
+  - src/skills/ts-deliver-router/rawfiles/SKILL.md
+  - src/skills/ts-deliver-router/rawfiles/references/commands.md
+  - src/skills/ts-project-planner/raw/references/iteration-schema.md
+  - src/skills/ts-deliver-router/references/sub-agents.md
+-->

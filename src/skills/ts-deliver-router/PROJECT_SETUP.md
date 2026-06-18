@@ -16,7 +16,7 @@ DIAL: read from `.ai/ts-deliver-router/autonomy` — default MID if missing.
 
 On any "what next" / "where am I" / "which skill" query:
 1. Read .ai/ts-deliver-router/state.json → stale or missing → STOP, report reason
-2. Read .ai/ts-deliver-router/registry.json → missing → prompt /ts-router init
+2. Read .ai/ts-deliver-router/registry.json → missing → prompt /ts-deliver init
 3. Verify phase artifacts pass minimum-schema
 4. Consult CHECKS REGISTRY for current phase
 5. Respect DIAL setting
@@ -89,17 +89,17 @@ mutation Python:  mutmut    (Test G2)
 - .claude/agents/ts-mutation-analyst.md            (Test)
 
 ### Commands (this skill)
-/ts-router init         → initialize project registry + state
-/ts-router refine       → refine registry (auto-called at Reflect MID/HIGH)
-/ts-router status       → print current phase + active tools + pending-setup
-/ts-router dry-run on   → simulation mode (describe commands, don't execute)
-/ts-router dry-run off  → resume normal execution
+/ts-deliver init         → initialize project registry + state
+/ts-deliver refine       → refine registry (auto-called at Reflect MID/HIGH)
+/ts-deliver status       → print current phase + active tools + pending-setup
+/ts-deliver dry-run on   → simulation mode (describe commands, don't execute)
+/ts-deliver dry-run off  → resume normal execution
 
 ### Commands (ts-project-planner — sibling skill, if installed)
 /ts-discover idea|explore|validate|decide|status  → Discovery track (Layer D)
 /ts-project plan --new|--sync|status|refine       → Backlog (Layer 0)
 /ts-iteration start|next|status|close             → Delivery (Layer 1, calls
-                                                      /ts-router init per epic)
+                                                      /ts-deliver init per epic)
 
 ### Design Principles
 - Add rigour, never add scope

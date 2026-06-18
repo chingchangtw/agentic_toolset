@@ -4,13 +4,13 @@ Use this reference when a project needs tiered activation and thresholds per che
 
 ## Purpose
 
-The phase registry files in `modules/registry/registry-<phase>.md` are the catalog of
+The phase registry files in `modules/registry-<phase>.md` are the catalog of
 possible checks. Project Registry defines which checks are active for one project and
 what thresholds apply.
 
 ## Source-of-truth split
 
-- Template catalog: `modules/registry/registry-<phase>.md` (all possible checks)
+- Template catalog: `modules/registry-<phase>.md` (all possible checks)
 - Project activation: `.ai/ts-deliver-router/registry.json` (active/optional/pending-setup/retired)
 - Router behavior: consult phase template for available checks, then project registry for
   tier and threshold at runtime
