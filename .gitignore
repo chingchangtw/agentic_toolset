@@ -1,50 +1,8 @@
-# Dependencies
-node_modules/
-pnpm-lock.yaml
-yarn.lock
-package-lock.json
-bun.lockb
-
-# Build output
-dist/
-build/
-*.tsbuildinfo
-
-# Environment
 .env
 .env.local
 .env.*.local
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-
-# Testing
-coverage/
-.nyc_output/
-
-# Logs
-logs/
-*.log
-npm-debug.log*
-
-# OS
-Thumbs.db
-.DS_Store
-
-# Temporary files
 tmp/
 temp/
-
-# AI and related
-.ai
-.claude
-.github
-.spectra/
-openspec/.vector-search.db*
-# Added by code-review-graph
-.code-review-graph/
+Thumbs.db
+.DS_Store

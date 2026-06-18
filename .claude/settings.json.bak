@@ -1,0 +1,68 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "cat >/dev/null || true; git rev-parse --git-dir >/dev/null 2>&1 && code-review-graph update --skip-flows --repo \"C:/Users/tlchang/OneDrive - Synaptics/work/workspace/atlassian-toolset\" || true",
+            "timeout": 30,
+            "type": "command"
+          }
+        ],
+        "matcher": "Edit|Write|Bash"
+      },
+      {
+        "matcher": "Edit|Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat >/dev/null || true; git rev-parse --git-dir >/dev/null 2>&1 && code-review-graph update --skip-flows --repo \"C:/Users/tlchang/OneDrive - Synaptics/work/workspace/agenticToolset\" || true",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "cat >/dev/null || true; git rev-parse --git-dir >/dev/null 2>&1 && code-review-graph status --repo \"C:/Users/tlchang/OneDrive - Synaptics/work/workspace/atlassian-toolset\" || echo 'Not a git repo, skipping'",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat >/dev/null || true; git rev-parse --git-dir >/dev/null 2>&1 && code-review-graph status --repo \"C:/Users/tlchang/OneDrive - Synaptics/work/workspace/agenticToolset\" || echo 'Not a git repo, skipping'",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "includeGitInstructions": false,
+  "permissions": {
+    "allow": [
+      "Read(//Users/ctony/.claude/**)",
+      "PowerShell(New-Item *)",
+      "Bash(python -m pytest *)",
+      "Bash(python -m ruff check *)",
+      "Bash(cd *)",
+      "Bash(Test-Path *)",
+      "PowerShell(python -m pytest *)",
+      "PowerShell(cd *)",
+      "PowerShell(ls *)",
+      "PowerShell(Select-String *)",
+      "PowerShell(Test-Path *)"
+    ],
+    "deny": [
+      "Bash(sudo *)",
+      "Bash(rm -rf /)"
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "change": "merge-code-review-into-registry",
+  "touched": [
+    {
+      "task_id": "1",
+      "task_desc": "1.1 Add `/code-review` as `always` check in `src/skills/lifecycle-router/modules/registry/registry-build.md`: after the change, the Build phase registry table contains a row with id=`code-review`, type=`always`, trigger=`each change`, skill/cmd=`gstack:/code-review`, block=`-`. Verification: open the file and confirm the row exists with correct column values; the `/code-review is registered in the Build phase registry` requirement from the spec is satisfied.",
+      "files": [
+        ".agents/skills/cavecrew/README.md",
+        ".agents/skills/cavecrew/SKILL.md",
+        ".agents/skills/caveman-commit/README.md",
+        ".agents/skills/caveman-commit/SKILL.md",
+        ".agents/skills/caveman-compress/README.md",
+        ".agents/skills/caveman-compress/scripts/__init__.py",
+        ".agents/skills/caveman-compress/scripts/__main__.py",
+        ".agents/skills/caveman-compress/scripts/benchmark.py",
+        ".agents/skills/caveman-compress/scripts/cli.py",
+        ".agents/skills/caveman-compress/scripts/compress.py",
+        ".agents/skills/caveman-compress/scripts/detect.py",
+        ".agents/skills/caveman-compress/scripts/validate.py",
+        ".agents/skills/caveman-compress/SECURITY.md",
+        ".agents/skills/caveman-compress/SKILL.md",
+        ".agents/skills/caveman-help/README.md",
+        ".agents/skills/caveman-help/SKILL.md",
+        ".agents/skills/caveman-review/README.md",
+        ".agents/skills/caveman-review/SKILL.md",
+        ".agents/skills/caveman-stats/README.md",
+        ".agents/skills/caveman-stats/SKILL.md",
+        ".agents/skills/caveman/README.md",
+        ".agents/skills/caveman/SKILL.md",
+        ".gitignore",
+        ".router/autonomy",
+        ".router/state.json",
+        ".spectra.yaml",
+        "CLAUDE.md",
+        "docs/project_init.md",
+        "skills-lock.json",
+        "src/skills/lifecycle-router/modules/registry/registry-build.md",
+        "src/skills/lifecycle-router/modules/registry/registry-plan.md",
+        "src/skills/lifecycle-router/modules/registry/registry-review.md",
+        "src/skills/lifecycle-router/modules/registry/registry-test.md"
+      ]
+    }
+  ]
+}
