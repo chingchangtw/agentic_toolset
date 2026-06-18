@@ -37,11 +37,11 @@ irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 | read/verify/write state, schema, staleness, exit contract | `references/state.md` |
 | exiting Think (G1) or entering Ship (G2); any sign-off | `references/security-gates.md` |
 | phase map, skills+artifacts per phase, ingest, refactor | `references/phases.md` |
-| DIAL behavior / check types / add-recipe / exclusions | `references/registry-index.md` |
-| checks for current phase P | `references/registry-index.md` + `references/registry-<P>.md` |
+| DIAL behavior / check types / add-recipe / exclusions | `registry/registry-index.md` |
+| checks for current phase P | `registry/registry-index.md` + `registry/registry-<P>.md` |
 | min-schema per artifact, debug mis-route, edge tests | `references/edge-tests.md` |
 | project-level check activation tiers and thresholds | `references/project-registry.md` |
-| full project registry schema and registry.log format | `references/registry-schema.md` |
+| full project registry schema and registry.log format | `registry/registry-schema.md` |
 | `/ts-deliver:init`, `/ts-deliver:refine`, `/ts-deliver:status`, `/ts-deliver:jump` command contracts | `references/commands.md` |
 | detailed gate checklists and sign-off record shapes | `references/gate-checklists.md` |
 | setup guidance for pending-setup tools | `references/setup-gaps.md` |
@@ -52,7 +52,7 @@ irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 | shared `.ai/` workspace contract and cross-skill boundaries | `references/workspace.md` |
 | on first use initialization steps | `references/on-first-use.md` |
 
-On "what's next": load state.md first, then registry/index.md + registry-<phase>.md for active phase.
+On "what's next": load state.md first, then registry-index.md + registry-<phase>.md for active phase.
 Do not load all registry-phase files at once.
 
 ## PRIMITIVE INTERFACES
@@ -61,7 +61,7 @@ Do not load all registry-phase files at once.
   Switch: "go auto" / "recommend" / "suggestions only".
 - **CHECKS REGISTRY** — one row per check (always/gate/rec). Add activity = append 1 row
   to matching `registry-<phase>.md`; never edit spine or router.
-  DIAL + types + recipe → `references/registry-index.md`. Rows → `references/registry-<phase>.md`.
+  DIAL + types + recipe → `registry/registry-index.md`. Rows → `registry/registry-<phase>.md`.
   Project-specific check activation/tier/threshold model → `references/project-registry.md`.
 - **DRY-RUN** — session-scoped, defaults OFF, NOT persisted. ON: prefix all output `[DRY-RUN]`,
   state.json read-only, side effects announced, sign-offs refused.
