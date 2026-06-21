@@ -33,5 +33,8 @@
   },
   "enabledMcpjsonServers": [
     "code-review-graph"
-  ]
+  ],
+  "enabledPlugins": {
+    "ponytail@ponytail": true
+  }
 }
