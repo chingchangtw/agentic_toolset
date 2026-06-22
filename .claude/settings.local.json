@@ -23,7 +23,8 @@
       "Bash(code-review-graph *)",
       "Bash(git add *)",
       "Bash(git push *)",
-      "Bash(spectra new *)"
+      "Bash(spectra new *)",
+      "Bash(git *)"
     ],
     "deny": [
       "Bash(sudo *)",

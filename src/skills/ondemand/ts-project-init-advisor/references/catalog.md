@@ -19,7 +19,7 @@ Last reviewed: 2025-06. Catalog-first: exhaust this before any web search.
 
 These apply to **every project regardless of stack or size**. Always include in Tier 1 without needing a trigger match.
 
-### filesystem (built-in)
+### filesystem (built-in) ✅ VERIFIED
 - **Why always**: Claude Code needs explicit read/write scope to operate safely on project files
 - **settings.json minimum**:
   ```json
@@ -31,23 +31,28 @@ These apply to **every project regardless of stack or size**. Always include in 
   }
   ```
 
-### git-operations skill
+### git-operations skill ✅ VERIFIED
 - **Why always**: Every code project needs commit, branch, diff, and log workflows
-- **Install**: `npx @anthropic-ai/claude-code skills add git-operations`
+- **Install**:
+  ```bash
+  npx skills@latest add git-operations
+  # or via Claude Code CLI:
+  claude skills add git-operations
+  ```
 - **Minimum CLAUDE.md entry**:
   ```
   Git: always branch before feature work; never push to main directly
   ```
 
-### code-reviewer sub-agent
+### code-reviewer sub-agent ✅ VERIFIED
 - **Why always**: Catches regressions, style drift, and security issues before commit
 - **Template**: see Sub-agent Archetypes → code-reviewer
 
-### researcher sub-agent
+### researcher sub-agent ✅ VERIFIED
 - **Why always**: Offloads doc lookup and external context from main agent, saving tokens
 - **Template**: see Sub-agent Archetypes → researcher
 
-### CLAUDE.md baseline sections (non-negotiable)
+### CLAUDE.md baseline sections (non-negotiable) ✅ VERIFIED
 Every generated CLAUDE.md must contain at minimum:
 1. Project Overview (type, stack, phase)
 2. Behavior Rules (always / never / style)
@@ -55,10 +60,91 @@ Every generated CLAUDE.md must contain at minimum:
 4. Architecture Notes (key decisions, don't-touch zones)
 5. Compaction Strategy (what to preserve on /compact)
 
-### Must-have hooks (non-negotiable)
+### Must-have hooks (non-negotiable) ✅ VERIFIED
 These two hooks apply to every project regardless of stack:
 - `block-env-edit.sh` — PreToolUse guard on `.env*` files (see Section 5)
 - `session-summary.sh` — PreCompact session log writer (see Section 5)
+
+### ponytail (Claude Code plugin) ✅ VERIFIED
+- **Why always**: Code minimization skill — reduces LOC ~54%, tokens ~22%, cost ~20%, time ~27% while maintaining 100% safety. Forces agent to reach for stdlib/native before writing new code.
+- **Install (Claude Code)**:
+  ```
+  /plugin marketplace add DietrichGebert/ponytail
+  /plugin install ponytail@ponytail
+  ```
+- **Install (GitHub Copilot CLI)**:
+  ```
+  copilot plugin marketplace add DietrichGebert/ponytail
+  copilot plugin install ponytail@ponytail
+  ```
+- **Repo**: https://github.com/DietrichGebert/ponytail
+- **settings.json entry**:
+  ```json
+  { "enabledPlugins": { "ponytail@ponytail": true } }
+  ```
+
+### Graphify (MCP — code graph) ⚠️ UNVERIFIED
+- **Why always**: Builds and queries a structural code graph (HTTP transport, shareable across team); stronger language coverage than alternatives
+- **Install**: Follow setup guide at https://github.com/safishamsi/graphify — then register as MCP:
+  ```bash
+  claude mcp add graphify -- <command from repo README>
+  ```
+  ⚠️ Verify exact command from repo README before adding to plan.
+- **Use-case tags**: all projects, code navigation, impact analysis
+
+### caveman (skill + system installer) ✅ VERIFIED
+- **Why always**: Compresses token output ~75% across all agents (Claude, Copilot, Gemini) — mandatory for token budget discipline
+- **Install (macOS/Linux/WSL)**:
+  ```bash
+  curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash
+  ```
+- **Install (Windows PowerShell)**:
+  ```powershell
+  irm https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.ps1 | iex
+  ```
+- **Install (Claude Code skill)**:
+  ```bash
+  claude skills add JuliusBrussee/caveman
+  ```
+- **Repo**: https://github.com/JuliusBrussee/caveman
+
+### spectra (spec-driven development) ✅ VERIFIED
+- **Why always**: Manages change proposals and specs; drives discuss→propose→apply→ingest→archive workflow
+- **Install**: Manual — Open the Spectra desktop app → "Open Project" → point to project root folder
+- **Config file**: `.spectra.yaml` in project root (auto-created on first open)
+- **Repo/docs**: https://github.com/spectra-app/spectra
+
+### code-review-graph (MCP — incremental code review) ✅ VERIFIED
+- **Why always**: Provides risk-scored code review, impact analysis, and test coverage mapping via MCP; keeps review in-context without token waste
+- **Install**:
+  ```bash
+  pip install code-review-graph          # or: pipx install code-review-graph
+  code-review-graph install --platform claude-code
+  code-review-graph build                # parse codebase — re-run after large changes
+  ```
+- **MCP config** (auto-added by install command):
+  ```json
+  { "mcpServers": { "code-review-graph": { "command": "uvx", "args": ["code-review-graph", "serve"] } } }
+  ```
+- **Use-case tags**: all projects
+
+### Superpowers (Claude Code plugin) ✅ VERIFIED
+- **Why always**: Extends Claude Code with additional tool capabilities and agent superpowers
+- **Install (Claude Code)**:
+  ```
+  /plugin install superpowers@claude-plugins-official
+  ```
+- **Repo**: https://github.com/obra/superpowers
+- **Use-case tags**: all projects
+
+### mattpocock/skills (TypeScript skill pack) ✅ VERIFIED
+- **Why always**: Adds TypeScript-specific workflows (type-checking, type wizardry, TS patterns)
+- **Install**:
+  ```bash
+  npx skills@latest add mattpocock/skills -g
+  ```
+- **Post-install**: Run `/setup-matt-pocock-skills` in Claude Code to activate
+- **Use-case tags**: all projects (TypeScript-specific skills activate conditionally)
 
 > **Token note**: The MUST-HAVE section is the only part of this catalog that must be read in full for every run.
 > Sections 1–5 below: read only the subsections relevant to the detected stack and services.
@@ -236,9 +322,11 @@ These two hooks apply to every project regardless of stack:
 
 ### core-skills (always recommended)
 ```bash
-npx @anthropic-ai/claude-code skills add git-operations
-npx @anthropic-ai/claude-code skills add code-reviewer
-npx @anthropic-ai/claude-code skills add researcher
+npx skills@latest add git-operations
+npx skills@latest add code-reviewer
+npx skills@latest add researcher
+# or via Claude Code CLI:
+claude skills add git-operations
 ```
 
 ### by project type
@@ -252,6 +340,63 @@ npx @anthropic-ai/claude-code skills add researcher
 | CLI Tool | `cli-ux-checker`, `help-text-generator` |
 | Enterprise/Atlassian | `atlassian-rest-api` (via Tony's skill library) |
 | Any Team | `vibe-coding-scaffold`, `six-thinking-hats-coach` |
+
+### recommended skills (install globally — all projects)
+```bash
+npx skills add ratacat/claude-skills@clean-code -g -y
+npx skills add ratacat/claude-skills@design-patterns -g -y
+```
+
+| Skill | Purpose | Tags |
+|---|---|---|
+| `ratacat/claude-skills@clean-code` | Clean Code principles (naming, structure, error handling, tests) | all projects, code quality |
+| `ratacat/claude-skills@design-patterns` | Design patterns (GoF, SOLID, architectural patterns) | all projects, architecture |
+
+### VoltAgent/awesome-agent-skills (curated skill collection)
+- **Purpose**: Curated collection of official Agent Skills from Anthropic, Google, Vercel, Stripe, Cloudflare, Trail of Bits, Figma, and community. Not AI-slop generated.
+- **Repo**: https://github.com/VoltAgent/awesome-agent-skills
+- **Browse**: https://officialskills.sh
+- **Install individual skills**:
+  ```bash
+  npx skills add <org>/<skill-name>
+  # e.g. npx skills add garrytan/design-review
+  # Browse the collection at officialskills.sh to find relevant skills
+  ```
+- **Use-case tags**: all projects — pick skills relevant to your stack
+
+### Impeccable (frontend design skill)
+- **Purpose**: 23 design commands + 44 deterministic detector rules for AI-generated frontend. Commands: `polish`, `audit`, `critique`, `distill`, `animate`, `bolder`, `quieter`, and more.
+- **Install**:
+  ```bash
+  npx impeccable install
+  ```
+- **Post-install** (run in Claude Code): `/impeccable init`
+- **Repo**: https://github.com/pbakaus/impeccable
+- **Use-case tags**: web projects, frontend design, UI
+
+### Design Council ⚠️ UNVERIFIED
+- **Purpose**: Design council / review workflow skill for UI/UX decision-making
+- **Install**: Verify at repo — possible: `npx skills add <org>/design-council`
+- ⚠️ Install command unverified — check repo before generating task
+
+### Anthropic Cybersecurity Skills ⚠️ UNVERIFIED
+- **Purpose**: Cybersecurity-focused skills from Anthropic covering threat modeling, OWASP, secure code review
+- **Install (likely)**: Via Anthropic skills marketplace:
+  ```
+  /plugin marketplace add anthropics/skills
+  # Then select cybersecurity skills from the plugin browser
+  ```
+- ⚠️ Exact skill name unverified — confirm from https://github.com/anthropics/skills
+
+### UI UX Pro Max ⚠️ UNVERIFIED
+- **Purpose**: Advanced UI/UX design skill for high-fidelity interface generation
+- **Install**: Verify at repo — possible: `npx skills add ratacat/claude-skills@ui-ux-pro-max`
+- ⚠️ Install command unverified — check repo before generating task
+
+### Awesome Claude Design ⚠️ UNVERIFIED
+- **Purpose**: Design system and DESIGN.md-driven UI generation skill
+- **Install**: Verify at https://getdesign.md
+- ⚠️ Install command unverified — check repo before generating task
 
 ### user skill library (Tony's installed skills — always available)
 These are pre-installed and available without npx:

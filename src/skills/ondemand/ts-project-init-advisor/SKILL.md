@@ -131,6 +131,13 @@ Tasks: {N} total  |  Tier 1: {n}  |  Tier 2: {n}  |  Hooks: {n}  |  Agents: {n}
 ### Tier 1 (always include on match)
 | Signal | Recommend |
 |---|---|
+| Any project | `ponytail` plugin (Claude Code) |
+| Any project | `Graphify` MCP (code graph) |
+| Any project | `caveman` skill + system installer |
+| Any project | `spectra` app (open project in Spectra) |
+| Any project | `code-review-graph` MCP |
+| Any project | `Superpowers` plugin (Claude Code) |
+| Any project | `mattpocock/skills` (global) |
 | GitHub / GitLab detected | `github` MCP + `git-operations` skill |
 | Jira / Confluence / Atlassian | `atlassian` MCP + `atlassian-rest-api` skill |
 | Google Workspace | `google-drive` MCP + `gmail` MCP |
@@ -146,6 +153,14 @@ Tasks: {N} total  |  Tier 1: {n}  |  Tier 2: {n}  |  Hooks: {n}  |  Agents: {n}
 ### Tier 2 (include if stack matches)
 | Signal | Recommend |
 |---|---|
+| Any project | `ratacat/claude-skills@clean-code` |
+| Any project | `ratacat/claude-skills@design-patterns` |
+| Any project | `VoltAgent/awesome-agent-skills` (browse collection, pick relevant) |
+| Any project | `Impeccable` (frontend design skill) |
+| Any project | `Design Council` ⚠️ unverified install |
+| Any project | `Anthropic Cybersecurity Skills` ⚠️ unverified install |
+| Any web project | `UI UX Pro Max` ⚠️ unverified install |
+| Any web project | `Awesome Claude Design` ⚠️ unverified install |
 | Any web project | `researcher` sub-agent |
 | Prettier / Black / gofmt detected | `format-on-edit` hook |
 | ESLint / Ruff detected | `lint-on-edit` hook |

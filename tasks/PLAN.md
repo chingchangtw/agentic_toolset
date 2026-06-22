@@ -119,3 +119,96 @@ None of these touch `.claude/`, `.github/`, or existing config without a separat
 
 ####################################
 
+
+
+# Revised Plan: Align claudemd-patterns.md with canonical template
+
+## Goal
+Align `src/skills/ondemand/ts-project-init-advisor/references/claudemd-patterns.md` with the canonical template (`src/project_root_structure/CLAUDE.md`) and golden rules (`.claude/CLAUDE.md` + `goverance_CLAUDE.md`). Pattern library should teach MINIMAL project CLAUDE.md structure only. Remove all content that duplicates golden files or contradicts the canonical template.
+
+## Source of Truth Hierarchy
+1. **Canonical template**: `src/project_root_structure/CLAUDE.md` — defines what sections a project CLAUDE.md must contain
+2. **Universal rules**: `src/project_root_structure/.claude/CLAUDE.md` — universal agent behavior, not to be repeated in project CLAUDE.md
+3. **Governance**: `src/project_root_structure/.claude/goverance_CLAUDE.md` — DoD, registries, agents — not to be in project CLAUDE.md
+
+## Canonical Template Sections (what user CLAUDE.md must have)
+From `project_root_structure/CLAUDE.md`:
+- Project (overview + context)
+- Stack
+- **Commands** ← MISSING from patterns library
+- Specs
+- Architecture Map
+- Project File Structure
+- **Hard Rules** (project-scoped, ≤15) ← patterns uses "Behavior Rules" (wrong name + wrong examples)
+- Workflow (pointer to goverance — one line only)
+- Out of Scope
+- Maintenance Checklist
+
+## Precise Changes to `claudemd-patterns.md`
+
+### Section 1: Required Sections (lines 16-33)
+
+**Update table**:
+- Rename "Behavior Rules" → "Hard Rules"; purpose = "Project-specific prohibitions and conventions (≤15 rules)"
+- Remove "Tool Permissions" from required (belongs in `.claude/settings.json` + Hard Rules)
+- Move "MCP / Tool References" to Optional (not in canonical template)
+- Add "Commands" as required: "Dev/build/test/lint commands" → "Agent uses wrong commands"
+
+**Update optional list** (lines 29-32):
+- Remove: Sub-agent Contracts, Compaction Strategy, Memory Anchors
+- Add: MCP Tool References (project-specific MCPs only)
+
+### Section 2: Templates (lines 36-180)
+
+**Add Commands template** (after Tech Stack, ~line 62):
+Matches canonical template format with placeholders for dev/build/test/lint/types.
+
+**Rename + refactor Behavior Rules → Hard Rules** (lines 63-83):
+- Remove: generic "Always" items (write tests, follow style, keep changes minimal) — all in `.claude/CLAUDE.md` Core Principles
+- Remove: generic "Never" items (Modify .env, Run destructive bash, Push to main) — in `.claude/CLAUDE.md` Commit & PR Hygiene + Anti-Slop Discipline
+- Keep/replace: numbered format matching canonical template with project-specific examples
+
+**Remove Tool Permissions template** (lines 85-103):
+- Not in canonical template
+- Replace with: "Tool permissions → `.claude/settings.json`. Project prohibitions → Hard Rules."
+
+**Keep Architecture Notes template** (lines 105-123): unchanged.
+
+**Simplify MCP / Tool References** (lines 125-142):
+- Keep template but mark as optional
+- Add scoping note: "Only project-specific MCP usage. Do NOT duplicate `.claude/CLAUDE.md` behavior."
+
+**Remove Sub-agent Contracts** (lines 144-162):
+- Belongs in `goverance_CLAUDE.md` Agents Registry
+- Replace with: "Agents registry → `.claude/goverance_CLAUDE.md`."
+
+**Remove Compaction Strategy** (lines 164-179):
+- Not in canonical template or golden files
+
+### Section 3: Anti-Patterns (lines 183-235)
+
+No changes — all anti-patterns are project-scoped evaluation guidance with no golden rule overlap.
+
+### Section 4: Scoring Rubric (lines 238-258)
+
+**Update rows**:
+- "Behavior rules" → rename "Hard rules"; score 2 = "≤15 project-specific rules with rationale"
+- "Tool permissions" → remove
+- "Sub-agent contracts" → remove
+- Add "Commands" row: 0 = missing, 1 = partial, 2 = all commands present
+
+**Update max score** (16 → 12):
+- 0–3: Major gaps → generate new CLAUDE.md from scratch
+- 4–7: Moderate gaps → targeted additions
+- 8–10: Good → minor refinements only
+- 11–12: Excellent → no action needed
+
+### Section 5: Complete Good Example (lines 261-321)
+
+- Remove Sub-agents block (lines 315-317)
+- Remove Compaction block (lines 319-320)
+- Rename "Behavior Rules" → "Hard Rules" in example
+- Keep all other content (project-specific examples are fine)
+
+## Expected Outcome
+322 → ~230 lines. Pattern library aligns with canonical template structure. No duplication of `.claude/CLAUDE.md` or `goverance_CLAUDE.md` content.

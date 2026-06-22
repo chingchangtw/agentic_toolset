@@ -1,4 +1,12 @@
 # Project Initialization
+## ponytail
+-Claude
+-Copilot
+
+## claude-mem
+
+## Graphify
+
 ## Caveman 
 every project needs to run
 - Claude : talk like caveman
@@ -18,6 +26,10 @@ npx skills add ratacat/claude-skills@design-patterns -g -y 2>&1
 
 npx skills add ratacat/claude-skills@modern-web-app-architecture -g -y 2>&1
 npx skills add ratacat/claude-skills@web-interface-design -g -y 2>&1
+
+
+### VoltAgent/awesome-agent-skills
+
 
 ## MCP
 have Playwright if web design
