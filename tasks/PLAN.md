@@ -161,7 +161,14 @@ From `project_root_structure/CLAUDE.md`:
 ### Section 2: Templates (lines 36-180)
 
 **Add Commands template** (after Tech Stack, ~line 62):
-Matches canonical template format with placeholders for dev/build/test/lint/types.
+```
+Dev:        <FILL IN, e.g. npm run dev>
+Build:      <FILL IN, e.g. npm run build>
+Test file:  <FILL IN, e.g. npm test -- path/to/file>
+Test all:   <FILL IN, e.g. npm test>
+Lint:       <FILL IN, e.g. npm run lint:fix>
+Types:      <FILL IN, e.g. npx tsc --noEmit>
+```
 
 **Rename + refactor Behavior Rules → Hard Rules** (lines 63-83):
 - Remove: generic "Always" items (write tests, follow style, keep changes minimal) — all in `.claude/CLAUDE.md` Core Principles
@@ -170,7 +177,7 @@ Matches canonical template format with placeholders for dev/build/test/lint/type
 
 **Remove Tool Permissions template** (lines 85-103):
 - Not in canonical template
-- Replace with: "Tool permissions → `.claude/settings.json`. Project prohibitions → Hard Rules."
+- Replace with one-liner IN the file: "Tool permissions → `.claude/settings.json`. Project prohibitions → Hard Rules."
 
 **Keep Architecture Notes template** (lines 105-123): unchanged.
 
@@ -191,13 +198,13 @@ No changes — all anti-patterns are project-scoped evaluation guidance with no 
 
 ### Section 4: Scoring Rubric (lines 238-258)
 
-**Update rows**:
+**Update rows** (Commands NOT in rubric — D1 resolved):
 - "Behavior rules" → rename "Hard rules"; score 2 = "≤15 project-specific rules with rationale"
 - "Tool permissions" → remove
 - "Sub-agent contracts" → remove
-- Add "Commands" row: 0 = missing, 1 = partial, 2 = all commands present
+- Commands row NOT added to rubric; 6 rows × 2pts = 12 ✓
 
-**Update max score** (16 → 12):
+**Update max score** (16 → 12); 6 rows × 2pts each = 12:
 - 0–3: Major gaps → generate new CLAUDE.md from scratch
 - 4–7: Moderate gaps → targeted additions
 - 8–10: Good → minor refinements only
