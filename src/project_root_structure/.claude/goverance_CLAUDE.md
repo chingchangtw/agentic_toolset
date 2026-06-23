@@ -31,19 +31,14 @@ A task is complete when:
 - [ ] Security review pass (if touching authn / authz / crypto / input parsing).
 
 ## Implementation Workflow
-1. Restate the goal in one sentence.
-2. List impacted files and modules.
-3. Note assumptions, risks, and conflicts with current conventions.
+1. Restate the goal in one sentence. Write plan to `tasks/todo.md` with checkable items.
+2. Verify plan with user before starting implementation.
+3. List impacted files and modules. Note assumptions and conflicts with current conventions.
 4. Propose the smallest safe implementation path.
-5. Implement with minimal diffs.
-6. Self-review against the Definition of Done.
+5. Implement with minimal diffs. Mark each item complete as you finish it — not in a batch.
+6. Self-review against the Definition of Done (including the staff-engineer check).
 7. Suggest follow-up improvements only after the main task is complete.
-
-## Task Flow (per task)
-1. Write plan to `tasks/todo.md` with checkable items.
-2. Verify plan before starting implementation.
-3. Mark items complete as you go — not in a batch at the end.
-4. After corrections: update `.ai/LESSONS_LEARNED.md` with the pattern. Ruthlessly iterate until mistake rate drops.
+8. After any correction: update `.ai/LESSONS_LEARNED.md`. Ruthlessly iterate until mistake rate drops.
 
 ## Elegance Check Gate
 For non-trivial changes, pause and ask: "Is there a more elegant way?" before committing.
