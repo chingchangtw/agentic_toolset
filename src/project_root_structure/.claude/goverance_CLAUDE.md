@@ -18,6 +18,7 @@ A task is complete when:
 - Documentation is updated when public behaviour changes.
 - Type-check, lint, and tests all pass.
 - Verification was actually run — not asserted.
+- Ask: "Would a staff engineer approve this?" If no → revise before marking done.
 
 ## Release Readiness Gates
 - [ ] All tests pass on CI.
@@ -37,6 +38,12 @@ A task is complete when:
 5. Implement with minimal diffs.
 6. Self-review against the Definition of Done.
 7. Suggest follow-up improvements only after the main task is complete.
+
+## Task Flow (per task)
+1. Write plan to `tasks/todo.md` with checkable items.
+2. Verify plan before starting implementation.
+3. Mark items complete as you go — not in a batch at the end.
+4. After corrections: update `.ai/LESSONS_LEARNED.md` with the pattern. Ruthlessly iterate until mistake rate drops.
 
 ## Elegance Check Gate
 For non-trivial changes, pause and ask: "Is there a more elegant way?" before committing.
