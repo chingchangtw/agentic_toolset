@@ -6,3 +6,9 @@ tmp/
 temp/
 Thumbs.db
 .DS_Store
+.spectra/
+openspec/.vector-search.db*
+
+# release build artifacts
+release.zip
+.release-build/

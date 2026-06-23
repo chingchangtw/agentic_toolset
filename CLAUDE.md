@@ -111,6 +111,17 @@ project-root/
 └── openspec/                  → Spectra specs and change proposals
 ```
 
+## Ship (Release)
+
+```
+Build:    node scripts/build-release.mjs
+Tag:      git tag v1.x.x && git push origin v1.x.x
+Publish:  gh release create v1.x.x release.zip install.sh install.ps1 --title "v1.x.x" --notes "what changed"
+```
+
+Trigger a new release whenever `src/skills/`, `src/hook/`, or `src/project_root_structure/` changes.
+`release.zip`, `install.sh`, and `install.ps1` are the three release assets — nothing else ships.
+
 ## Out of Scope
 
 - `dist/` — generated, do not edit
