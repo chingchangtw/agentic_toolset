@@ -17,7 +17,12 @@ state_file = (Path(_home) if _home else Path.home()) / ".claude" / "session_guar
 
 try:
     data = json.load(sys.stdin)
-    ctx_raw = data.get("context_window", {}).get("used_percentage", 0)
+    ctx_window = data.get("context_window", {})
+    ctx_raw = ctx_window.get("used_percentage")
+    if ctx_raw is None:
+        cur = ctx_window.get("current_tokens", 0)
+        mx  = ctx_window.get("max_tokens", 0)
+        ctx_raw = (cur / mx * 100) if mx else 0
     ctx_pct = round(float(ctx_raw or 0), 1)
     model  = data.get("model", "unknown")
 
