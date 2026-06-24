@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-REPO="chingchangtw/agenticToolset"
+REPO="chingchangtw/agentic_toolset"
 RELEASE_URL="https://github.com/${REPO}/releases/latest/download/release.zip"
 CLAUDE_DIR="${HOME}/.claude"
 HOOKS_DIR="${CLAUDE_DIR}/hooks"

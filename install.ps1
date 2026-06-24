@@ -5,7 +5,7 @@
 
 $ErrorActionPreference = "Stop"
 
-$Repo       = "chingchangtw/agenticToolset"
+$Repo       = "chingchangtw/agentic_toolset"
 $ReleaseUrl = "https://github.com/$Repo/releases/latest/download/release.zip"
 $ClaudeDir  = "$env:USERPROFILE\.claude"
 $HooksDir   = "$ClaudeDir\hooks"

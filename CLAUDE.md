@@ -115,8 +115,8 @@ project-root/
 
 ```
 Build:    node scripts/build-release.mjs
-Tag:      git tag v1.x.x && git push origin v1.x.x
-Publish:  gh release create v1.x.x release.zip install.sh install.ps1 --title "v1.x.x" --notes "what changed"
+Tag:      git tag vx.y.z && git push origin vx.y.z
+Publish:  gh release create vx.y.z release.zip install.sh install.ps1 --title "vx.y.z" --notes "what changed"
 ```
 
 Trigger a new release whenever `src/skills/`, `src/hook/`, or `src/project_root_structure/` changes.
