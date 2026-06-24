@@ -1,0 +1,1 @@
+{"nodes": [], "edges": [{"source": "registry_reflect", "target": "registry_index", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "src/skills/ts-deliver-router/registry/registry-reflect.md", "source_location": null, "weight": 1.0}], "hyperedges": []}

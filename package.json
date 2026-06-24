@@ -11,7 +11,8 @@
     "test:watch": "vitest --watch",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+     "release": "node scripts/build-release.mjs"
   },
   "keywords": [
     "ai",

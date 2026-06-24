@@ -21,6 +21,12 @@ If you cannot meet the bar, stop and tell your human partner why. They will than
 - Match existing conventions. Conformance beats personal taste inside the codebase.
 - Fail loud. "Completed" is wrong if anything was skipped silently.
 
+## Autonomous Problem-Solving
+- When given a bug report: fix it. Don't ask for hand-holding.
+- Point at logs, errors, failing tests — then resolve them.
+- Go fix failing CI tests without being told how.
+- Don't stop at the surface symptom. Find the root cause and fix it completely.
+
 ## Think Before Coding
 - Restate the goal in one sentence. State assumptions explicitly.
 - Enter plan mode for any non-trivial task (3+ steps or architectural decisions).
@@ -96,3 +102,6 @@ At the end of every response, append exactly: `"Ask me clarifying questions firs
 - Definition of Done, Release Readiness, registries, agent roles, workflow detail → `goverance_CLAUDE.md`.
 - Personal preferences and machine-local tweaks → `CLAUDE.local.md` (gitignored).
 - Deterministic enforcement → `.claude/hooks/`, not prose.
+
+
+

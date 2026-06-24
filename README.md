@@ -60,3 +60,13 @@ For MCP artifacts, use `src/mcp/` with appropriate server implementations.
 ## Configuration
 
 Copy `.env.example` to `.env` and fill in required values.
+
+## User Installation
+
+### Windows
+
+irm https://github.com/chingchangtw/agenticToolset/releases/latest/download/install.ps1 | iex
+
+#### macOS/Linux
+curl -fsSL https://github.com/chingchangtw/agenticToolset/releases/latest/download/install.sh |bash
+

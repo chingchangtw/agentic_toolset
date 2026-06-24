@@ -1,0 +1,2412 @@
+{
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-compress\\scripts\\__init__.py": {
+    "mtime": 1781086807.391862,
+    "ast_hash": "d6acae7e188357d1bc1258ce02a29811",
+    "semantic_hash": "d6acae7e188357d1bc1258ce02a29811"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-compress\\scripts\\__main__.py": {
+    "mtime": 1781086807.3969126,
+    "ast_hash": "5bd0e02db4907bf4e435e5d770256fef",
+    "semantic_hash": "5bd0e02db4907bf4e435e5d770256fef"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-compress\\scripts\\benchmark.py": {
+    "mtime": 1781086807.4012394,
+    "ast_hash": "07500037c8606fc9ab1832f55a5ff346",
+    "semantic_hash": "07500037c8606fc9ab1832f55a5ff346"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-compress\\scripts\\cli.py": {
+    "mtime": 1781086807.4047425,
+    "ast_hash": "c558740fb2c74c292c1886353add193a",
+    "semantic_hash": "c558740fb2c74c292c1886353add193a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-compress\\scripts\\compress.py": {
+    "mtime": 1781086807.4089835,
+    "ast_hash": "b64cfd042fdf93e8ac852fb3b87195a3",
+    "semantic_hash": "b64cfd042fdf93e8ac852fb3b87195a3"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-compress\\scripts\\detect.py": {
+    "mtime": 1781086807.4132135,
+    "ast_hash": "951a4593947c23cb9bfe8d99dc245b16",
+    "semantic_hash": "951a4593947c23cb9bfe8d99dc245b16"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-compress\\scripts\\validate.py": {
+    "mtime": 1781086807.4162147,
+    "ast_hash": "5d3394df7677d1ee08f0b69bb767b38c",
+    "semantic_hash": "5d3394df7677d1ee08f0b69bb767b38c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\settings.json": {
+    "mtime": 1782037786.1023724,
+    "ast_hash": "e21f674e8803bb4988fe1854e1a03633",
+    "semantic_hash": "e21f674e8803bb4988fe1854e1a03633"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\settings.local.json": {
+    "mtime": 1781889213.3103838,
+    "ast_hash": "796c078b335cbe3d943cc81e1c53abe9",
+    "semantic_hash": "796c078b335cbe3d943cc81e1c53abe9"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-compress\\scripts\\__init__.py": {
+    "mtime": 1781086807.391862,
+    "ast_hash": "d6acae7e188357d1bc1258ce02a29811",
+    "semantic_hash": "d6acae7e188357d1bc1258ce02a29811"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-compress\\scripts\\__main__.py": {
+    "mtime": 1781086807.3969126,
+    "ast_hash": "5bd0e02db4907bf4e435e5d770256fef",
+    "semantic_hash": "5bd0e02db4907bf4e435e5d770256fef"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-compress\\scripts\\benchmark.py": {
+    "mtime": 1781086807.4012394,
+    "ast_hash": "07500037c8606fc9ab1832f55a5ff346",
+    "semantic_hash": "07500037c8606fc9ab1832f55a5ff346"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-compress\\scripts\\cli.py": {
+    "mtime": 1781086807.4047425,
+    "ast_hash": "c558740fb2c74c292c1886353add193a",
+    "semantic_hash": "c558740fb2c74c292c1886353add193a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-compress\\scripts\\compress.py": {
+    "mtime": 1781086807.4089835,
+    "ast_hash": "b64cfd042fdf93e8ac852fb3b87195a3",
+    "semantic_hash": "b64cfd042fdf93e8ac852fb3b87195a3"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-compress\\scripts\\detect.py": {
+    "mtime": 1781086807.4132135,
+    "ast_hash": "951a4593947c23cb9bfe8d99dc245b16",
+    "semantic_hash": "951a4593947c23cb9bfe8d99dc245b16"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-compress\\scripts\\validate.py": {
+    "mtime": 1781086807.4162147,
+    "ast_hash": "5d3394df7677d1ee08f0b69bb767b38c",
+    "semantic_hash": "5d3394df7677d1ee08f0b69bb767b38c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.mcp.json": {
+    "mtime": 1781239019.549668,
+    "ast_hash": "65c7590a994f29c163208626ca76eb9e",
+    "semantic_hash": "65c7590a994f29c163208626ca76eb9e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.spectra\\touched\\merge-code-review-into-registry.json": {
+    "mtime": 1781144853.6898923,
+    "ast_hash": "f91fd2ea454145be513b207ebc75ad8f",
+    "semantic_hash": "f91fd2ea454145be513b207ebc75ad8f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\package.json": {
+    "mtime": 1781085429.6579452,
+    "ast_hash": "155edb9f593dc970621fd55947494443",
+    "semantic_hash": "155edb9f593dc970621fd55947494443"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\skills-lock.json": {
+    "mtime": 1781238605.8018901,
+    "ast_hash": "378621d3dc9a3a0062e9ef96ed2a1cae",
+    "semantic_hash": "378621d3dc9a3a0062e9ef96ed2a1cae"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\core\\index.ts": {
+    "mtime": 1781085462.437893,
+    "ast_hash": "16a511155461b01aca2be13509fc74f3",
+    "semantic_hash": "16a511155461b01aca2be13509fc74f3"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\index.ts": {
+    "mtime": 1782038123.5766847,
+    "ast_hash": "fd591728c8c8dac1df727951097fa2ce",
+    "semantic_hash": "fd591728c8c8dac1df727951097fa2ce"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\.claude\\settings.local.json": {
+    "mtime": 1780747595.1805801,
+    "ast_hash": "7928ced8c436b52cc1ceb4a26c5881e8",
+    "semantic_hash": "7928ced8c436b52cc1ceb4a26c5881e8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\types\\index.ts": {
+    "mtime": 1781085459.0130694,
+    "ast_hash": "5283753996594e5808b5d23253c22e63",
+    "semantic_hash": "5283753996594e5808b5d23253c22e63"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\utils\\index.ts": {
+    "mtime": 1781085475.093208,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\tsconfig.json": {
+    "mtime": 1781085433.910735,
+    "ast_hash": "71a8fc1979cd91ad4fa7024ff6c2087c",
+    "semantic_hash": "71a8fc1979cd91ad4fa7024ff6c2087c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\build-graph\\SKILL.md": {
+    "mtime": 1781238578.7573495,
+    "ast_hash": "716239624ab5f033373c7573b9a1eb51",
+    "semantic_hash": "716239624ab5f033373c7573b9a1eb51"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\cavecrew\\README.md": {
+    "mtime": 1781086807.3686402,
+    "ast_hash": "8b7ca548bd36b6db39006bac6cd54759",
+    "semantic_hash": "8b7ca548bd36b6db39006bac6cd54759"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\cavecrew\\SKILL.md": {
+    "mtime": 1781086807.3711627,
+    "ast_hash": "6ea8150438c6392a5ee0afef0a735ad4",
+    "semantic_hash": "6ea8150438c6392a5ee0afef0a735ad4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-commit\\README.md": {
+    "mtime": 1781086807.3741615,
+    "ast_hash": "2fe1d98cadbd2709a34ee3c77795a143",
+    "semantic_hash": "2fe1d98cadbd2709a34ee3c77795a143"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-commit\\SKILL.md": {
+    "mtime": 1781086807.3761768,
+    "ast_hash": "e8d814f342ec5752f47866299badd0a7",
+    "semantic_hash": "e8d814f342ec5752f47866299badd0a7"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-compress\\README.md": {
+    "mtime": 1781086807.3807452,
+    "ast_hash": "78d3757502badfab9db0e38724d336b3",
+    "semantic_hash": "78d3757502badfab9db0e38724d336b3"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-compress\\SECURITY.md": {
+    "mtime": 1781086807.3837492,
+    "ast_hash": "b2caed82d9d4a58c0530f7e741851224",
+    "semantic_hash": "b2caed82d9d4a58c0530f7e741851224"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-compress\\SKILL.md": {
+    "mtime": 1781086807.3877888,
+    "ast_hash": "5cfd6ee9993c9e72da6404a9841d82fd",
+    "semantic_hash": "5cfd6ee9993c9e72da6404a9841d82fd"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-help\\README.md": {
+    "mtime": 1781086807.4213781,
+    "ast_hash": "f49266e99b58d33c1d40b7bf0a644ec3",
+    "semantic_hash": "f49266e99b58d33c1d40b7bf0a644ec3"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-help\\SKILL.md": {
+    "mtime": 1781086807.4233735,
+    "ast_hash": "b0168dbcf14c8d3cd29101e1eb66de12",
+    "semantic_hash": "b0168dbcf14c8d3cd29101e1eb66de12"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-review\\README.md": {
+    "mtime": 1781086807.4287088,
+    "ast_hash": "9777a26704850f1e091ab072f02fa10f",
+    "semantic_hash": "9777a26704850f1e091ab072f02fa10f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-review\\SKILL.md": {
+    "mtime": 1781086807.4317074,
+    "ast_hash": "0e038c50a6bfdc9b8a307e6316c07236",
+    "semantic_hash": "0e038c50a6bfdc9b8a307e6316c07236"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-stats\\README.md": {
+    "mtime": 1781086807.435948,
+    "ast_hash": "866dc96f332b4e2bc1f80fec878fea52",
+    "semantic_hash": "866dc96f332b4e2bc1f80fec878fea52"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman-stats\\SKILL.md": {
+    "mtime": 1781086807.4379504,
+    "ast_hash": "e9966f688641209792719474f241a6ef",
+    "semantic_hash": "e9966f688641209792719474f241a6ef"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman\\README.md": {
+    "mtime": 1781086807.444105,
+    "ast_hash": "3358f5119f61b24f5fa65a25de7b866b",
+    "semantic_hash": "3358f5119f61b24f5fa65a25de7b866b"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\caveman\\SKILL.md": {
+    "mtime": 1781086807.4486897,
+    "ast_hash": "90e5f9d97791c2080495926731e0f5ad",
+    "semantic_hash": "90e5f9d97791c2080495926731e0f5ad"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\spectra-apply\\SKILL.md": {
+    "mtime": 1781492507.8723643,
+    "ast_hash": "56580d74bace40bdf5e6d994a1f83a3f",
+    "semantic_hash": "56580d74bace40bdf5e6d994a1f83a3f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\spectra-archive\\SKILL.md": {
+    "mtime": 1781492507.878357,
+    "ast_hash": "860409feecca7fcbafd73c5426b713b3",
+    "semantic_hash": "860409feecca7fcbafd73c5426b713b3"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\spectra-ask\\SKILL.md": {
+    "mtime": 1781492507.8833547,
+    "ast_hash": "422b20ed87f8463740c1703cd1845d6a",
+    "semantic_hash": "422b20ed87f8463740c1703cd1845d6a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\spectra-audit\\SKILL.md": {
+    "mtime": 1781492507.8883684,
+    "ast_hash": "69baa8db9604ef0d3d59c566b800791f",
+    "semantic_hash": "69baa8db9604ef0d3d59c566b800791f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\spectra-commit\\SKILL.md": {
+    "mtime": 1781492507.8943706,
+    "ast_hash": "c3769b11bd2bf61f34a8b9f7e5d2249e",
+    "semantic_hash": "c3769b11bd2bf61f34a8b9f7e5d2249e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\spectra-debug\\SKILL.md": {
+    "mtime": 1781492507.901208,
+    "ast_hash": "4861f124c210e250ccc388d7be9211d0",
+    "semantic_hash": "4861f124c210e250ccc388d7be9211d0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\spectra-discuss\\SKILL.md": {
+    "mtime": 1781492507.9057102,
+    "ast_hash": "9fddd0fa3f0ca377008a3f3e15fe61f0",
+    "semantic_hash": "9fddd0fa3f0ca377008a3f3e15fe61f0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\spectra-drift\\SKILL.md": {
+    "mtime": 1781492507.9117262,
+    "ast_hash": "5908841f650afc3dd680d4c909b49de6",
+    "semantic_hash": "5908841f650afc3dd680d4c909b49de6"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\spectra-ingest\\SKILL.md": {
+    "mtime": 1781492507.9170704,
+    "ast_hash": "533454f2659bb61030bf938b3bc82f38",
+    "semantic_hash": "533454f2659bb61030bf938b3bc82f38"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\spectra-propose\\SKILL.md": {
+    "mtime": 1781492507.9230826,
+    "ast_hash": "e96e8b122676075a32f8bd38caa6ada9",
+    "semantic_hash": "e96e8b122676075a32f8bd38caa6ada9"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-acpl\\SKILL.md": {
+    "mtime": 1781492507.954476,
+    "ast_hash": "5d20ac43ec11214a1ffbf91f1c788682",
+    "semantic_hash": "5d20ac43ec11214a1ffbf91f1c788682"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\PROJECT_SETUP.md": {
+    "mtime": 1781492508.1319532,
+    "ast_hash": "7e2c8bd369333ff5076d16218544d0f0",
+    "semantic_hash": "7e2c8bd369333ff5076d16218544d0f0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\README.md": {
+    "mtime": 1781492507.9600215,
+    "ast_hash": "be33280f1e8805f020b76213666944d5",
+    "semantic_hash": "be33280f1e8805f020b76213666944d5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\SKILL.md": {
+    "mtime": 1781498412.0284035,
+    "ast_hash": "1ff7de0c88414c074e3b877e44706a14",
+    "semantic_hash": "1ff7de0c88414c074e3b877e44706a14"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\SKILL.original.md": {
+    "mtime": 1781498396.548956,
+    "ast_hash": "38966914d27b6945baaa46c7a53cad9a",
+    "semantic_hash": "38966914d27b6945baaa46c7a53cad9a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\SKILL_caveman.md": {
+    "mtime": 1781492507.9681258,
+    "ast_hash": "03586b82b2776117cc2216044aa05adc",
+    "semantic_hash": "03586b82b2776117cc2216044aa05adc"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\ideas\\DISCUSSION_code_graph_registry.md": {
+    "mtime": 1781492507.972165,
+    "ast_hash": "c114f967ff0ffbbe58c718bb73b95722",
+    "semantic_hash": "c114f967ff0ffbbe58c718bb73b95722"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\ideas\\initIdeas.md": {
+    "mtime": 1781492507.977358,
+    "ast_hash": "f2f0b95fb9db9e78f4c7eec832dc2e17",
+    "semantic_hash": "f2f0b95fb9db9e78f4c7eec832dc2e17"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\SKILL.md": {
+    "mtime": 1781497465.378135,
+    "ast_hash": "ecc56abc27daf22cac3f209391b6f76f",
+    "semantic_hash": "ecc56abc27daf22cac3f209391b6f76f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\acpl-integration.md": {
+    "mtime": 1781497579.86642,
+    "ast_hash": "444444e5c28c5e1aa6ee914e7e2b503c",
+    "semantic_hash": "444444e5c28c5e1aa6ee914e7e2b503c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\commands.md": {
+    "mtime": 1781494670.2620218,
+    "ast_hash": "cc56dd4aa9d9f6786874b65ccb17ecc2",
+    "semantic_hash": "cc56dd4aa9d9f6786874b65ccb17ecc2"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\edge-tests.md": {
+    "mtime": 1781492507.9840312,
+    "ast_hash": "8366d15ddd81af05bda2921fd2e57993",
+    "semantic_hash": "8366d15ddd81af05bda2921fd2e57993"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\gate-checklists.md": {
+    "mtime": 1781497599.8552687,
+    "ast_hash": "7d4b039d3fd50659a11e26da627e9c32",
+    "semantic_hash": "7d4b039d3fd50659a11e26da627e9c32"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\github-mcp.md": {
+    "mtime": 1781494720.681615,
+    "ast_hash": "bb5f115c416c0eee2ac8a3dd753d4f0c",
+    "semantic_hash": "bb5f115c416c0eee2ac8a3dd753d4f0c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\phase-exit-contracts.md": {
+    "mtime": 1781497629.0558255,
+    "ast_hash": "159f02a06fc54ebd745efb584927237b",
+    "semantic_hash": "159f02a06fc54ebd745efb584927237b"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\phases.md": {
+    "mtime": 1781494742.5225391,
+    "ast_hash": "1fd89128965d9e11f325e8b8c38a39b9",
+    "semantic_hash": "1fd89128965d9e11f325e8b8c38a39b9"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\project-registry.md": {
+    "mtime": 1781494643.8001902,
+    "ast_hash": "59e79d6fd3110c528a4c40600852a863",
+    "semantic_hash": "59e79d6fd3110c528a4c40600852a863"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\registry-schema.md": {
+    "mtime": 1781497652.899779,
+    "ast_hash": "476c4cfe0e39b3f349f2ba98a622f26d",
+    "semantic_hash": "476c4cfe0e39b3f349f2ba98a622f26d"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\index.md": {
+    "mtime": 1781492507.9966333,
+    "ast_hash": "2babf206a0e0fcb04b8a26f1bf4cccab",
+    "semantic_hash": "2babf206a0e0fcb04b8a26f1bf4cccab"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-build.md": {
+    "mtime": 1781494766.6936696,
+    "ast_hash": "fc47f1dd3f24ebeaddc62ea28cf61455",
+    "semantic_hash": "fc47f1dd3f24ebeaddc62ea28cf61455"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-plan.md": {
+    "mtime": 1781494759.5948431,
+    "ast_hash": "b10bf8d1613bd71f58354cf05a9391f4",
+    "semantic_hash": "b10bf8d1613bd71f58354cf05a9391f4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-reflect.md": {
+    "mtime": 1781492508.0089188,
+    "ast_hash": "f26ab5e436b7c53af296aef0dcf7f724",
+    "semantic_hash": "f26ab5e436b7c53af296aef0dcf7f724"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-review.md": {
+    "mtime": 1781494774.215162,
+    "ast_hash": "c8cebf0c4447c2a8241eef33289de86c",
+    "semantic_hash": "c8cebf0c4447c2a8241eef33289de86c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-ship.md": {
+    "mtime": 1781494784.9336865,
+    "ast_hash": "3d81c4c5c027be013ae75ac86b705ea1",
+    "semantic_hash": "3d81c4c5c027be013ae75ac86b705ea1"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-test.md": {
+    "mtime": 1781494780.0385885,
+    "ast_hash": "a6f1de8e4015714a0ccdef339f9cfaf8",
+    "semantic_hash": "a6f1de8e4015714a0ccdef339f9cfaf8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-think.md": {
+    "mtime": 1781494753.6002603,
+    "ast_hash": "191f27d614f7346df336d21e9a6fb05f",
+    "semantic_hash": "191f27d614f7346df336d21e9a6fb05f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\security-gates.md": {
+    "mtime": 1781494735.034031,
+    "ast_hash": "97aaf17b2195e538027273f9953b643f",
+    "semantic_hash": "97aaf17b2195e538027273f9953b643f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\setup-gaps.md": {
+    "mtime": 1781497679.7459757,
+    "ast_hash": "f2ab1f6d5e44ea62e8d1158a7b555c7e",
+    "semantic_hash": "f2ab1f6d5e44ea62e8d1158a7b555c7e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\state.md": {
+    "mtime": 1781494748.5454528,
+    "ast_hash": "305c4d0eac1aa126d734a677de3ebc10",
+    "semantic_hash": "305c4d0eac1aa126d734a677de3ebc10"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\sub-agents.md": {
+    "mtime": 1781497693.9601843,
+    "ast_hash": "af7a03d62f2eb22a3aaa14b201e7e4f0",
+    "semantic_hash": "af7a03d62f2eb22a3aaa14b201e7e4f0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\rawfiles\\references\\workspace.md": {
+    "mtime": 1781494729.3630557,
+    "ast_hash": "0cde2579ca49c93d4a1df5c51f1712e4",
+    "semantic_hash": "0cde2579ca49c93d4a1df5c51f1712e4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\acpl-integration.md": {
+    "mtime": 1781497579.86642,
+    "ast_hash": "444444e5c28c5e1aa6ee914e7e2b503c",
+    "semantic_hash": "444444e5c28c5e1aa6ee914e7e2b503c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\commands.md": {
+    "mtime": 1781494670.2620218,
+    "ast_hash": "cc56dd4aa9d9f6786874b65ccb17ecc2",
+    "semantic_hash": "cc56dd4aa9d9f6786874b65ccb17ecc2"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\edge-tests.md": {
+    "mtime": 1781492507.9840312,
+    "ast_hash": "8366d15ddd81af05bda2921fd2e57993",
+    "semantic_hash": "8366d15ddd81af05bda2921fd2e57993"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\gate-checklists.md": {
+    "mtime": 1781497599.8552687,
+    "ast_hash": "7d4b039d3fd50659a11e26da627e9c32",
+    "semantic_hash": "7d4b039d3fd50659a11e26da627e9c32"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\github-mcp.md": {
+    "mtime": 1781494720.681615,
+    "ast_hash": "bb5f115c416c0eee2ac8a3dd753d4f0c",
+    "semantic_hash": "bb5f115c416c0eee2ac8a3dd753d4f0c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\phase-exit-contracts.md": {
+    "mtime": 1781497629.0558255,
+    "ast_hash": "159f02a06fc54ebd745efb584927237b",
+    "semantic_hash": "159f02a06fc54ebd745efb584927237b"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\phases.md": {
+    "mtime": 1781494742.5225391,
+    "ast_hash": "1fd89128965d9e11f325e8b8c38a39b9",
+    "semantic_hash": "1fd89128965d9e11f325e8b8c38a39b9"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\project-registry.md": {
+    "mtime": 1781494643.8001902,
+    "ast_hash": "59e79d6fd3110c528a4c40600852a863",
+    "semantic_hash": "59e79d6fd3110c528a4c40600852a863"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\registry-schema.md": {
+    "mtime": 1781497652.899779,
+    "ast_hash": "476c4cfe0e39b3f349f2ba98a622f26d",
+    "semantic_hash": "476c4cfe0e39b3f349f2ba98a622f26d"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\registry\\index.md": {
+    "mtime": 1781492507.9966333,
+    "ast_hash": "2babf206a0e0fcb04b8a26f1bf4cccab",
+    "semantic_hash": "2babf206a0e0fcb04b8a26f1bf4cccab"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\registry\\registry-build.md": {
+    "mtime": 1781494766.6936696,
+    "ast_hash": "fc47f1dd3f24ebeaddc62ea28cf61455",
+    "semantic_hash": "fc47f1dd3f24ebeaddc62ea28cf61455"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\registry\\registry-plan.md": {
+    "mtime": 1781494759.5948431,
+    "ast_hash": "b10bf8d1613bd71f58354cf05a9391f4",
+    "semantic_hash": "b10bf8d1613bd71f58354cf05a9391f4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\registry\\registry-reflect.md": {
+    "mtime": 1781492508.0089188,
+    "ast_hash": "f26ab5e436b7c53af296aef0dcf7f724",
+    "semantic_hash": "f26ab5e436b7c53af296aef0dcf7f724"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\registry\\registry-review.md": {
+    "mtime": 1781494774.215162,
+    "ast_hash": "c8cebf0c4447c2a8241eef33289de86c",
+    "semantic_hash": "c8cebf0c4447c2a8241eef33289de86c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\registry\\registry-ship.md": {
+    "mtime": 1781494784.9336865,
+    "ast_hash": "3d81c4c5c027be013ae75ac86b705ea1",
+    "semantic_hash": "3d81c4c5c027be013ae75ac86b705ea1"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\registry\\registry-test.md": {
+    "mtime": 1781494780.0385885,
+    "ast_hash": "a6f1de8e4015714a0ccdef339f9cfaf8",
+    "semantic_hash": "a6f1de8e4015714a0ccdef339f9cfaf8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\registry\\registry-think.md": {
+    "mtime": 1781494753.6002603,
+    "ast_hash": "191f27d614f7346df336d21e9a6fb05f",
+    "semantic_hash": "191f27d614f7346df336d21e9a6fb05f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\security-gates.md": {
+    "mtime": 1781494735.034031,
+    "ast_hash": "97aaf17b2195e538027273f9953b643f",
+    "semantic_hash": "97aaf17b2195e538027273f9953b643f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\setup-gaps.md": {
+    "mtime": 1781497679.7459757,
+    "ast_hash": "f2ab1f6d5e44ea62e8d1158a7b555c7e",
+    "semantic_hash": "f2ab1f6d5e44ea62e8d1158a7b555c7e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\state.md": {
+    "mtime": 1781494748.5454528,
+    "ast_hash": "305c4d0eac1aa126d734a677de3ebc10",
+    "semantic_hash": "305c4d0eac1aa126d734a677de3ebc10"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\sub-agents.md": {
+    "mtime": 1781497693.9601843,
+    "ast_hash": "af7a03d62f2eb22a3aaa14b201e7e4f0",
+    "semantic_hash": "af7a03d62f2eb22a3aaa14b201e7e4f0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-deliver-router\\references\\workspace.md": {
+    "mtime": 1781494729.3630557,
+    "ast_hash": "0cde2579ca49c93d4a1df5c51f1712e4",
+    "semantic_hash": "0cde2579ca49c93d4a1df5c51f1712e4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-init-advisor\\SKILL.md": {
+    "mtime": 1781539083.851825,
+    "ast_hash": "3870e97c4266f40737ebe3a1a68daf1a",
+    "semantic_hash": "3870e97c4266f40737ebe3a1a68daf1a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-init-advisor\\references\\catalog.md": {
+    "mtime": 1781232602.0,
+    "ast_hash": "7fc398067ba9d42be09530aacd2d7cd4",
+    "semantic_hash": "7fc398067ba9d42be09530aacd2d7cd4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-init-advisor\\references\\claudemd-patterns.md": {
+    "mtime": 1781232409.0,
+    "ast_hash": "e264d4dc99bc6d90132d7ef80ea76549",
+    "semantic_hash": "e264d4dc99bc6d90132d7ef80ea76549"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-init-advisor\\references\\project-init-advisor-PRD.md": {
+    "mtime": 1781237292.6622028,
+    "ast_hash": "674575ef12a5ee316e4006206cabe5c0",
+    "semantic_hash": "674575ef12a5ee316e4006206cabe5c0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\README.md": {
+    "mtime": 1781492508.0357592,
+    "ast_hash": "70306bcd9ac2a4ac7ccabc9f853feafb",
+    "semantic_hash": "70306bcd9ac2a4ac7ccabc9f853feafb"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\SKILL.md": {
+    "mtime": 1781535673.8728034,
+    "ast_hash": "6e65c644e3ac45965f99cd1a210fb54f",
+    "semantic_hash": "6e65c644e3ac45965f99cd1a210fb54f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\raw\\SKILL.md": {
+    "mtime": 1781535673.8728034,
+    "ast_hash": "6e65c644e3ac45965f99cd1a210fb54f",
+    "semantic_hash": "6e65c644e3ac45965f99cd1a210fb54f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\raw\\references\\agents.md": {
+    "mtime": 1781535450.8586671,
+    "ast_hash": "03cc3ab1f6107df95e84c7a4bd0fb700",
+    "semantic_hash": "03cc3ab1f6107df95e84c7a4bd0fb700"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\raw\\references\\commands.md": {
+    "mtime": 1781535419.1413462,
+    "ast_hash": "446bbf7b9abd23f5b75efcb61ef9d1c1",
+    "semantic_hash": "446bbf7b9abd23f5b75efcb61ef9d1c1"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\raw\\references\\discovery-kanban.md": {
+    "mtime": 1781492508.2029407,
+    "ast_hash": "26d0b313348c0802ee78ac4bef4851a2",
+    "semantic_hash": "26d0b313348c0802ee78ac4bef4851a2"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\raw\\references\\discovery-state.md": {
+    "mtime": 1781535287.2326856,
+    "ast_hash": "88ee1f828f62701e45a864c50f559ae8",
+    "semantic_hash": "88ee1f828f62701e45a864c50f559ae8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\raw\\references\\iteration-schema.md": {
+    "mtime": 1781492508.2074811,
+    "ast_hash": "5d9d70fdd8899c82de3a7655006ae751",
+    "semantic_hash": "5d9d70fdd8899c82de3a7655006ae751"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\raw\\references\\router-integration.md": {
+    "mtime": 1781535431.4056482,
+    "ast_hash": "605dcc0235e0e857554ca4df2ecaf149",
+    "semantic_hash": "605dcc0235e0e857554ca4df2ecaf149"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\raw\\references\\work-unit-profiles.md": {
+    "mtime": 1781535227.445697,
+    "ast_hash": "dd6aeb7607efcb3c1b4c27f2fc841d51",
+    "semantic_hash": "dd6aeb7607efcb3c1b4c27f2fc841d51"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\raw\\references\\workspace-spec.md": {
+    "mtime": 1781492508.216296,
+    "ast_hash": "91f59240182224b68e02e1bbe69ae7f5",
+    "semantic_hash": "91f59240182224b68e02e1bbe69ae7f5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\references\\agents.md": {
+    "mtime": 1781538013.657063,
+    "ast_hash": "8a9eb80cd1d18f311419e4e92d7aa8d0",
+    "semantic_hash": "8a9eb80cd1d18f311419e4e92d7aa8d0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\references\\commands.md": {
+    "mtime": 1781536983.7563126,
+    "ast_hash": "09e4801b6d8c9b6152d4bd05fa337a9b",
+    "semantic_hash": "09e4801b6d8c9b6152d4bd05fa337a9b"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\references\\discovery-kanban.md": {
+    "mtime": 1781537037.6699467,
+    "ast_hash": "b2f0283ba0ea0e708f2f1acb96445c3d",
+    "semantic_hash": "b2f0283ba0ea0e708f2f1acb96445c3d"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\references\\discovery-state.md": {
+    "mtime": 1781537491.5128124,
+    "ast_hash": "56f356188df30fce07d58aebca201198",
+    "semantic_hash": "56f356188df30fce07d58aebca201198"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\references\\iteration-schema.md": {
+    "mtime": 1781537724.3825173,
+    "ast_hash": "bb5e45dc1f39431a9d71dd9559a27337",
+    "semantic_hash": "bb5e45dc1f39431a9d71dd9559a27337"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\references\\router-integration.md": {
+    "mtime": 1781537949.937896,
+    "ast_hash": "e1853ab92a6495da308ae9b3cbc07e2b",
+    "semantic_hash": "e1853ab92a6495da308ae9b3cbc07e2b"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\references\\work-unit-profiles.md": {
+    "mtime": 1781537867.9683406,
+    "ast_hash": "9e0af203fe45d14cd0cda2dd6410b161",
+    "semantic_hash": "9e0af203fe45d14cd0cda2dd6410b161"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-planner\\references\\workspace-spec.md": {
+    "mtime": 1781537114.131729,
+    "ast_hash": "5850048b04ff0e904cd293b36990b91a",
+    "semantic_hash": "5850048b04ff0e904cd293b36990b91a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.agents\\skills\\ts-project-scaffolder\\SKILL.md": {
+    "mtime": 1781539099.8396237,
+    "ast_hash": "5893436c1f311f9a7ad7afb4c7c6790a",
+    "semantic_hash": "5893436c1f311f9a7ad7afb4c7c6790a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.ai\\ANTI_AI_STYLE.md": {
+    "mtime": 1780491151.8986304,
+    "ast_hash": "ad73cbb495e3d4183ad2e14b811234e5",
+    "semantic_hash": "ad73cbb495e3d4183ad2e14b811234e5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.ai\\LESSONS_LEARNED.md": {
+    "mtime": 1777882646.503682,
+    "ast_hash": "f7d624a1ba10edf6782c6f970fc5bda0",
+    "semantic_hash": "f7d624a1ba10edf6782c6f970fc5bda0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.ai\\build-test-validate.md": {
+    "mtime": 1777882646.505434,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.ai\\coding-standards.md": {
+    "mtime": 1780491564.4217372,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.ai\\standards.md": {
+    "mtime": 1780491151.8996332,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\CLAUDE copy.md": {
+    "mtime": 1780747595.1765797,
+    "ast_hash": "0cfdd3c7aa73f8cf410bbc384829c500",
+    "semantic_hash": "0cfdd3c7aa73f8cf410bbc384829c500"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\CLAUDE.md": {
+    "mtime": 1780747595.1765797,
+    "ast_hash": "0cfdd3c7aa73f8cf410bbc384829c500",
+    "semantic_hash": "0cfdd3c7aa73f8cf410bbc384829c500"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\commands\\ts-deliver\\init.md": {
+    "mtime": 1781761863.191906,
+    "ast_hash": "5a3b6bffd5dd6e563be2289ad5cad505",
+    "semantic_hash": "5a3b6bffd5dd6e563be2289ad5cad505"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\goverance_CLAUDE.md": {
+    "mtime": 1780491433.5968006,
+    "ast_hash": "70197c0a6c2818a934e5fe9e56c6d73c",
+    "semantic_hash": "70197c0a6c2818a934e5fe9e56c6d73c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\build-graph\\SKILL.md": {
+    "mtime": 1781238578.7573495,
+    "ast_hash": "716239624ab5f033373c7573b9a1eb51",
+    "semantic_hash": "716239624ab5f033373c7573b9a1eb51"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-commit\\README.md": {
+    "mtime": 1781086807.3741615,
+    "ast_hash": "2fe1d98cadbd2709a34ee3c77795a143",
+    "semantic_hash": "2fe1d98cadbd2709a34ee3c77795a143"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-commit\\SKILL.md": {
+    "mtime": 1781086807.3761768,
+    "ast_hash": "e8d814f342ec5752f47866299badd0a7",
+    "semantic_hash": "e8d814f342ec5752f47866299badd0a7"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-compress\\README.md": {
+    "mtime": 1781086807.3807452,
+    "ast_hash": "78d3757502badfab9db0e38724d336b3",
+    "semantic_hash": "78d3757502badfab9db0e38724d336b3"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-compress\\SECURITY.md": {
+    "mtime": 1781086807.3837492,
+    "ast_hash": "b2caed82d9d4a58c0530f7e741851224",
+    "semantic_hash": "b2caed82d9d4a58c0530f7e741851224"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-compress\\SKILL.md": {
+    "mtime": 1781086807.3877888,
+    "ast_hash": "5cfd6ee9993c9e72da6404a9841d82fd",
+    "semantic_hash": "5cfd6ee9993c9e72da6404a9841d82fd"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-help\\README.md": {
+    "mtime": 1781086807.4213781,
+    "ast_hash": "f49266e99b58d33c1d40b7bf0a644ec3",
+    "semantic_hash": "f49266e99b58d33c1d40b7bf0a644ec3"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-help\\SKILL.md": {
+    "mtime": 1781086807.4233735,
+    "ast_hash": "b0168dbcf14c8d3cd29101e1eb66de12",
+    "semantic_hash": "b0168dbcf14c8d3cd29101e1eb66de12"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-review\\README.md": {
+    "mtime": 1781086807.4287088,
+    "ast_hash": "9777a26704850f1e091ab072f02fa10f",
+    "semantic_hash": "9777a26704850f1e091ab072f02fa10f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-review\\SKILL.md": {
+    "mtime": 1781086807.4317074,
+    "ast_hash": "0e038c50a6bfdc9b8a307e6316c07236",
+    "semantic_hash": "0e038c50a6bfdc9b8a307e6316c07236"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-stats\\README.md": {
+    "mtime": 1781086807.435948,
+    "ast_hash": "866dc96f332b4e2bc1f80fec878fea52",
+    "semantic_hash": "866dc96f332b4e2bc1f80fec878fea52"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\caveman-stats\\SKILL.md": {
+    "mtime": 1781086807.4379504,
+    "ast_hash": "e9966f688641209792719474f241a6ef",
+    "semantic_hash": "e9966f688641209792719474f241a6ef"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\debug-issue\\skill.md": {
+    "mtime": 1781495352.8841586,
+    "ast_hash": "83266930cd7096aee27fd30edc55c85f",
+    "semantic_hash": "83266930cd7096aee27fd30edc55c85f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\explore-codebase\\skill.md": {
+    "mtime": 1781495352.8721588,
+    "ast_hash": "b70f59c577a3ce3a3e72d8c61ce3469a",
+    "semantic_hash": "b70f59c577a3ce3a3e72d8c61ce3469a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\refactor-safely\\skill.md": {
+    "mtime": 1781495352.9217181,
+    "ast_hash": "de0e5b1c85bd387821268d0f9411a778",
+    "semantic_hash": "de0e5b1c85bd387821268d0f9411a778"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\review-changes\\skill.md": {
+    "mtime": 1781495352.8771524,
+    "ast_hash": "1ce0725b638aed739326a7687c7fffb0",
+    "semantic_hash": "1ce0725b638aed739326a7687c7fffb0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\spectra-analyze\\SKILL.md": {
+    "mtime": 1781143827.1399589,
+    "ast_hash": "44f22542cac54a6ebfc7040753423a37",
+    "semantic_hash": "44f22542cac54a6ebfc7040753423a37"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\spectra-apply\\SKILL.md": {
+    "mtime": 1781143827.1094377,
+    "ast_hash": "379bc7280d1a96af053c54caa27b3a35",
+    "semantic_hash": "379bc7280d1a96af053c54caa27b3a35"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\spectra-archive\\SKILL.md": {
+    "mtime": 1781143827.1199608,
+    "ast_hash": "a53b5c6e9901214bb51c6dd9b09288b5",
+    "semantic_hash": "a53b5c6e9901214bb51c6dd9b09288b5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\spectra-ask\\SKILL.md": {
+    "mtime": 1781143827.1489596,
+    "ast_hash": "be608bd5093514525d7bf3b994f3f74e",
+    "semantic_hash": "be608bd5093514525d7bf3b994f3f74e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\spectra-audit\\SKILL.md": {
+    "mtime": 1781143827.190961,
+    "ast_hash": "53cf6ea558c8174190ee3406c16eea13",
+    "semantic_hash": "53cf6ea558c8174190ee3406c16eea13"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\spectra-commit\\SKILL.md": {
+    "mtime": 1781143827.1999674,
+    "ast_hash": "0e2d9bab072ccae72e9b780e81ca3751",
+    "semantic_hash": "0e2d9bab072ccae72e9b780e81ca3751"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\spectra-debug\\SKILL.md": {
+    "mtime": 1781143827.1799605,
+    "ast_hash": "9eb851792a18e95522107057cd7bed40",
+    "semantic_hash": "9eb851792a18e95522107057cd7bed40"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\spectra-discuss\\SKILL.md": {
+    "mtime": 1781143827.0900776,
+    "ast_hash": "613d5ece3eeb3777b562caaa35491192",
+    "semantic_hash": "613d5ece3eeb3777b562caaa35491192"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\spectra-drift\\SKILL.md": {
+    "mtime": 1781143827.2099702,
+    "ast_hash": "502abfe945a18c85f128b85fd03512a8",
+    "semantic_hash": "502abfe945a18c85f128b85fd03512a8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\spectra-ingest\\SKILL.md": {
+    "mtime": 1781143827.1699636,
+    "ast_hash": "47b0085406018d15a645c7579196764b",
+    "semantic_hash": "47b0085406018d15a645c7579196764b"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\spectra-propose\\SKILL.md": {
+    "mtime": 1781143827.1579592,
+    "ast_hash": "ff838b47b954188f5c88751306a17331",
+    "semantic_hash": "ff838b47b954188f5c88751306a17331"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\spectra-verify\\SKILL.md": {
+    "mtime": 1781143827.1279576,
+    "ast_hash": "dc70c5831c8e6330323297462d0d7702",
+    "semantic_hash": "dc70c5831c8e6330323297462d0d7702"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-acpl\\SKILL.md": {
+    "mtime": 1781492507.954476,
+    "ast_hash": "5d20ac43ec11214a1ffbf91f1c788682",
+    "semantic_hash": "5d20ac43ec11214a1ffbf91f1c788682"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\PROJECT_SETUP.md": {
+    "mtime": 1781722307.8877535,
+    "ast_hash": "0771395407ddd8cea61c44bb38cf20b7",
+    "semantic_hash": "0771395407ddd8cea61c44bb38cf20b7"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\README.md": {
+    "mtime": 1781492507.9600215,
+    "ast_hash": "be33280f1e8805f020b76213666944d5",
+    "semantic_hash": "be33280f1e8805f020b76213666944d5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\SKILL.md": {
+    "mtime": 1781804337.2940526,
+    "ast_hash": "0b399008df0c2ea86314efca71c70046",
+    "semantic_hash": "0b399008df0c2ea86314efca71c70046"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\SKILL.original.md": {
+    "mtime": 1781722356.6541078,
+    "ast_hash": "95db2ab1785fbf3c045e2bc88b5b6c95",
+    "semantic_hash": "95db2ab1785fbf3c045e2bc88b5b6c95"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\SKILL_caveman.md": {
+    "mtime": 1781492507.9681258,
+    "ast_hash": "03586b82b2776117cc2216044aa05adc",
+    "semantic_hash": "03586b82b2776117cc2216044aa05adc"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\ideas\\DISCUSSION_code_graph_registry.md": {
+    "mtime": 1781492507.972165,
+    "ast_hash": "c114f967ff0ffbbe58c718bb73b95722",
+    "semantic_hash": "c114f967ff0ffbbe58c718bb73b95722"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\ideas\\initIdeas.md": {
+    "mtime": 1781492507.977358,
+    "ast_hash": "f2f0b95fb9db9e78f4c7eec832dc2e17",
+    "semantic_hash": "f2f0b95fb9db9e78f4c7eec832dc2e17"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\SKILL.md": {
+    "mtime": 1781722462.9457462,
+    "ast_hash": "a39817e66dc52f6bafb1ffec2372b24e",
+    "semantic_hash": "a39817e66dc52f6bafb1ffec2372b24e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\acpl-integration.md": {
+    "mtime": 1781497579.86642,
+    "ast_hash": "444444e5c28c5e1aa6ee914e7e2b503c",
+    "semantic_hash": "444444e5c28c5e1aa6ee914e7e2b503c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\commands.md": {
+    "mtime": 1781722426.050968,
+    "ast_hash": "c793fda4e20ea29bcc4b6fb69ad1baef",
+    "semantic_hash": "c793fda4e20ea29bcc4b6fb69ad1baef"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\edge-tests.md": {
+    "mtime": 1781492507.9840312,
+    "ast_hash": "8366d15ddd81af05bda2921fd2e57993",
+    "semantic_hash": "8366d15ddd81af05bda2921fd2e57993"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\gate-checklists.md": {
+    "mtime": 1781497599.8552687,
+    "ast_hash": "7d4b039d3fd50659a11e26da627e9c32",
+    "semantic_hash": "7d4b039d3fd50659a11e26da627e9c32"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\github-mcp.md": {
+    "mtime": 1781494720.681615,
+    "ast_hash": "bb5f115c416c0eee2ac8a3dd753d4f0c",
+    "semantic_hash": "bb5f115c416c0eee2ac8a3dd753d4f0c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\phase-exit-contracts.md": {
+    "mtime": 1781497629.0558255,
+    "ast_hash": "159f02a06fc54ebd745efb584927237b",
+    "semantic_hash": "159f02a06fc54ebd745efb584927237b"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\phases.md": {
+    "mtime": 1781494742.5225391,
+    "ast_hash": "1fd89128965d9e11f325e8b8c38a39b9",
+    "semantic_hash": "1fd89128965d9e11f325e8b8c38a39b9"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\project-registry.md": {
+    "mtime": 1781494643.8001902,
+    "ast_hash": "59e79d6fd3110c528a4c40600852a863",
+    "semantic_hash": "59e79d6fd3110c528a4c40600852a863"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\registry-schema.md": {
+    "mtime": 1781722439.706323,
+    "ast_hash": "f44114c3e4c79662e8856bf84156c86f",
+    "semantic_hash": "f44114c3e4c79662e8856bf84156c86f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\index.md": {
+    "mtime": 1781492507.9966333,
+    "ast_hash": "2babf206a0e0fcb04b8a26f1bf4cccab",
+    "semantic_hash": "2babf206a0e0fcb04b8a26f1bf4cccab"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-build.md": {
+    "mtime": 1781494766.6936696,
+    "ast_hash": "fc47f1dd3f24ebeaddc62ea28cf61455",
+    "semantic_hash": "fc47f1dd3f24ebeaddc62ea28cf61455"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-plan.md": {
+    "mtime": 1781494759.5948431,
+    "ast_hash": "b10bf8d1613bd71f58354cf05a9391f4",
+    "semantic_hash": "b10bf8d1613bd71f58354cf05a9391f4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-reflect.md": {
+    "mtime": 1781492508.0089188,
+    "ast_hash": "f26ab5e436b7c53af296aef0dcf7f724",
+    "semantic_hash": "f26ab5e436b7c53af296aef0dcf7f724"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-review.md": {
+    "mtime": 1781494774.215162,
+    "ast_hash": "c8cebf0c4447c2a8241eef33289de86c",
+    "semantic_hash": "c8cebf0c4447c2a8241eef33289de86c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-ship.md": {
+    "mtime": 1781494784.9336865,
+    "ast_hash": "3d81c4c5c027be013ae75ac86b705ea1",
+    "semantic_hash": "3d81c4c5c027be013ae75ac86b705ea1"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-test.md": {
+    "mtime": 1781494780.0385885,
+    "ast_hash": "a6f1de8e4015714a0ccdef339f9cfaf8",
+    "semantic_hash": "a6f1de8e4015714a0ccdef339f9cfaf8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-think.md": {
+    "mtime": 1781494753.6002603,
+    "ast_hash": "191f27d614f7346df336d21e9a6fb05f",
+    "semantic_hash": "191f27d614f7346df336d21e9a6fb05f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\security-gates.md": {
+    "mtime": 1781494735.034031,
+    "ast_hash": "97aaf17b2195e538027273f9953b643f",
+    "semantic_hash": "97aaf17b2195e538027273f9953b643f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\setup-gaps.md": {
+    "mtime": 1781722448.9544642,
+    "ast_hash": "372d5ae883bf3b845cd9c923719eb076",
+    "semantic_hash": "372d5ae883bf3b845cd9c923719eb076"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\state.md": {
+    "mtime": 1781494748.5454528,
+    "ast_hash": "305c4d0eac1aa126d734a677de3ebc10",
+    "semantic_hash": "305c4d0eac1aa126d734a677de3ebc10"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\sub-agents.md": {
+    "mtime": 1781722455.2271605,
+    "ast_hash": "e8afe518ac8a131fdb51d16a80ade1e0",
+    "semantic_hash": "e8afe518ac8a131fdb51d16a80ade1e0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\rawfiles\\references\\workspace.md": {
+    "mtime": 1781494729.3630557,
+    "ast_hash": "0cde2579ca49c93d4a1df5c51f1712e4",
+    "semantic_hash": "0cde2579ca49c93d4a1df5c51f1712e4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\acpl-integration.md": {
+    "mtime": 1781497579.86642,
+    "ast_hash": "444444e5c28c5e1aa6ee914e7e2b503c",
+    "semantic_hash": "444444e5c28c5e1aa6ee914e7e2b503c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\agent-scaffold.md": {
+    "mtime": 1781723143.0427744,
+    "ast_hash": "fd0f548eab3e02ddb9da306d110bc44e",
+    "semantic_hash": "fd0f548eab3e02ddb9da306d110bc44e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\commands.md": {
+    "mtime": 1781802869.3599417,
+    "ast_hash": "0f4ade13d87b51a21580fb44b2208b93",
+    "semantic_hash": "0f4ade13d87b51a21580fb44b2208b93"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\edge-tests.md": {
+    "mtime": 1781492507.9840312,
+    "ast_hash": "8366d15ddd81af05bda2921fd2e57993",
+    "semantic_hash": "8366d15ddd81af05bda2921fd2e57993"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\gate-checklists.md": {
+    "mtime": 1781497599.8552687,
+    "ast_hash": "7d4b039d3fd50659a11e26da627e9c32",
+    "semantic_hash": "7d4b039d3fd50659a11e26da627e9c32"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\github-mcp.md": {
+    "mtime": 1781494720.681615,
+    "ast_hash": "bb5f115c416c0eee2ac8a3dd753d4f0c",
+    "semantic_hash": "bb5f115c416c0eee2ac8a3dd753d4f0c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\on-first-use.md": {
+    "mtime": 1781798211.4516413,
+    "ast_hash": "1c131cae959119a86f807982cef202cb",
+    "semantic_hash": "1c131cae959119a86f807982cef202cb"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\phase-exit-contracts.md": {
+    "mtime": 1781497629.0558255,
+    "ast_hash": "159f02a06fc54ebd745efb584927237b",
+    "semantic_hash": "159f02a06fc54ebd745efb584927237b"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\phases.md": {
+    "mtime": 1781494742.5225391,
+    "ast_hash": "1fd89128965d9e11f325e8b8c38a39b9",
+    "semantic_hash": "1fd89128965d9e11f325e8b8c38a39b9"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\project-registry.md": {
+    "mtime": 1781804115.3270075,
+    "ast_hash": "361a5c9f672d63b7708bd09d8319b623",
+    "semantic_hash": "361a5c9f672d63b7708bd09d8319b623"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\security-gates.md": {
+    "mtime": 1781494735.034031,
+    "ast_hash": "97aaf17b2195e538027273f9953b643f",
+    "semantic_hash": "97aaf17b2195e538027273f9953b643f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\setup-gaps.md": {
+    "mtime": 1781722329.6002457,
+    "ast_hash": "372d5ae883bf3b845cd9c923719eb076",
+    "semantic_hash": "372d5ae883bf3b845cd9c923719eb076"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\state.md": {
+    "mtime": 1781494748.5454528,
+    "ast_hash": "305c4d0eac1aa126d734a677de3ebc10",
+    "semantic_hash": "305c4d0eac1aa126d734a677de3ebc10"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\sub-agents.md": {
+    "mtime": 1781722343.8292954,
+    "ast_hash": "e8afe518ac8a131fdb51d16a80ade1e0",
+    "semantic_hash": "e8afe518ac8a131fdb51d16a80ade1e0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\references\\workspace.md": {
+    "mtime": 1781723310.789987,
+    "ast_hash": "0455dfdbd3fe12fcf95bb96fed339991",
+    "semantic_hash": "0455dfdbd3fe12fcf95bb96fed339991"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\registry\\registry-build.md": {
+    "mtime": 1781494766.6936696,
+    "ast_hash": "fc47f1dd3f24ebeaddc62ea28cf61455",
+    "semantic_hash": "fc47f1dd3f24ebeaddc62ea28cf61455"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\registry\\registry-index.md": {
+    "mtime": 1781492507.9966333,
+    "ast_hash": "2babf206a0e0fcb04b8a26f1bf4cccab",
+    "semantic_hash": "2babf206a0e0fcb04b8a26f1bf4cccab"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\registry\\registry-plan.md": {
+    "mtime": 1781494759.5948431,
+    "ast_hash": "b10bf8d1613bd71f58354cf05a9391f4",
+    "semantic_hash": "b10bf8d1613bd71f58354cf05a9391f4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\registry\\registry-reflect.md": {
+    "mtime": 1781492508.0089188,
+    "ast_hash": "f26ab5e436b7c53af296aef0dcf7f724",
+    "semantic_hash": "f26ab5e436b7c53af296aef0dcf7f724"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\registry\\registry-review.md": {
+    "mtime": 1781494774.215162,
+    "ast_hash": "c8cebf0c4447c2a8241eef33289de86c",
+    "semantic_hash": "c8cebf0c4447c2a8241eef33289de86c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\registry\\registry-schema.md": {
+    "mtime": 1781804251.8130476,
+    "ast_hash": "4522aee56e058fc70998317fea868a9a",
+    "semantic_hash": "4522aee56e058fc70998317fea868a9a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\registry\\registry-ship.md": {
+    "mtime": 1781494784.9336865,
+    "ast_hash": "3d81c4c5c027be013ae75ac86b705ea1",
+    "semantic_hash": "3d81c4c5c027be013ae75ac86b705ea1"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\registry\\registry-test.md": {
+    "mtime": 1781494780.0385885,
+    "ast_hash": "a6f1de8e4015714a0ccdef339f9cfaf8",
+    "semantic_hash": "a6f1de8e4015714a0ccdef339f9cfaf8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-deliver-router\\registry\\registry-think.md": {
+    "mtime": 1781494753.6002603,
+    "ast_hash": "191f27d614f7346df336d21e9a6fb05f",
+    "semantic_hash": "191f27d614f7346df336d21e9a6fb05f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\README.md": {
+    "mtime": 1781722533.754002,
+    "ast_hash": "bb16603e1be82c5a33bbf101b1527940",
+    "semantic_hash": "bb16603e1be82c5a33bbf101b1527940"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\SKILL.md": {
+    "mtime": 1781803436.6626992,
+    "ast_hash": "ad487d98672d096b3a9a9eaeb2ea2ee7",
+    "semantic_hash": "ad487d98672d096b3a9a9eaeb2ea2ee7"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\raw\\SKILL.md": {
+    "mtime": 1781722526.9879568,
+    "ast_hash": "e81c0094e5c65ff293d850f567d5bc38",
+    "semantic_hash": "e81c0094e5c65ff293d850f567d5bc38"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\raw\\references\\agents.md": {
+    "mtime": 1781535450.8586671,
+    "ast_hash": "03cc3ab1f6107df95e84c7a4bd0fb700",
+    "semantic_hash": "03cc3ab1f6107df95e84c7a4bd0fb700"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\raw\\references\\commands.md": {
+    "mtime": 1781722472.446134,
+    "ast_hash": "1c16e3500c16bcc72167eef3f377cd33",
+    "semantic_hash": "1c16e3500c16bcc72167eef3f377cd33"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\raw\\references\\discovery-kanban.md": {
+    "mtime": 1781492508.2029407,
+    "ast_hash": "26d0b313348c0802ee78ac4bef4851a2",
+    "semantic_hash": "26d0b313348c0802ee78ac4bef4851a2"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\raw\\references\\discovery-state.md": {
+    "mtime": 1781535287.2326856,
+    "ast_hash": "88ee1f828f62701e45a864c50f559ae8",
+    "semantic_hash": "88ee1f828f62701e45a864c50f559ae8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\raw\\references\\iteration-schema.md": {
+    "mtime": 1781722503.416336,
+    "ast_hash": "73019fb4fde421edf161e2ec194de102",
+    "semantic_hash": "73019fb4fde421edf161e2ec194de102"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\raw\\references\\router-integration.md": {
+    "mtime": 1781722513.1461756,
+    "ast_hash": "80cb7407f6da7bb2de953d78b6abbd1e",
+    "semantic_hash": "80cb7407f6da7bb2de953d78b6abbd1e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\raw\\references\\work-unit-profiles.md": {
+    "mtime": 1781722519.3045273,
+    "ast_hash": "6efd12f2c49ce31e761866125e7ba996",
+    "semantic_hash": "6efd12f2c49ce31e761866125e7ba996"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\raw\\references\\workspace-spec.md": {
+    "mtime": 1781492508.216296,
+    "ast_hash": "91f59240182224b68e02e1bbe69ae7f5",
+    "semantic_hash": "91f59240182224b68e02e1bbe69ae7f5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\references\\agents.md": {
+    "mtime": 1781538013.657063,
+    "ast_hash": "8a9eb80cd1d18f311419e4e92d7aa8d0",
+    "semantic_hash": "8a9eb80cd1d18f311419e4e92d7aa8d0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\references\\architecture.md": {
+    "mtime": 1781803423.21809,
+    "ast_hash": "fcb1cd95ff0532320c49f9a60c3b5497",
+    "semantic_hash": "fcb1cd95ff0532320c49f9a60c3b5497"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\references\\commands.md": {
+    "mtime": 1781722364.065572,
+    "ast_hash": "e4745122aed2dab7287521c641a5e49f",
+    "semantic_hash": "e4745122aed2dab7287521c641a5e49f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\references\\discovery-kanban.md": {
+    "mtime": 1781537037.6699467,
+    "ast_hash": "b2f0283ba0ea0e708f2f1acb96445c3d",
+    "semantic_hash": "b2f0283ba0ea0e708f2f1acb96445c3d"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\references\\discovery-state.md": {
+    "mtime": 1781537491.5128124,
+    "ast_hash": "56f356188df30fce07d58aebca201198",
+    "semantic_hash": "56f356188df30fce07d58aebca201198"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\references\\iteration-schema.md": {
+    "mtime": 1781722552.5173774,
+    "ast_hash": "059153e8a479407ea9505cac565a3620",
+    "semantic_hash": "059153e8a479407ea9505cac565a3620"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\references\\on-first-use.md": {
+    "mtime": 1781798056.367352,
+    "ast_hash": "20901d4d129eb6786b35931c4bd94bcd",
+    "semantic_hash": "20901d4d129eb6786b35931c4bd94bcd"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\references\\router-integration.md": {
+    "mtime": 1781722202.2462218,
+    "ast_hash": "1c36a5467dbf88a1c7075736dd2ff993",
+    "semantic_hash": "1c36a5467dbf88a1c7075736dd2ff993"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\references\\work-unit-profiles.md": {
+    "mtime": 1781722558.9607756,
+    "ast_hash": "80461cf649d677538695005629284bc8",
+    "semantic_hash": "80461cf649d677538695005629284bc8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-discover\\references\\workspace-spec.md": {
+    "mtime": 1781537114.131729,
+    "ast_hash": "5850048b04ff0e904cd293b36990b91a",
+    "semantic_hash": "5850048b04ff0e904cd293b36990b91a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\README.md": {
+    "mtime": 1781722533.754002,
+    "ast_hash": "bb16603e1be82c5a33bbf101b1527940",
+    "semantic_hash": "bb16603e1be82c5a33bbf101b1527940"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\SKILL.md": {
+    "mtime": 1781803436.6626992,
+    "ast_hash": "ad487d98672d096b3a9a9eaeb2ea2ee7",
+    "semantic_hash": "ad487d98672d096b3a9a9eaeb2ea2ee7"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\raw\\SKILL.md": {
+    "mtime": 1781722526.9879568,
+    "ast_hash": "e81c0094e5c65ff293d850f567d5bc38",
+    "semantic_hash": "e81c0094e5c65ff293d850f567d5bc38"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\raw\\references\\agents.md": {
+    "mtime": 1781535450.8586671,
+    "ast_hash": "03cc3ab1f6107df95e84c7a4bd0fb700",
+    "semantic_hash": "03cc3ab1f6107df95e84c7a4bd0fb700"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\raw\\references\\commands.md": {
+    "mtime": 1781722472.446134,
+    "ast_hash": "1c16e3500c16bcc72167eef3f377cd33",
+    "semantic_hash": "1c16e3500c16bcc72167eef3f377cd33"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\raw\\references\\discovery-kanban.md": {
+    "mtime": 1781492508.2029407,
+    "ast_hash": "26d0b313348c0802ee78ac4bef4851a2",
+    "semantic_hash": "26d0b313348c0802ee78ac4bef4851a2"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\raw\\references\\discovery-state.md": {
+    "mtime": 1781535287.2326856,
+    "ast_hash": "88ee1f828f62701e45a864c50f559ae8",
+    "semantic_hash": "88ee1f828f62701e45a864c50f559ae8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\raw\\references\\iteration-schema.md": {
+    "mtime": 1781722503.416336,
+    "ast_hash": "73019fb4fde421edf161e2ec194de102",
+    "semantic_hash": "73019fb4fde421edf161e2ec194de102"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\raw\\references\\router-integration.md": {
+    "mtime": 1781722513.1461756,
+    "ast_hash": "80cb7407f6da7bb2de953d78b6abbd1e",
+    "semantic_hash": "80cb7407f6da7bb2de953d78b6abbd1e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\raw\\references\\work-unit-profiles.md": {
+    "mtime": 1781722519.3045273,
+    "ast_hash": "6efd12f2c49ce31e761866125e7ba996",
+    "semantic_hash": "6efd12f2c49ce31e761866125e7ba996"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\raw\\references\\workspace-spec.md": {
+    "mtime": 1781492508.216296,
+    "ast_hash": "91f59240182224b68e02e1bbe69ae7f5",
+    "semantic_hash": "91f59240182224b68e02e1bbe69ae7f5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\references\\agents.md": {
+    "mtime": 1781538013.657063,
+    "ast_hash": "8a9eb80cd1d18f311419e4e92d7aa8d0",
+    "semantic_hash": "8a9eb80cd1d18f311419e4e92d7aa8d0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\references\\architecture.md": {
+    "mtime": 1781803423.21809,
+    "ast_hash": "fcb1cd95ff0532320c49f9a60c3b5497",
+    "semantic_hash": "fcb1cd95ff0532320c49f9a60c3b5497"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\references\\commands.md": {
+    "mtime": 1781722364.065572,
+    "ast_hash": "e4745122aed2dab7287521c641a5e49f",
+    "semantic_hash": "e4745122aed2dab7287521c641a5e49f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\references\\discovery-kanban.md": {
+    "mtime": 1781537037.6699467,
+    "ast_hash": "b2f0283ba0ea0e708f2f1acb96445c3d",
+    "semantic_hash": "b2f0283ba0ea0e708f2f1acb96445c3d"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\references\\discovery-state.md": {
+    "mtime": 1781537491.5128124,
+    "ast_hash": "56f356188df30fce07d58aebca201198",
+    "semantic_hash": "56f356188df30fce07d58aebca201198"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\references\\iteration-schema.md": {
+    "mtime": 1781722552.5173774,
+    "ast_hash": "059153e8a479407ea9505cac565a3620",
+    "semantic_hash": "059153e8a479407ea9505cac565a3620"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\references\\on-first-use.md": {
+    "mtime": 1781798056.367352,
+    "ast_hash": "20901d4d129eb6786b35931c4bd94bcd",
+    "semantic_hash": "20901d4d129eb6786b35931c4bd94bcd"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\references\\router-integration.md": {
+    "mtime": 1781722202.2462218,
+    "ast_hash": "1c36a5467dbf88a1c7075736dd2ff993",
+    "semantic_hash": "1c36a5467dbf88a1c7075736dd2ff993"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\references\\work-unit-profiles.md": {
+    "mtime": 1781722558.9607756,
+    "ast_hash": "80461cf649d677538695005629284bc8",
+    "semantic_hash": "80461cf649d677538695005629284bc8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-iteration\\references\\workspace-spec.md": {
+    "mtime": 1781537114.131729,
+    "ast_hash": "5850048b04ff0e904cd293b36990b91a",
+    "semantic_hash": "5850048b04ff0e904cd293b36990b91a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-init-advisor\\SKILL.md": {
+    "mtime": 1781539083.851825,
+    "ast_hash": "3870e97c4266f40737ebe3a1a68daf1a",
+    "semantic_hash": "3870e97c4266f40737ebe3a1a68daf1a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-init-advisor\\references\\catalog.md": {
+    "mtime": 1781232602.0,
+    "ast_hash": "7fc398067ba9d42be09530aacd2d7cd4",
+    "semantic_hash": "7fc398067ba9d42be09530aacd2d7cd4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-init-advisor\\references\\claudemd-patterns.md": {
+    "mtime": 1781232409.0,
+    "ast_hash": "e264d4dc99bc6d90132d7ef80ea76549",
+    "semantic_hash": "e264d4dc99bc6d90132d7ef80ea76549"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-init-advisor\\references\\project-init-advisor-PRD.md": {
+    "mtime": 1781237292.6622028,
+    "ast_hash": "674575ef12a5ee316e4006206cabe5c0",
+    "semantic_hash": "674575ef12a5ee316e4006206cabe5c0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\README.md": {
+    "mtime": 1781722533.754002,
+    "ast_hash": "bb16603e1be82c5a33bbf101b1527940",
+    "semantic_hash": "bb16603e1be82c5a33bbf101b1527940"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\SKILL.md": {
+    "mtime": 1781803436.6626992,
+    "ast_hash": "ad487d98672d096b3a9a9eaeb2ea2ee7",
+    "semantic_hash": "ad487d98672d096b3a9a9eaeb2ea2ee7"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\raw\\SKILL.md": {
+    "mtime": 1781722526.9879568,
+    "ast_hash": "e81c0094e5c65ff293d850f567d5bc38",
+    "semantic_hash": "e81c0094e5c65ff293d850f567d5bc38"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\raw\\references\\agents.md": {
+    "mtime": 1781535450.8586671,
+    "ast_hash": "03cc3ab1f6107df95e84c7a4bd0fb700",
+    "semantic_hash": "03cc3ab1f6107df95e84c7a4bd0fb700"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\raw\\references\\commands.md": {
+    "mtime": 1781722472.446134,
+    "ast_hash": "1c16e3500c16bcc72167eef3f377cd33",
+    "semantic_hash": "1c16e3500c16bcc72167eef3f377cd33"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\raw\\references\\discovery-kanban.md": {
+    "mtime": 1781492508.2029407,
+    "ast_hash": "26d0b313348c0802ee78ac4bef4851a2",
+    "semantic_hash": "26d0b313348c0802ee78ac4bef4851a2"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\raw\\references\\discovery-state.md": {
+    "mtime": 1781535287.2326856,
+    "ast_hash": "88ee1f828f62701e45a864c50f559ae8",
+    "semantic_hash": "88ee1f828f62701e45a864c50f559ae8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\raw\\references\\iteration-schema.md": {
+    "mtime": 1781722503.416336,
+    "ast_hash": "73019fb4fde421edf161e2ec194de102",
+    "semantic_hash": "73019fb4fde421edf161e2ec194de102"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\raw\\references\\router-integration.md": {
+    "mtime": 1781722513.1461756,
+    "ast_hash": "80cb7407f6da7bb2de953d78b6abbd1e",
+    "semantic_hash": "80cb7407f6da7bb2de953d78b6abbd1e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\raw\\references\\work-unit-profiles.md": {
+    "mtime": 1781722519.3045273,
+    "ast_hash": "6efd12f2c49ce31e761866125e7ba996",
+    "semantic_hash": "6efd12f2c49ce31e761866125e7ba996"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\raw\\references\\workspace-spec.md": {
+    "mtime": 1781492508.216296,
+    "ast_hash": "91f59240182224b68e02e1bbe69ae7f5",
+    "semantic_hash": "91f59240182224b68e02e1bbe69ae7f5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\references\\agents.md": {
+    "mtime": 1781538013.657063,
+    "ast_hash": "8a9eb80cd1d18f311419e4e92d7aa8d0",
+    "semantic_hash": "8a9eb80cd1d18f311419e4e92d7aa8d0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\references\\architecture.md": {
+    "mtime": 1781803423.21809,
+    "ast_hash": "fcb1cd95ff0532320c49f9a60c3b5497",
+    "semantic_hash": "fcb1cd95ff0532320c49f9a60c3b5497"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\references\\commands.md": {
+    "mtime": 1781722364.065572,
+    "ast_hash": "e4745122aed2dab7287521c641a5e49f",
+    "semantic_hash": "e4745122aed2dab7287521c641a5e49f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\references\\discovery-kanban.md": {
+    "mtime": 1781537037.6699467,
+    "ast_hash": "b2f0283ba0ea0e708f2f1acb96445c3d",
+    "semantic_hash": "b2f0283ba0ea0e708f2f1acb96445c3d"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\references\\discovery-state.md": {
+    "mtime": 1781537491.5128124,
+    "ast_hash": "56f356188df30fce07d58aebca201198",
+    "semantic_hash": "56f356188df30fce07d58aebca201198"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\references\\iteration-schema.md": {
+    "mtime": 1781722552.5173774,
+    "ast_hash": "059153e8a479407ea9505cac565a3620",
+    "semantic_hash": "059153e8a479407ea9505cac565a3620"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\references\\on-first-use.md": {
+    "mtime": 1781798056.367352,
+    "ast_hash": "20901d4d129eb6786b35931c4bd94bcd",
+    "semantic_hash": "20901d4d129eb6786b35931c4bd94bcd"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\references\\router-integration.md": {
+    "mtime": 1781722202.2462218,
+    "ast_hash": "1c36a5467dbf88a1c7075736dd2ff993",
+    "semantic_hash": "1c36a5467dbf88a1c7075736dd2ff993"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\references\\work-unit-profiles.md": {
+    "mtime": 1781722558.9607756,
+    "ast_hash": "80461cf649d677538695005629284bc8",
+    "semantic_hash": "80461cf649d677538695005629284bc8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-planner\\references\\workspace-spec.md": {
+    "mtime": 1781537114.131729,
+    "ast_hash": "5850048b04ff0e904cd293b36990b91a",
+    "semantic_hash": "5850048b04ff0e904cd293b36990b91a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project-scaffolder\\SKILL.md": {
+    "mtime": 1781539099.8396237,
+    "ast_hash": "5893436c1f311f9a7ad7afb4c7c6790a",
+    "semantic_hash": "5893436c1f311f9a7ad7afb4c7c6790a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\README.md": {
+    "mtime": 1781722533.754002,
+    "ast_hash": "bb16603e1be82c5a33bbf101b1527940",
+    "semantic_hash": "bb16603e1be82c5a33bbf101b1527940"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\SKILL.md": {
+    "mtime": 1781803436.6626992,
+    "ast_hash": "ad487d98672d096b3a9a9eaeb2ea2ee7",
+    "semantic_hash": "ad487d98672d096b3a9a9eaeb2ea2ee7"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\raw\\SKILL.md": {
+    "mtime": 1781722526.9879568,
+    "ast_hash": "e81c0094e5c65ff293d850f567d5bc38",
+    "semantic_hash": "e81c0094e5c65ff293d850f567d5bc38"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\raw\\references\\agents.md": {
+    "mtime": 1781535450.8586671,
+    "ast_hash": "03cc3ab1f6107df95e84c7a4bd0fb700",
+    "semantic_hash": "03cc3ab1f6107df95e84c7a4bd0fb700"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\raw\\references\\commands.md": {
+    "mtime": 1781722472.446134,
+    "ast_hash": "1c16e3500c16bcc72167eef3f377cd33",
+    "semantic_hash": "1c16e3500c16bcc72167eef3f377cd33"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\raw\\references\\discovery-kanban.md": {
+    "mtime": 1781492508.2029407,
+    "ast_hash": "26d0b313348c0802ee78ac4bef4851a2",
+    "semantic_hash": "26d0b313348c0802ee78ac4bef4851a2"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\raw\\references\\discovery-state.md": {
+    "mtime": 1781535287.2326856,
+    "ast_hash": "88ee1f828f62701e45a864c50f559ae8",
+    "semantic_hash": "88ee1f828f62701e45a864c50f559ae8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\raw\\references\\iteration-schema.md": {
+    "mtime": 1781722503.416336,
+    "ast_hash": "73019fb4fde421edf161e2ec194de102",
+    "semantic_hash": "73019fb4fde421edf161e2ec194de102"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\raw\\references\\router-integration.md": {
+    "mtime": 1781722513.1461756,
+    "ast_hash": "80cb7407f6da7bb2de953d78b6abbd1e",
+    "semantic_hash": "80cb7407f6da7bb2de953d78b6abbd1e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\raw\\references\\work-unit-profiles.md": {
+    "mtime": 1781722519.3045273,
+    "ast_hash": "6efd12f2c49ce31e761866125e7ba996",
+    "semantic_hash": "6efd12f2c49ce31e761866125e7ba996"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\raw\\references\\workspace-spec.md": {
+    "mtime": 1781492508.216296,
+    "ast_hash": "91f59240182224b68e02e1bbe69ae7f5",
+    "semantic_hash": "91f59240182224b68e02e1bbe69ae7f5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\references\\agents.md": {
+    "mtime": 1781538013.657063,
+    "ast_hash": "8a9eb80cd1d18f311419e4e92d7aa8d0",
+    "semantic_hash": "8a9eb80cd1d18f311419e4e92d7aa8d0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\references\\architecture.md": {
+    "mtime": 1781803423.21809,
+    "ast_hash": "fcb1cd95ff0532320c49f9a60c3b5497",
+    "semantic_hash": "fcb1cd95ff0532320c49f9a60c3b5497"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\references\\commands.md": {
+    "mtime": 1781722364.065572,
+    "ast_hash": "e4745122aed2dab7287521c641a5e49f",
+    "semantic_hash": "e4745122aed2dab7287521c641a5e49f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\references\\discovery-kanban.md": {
+    "mtime": 1781537037.6699467,
+    "ast_hash": "b2f0283ba0ea0e708f2f1acb96445c3d",
+    "semantic_hash": "b2f0283ba0ea0e708f2f1acb96445c3d"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\references\\discovery-state.md": {
+    "mtime": 1781537491.5128124,
+    "ast_hash": "56f356188df30fce07d58aebca201198",
+    "semantic_hash": "56f356188df30fce07d58aebca201198"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\references\\iteration-schema.md": {
+    "mtime": 1781722552.5173774,
+    "ast_hash": "059153e8a479407ea9505cac565a3620",
+    "semantic_hash": "059153e8a479407ea9505cac565a3620"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\references\\on-first-use.md": {
+    "mtime": 1781798056.367352,
+    "ast_hash": "20901d4d129eb6786b35931c4bd94bcd",
+    "semantic_hash": "20901d4d129eb6786b35931c4bd94bcd"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\references\\router-integration.md": {
+    "mtime": 1781722202.2462218,
+    "ast_hash": "1c36a5467dbf88a1c7075736dd2ff993",
+    "semantic_hash": "1c36a5467dbf88a1c7075736dd2ff993"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\references\\work-unit-profiles.md": {
+    "mtime": 1781722558.9607756,
+    "ast_hash": "80461cf649d677538695005629284bc8",
+    "semantic_hash": "80461cf649d677538695005629284bc8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.claude\\skills\\ts-project\\references\\workspace-spec.md": {
+    "mtime": 1781537114.131729,
+    "ast_hash": "5850048b04ff0e904cd293b36990b91a",
+    "semantic_hash": "5850048b04ff0e904cd293b36990b91a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\backend.instructions.md": {
+    "mtime": 1777882646.3866322,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\copilot-instructions.md": {
+    "mtime": 1777882646.3886404,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\frontend.instructions.md": {
+    "mtime": 1777882646.3906527,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\prompts\\spectra-apply.prompt.md": {
+    "mtime": 1781143827.2674842,
+    "ast_hash": "47b32a0087f47f1a241187b522850ece",
+    "semantic_hash": "47b32a0087f47f1a241187b522850ece"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\prompts\\spectra-archive.prompt.md": {
+    "mtime": 1781143827.2734845,
+    "ast_hash": "4051800b14b65919ae5b1901dd44eb33",
+    "semantic_hash": "4051800b14b65919ae5b1901dd44eb33"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\prompts\\spectra-ask.prompt.md": {
+    "mtime": 1781143827.278486,
+    "ast_hash": "cfa734bb69d3b7f8bf9bf931f3d24340",
+    "semantic_hash": "cfa734bb69d3b7f8bf9bf931f3d24340"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\prompts\\spectra-audit.prompt.md": {
+    "mtime": 1781143827.3010757,
+    "ast_hash": "d5c04e003d96daaae0f58b9a68061121",
+    "semantic_hash": "d5c04e003d96daaae0f58b9a68061121"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\prompts\\spectra-commit.prompt.md": {
+    "mtime": 1781143827.306077,
+    "ast_hash": "7f434221a4c1a184101cc9447c9e6534",
+    "semantic_hash": "7f434221a4c1a184101cc9447c9e6534"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\prompts\\spectra-debug.prompt.md": {
+    "mtime": 1781143827.2954843,
+    "ast_hash": "b38e6de9a0ed15f0605eec6cfff3c24c",
+    "semantic_hash": "b38e6de9a0ed15f0605eec6cfff3c24c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\prompts\\spectra-discuss.prompt.md": {
+    "mtime": 1781143827.261485,
+    "ast_hash": "1a14dc583d4767ebc0d3dedf5502a4b6",
+    "semantic_hash": "1a14dc583d4767ebc0d3dedf5502a4b6"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\prompts\\spectra-drift.prompt.md": {
+    "mtime": 1781143827.3100772,
+    "ast_hash": "53f053bb502c083ac2f449394499f1ca",
+    "semantic_hash": "53f053bb502c083ac2f449394499f1ca"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\prompts\\spectra-ingest.prompt.md": {
+    "mtime": 1781143827.2904868,
+    "ast_hash": "fdd22cf3f6e3da5e757616b8592240d8",
+    "semantic_hash": "fdd22cf3f6e3da5e757616b8592240d8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\prompts\\spectra-propose.prompt.md": {
+    "mtime": 1781143827.2845862,
+    "ast_hash": "05707c1c8c7d66d15b32de0f1c469749",
+    "semantic_hash": "05707c1c8c7d66d15b32de0f1c469749"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\skills\\spectra-apply\\SKILL.md": {
+    "mtime": 1781143827.3486505,
+    "ast_hash": "d5fca2836f9992e2b0634dbc6375920d",
+    "semantic_hash": "d5fca2836f9992e2b0634dbc6375920d"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\skills\\spectra-archive\\SKILL.md": {
+    "mtime": 1781143827.358597,
+    "ast_hash": "3c3de501371952876995bfc7773fb1c7",
+    "semantic_hash": "3c3de501371952876995bfc7773fb1c7"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\skills\\spectra-ask\\SKILL.md": {
+    "mtime": 1781143827.371589,
+    "ast_hash": "7d56f6c14590a3ff3125e3411aeeba6a",
+    "semantic_hash": "7d56f6c14590a3ff3125e3411aeeba6a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\skills\\spectra-audit\\SKILL.md": {
+    "mtime": 1781143827.4116051,
+    "ast_hash": "573f6bb63e88d36e62ddb2930c756e50",
+    "semantic_hash": "573f6bb63e88d36e62ddb2930c756e50"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\skills\\spectra-commit\\SKILL.md": {
+    "mtime": 1781143827.4201176,
+    "ast_hash": "170b555a277c87d37fab753c4b04fa84",
+    "semantic_hash": "170b555a277c87d37fab753c4b04fa84"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\skills\\spectra-debug\\SKILL.md": {
+    "mtime": 1781143827.4016008,
+    "ast_hash": "44525e3351141ace411dd4f50f4c81f0",
+    "semantic_hash": "44525e3351141ace411dd4f50f4c81f0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\skills\\spectra-discuss\\SKILL.md": {
+    "mtime": 1781143827.3386087,
+    "ast_hash": "43228ca938867cea3999de2ebe2d7e19",
+    "semantic_hash": "43228ca938867cea3999de2ebe2d7e19"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\skills\\spectra-drift\\SKILL.md": {
+    "mtime": 1781143827.4281185,
+    "ast_hash": "e29dfa3f57b0d4ccebb2292f0da197fe",
+    "semantic_hash": "e29dfa3f57b0d4ccebb2292f0da197fe"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\skills\\spectra-ingest\\SKILL.md": {
+    "mtime": 1781143827.3905935,
+    "ast_hash": "9381f64f01a4b669cf637a4297db64b7",
+    "semantic_hash": "9381f64f01a4b669cf637a4297db64b7"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.github\\skills\\spectra-propose\\SKILL.md": {
+    "mtime": 1781143827.378589,
+    "ast_hash": "d1476e535d6ca8691eb090c59bd2d7a0",
+    "semantic_hash": "d1476e535d6ca8691eb090c59bd2d7a0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\.spectra.yaml": {
+    "mtime": 1781086977.7862377,
+    "ast_hash": "997a026a53bf5399877568761d5ceaf8",
+    "semantic_hash": "997a026a53bf5399877568761d5ceaf8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\AGENTS.md": {
+    "mtime": 1780969448.848734,
+    "ast_hash": "d61a44f51901fef003f518d105b77df0",
+    "semantic_hash": "d61a44f51901fef003f518d105b77df0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\CLAUDE.md": {
+    "mtime": 1781492507.9292452,
+    "ast_hash": "6c7be67c7ce22b9e4cb2af14f89b1120",
+    "semantic_hash": "6c7be67c7ce22b9e4cb2af14f89b1120"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\README.md": {
+    "mtime": 1781085447.035401,
+    "ast_hash": "82930e738d35a67966ffafd2ca83932b",
+    "semantic_hash": "82930e738d35a67966ffafd2ca83932b"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\docs\\Ideas.md": {
+    "mtime": 1781492507.9335947,
+    "ast_hash": "302c9cbb4cce9f0d6c47a7fa91f008bc",
+    "semantic_hash": "302c9cbb4cce9f0d6c47a7fa91f008bc"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\docs\\agent-scaffold-proposal.md": {
+    "mtime": 1781719822.8220885,
+    "ast_hash": "6a194f9ebc4a27b716fa14d24fb09736",
+    "semantic_hash": "6a194f9ebc4a27b716fa14d24fb09736"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\docs\\architecture.md": {
+    "mtime": 1777882646.511468,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\docs\\project_init.md": {
+    "mtime": 1781086640.1466303,
+    "ast_hash": "5cca8b62a26b8414623e278e07c82aa4",
+    "semantic_hash": "5cca8b62a26b8414623e278e07c82aa4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\docs\\ts-acpl-prd.md": {
+    "mtime": 1781492507.9377127,
+    "ast_hash": "7e2faecbfc2c27088fb090df4656e6c6",
+    "semantic_hash": "7e2faecbfc2c27088fb090df4656e6c6"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\docs\\ts-deliver-router-prd.md": {
+    "mtime": 1781492507.9432542,
+    "ast_hash": "6f70ae1fe8a85757c22cd708efacf7c6",
+    "semantic_hash": "6f70ae1fe8a85757c22cd708efacf7c6"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\docs\\ts-project-planner-prd.md": {
+    "mtime": 1781492508.1792994,
+    "ast_hash": "be54779f3c482398d581bd1a666daca3",
+    "semantic_hash": "be54779f3c482398d581bd1a666daca3"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\docs\\workflow_cheat_sheet.html": {
+    "mtime": 1781492508.228889,
+    "ast_hash": "c47302d27940571a8c3626f6bf9ec9cd",
+    "semantic_hash": "c47302d27940571a8c3626f6bf9ec9cd"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-11-merge-code-review-into-registry\\.openspec.yaml": {
+    "mtime": 1781147606.8604443,
+    "ast_hash": "46afa7bb1c989688a6a5ba78f4d77e50",
+    "semantic_hash": "46afa7bb1c989688a6a5ba78f4d77e50"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-11-merge-code-review-into-registry\\proposal.md": {
+    "mtime": 1781142445.9138753,
+    "ast_hash": "05bf24d120c4b8e62a653934474abbc1",
+    "semantic_hash": "05bf24d120c4b8e62a653934474abbc1"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-11-merge-code-review-into-registry\\specs\\code-review-registry-entries\\spec.md": {
+    "mtime": 1781143503.9151108,
+    "ast_hash": "0f5ce22ef43fc4404a05bc04a1577a36",
+    "semantic_hash": "0f5ce22ef43fc4404a05bc04a1577a36"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-11-merge-code-review-into-registry\\tasks.md": {
+    "mtime": 1781144966.638813,
+    "ast_hash": "a2dc8d701297b345723cdee0418b09c2",
+    "semantic_hash": "a2dc8d701297b345723cdee0418b09c2"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-15-wise-snacking-fountain\\.openspec.yaml": {
+    "mtime": 1781509799.5866177,
+    "ast_hash": "1b8b6e8c7d9887d1526a9f379f6ad98a",
+    "semantic_hash": "1b8b6e8c7d9887d1526a9f379f6ad98a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-15-wise-snacking-fountain\\design.md": {
+    "mtime": 1781494071.4725654,
+    "ast_hash": "0bbdc8c2eb5a221452f83b43f0aaa6d4",
+    "semantic_hash": "0bbdc8c2eb5a221452f83b43f0aaa6d4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-15-wise-snacking-fountain\\proposal.md": {
+    "mtime": 1781494029.7144969,
+    "ast_hash": "13f14146e181d11b7b0b370429954c59",
+    "semantic_hash": "13f14146e181d11b7b0b370429954c59"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-15-wise-snacking-fountain\\specs\\ts-deliver-router-secondary-backfill\\spec.md": {
+    "mtime": 1781494096.0621858,
+    "ast_hash": "367ebfbccaef990a277e3a68660ea312",
+    "semantic_hash": "367ebfbccaef990a277e3a68660ea312"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-15-wise-snacking-fountain\\tasks.md": {
+    "mtime": 1781494809.9911602,
+    "ast_hash": "b68d5091af26408b1a422e175109b634",
+    "semantic_hash": "b68d5091af26408b1a422e175109b634"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-16-refactor-ts-project-planner-skill-md\\.openspec.yaml": {
+    "mtime": 1781540416.4496064,
+    "ast_hash": "1f5253b25d8868a329e6c74b43c99fd2",
+    "semantic_hash": "1f5253b25d8868a329e6c74b43c99fd2"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-16-refactor-ts-project-planner-skill-md\\design.md": {
+    "mtime": 1781512393.5356183,
+    "ast_hash": "a87e0b9f6e2dcc18971228d8909e0443",
+    "semantic_hash": "a87e0b9f6e2dcc18971228d8909e0443"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-16-refactor-ts-project-planner-skill-md\\proposal.md": {
+    "mtime": 1781512251.718521,
+    "ast_hash": "ccc67fc354ede6b0bd3d267c5ccd3ede",
+    "semantic_hash": "ccc67fc354ede6b0bd3d267c5ccd3ede"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-16-refactor-ts-project-planner-skill-md\\tasks.md": {
+    "mtime": 1781538130.4331453,
+    "ast_hash": "0f50ca778fb90111c16192d3d5739ec5",
+    "semantic_hash": "0f50ca778fb90111c16192d3d5739ec5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-18-fix-ts-slash-command-system\\.openspec.yaml": {
+    "mtime": 1781723478.0488987,
+    "ast_hash": "00e7fc43180b8f120a71a656fc5f829f",
+    "semantic_hash": "00e7fc43180b8f120a71a656fc5f829f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-18-fix-ts-slash-command-system\\design.md": {
+    "mtime": 1781721064.182699,
+    "ast_hash": "bf643192c8840545ecf6741d31e80497",
+    "semantic_hash": "bf643192c8840545ecf6741d31e80497"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-18-fix-ts-slash-command-system\\proposal.md": {
+    "mtime": 1781720902.557711,
+    "ast_hash": "72b5dda1cf8d2de359174061fbf95ecc",
+    "semantic_hash": "72b5dda1cf8d2de359174061fbf95ecc"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-18-fix-ts-slash-command-system\\specs\\ts-deliver-router-agent-scaffold\\spec.md": {
+    "mtime": 1781720946.6985145,
+    "ast_hash": "db7014e54649e75c54e1e3919086a376",
+    "semantic_hash": "db7014e54649e75c54e1e3919086a376"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-18-fix-ts-slash-command-system\\specs\\ts-deliver-router-secondary-backfill\\spec.md": {
+    "mtime": 1781717983.9339397,
+    "ast_hash": "68461efa510fa9c456947b17221ff439",
+    "semantic_hash": "68461efa510fa9c456947b17221ff439"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-18-fix-ts-slash-command-system\\specs\\ts-slash-command-stubs\\spec.md": {
+    "mtime": 1781718718.580865,
+    "ast_hash": "ead122b2780079665890f7adbca7b486",
+    "semantic_hash": "ead122b2780079665890f7adbca7b486"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-18-fix-ts-slash-command-system\\tasks.md": {
+    "mtime": 1781723400.746919,
+    "ast_hash": "39bc5f4140cd12fde0c0784ed8f89f7c",
+    "semantic_hash": "39bc5f4140cd12fde0c0784ed8f89f7c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-19-ts-deliver-router-jump-command\\.openspec.yaml": {
+    "mtime": 1781803348.2168715,
+    "ast_hash": "bd95bbec6e63653011b7ccd1ba45ef58",
+    "semantic_hash": "bd95bbec6e63653011b7ccd1ba45ef58"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-19-ts-deliver-router-jump-command\\proposal.md": {
+    "mtime": 1781801825.2811105,
+    "ast_hash": "ec0e9900c1542842a5d7f4b2333f3433",
+    "semantic_hash": "ec0e9900c1542842a5d7f4b2333f3433"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-19-ts-deliver-router-jump-command\\specs\\ts-deliver-router-jump\\spec.md": {
+    "mtime": 1781802012.7609878,
+    "ast_hash": "c89eb220ad86ab97cf23a84e5fd1e877",
+    "semantic_hash": "c89eb220ad86ab97cf23a84e5fd1e877"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\changes\\archive\\2026-06-19-ts-deliver-router-jump-command\\tasks.md": {
+    "mtime": 1781803106.7631524,
+    "ast_hash": "af8f904a455ced0ce0d1fb98bb9891c2",
+    "semantic_hash": "af8f904a455ced0ce0d1fb98bb9891c2"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\config.yaml": {
+    "mtime": 1781087186.1909072,
+    "ast_hash": "9e3e7672b387a282583011181ab35f9a",
+    "semantic_hash": "9e3e7672b387a282583011181ab35f9a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\specs\\code-review-registry-entries\\spec.md": {
+    "mtime": 1781147606.788663,
+    "ast_hash": "0b51a315c6e2b6c8a8bf0cc6b2dfc900",
+    "semantic_hash": "0b51a315c6e2b6c8a8bf0cc6b2dfc900"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\specs\\ts-deliver-router-agent-scaffold\\spec.md": {
+    "mtime": 1781723478.005923,
+    "ast_hash": "055ddf916e1ef5e912b6f14093bda6de",
+    "semantic_hash": "055ddf916e1ef5e912b6f14093bda6de"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\specs\\ts-deliver-router-jump\\spec.md": {
+    "mtime": 1781803347.9155543,
+    "ast_hash": "d665150facff3338ad6c03742b728626",
+    "semantic_hash": "d665150facff3338ad6c03742b728626"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\specs\\ts-deliver-router-secondary-backfill\\spec.md": {
+    "mtime": 1781723478.0193424,
+    "ast_hash": "88a81f621b4e0e8e6d3afdf1cb0583e8",
+    "semantic_hash": "88a81f621b4e0e8e6d3afdf1cb0583e8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\openspec\\specs\\ts-slash-command-stubs\\spec.md": {
+    "mtime": 1781723478.0257638,
+    "ast_hash": "3f8fe062a7a13c63090b7b66d2b62288",
+    "semantic_hash": "3f8fe062a7a13c63090b7b66d2b62288"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\README.md": {
+    "mtime": 1781085455.5942876,
+    "ast_hash": "1aba44e300d0dd2be4209210b1b27f46",
+    "semantic_hash": "1aba44e300d0dd2be4209210b1b27f46"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\.ai\\ANTI_AI_STYLE.md": {
+    "mtime": 1780491151.8986304,
+    "ast_hash": "ad73cbb495e3d4183ad2e14b811234e5",
+    "semantic_hash": "ad73cbb495e3d4183ad2e14b811234e5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\.ai\\LESSONS_LEARNED.md": {
+    "mtime": 1777882646.503682,
+    "ast_hash": "f7d624a1ba10edf6782c6f970fc5bda0",
+    "semantic_hash": "f7d624a1ba10edf6782c6f970fc5bda0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\.ai\\build-test-validate.md": {
+    "mtime": 1777882646.505434,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\.ai\\coding-standards.md": {
+    "mtime": 1780491564.4217372,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\.ai\\standards.md": {
+    "mtime": 1780491151.8996332,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\.claude\\CLAUDE.md": {
+    "mtime": 1780747595.1765797,
+    "ast_hash": "0cfdd3c7aa73f8cf410bbc384829c500",
+    "semantic_hash": "0cfdd3c7aa73f8cf410bbc384829c500"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\.claude\\goverance_CLAUDE.md": {
+    "mtime": 1780491433.5968006,
+    "ast_hash": "70197c0a6c2818a934e5fe9e56c6d73c",
+    "semantic_hash": "70197c0a6c2818a934e5fe9e56c6d73c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\.github\\backend.instructions.md": {
+    "mtime": 1777882646.3866322,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\.github\\copilot-instructions.md": {
+    "mtime": 1777882646.3886404,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\.github\\frontend.instructions.md": {
+    "mtime": 1777882646.3906527,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\AGENTS.md": {
+    "mtime": 1780969448.848734,
+    "ast_hash": "d61a44f51901fef003f518d105b77df0",
+    "semantic_hash": "d61a44f51901fef003f518d105b77df0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\CLAUDE.md": {
+    "mtime": 1781148969.3083546,
+    "ast_hash": "9104ac1cb698c7de0ad491e2c6b676f2",
+    "semantic_hash": "9104ac1cb698c7de0ad491e2c6b676f2"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\docs\\architecture.md": {
+    "mtime": 1777882646.511468,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\docs\\project_init.md": {
+    "mtime": 1782038787.9076147,
+    "ast_hash": "dd2b43b40724beecbbbd2796caa9528d",
+    "semantic_hash": "dd2b43b40724beecbbbd2796caa9528d"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\tasks\\PLAN.md": {
+    "mtime": 1780491564.4187336,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\project_root_structure\\tasks\\TASK.md": {
+    "mtime": 1780491564.4197314,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ondemand\\ts-project-init-advisor\\SKILL.md": {
+    "mtime": 1782054691.5520756,
+    "ast_hash": "dbb99a4e11813e60d81fe2567ca95581",
+    "semantic_hash": "dbb99a4e11813e60d81fe2567ca95581"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ondemand\\ts-project-init-advisor\\references\\catalog.md": {
+    "mtime": 1782055181.6845071,
+    "ast_hash": "1ffb0f176695592d6c66bb9ca86cd5e0",
+    "semantic_hash": "1ffb0f176695592d6c66bb9ca86cd5e0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ondemand\\ts-project-init-advisor\\references\\claudemd-patterns.md": {
+    "mtime": 1781232409.0,
+    "ast_hash": "e264d4dc99bc6d90132d7ef80ea76549",
+    "semantic_hash": "e264d4dc99bc6d90132d7ef80ea76549"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ondemand\\ts-project-init-advisor\\references\\init-plan-template.md": {
+    "mtime": 1781797027.7542999,
+    "ast_hash": "6f6b1fbe56e69ff2b15a6e9045611087",
+    "semantic_hash": "6f6b1fbe56e69ff2b15a6e9045611087"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ondemand\\ts-project-init-advisor\\references\\project-init-advisor-PRD.md": {
+    "mtime": 1781237292.6622028,
+    "ast_hash": "674575ef12a5ee316e4006206cabe5c0",
+    "semantic_hash": "674575ef12a5ee316e4006206cabe5c0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-acpl\\SKILL.md": {
+    "mtime": 1781797803.6728935,
+    "ast_hash": "ccbc879f0eeefc51e08acb1145e96da7",
+    "semantic_hash": "ccbc879f0eeefc51e08acb1145e96da7"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-acpl\\reference\\mutation-guide.md": {
+    "mtime": 1781797599.4974115,
+    "ast_hash": "a61e9ed87b29b6e7e403021b670c6e10",
+    "semantic_hash": "a61e9ed87b29b6e7e403021b670c6e10"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-acpl\\reference\\patterns.md": {
+    "mtime": 1781797609.4974885,
+    "ast_hash": "c939ec85e73b89dcd84ee80802e01c0a",
+    "semantic_hash": "c939ec85e73b89dcd84ee80802e01c0a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-acpl\\reference\\problem-frame-map.md": {
+    "mtime": 1781797619.6360404,
+    "ast_hash": "88b966c8b9297e6dc92cbf3919103680",
+    "semantic_hash": "88b966c8b9297e6dc92cbf3919103680"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\PROJECT_SETUP.md": {
+    "mtime": 1781722307.8877535,
+    "ast_hash": "0771395407ddd8cea61c44bb38cf20b7",
+    "semantic_hash": "0771395407ddd8cea61c44bb38cf20b7"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\README.md": {
+    "mtime": 1781492507.9600215,
+    "ast_hash": "be33280f1e8805f020b76213666944d5",
+    "semantic_hash": "be33280f1e8805f020b76213666944d5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\SKILL.md": {
+    "mtime": 1781804337.2940526,
+    "ast_hash": "0b399008df0c2ea86314efca71c70046",
+    "semantic_hash": "0b399008df0c2ea86314efca71c70046"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\SKILL.original.md": {
+    "mtime": 1781722356.6541078,
+    "ast_hash": "95db2ab1785fbf3c045e2bc88b5b6c95",
+    "semantic_hash": "95db2ab1785fbf3c045e2bc88b5b6c95"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\SKILL_caveman.md": {
+    "mtime": 1781492507.9681258,
+    "ast_hash": "03586b82b2776117cc2216044aa05adc",
+    "semantic_hash": "03586b82b2776117cc2216044aa05adc"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\ideas\\DISCUSSION_code_graph_registry.md": {
+    "mtime": 1781492507.972165,
+    "ast_hash": "c114f967ff0ffbbe58c718bb73b95722",
+    "semantic_hash": "c114f967ff0ffbbe58c718bb73b95722"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\ideas\\initIdeas.md": {
+    "mtime": 1781492507.977358,
+    "ast_hash": "f2f0b95fb9db9e78f4c7eec832dc2e17",
+    "semantic_hash": "f2f0b95fb9db9e78f4c7eec832dc2e17"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\SKILL.md": {
+    "mtime": 1781722462.9457462,
+    "ast_hash": "a39817e66dc52f6bafb1ffec2372b24e",
+    "semantic_hash": "a39817e66dc52f6bafb1ffec2372b24e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\acpl-integration.md": {
+    "mtime": 1781497579.86642,
+    "ast_hash": "444444e5c28c5e1aa6ee914e7e2b503c",
+    "semantic_hash": "444444e5c28c5e1aa6ee914e7e2b503c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\commands.md": {
+    "mtime": 1781722426.050968,
+    "ast_hash": "c793fda4e20ea29bcc4b6fb69ad1baef",
+    "semantic_hash": "c793fda4e20ea29bcc4b6fb69ad1baef"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\edge-tests.md": {
+    "mtime": 1781492507.9840312,
+    "ast_hash": "8366d15ddd81af05bda2921fd2e57993",
+    "semantic_hash": "8366d15ddd81af05bda2921fd2e57993"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\gate-checklists.md": {
+    "mtime": 1781497599.8552687,
+    "ast_hash": "7d4b039d3fd50659a11e26da627e9c32",
+    "semantic_hash": "7d4b039d3fd50659a11e26da627e9c32"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\github-mcp.md": {
+    "mtime": 1781494720.681615,
+    "ast_hash": "bb5f115c416c0eee2ac8a3dd753d4f0c",
+    "semantic_hash": "bb5f115c416c0eee2ac8a3dd753d4f0c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\phase-exit-contracts.md": {
+    "mtime": 1781497629.0558255,
+    "ast_hash": "159f02a06fc54ebd745efb584927237b",
+    "semantic_hash": "159f02a06fc54ebd745efb584927237b"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\phases.md": {
+    "mtime": 1781494742.5225391,
+    "ast_hash": "1fd89128965d9e11f325e8b8c38a39b9",
+    "semantic_hash": "1fd89128965d9e11f325e8b8c38a39b9"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\project-registry.md": {
+    "mtime": 1781494643.8001902,
+    "ast_hash": "59e79d6fd3110c528a4c40600852a863",
+    "semantic_hash": "59e79d6fd3110c528a4c40600852a863"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\registry-schema.md": {
+    "mtime": 1781722439.706323,
+    "ast_hash": "f44114c3e4c79662e8856bf84156c86f",
+    "semantic_hash": "f44114c3e4c79662e8856bf84156c86f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\index.md": {
+    "mtime": 1781492507.9966333,
+    "ast_hash": "2babf206a0e0fcb04b8a26f1bf4cccab",
+    "semantic_hash": "2babf206a0e0fcb04b8a26f1bf4cccab"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-build.md": {
+    "mtime": 1781494766.6936696,
+    "ast_hash": "fc47f1dd3f24ebeaddc62ea28cf61455",
+    "semantic_hash": "fc47f1dd3f24ebeaddc62ea28cf61455"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-plan.md": {
+    "mtime": 1781494759.5948431,
+    "ast_hash": "b10bf8d1613bd71f58354cf05a9391f4",
+    "semantic_hash": "b10bf8d1613bd71f58354cf05a9391f4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-reflect.md": {
+    "mtime": 1781492508.0089188,
+    "ast_hash": "f26ab5e436b7c53af296aef0dcf7f724",
+    "semantic_hash": "f26ab5e436b7c53af296aef0dcf7f724"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-review.md": {
+    "mtime": 1781494774.215162,
+    "ast_hash": "c8cebf0c4447c2a8241eef33289de86c",
+    "semantic_hash": "c8cebf0c4447c2a8241eef33289de86c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-ship.md": {
+    "mtime": 1781494784.9336865,
+    "ast_hash": "3d81c4c5c027be013ae75ac86b705ea1",
+    "semantic_hash": "3d81c4c5c027be013ae75ac86b705ea1"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-test.md": {
+    "mtime": 1781494780.0385885,
+    "ast_hash": "a6f1de8e4015714a0ccdef339f9cfaf8",
+    "semantic_hash": "a6f1de8e4015714a0ccdef339f9cfaf8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\registry\\registry-think.md": {
+    "mtime": 1781494753.6002603,
+    "ast_hash": "191f27d614f7346df336d21e9a6fb05f",
+    "semantic_hash": "191f27d614f7346df336d21e9a6fb05f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\security-gates.md": {
+    "mtime": 1781494735.034031,
+    "ast_hash": "97aaf17b2195e538027273f9953b643f",
+    "semantic_hash": "97aaf17b2195e538027273f9953b643f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\setup-gaps.md": {
+    "mtime": 1781722448.9544642,
+    "ast_hash": "372d5ae883bf3b845cd9c923719eb076",
+    "semantic_hash": "372d5ae883bf3b845cd9c923719eb076"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\state.md": {
+    "mtime": 1781494748.5454528,
+    "ast_hash": "305c4d0eac1aa126d734a677de3ebc10",
+    "semantic_hash": "305c4d0eac1aa126d734a677de3ebc10"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\sub-agents.md": {
+    "mtime": 1781722455.2271605,
+    "ast_hash": "e8afe518ac8a131fdb51d16a80ade1e0",
+    "semantic_hash": "e8afe518ac8a131fdb51d16a80ade1e0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\rawfiles\\references\\workspace.md": {
+    "mtime": 1781494729.3630557,
+    "ast_hash": "0cde2579ca49c93d4a1df5c51f1712e4",
+    "semantic_hash": "0cde2579ca49c93d4a1df5c51f1712e4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\acpl-integration.md": {
+    "mtime": 1781497579.86642,
+    "ast_hash": "444444e5c28c5e1aa6ee914e7e2b503c",
+    "semantic_hash": "444444e5c28c5e1aa6ee914e7e2b503c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\agent-scaffold.md": {
+    "mtime": 1781723143.0427744,
+    "ast_hash": "fd0f548eab3e02ddb9da306d110bc44e",
+    "semantic_hash": "fd0f548eab3e02ddb9da306d110bc44e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\commands.md": {
+    "mtime": 1781802869.3599417,
+    "ast_hash": "0f4ade13d87b51a21580fb44b2208b93",
+    "semantic_hash": "0f4ade13d87b51a21580fb44b2208b93"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\edge-tests.md": {
+    "mtime": 1781492507.9840312,
+    "ast_hash": "8366d15ddd81af05bda2921fd2e57993",
+    "semantic_hash": "8366d15ddd81af05bda2921fd2e57993"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\gate-checklists.md": {
+    "mtime": 1781497599.8552687,
+    "ast_hash": "7d4b039d3fd50659a11e26da627e9c32",
+    "semantic_hash": "7d4b039d3fd50659a11e26da627e9c32"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\github-mcp.md": {
+    "mtime": 1781494720.681615,
+    "ast_hash": "bb5f115c416c0eee2ac8a3dd753d4f0c",
+    "semantic_hash": "bb5f115c416c0eee2ac8a3dd753d4f0c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\on-first-use.md": {
+    "mtime": 1781798211.4516413,
+    "ast_hash": "1c131cae959119a86f807982cef202cb",
+    "semantic_hash": "1c131cae959119a86f807982cef202cb"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\phase-exit-contracts.md": {
+    "mtime": 1781497629.0558255,
+    "ast_hash": "159f02a06fc54ebd745efb584927237b",
+    "semantic_hash": "159f02a06fc54ebd745efb584927237b"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\phases.md": {
+    "mtime": 1781494742.5225391,
+    "ast_hash": "1fd89128965d9e11f325e8b8c38a39b9",
+    "semantic_hash": "1fd89128965d9e11f325e8b8c38a39b9"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\project-registry.md": {
+    "mtime": 1781804115.3270075,
+    "ast_hash": "361a5c9f672d63b7708bd09d8319b623",
+    "semantic_hash": "361a5c9f672d63b7708bd09d8319b623"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\security-gates.md": {
+    "mtime": 1781494735.034031,
+    "ast_hash": "97aaf17b2195e538027273f9953b643f",
+    "semantic_hash": "97aaf17b2195e538027273f9953b643f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\setup-gaps.md": {
+    "mtime": 1781722329.6002457,
+    "ast_hash": "372d5ae883bf3b845cd9c923719eb076",
+    "semantic_hash": "372d5ae883bf3b845cd9c923719eb076"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\state.md": {
+    "mtime": 1781494748.5454528,
+    "ast_hash": "305c4d0eac1aa126d734a677de3ebc10",
+    "semantic_hash": "305c4d0eac1aa126d734a677de3ebc10"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\sub-agents.md": {
+    "mtime": 1781722343.8292954,
+    "ast_hash": "e8afe518ac8a131fdb51d16a80ade1e0",
+    "semantic_hash": "e8afe518ac8a131fdb51d16a80ade1e0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\references\\workspace.md": {
+    "mtime": 1781723310.789987,
+    "ast_hash": "0455dfdbd3fe12fcf95bb96fed339991",
+    "semantic_hash": "0455dfdbd3fe12fcf95bb96fed339991"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\registry\\registry-build.md": {
+    "mtime": 1781494766.6936696,
+    "ast_hash": "fc47f1dd3f24ebeaddc62ea28cf61455",
+    "semantic_hash": "fc47f1dd3f24ebeaddc62ea28cf61455"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\registry\\registry-index.md": {
+    "mtime": 1781492507.9966333,
+    "ast_hash": "2babf206a0e0fcb04b8a26f1bf4cccab",
+    "semantic_hash": "2babf206a0e0fcb04b8a26f1bf4cccab"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\registry\\registry-plan.md": {
+    "mtime": 1781494759.5948431,
+    "ast_hash": "b10bf8d1613bd71f58354cf05a9391f4",
+    "semantic_hash": "b10bf8d1613bd71f58354cf05a9391f4"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\registry\\registry-reflect.md": {
+    "mtime": 1781492508.0089188,
+    "ast_hash": "f26ab5e436b7c53af296aef0dcf7f724",
+    "semantic_hash": "f26ab5e436b7c53af296aef0dcf7f724"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\registry\\registry-review.md": {
+    "mtime": 1781494774.215162,
+    "ast_hash": "c8cebf0c4447c2a8241eef33289de86c",
+    "semantic_hash": "c8cebf0c4447c2a8241eef33289de86c"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\registry\\registry-schema.md": {
+    "mtime": 1781804251.8130476,
+    "ast_hash": "4522aee56e058fc70998317fea868a9a",
+    "semantic_hash": "4522aee56e058fc70998317fea868a9a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\registry\\registry-ship.md": {
+    "mtime": 1781494784.9336865,
+    "ast_hash": "3d81c4c5c027be013ae75ac86b705ea1",
+    "semantic_hash": "3d81c4c5c027be013ae75ac86b705ea1"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\registry\\registry-test.md": {
+    "mtime": 1781494780.0385885,
+    "ast_hash": "a6f1de8e4015714a0ccdef339f9cfaf8",
+    "semantic_hash": "a6f1de8e4015714a0ccdef339f9cfaf8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-deliver-router\\registry\\registry-think.md": {
+    "mtime": 1781494753.6002603,
+    "ast_hash": "191f27d614f7346df336d21e9a6fb05f",
+    "semantic_hash": "191f27d614f7346df336d21e9a6fb05f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\README.md": {
+    "mtime": 1781722533.754002,
+    "ast_hash": "bb16603e1be82c5a33bbf101b1527940",
+    "semantic_hash": "bb16603e1be82c5a33bbf101b1527940"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\SKILL.md": {
+    "mtime": 1781803436.6626992,
+    "ast_hash": "ad487d98672d096b3a9a9eaeb2ea2ee7",
+    "semantic_hash": "ad487d98672d096b3a9a9eaeb2ea2ee7"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\raw\\SKILL.md": {
+    "mtime": 1781722526.9879568,
+    "ast_hash": "e81c0094e5c65ff293d850f567d5bc38",
+    "semantic_hash": "e81c0094e5c65ff293d850f567d5bc38"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\raw\\references\\agents.md": {
+    "mtime": 1781535450.8586671,
+    "ast_hash": "03cc3ab1f6107df95e84c7a4bd0fb700",
+    "semantic_hash": "03cc3ab1f6107df95e84c7a4bd0fb700"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\raw\\references\\commands.md": {
+    "mtime": 1781722472.446134,
+    "ast_hash": "1c16e3500c16bcc72167eef3f377cd33",
+    "semantic_hash": "1c16e3500c16bcc72167eef3f377cd33"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\raw\\references\\discovery-kanban.md": {
+    "mtime": 1781492508.2029407,
+    "ast_hash": "26d0b313348c0802ee78ac4bef4851a2",
+    "semantic_hash": "26d0b313348c0802ee78ac4bef4851a2"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\raw\\references\\discovery-state.md": {
+    "mtime": 1781535287.2326856,
+    "ast_hash": "88ee1f828f62701e45a864c50f559ae8",
+    "semantic_hash": "88ee1f828f62701e45a864c50f559ae8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\raw\\references\\iteration-schema.md": {
+    "mtime": 1781722503.416336,
+    "ast_hash": "73019fb4fde421edf161e2ec194de102",
+    "semantic_hash": "73019fb4fde421edf161e2ec194de102"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\raw\\references\\router-integration.md": {
+    "mtime": 1781722513.1461756,
+    "ast_hash": "80cb7407f6da7bb2de953d78b6abbd1e",
+    "semantic_hash": "80cb7407f6da7bb2de953d78b6abbd1e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\raw\\references\\work-unit-profiles.md": {
+    "mtime": 1781722519.3045273,
+    "ast_hash": "6efd12f2c49ce31e761866125e7ba996",
+    "semantic_hash": "6efd12f2c49ce31e761866125e7ba996"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\raw\\references\\workspace-spec.md": {
+    "mtime": 1781492508.216296,
+    "ast_hash": "91f59240182224b68e02e1bbe69ae7f5",
+    "semantic_hash": "91f59240182224b68e02e1bbe69ae7f5"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\references\\agents.md": {
+    "mtime": 1781538013.657063,
+    "ast_hash": "8a9eb80cd1d18f311419e4e92d7aa8d0",
+    "semantic_hash": "8a9eb80cd1d18f311419e4e92d7aa8d0"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\references\\architecture.md": {
+    "mtime": 1781803423.21809,
+    "ast_hash": "fcb1cd95ff0532320c49f9a60c3b5497",
+    "semantic_hash": "fcb1cd95ff0532320c49f9a60c3b5497"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\references\\commands.md": {
+    "mtime": 1781722364.065572,
+    "ast_hash": "e4745122aed2dab7287521c641a5e49f",
+    "semantic_hash": "e4745122aed2dab7287521c641a5e49f"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\references\\discovery-kanban.md": {
+    "mtime": 1781537037.6699467,
+    "ast_hash": "b2f0283ba0ea0e708f2f1acb96445c3d",
+    "semantic_hash": "b2f0283ba0ea0e708f2f1acb96445c3d"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\references\\discovery-state.md": {
+    "mtime": 1781537491.5128124,
+    "ast_hash": "56f356188df30fce07d58aebca201198",
+    "semantic_hash": "56f356188df30fce07d58aebca201198"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\references\\iteration-schema.md": {
+    "mtime": 1781722552.5173774,
+    "ast_hash": "059153e8a479407ea9505cac565a3620",
+    "semantic_hash": "059153e8a479407ea9505cac565a3620"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\references\\on-first-use.md": {
+    "mtime": 1781798056.367352,
+    "ast_hash": "20901d4d129eb6786b35931c4bd94bcd",
+    "semantic_hash": "20901d4d129eb6786b35931c4bd94bcd"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\references\\router-integration.md": {
+    "mtime": 1781722202.2462218,
+    "ast_hash": "1c36a5467dbf88a1c7075736dd2ff993",
+    "semantic_hash": "1c36a5467dbf88a1c7075736dd2ff993"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\references\\work-unit-profiles.md": {
+    "mtime": 1781722558.9607756,
+    "ast_hash": "80461cf649d677538695005629284bc8",
+    "semantic_hash": "80461cf649d677538695005629284bc8"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-planner\\references\\workspace-spec.md": {
+    "mtime": 1781537114.131729,
+    "ast_hash": "5850048b04ff0e904cd293b36990b91a",
+    "semantic_hash": "5850048b04ff0e904cd293b36990b91a"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\src\\skills\\ts-project-scaffolder\\SKILL.md": {
+    "mtime": 1781796041.8916702,
+    "ast_hash": "b24e11a5198b68c208b042c54f7b49b6",
+    "semantic_hash": "b24e11a5198b68c208b042c54f7b49b6"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\tasks\\PLAN.md": {
+    "mtime": 1782036678.0325415,
+    "ast_hash": "281dba4d71a5a759b31c98d842a676c9",
+    "semantic_hash": "281dba4d71a5a759b31c98d842a676c9"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\tasks\\TASK.md": {
+    "mtime": 1780491564.4197314,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\tasks\\full-loop.md": {
+    "mtime": 1781492508.0887008,
+    "ast_hash": "2311ca8293eb2fda7aa26cb8f9aa2987",
+    "semantic_hash": "2311ca8293eb2fda7aa26cb8f9aa2987"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\tasks\\ossReviewList.md": {
+    "mtime": 1781760279.1310048,
+    "ast_hash": "ef3434541bf3a5d53fe234cc074b9594",
+    "semantic_hash": "ef3434541bf3a5d53fe234cc074b9594"
+  },
+  "C:\\Users\\tlchang\\OneDrive - Synaptics\\work\\workspace\\agenticToolset\\tasks\\IMG_4298.jpg": {
+    "mtime": 1781492508.0784354,
+    "ast_hash": "03ed66441a7450c4c22061332b82756d",
+    "semantic_hash": "03ed66441a7450c4c22061332b82756d"
+  }
+}
