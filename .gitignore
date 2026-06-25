@@ -10,5 +10,5 @@ Thumbs.db
 openspec/.vector-search.db*
 
 # release build artifacts
-release.zip
+dist/
 .release-build/

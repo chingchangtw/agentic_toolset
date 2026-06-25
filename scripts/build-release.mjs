@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const BUILD = join(ROOT, '.release-build');
-const OUT   = join(ROOT, 'release.zip');
+const OUT   = join(ROOT, 'dist', 'release.zip');
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
@@ -99,6 +99,7 @@ console.log('  scaffold: project_root_structure → scaffold/');
 // ── 5. zip ────────────────────────────────────────────────────────────────────
 
 console.log('── zip ──────────────────────────────────────────────────────────────────────');
+mkdirSync(join(ROOT, 'dist'), { recursive: true });
 if (existsSync(OUT)) rmSync(OUT);
 
 const isWin = process.platform === 'win32';

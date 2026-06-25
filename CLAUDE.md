@@ -67,14 +67,7 @@ Types:      npm run type-check
 
 ## Architecture
 
-- `src/skills/` — self-contained skill modules; each skill is independently deployable
-- `src/plugins/` — plugin modules extending core functionality
-- `src/mcp/` — MCP server implementations
-- `src/core/` — base classes and framework interfaces (exported via `src/index.ts`)
-- `src/types/` — shared TypeScript definitions (exported via `src/index.ts`)
-- `src/utils/` — reusable helpers
-
-Skills are isolated by directory. Each skill owns its own submodules (e.g., `ts-deliver-router/` contains registry, state, phases, security-gates). `src/index.ts` exports only `core` and `types` — skills/plugins are not re-exported from root.
+See `docs/architecture.md` for full architecture, skill catalogue, hook data flow, build/distribution pipeline, and repo layout.
 
 ## Hard Rules
 
@@ -85,42 +78,11 @@ Skills are isolated by directory. Each skill owns its own submodules (e.g., `ts-
 
 ## Project File Structure
 
-```text
-project-root/
-├── CLAUDE.md                  → this file (project brief)
-├── CLAUDE.local.md            → personal overrides, gitignored
-├── .gitignore
-├── .ai/
-│   ├── ANTI_AI_STYLE.md       → style guard (referenced by global)
-│   ├── LESSONS_LEARNED.md     → durable lessons (see goverance)
-│   ├── build-test-validate.md → build / test / validate recipes
-│   └── standards.md           → project-specific standards
-├── .claude/
-│   ├── CLAUDE.md              → universal agent behaviour
-│   ├── goverance_CLAUDE.md    → DoD, registries, agent roles, workflow
-│   ├── hooks/                 → deterministic enforcement
-│   ├── commands/              → slash-command flows
-│   ├── skills/                → model-invokable, on-demand
-│   ├── agents/                → subagents with isolated context
-│   ├── settings.json          → permissions, model, hook registry
-│   └── settings.local.json    → personal settings, gitignored
-├── docs/
-│   └── architecture.md        → architecture deep-dive
-├── src/                       → application source
-├── tests/                     → test source
-└── openspec/                  → Spectra specs and change proposals
-```
+See `docs/architecture.md` → Repository Layout.
 
 ## Ship (Release)
 
-```
-Build:    node scripts/build-release.mjs
-Tag:      git tag vx.y.z && git push origin vx.y.z
-Publish:  gh release create vx.y.z release.zip install.sh install.ps1 --title "vx.y.z" --notes "what changed"
-```
-
-Trigger a new release whenever `src/skills/`, `src/hook/`, or `src/project_root_structure/` changes.
-`release.zip`, `install.sh`, and `install.ps1` are the three release assets — nothing else ships.
+See 'docs/architecture.md' → Build and Distribution.
 
 ## Out of Scope
 
