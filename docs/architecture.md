@@ -200,8 +200,9 @@ Both installers:
 2. Extract to a temp directory
 3. Copy skills → `.claude/skills/`
 4. Copy hooks → `~/.claude/hooks/`
-5. Copy scaffold → project root (on demand)
-6. Patch `~/.claude/settings.json` with hook registrations
+5. Copy commands → `.claude/commands/`
+6. Copy scaffold → project root (on demand)
+7. Patch `~/.claude/settings.json` with hook registrations
 
 `install.ps1` uses `pwsh`/PowerShell; `install.sh` uses bash + curl/unzip.
 
