@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * build-release.mjs
- * Bundles src/skills/, src/hook/, src/project_root_structure/ into release.zip
+ * Bundles src/skills/, src/hook/, src/commands/, src/project_root_structure/ into release.zip
  * for GitHub Releases distribution. Run: node scripts/build-release.mjs
  */
 import { cpSync, mkdirSync, rmSync, existsSync, readdirSync, statSync } from 'node:fs';
@@ -69,14 +69,26 @@ const hookSrc  = join(ROOT, 'src', 'hook');
 const hookDest = join(BUILD, 'hook');
 mkdirSync(hookDest, { recursive: true });
 
-for (const f of ['ts-session-guard.sh', 'ts-statusline_bridge.py']) {
+for (const f of ['ts-session-guard.py', 'ts-statusline_bridge.py', 'ts-statusline_bridge.ps1', 'ts-statusline_wrapper.sh']) {
   const src = join(hookSrc, f);
   if (!existsSync(src)) { console.warn(`  SKIP (missing): ${f}`); continue; }
   cp(src, join(hookDest, f));
   console.log(`  hook: ${f}`);
 }
 
-// ── 3. scaffold ───────────────────────────────────────────────────────────────
+// ── 3. commands ───────────────────────────────────────────────────────────────
+
+console.log('── commands ─────────────────────────────────────────────────────────────────');
+const commandsSrc  = join(ROOT, 'src', 'commands');
+const commandsDest = join(BUILD, 'commands');
+if (existsSync(commandsSrc)) {
+  cp(commandsSrc, commandsDest);
+  console.log('  commands: src/commands → commands/');
+} else {
+  console.warn('  SKIP (missing): src/commands');
+}
+
+// ── 4. scaffold ───────────────────────────────────────────────────────────────
 
 console.log('── scaffold ─────────────────────────────────────────────────────────────────');
 const scaffoldSrc  = join(ROOT, 'src', 'project_root_structure');
@@ -84,7 +96,7 @@ const scaffoldDest = join(BUILD, 'scaffold');
 cp(scaffoldSrc, scaffoldDest);
 console.log('  scaffold: project_root_structure → scaffold/');
 
-// ── 4. zip ────────────────────────────────────────────────────────────────────
+// ── 5. zip ────────────────────────────────────────────────────────────────────
 
 console.log('── zip ──────────────────────────────────────────────────────────────────────');
 if (existsSync(OUT)) rmSync(OUT);
