@@ -227,6 +227,116 @@ Hook thresholds are set at the top of each hook script in `~/.claude/hooks/`:
 
 ---
 
+## Example Workflows
+
+### 1 — New greenfield project
+
+Starting from a raw idea with no existing backlog.
+
+```
+# Initialize the planner workspace
+/ts-project-planner
+
+# Seed Discovery with the product vision
+/ts-project plan --new "Build a multi-tenant invoicing SaaS"
+
+# Explore and validate the riskiest idea
+/ts-discover explore INV-001
+/ts-discover validate INV-001
+
+# Decision: build it
+/ts-discover decide INV-001 build
+
+# Pull validated ideas into the release plan
+/ts-project plan --sync
+
+# Start the first release iteration
+/ts-iteration start MVP
+
+# Kick off the first epic — triggers ts-deliver-router
+/ts-iteration next
+```
+
+`ts-deliver-router` takes over from here: Think → Plan (G1 gate) → Build → Review → Test → Ship (G2 gate) → Reflect.
+
+---
+
+### 2 — Single bugfix or small standalone change
+
+No portfolio management needed. Go directly to the router.
+
+```
+# Initialize the router for this repo
+/ts-deliver-router
+/ts-deliver:init
+
+# Check current state at any time
+/ts-deliver:status
+```
+
+The router runs the same 7-phase spine at reduced scope. Refactor and bugfix
+work unit profiles skip Plan and Ship phases automatically.
+
+---
+
+### 3 — Mid-delivery scope change (feedback hook)
+
+During Build phase, the team discovers a new external dependency not previously
+in scope. The router fires the feedback hook automatically:
+
+```
+# (automatic — triggered by ts-deliver-router during Think or Build)
+/ts-discover idea --from-router
+```
+
+This creates a new Discovery entry linked to the current epic. Delivery
+continues without blocking. Later:
+
+```
+# Check what the hook surfaced
+/ts-discover status
+
+# Validate and decide in the next planning cycle
+/ts-discover validate NEW-007
+/ts-discover decide NEW-007 build
+
+# Sync into the next release
+/ts-project plan --sync
+/ts-iteration start v1.1
+```
+
+The feedback hook never writes `status` or `decision` — only `ts-project-planner`
+(human-invoked) can move an idea to `ready` or `killed`.
+
+---
+
+### 4 — Full dual-track loop (portfolio across two releases)
+
+Both tracks run continuously in parallel. Release 1 is in Delivery while
+Release 2's ideas are already in Discovery.
+
+```
+# Release 1 — in progress
+/ts-iteration status                    # check delivery progress
+
+# Release 2 — Discovery running in parallel
+/ts-discover explore REL2-001
+/ts-discover validate REL2-001
+/ts-discover decide REL2-001 build
+
+# When Release 1 closes, sync Release 2's ready items
+/ts-iteration close                     # prompts: check /ts-discover status
+/ts-project plan --sync
+/ts-iteration start "Release 2"
+/ts-iteration next                      # first epic of Release 2
+```
+
+`/ts-iteration close` explicitly surfaces pending Discovery items — the prompt
+"Discovery has been running in parallel — check `/ts-discover status`" is
+built into the close flow.
+
+---
+
 ## Contributing
 
 [TODO] Contribution guidelines not yet written. In the meantime:
