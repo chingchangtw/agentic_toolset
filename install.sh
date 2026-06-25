@@ -9,8 +9,10 @@ set -euo pipefail
 REPO="chingchangtw/agentic_toolset"
 RELEASE_URL="https://github.com/${REPO}/releases/latest/download/release.zip"
 CLAUDE_DIR="${HOME}/.claude"
+PROJECT_DIR=$(pwd)
+PROJECT_CLAUDE_DIR="${PROJECT_DIR}/.claude"
 HOOKS_DIR="${CLAUDE_DIR}/hooks"
-SKILLS_DIR="${CLAUDE_DIR}/skills"
+SKILLS_DIR="${PROJECT_CLAUDE_DIR}/skills"
 SETTINGS="${CLAUDE_DIR}/settings.json"
 TMPDIR_INSTALL="$(mktemp -d)"
 
@@ -43,7 +45,7 @@ fi
 echo "→ Installing hooks → ${HOOKS_DIR}/"
 mkdir -p "${HOOKS_DIR}"
 if [[ -d hook ]]; then
-  cp hook/ts-session-guard.sh    "${HOOKS_DIR}/ts-session-guard.py"
+  cp hook/ts-session-guard.py    "${HOOKS_DIR}/ts-session-guard.py"
   cp hook/ts-statusline_bridge.py "${HOOKS_DIR}/ts-statusline_bridge.py"
   chmod +x "${HOOKS_DIR}/ts-session-guard.py"
   chmod +x "${HOOKS_DIR}/ts-statusline_bridge.py"

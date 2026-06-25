@@ -26,7 +26,8 @@
       "Bash(spectra new *)",
       "Bash(git *)",
       "Bash(spectra instructions *)",
-      "Bash(spectra status *)"
+      "Bash(spectra status *)",
+      "Bash(spectra analyze *)"
     ],
     "deny": [
       "Bash(sudo *)",

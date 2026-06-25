@@ -41,8 +41,7 @@ except Exception:
 # ── Read context % from StatusLine state file (written by statusline script)
 # Falls back to 0 if not available — hook still works for message count.
 ctx_pct = 0
-_home = os.environ.get("USERPROFILE") or os.environ.get("HOME")
-state_file = (Path(_home) if _home else Path.home()) / ".claude" / "session_guard_state.json"
+state_file = Path.home() / ".claude" / "session_guard_state.json"
 try:
     if state_file.exists():
         state = json.loads(state_file.read_text(encoding="utf-8"))
