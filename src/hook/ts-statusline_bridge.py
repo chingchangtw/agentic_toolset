@@ -7,24 +7,22 @@ Also prints a formatted status line to stdout.
 """
 
 import json
-import os
 import sys
 from pathlib import Path
 
-# USERPROFILE = Windows, HOME = Linux/macOS; avoid Path.home() which breaks on domain/OneDrive setups
-_home = os.environ.get("USERPROFILE") or os.environ.get("HOME")
-state_file = (Path(_home) if _home else Path.home()) / ".claude" / "session_guard_state.json"
+state_file = Path.home() / ".claude" / "session_guard_state.json"
 
 try:
     data = json.load(sys.stdin)
-    ctx_window = data.get("context_window", {})
-    ctx_raw = ctx_window.get("used_percentage")
+    ctx_win = data.get("context_window") or {}
+    ctx_raw = ctx_win.get("used_percentage")
     if ctx_raw is None:
-        cur = ctx_window.get("current_tokens", 0)
-        mx  = ctx_window.get("max_tokens", 0)
-        ctx_raw = (cur / mx * 100) if mx else 0
-    ctx_pct = round(float(ctx_raw or 0), 1)
-    model  = data.get("model", "unknown")
+        cur = ctx_win.get("current_tokens") or 0
+        mx = ctx_win.get("max_tokens") or 0
+        ctx_raw = cur / mx * 100 if mx else 0
+    ctx_pct = round(float(ctx_raw), 1)
+    model_field = data.get("model", "unknown")
+    model = model_field.get("display_name", "unknown") if isinstance(model_field, dict) else model_field
 
     # Persist for hook
     state_file.write_text(
