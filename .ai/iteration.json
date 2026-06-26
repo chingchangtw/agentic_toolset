@@ -15,12 +15,12 @@
       "title": "vision.md — immutable outcome anchor (PRD §1)",
       "type": "epic",
       "priority": 1,
-      "status": "queued",
+      "status": "done",
       "depends_on": [],
-      "router_state": null,
-      "branch": null,
+      "router_state": ".ai/ts-deliver-router/state.json",
+      "branch": "claude/ts-project-planner-features-aj9phb",
       "mutation_score": null,
-      "shipped_at": null
+      "shipped_at": "2026-06-26T00:23:00Z"
     },
     {
       "id": "F2-CONTEXT-MD",

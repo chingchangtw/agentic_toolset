@@ -15,7 +15,7 @@ The router NEVER infers phase from artifacts on disk.
     {"phase":"<p>","entered_at":"<t>","exited_at":"<t>","artifacts_at_exit":{}}
   ],
   "artifacts": {
-    "think":   {"framing":"<path>","capabilities":"<path>","never_automate":"<path>","complete":false},
+    "think":   {"framing":"<path>","capabilities":"<path>","never_automate":"<path>","vision":"<path>","complete":false},
     "plan":    {"spec":"<path>","scenarios":"<path>","complete":false},
     "build":   {"tasks_done":0,"tasks_total":0,"complete":false},
     "review":  {"report":"<path>","complete":false},

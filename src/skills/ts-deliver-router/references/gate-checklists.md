@@ -4,6 +4,15 @@
 
 Human sign-off required. Results written to `state.gates.G1`.
 
+### Vision Check
+
+```
+[ ] .ai/vision.md exists and is non-empty (definition_of_done section completed)
+```
+
+Missing or empty → router emits `vision-check FAILED` (see `registry/registry-think.md`
+row `vision-check`) and blocks phase exit before the STRIDE items below are evaluated.
+
 ### STRIDE Threat Model
 
 For each trust boundary and data flow in scope:

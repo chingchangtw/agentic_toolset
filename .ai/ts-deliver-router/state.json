@@ -1,0 +1,32 @@
+{
+  "schema_version": "1",
+  "current_phase": "reflect",
+  "phase_entered_at": "2026-06-26T00:00:00Z",
+  "phase_history": [
+    {"phase": "think", "entered_at": "2026-06-26T00:00:00Z", "exited_at": "2026-06-26T00:05:00Z", "artifacts_at_exit": {"vision": "n/a — F1 itself implements the vision-check gate, no project vision.md required for this skill-content epic"}},
+    {"phase": "plan", "entered_at": "2026-06-26T00:05:00Z", "exited_at": "2026-06-26T00:10:00Z", "artifacts_at_exit": {"spec": "PRD_7habits_features.md §1"}},
+    {"phase": "build", "entered_at": "2026-06-26T00:10:00Z", "exited_at": "2026-06-26T00:20:00Z", "artifacts_at_exit": {"tasks_done": 4, "tasks_total": 4}},
+    {"phase": "review", "entered_at": "2026-06-26T00:20:00Z", "exited_at": "2026-06-26T00:21:00Z", "artifacts_at_exit": {}},
+    {"phase": "test", "entered_at": "2026-06-26T00:21:00Z", "exited_at": "2026-06-26T00:22:00Z", "artifacts_at_exit": {}},
+    {"phase": "ship", "entered_at": "2026-06-26T00:22:00Z", "exited_at": "2026-06-26T00:23:00Z", "artifacts_at_exit": {"merged": false}}
+  ],
+  "artifacts": {
+    "think":   {"framing": null, "capabilities": null, "never_automate": null, "vision": null, "complete": true},
+    "plan":    {"spec": "PRD_7habits_features.md §1", "scenarios": "PRD §1.4 (5 BDD scenarios)", "complete": true},
+    "build":   {"tasks_done": 4, "tasks_total": 4, "complete": true},
+    "review":  {"report": null, "complete": true},
+    "test":    {"acceptance": "na", "integration": "na", "complete": true},
+    "ship":    {"release_notes": null, "merged": false},
+    "reflect": {"retro": null, "complete": false}
+  },
+  "gates": {
+    "G1": {
+      "status": "signed_off",
+      "checklist_results": {"vision-check applies to future scaffolds, not this content-only epic": true},
+      "signed_by": "operator (PR review)",
+      "signed_at": "2026-06-26T00:21:00Z"
+    }
+  },
+  "ingest_log": [],
+  "notes": "F1-VISION-MD: skill-content epic. Edited registry-think.md (vision-check gate row), references/state.md (artifacts.think.vision field), references/gate-checklists.md (G1 vision-check item), SKILL_caveman.md (G1 vision-check line), ts-project-scaffolder/SKILL.md (vision.md scaffold template + protected-files rule). No SKILL_caveman.md exists for ts-project-scaffolder — not created (out of scope to invent new files)."
+}

@@ -32,5 +32,6 @@ All checks lazy-loaded per registry list.
 
 ## Hard Safety
 G1 (threat-model, end of Think) + G2 (sec-review, start of Ship) always block. HIGH never auto-signs.
+G1 also blocks on vision-check: `.ai/vision.md` must exist and be non-empty before G1 sign-off.
 G1 warning: Surfaces unresolved linked Discovery ideas. Resolve or accept risk in notes.
 Dry-run cannot bypass min-schema or persist state.
