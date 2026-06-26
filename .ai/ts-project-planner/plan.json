@@ -1,0 +1,63 @@
+{
+  "project": "ts-project-planner-features",
+  "vision": "Implement the 7-Habits PRD: vision.md, context.md, retro-actions.json, and L0 backlog scoring, adding rigour to ts-deliver-router, ts-project-planner, and ts-project-scaffolder without expanding scope.",
+  "planned_at": "2026-06-26T00:00:00Z",
+  "releases": [
+    {
+      "name": "7habits-features",
+      "goal": "Add rigour, never add scope — close the H2/H3/H4/H5/H7 gaps identified in PRD_7habits_features.md.",
+      "exit_criteria": [
+        "vision-check gate row live in registry-think.md; G1 blocks on missing/empty vision.md",
+        "context-captured always-row live in registry-think.md; Plan reads context.md",
+        "retro-actions-captured gate row live in registry-reflect.md; cycle close blocks on untriaged entries",
+        "discovery.json/plan.json/iteration.json carry exit_criteria[], q2_score, value_to[] per PRD §4.5",
+        "ts-deliver-router and ts-project-planner SKILL.md + SKILL_caveman.md updated in the same session as their schema/registry changes"
+      ],
+      "epics": ["F1-VISION-MD", "F2-CONTEXT-MD", "F3-RETRO-ACTIONS", "F4-L0-SCORING"]
+    }
+  ],
+  "epics": [
+    {
+      "id": "F1-VISION-MD",
+      "title": "vision.md — immutable outcome anchor (PRD §1)",
+      "type": "epic",
+      "size": "S",
+      "priority": 1,
+      "depends_on": [],
+      "release": "7habits-features",
+      "notes": "ts-project-scaffolder: vision.md template + protected-files rule. ts-deliver-router: vision-check gate row in registry-think.md, state.json artifacts.think.vision field, G1 checklist item."
+    },
+    {
+      "id": "F2-CONTEXT-MD",
+      "title": "context.md — durable understanding artifact (PRD §2)",
+      "type": "epic",
+      "size": "S",
+      "priority": 2,
+      "depends_on": [],
+      "release": "7habits-features",
+      "notes": "ts-deliver-router: context.md as discuss-step output, context-captured always-row, state.json artifacts.think.context field, propose step reads context.md, ingest sub-loop mid-delivery updates."
+    },
+    {
+      "id": "F3-RETRO-ACTIONS",
+      "title": "retro-actions.json — harness improvement loop (PRD §3)",
+      "type": "epic",
+      "size": "S",
+      "priority": 3,
+      "depends_on": [],
+      "release": "7habits-features",
+      "notes": "ts-deliver-router: retro-actions.json as Reflect-phase output, retro-actions-captured gate row, state.json artifacts.reflect.retro_actions field, /ts-iteration close triage step, SKILL-PATCH-RETRO integration for accepted skill-patch entries."
+    },
+    {
+      "id": "F4-L0-SCORING",
+      "title": "L0 backlog scoring — exit_criteria[], q2_score, value_to[] (PRD §4)",
+      "type": "epic",
+      "size": "M",
+      "priority": 4,
+      "depends_on": [],
+      "release": "7habits-features",
+      "notes": "ts-project-planner: discovery.json exit_criteria[] required at decide-build, plan.json impact_score/effort_score/q2_score/urgency_flag/value_to[], iteration.json exit_criteria_source/q2_warning, /ts-iteration start Q2 warning, /ts-iteration next surfaces value_to[]. No new registry rows (PRD §4.6)."
+    }
+  ],
+  "constraints": [],
+  "refined_count": 0
+}

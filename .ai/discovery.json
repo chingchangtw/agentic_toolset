@@ -1,0 +1,101 @@
+{
+  "project": "ts-project-planner-features",
+  "ideas": [
+    {
+      "id": "idea-001",
+      "title": "F1: vision.md immutable outcome anchor",
+      "status": "ready",
+      "source_epic": null,
+      "keep_learning_count": 0,
+      "riskiest_assumptions": [],
+      "exploration_output": {
+        "domain_events": [],
+        "commands": [],
+        "aggregates": [],
+        "bounded_contexts": ["ts-project-scaffolder", "ts-deliver-router"],
+        "acpl_pattern_group": null
+      },
+      "validation_output": {
+        "feasibility": "feasible",
+        "council_verdict": "fully specified in PRD §1 — scaffold template + gate row, no open unknowns",
+        "decision_rationale": "validation skipped — no H-risk assumptions"
+      },
+      "decision": "build",
+      "ready_epics": ["F1-VISION-MD"],
+      "synced_to_plan": true,
+      "notes": "PRD: PRD_7habits_features.md §1. H2 — Begin with the End in Mind."
+    },
+    {
+      "id": "idea-002",
+      "title": "F2: context.md durable understanding artifact",
+      "status": "ready",
+      "source_epic": null,
+      "keep_learning_count": 0,
+      "riskiest_assumptions": [],
+      "exploration_output": {
+        "domain_events": [],
+        "commands": [],
+        "aggregates": [],
+        "bounded_contexts": ["ts-deliver-router"],
+        "acpl_pattern_group": null
+      },
+      "validation_output": {
+        "feasibility": "feasible",
+        "council_verdict": "fully specified in PRD §2 — discuss-step output, always-row, no open unknowns",
+        "decision_rationale": "validation skipped — no H-risk assumptions"
+      },
+      "decision": "build",
+      "ready_epics": ["F2-CONTEXT-MD"],
+      "synced_to_plan": true,
+      "notes": "PRD: PRD_7habits_features.md §2. H5 — Seek First to Understand."
+    },
+    {
+      "id": "idea-003",
+      "title": "F3: retro-actions.json harness improvement loop",
+      "status": "ready",
+      "source_epic": null,
+      "keep_learning_count": 0,
+      "riskiest_assumptions": [],
+      "exploration_output": {
+        "domain_events": [],
+        "commands": [],
+        "aggregates": [],
+        "bounded_contexts": ["ts-deliver-router"],
+        "acpl_pattern_group": null
+      },
+      "validation_output": {
+        "feasibility": "feasible",
+        "council_verdict": "fully specified in PRD §3 — Reflect-phase gate, no open unknowns",
+        "decision_rationale": "validation skipped — no H-risk assumptions"
+      },
+      "decision": "build",
+      "ready_epics": ["F3-RETRO-ACTIONS"],
+      "synced_to_plan": true,
+      "notes": "PRD: PRD_7habits_features.md §3. H7 — Sharpen the Saw."
+    },
+    {
+      "id": "idea-004",
+      "title": "F4: L0 backlog scoring — q2_score, value_to[], exit_criteria[]",
+      "status": "ready",
+      "source_epic": null,
+      "keep_learning_count": 0,
+      "riskiest_assumptions": [],
+      "exploration_output": {
+        "domain_events": [],
+        "commands": [],
+        "aggregates": [],
+        "bounded_contexts": ["ts-project-planner"],
+        "acpl_pattern_group": null
+      },
+      "validation_output": {
+        "feasibility": "feasible",
+        "council_verdict": "fully specified in PRD §4 — discovery.json/plan.json/iteration.json additive schema, no open unknowns",
+        "decision_rationale": "validation skipped — no H-risk assumptions"
+      },
+      "decision": "build",
+      "ready_epics": ["F4-L0-SCORING"],
+      "synced_to_plan": true,
+      "notes": "PRD: PRD_7habits_features.md §4. H2+H3+H4."
+    }
+  ]
+}
