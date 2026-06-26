@@ -12,3 +12,4 @@ Load with: registry/index.md
 | ts-event-storming-facilitator | rec | domain model unclear | references/sub-agents.md | - |
 | threat-model  | gate | before any spec (G1)         | NAMED CHECKLIST (security-gates.md)     | yes*  |
 | vision-check  | gate | before G1 sign-off           | verify .ai/vision.md exists + non-empty | yes   |
+| context-captured | always | after discuss step        | verify .ai/context.md written           | -     |

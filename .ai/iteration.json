@@ -27,12 +27,12 @@
       "title": "context.md — durable understanding artifact (PRD §2)",
       "type": "epic",
       "priority": 2,
-      "status": "queued",
+      "status": "done",
       "depends_on": [],
-      "router_state": null,
-      "branch": null,
+      "router_state": ".ai/ts-deliver-router/state.json",
+      "branch": "claude/ts-project-planner-features-aj9phb",
       "mutation_score": null,
-      "shipped_at": null
+      "shipped_at": "2026-06-26T00:53:00Z"
     },
     {
       "id": "F3-RETRO-ACTIONS",

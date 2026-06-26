@@ -4,14 +4,18 @@ Loaded when: need phase map, skills/artifacts for a phase, ingest, or refactor e
 
 ## Map (gstack 7-phase, Spectra BDD nested)
 1. **Think** — Spectra:discuss. Skills: gstack:/office-hours, council-advisor.
+   discuss writes `.ai/context.md` (problem_framing, stakeholders, constraints,
+   open_questions) — `context-captured` always-row warns (non-blocking) if missing on exit.
    Rec: deep-research (anthropics/skills, broad problems), ux-research
    (addyosmani/agent-skills, user-facing), frame-hats (six-thinking-hats-coach,
    ambiguous/multi-stakeholder), first-princ (first-principles-agent, novel problems),
    strat-fit (tows-strategy-analyst, portfolio scope).
-   Artifacts: framing, capabilities, never_automate.
-   Exit gate: **threat-model (G1)** → security-gates.md.
+   Artifacts: framing, capabilities, never_automate, context.
+   Exit gates: **vision-check** (registry-think.md) + **threat-model (G1)** → security-gates.md.
 
 2. **Plan** — Spectra:propose (spec + Given/When/Then; scenarios become acceptance tests in Test).
+   propose reads `.ai/context.md` before generating the spec: spec must reference at least
+   one `problem_framing` item; `open_questions` surface as unresolved risks.
    Skills: council-advisor, gstack:/plan-eng-review, gstack:/plan-ceo-review.
    Rec: brainstorm (superpowers:brainstorming), write-plan (superpowers:writing-plans),
    prompt-opt (the-master-prompt-optimization-architect), xmodel-plan (gstack:/codex),
@@ -48,8 +52,11 @@ Triggered from Build/Review/Test when reality forces a spec change:
 1. Spectra:ingest identifies affected spec/scenarios.
 2. Write DELTA (changed parts only), not full re-propose.
 3. council-advisor re-checks scope + risk.
-4. Append entry to `state.ingest_log[]`.
-5. Resume triggering phase. Prevents scope drift.
+4. New constraint not already in `.ai/context.md`? Prompt: "Update context.md
+   open_questions with new constraint: <constraint>" — ingest is the one
+   permitted mid-delivery writer of context.md.
+5. Append entry to `state.ingest_log[]` (record context.md update path if written).
+6. Resume triggering phase. Prevents scope drift.
 
 ## Discovery feedback hook detail
 When Think or Build surfaces unresolved assumptions, trigger

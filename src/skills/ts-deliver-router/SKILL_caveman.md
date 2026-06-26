@@ -34,4 +34,5 @@ All checks lazy-loaded per registry list.
 G1 (threat-model, end of Think) + G2 (sec-review, start of Ship) always block. HIGH never auto-signs.
 G1 also blocks on vision-check: `.ai/vision.md` must exist and be non-empty before G1 sign-off.
 G1 warning: Surfaces unresolved linked Discovery ideas. Resolve or accept risk in notes.
+context-captured: discuss writes `.ai/context.md` — warns (non-blocking) on Think exit if missing. ingest is the only permitted mid-delivery writer.
 Dry-run cannot bypass min-schema or persist state.
