@@ -32,5 +32,7 @@ All checks lazy-loaded per registry list.
 
 ## Hard Safety
 G1 (threat-model, end of Think) + G2 (sec-review, start of Ship) always block. HIGH never auto-signs.
+Sign-off authenticity: signed_by/signed_at come ONLY from a human's literal response to a
+blocking question this turn. Agent never authors these fields itself — no exceptions.
 G1 warning: Surfaces unresolved linked Discovery ideas. Resolve or accept risk in notes.
 Dry-run cannot bypass min-schema or persist state.

@@ -9,6 +9,16 @@ Dry-run: checklists display, CANNOT be signed →
 
 Pass condition: `status = signed_off` AND every item `true` AND `signed_by` + `signed_at` recorded.
 
+## Sign-off authenticity (hard rule — not advisory)
+`signed_by`/`signed_at` MUST be populated only from a human's literal response to a
+blocking question asked in the current turn (e.g. AskUserQuestion, or the human's own
+chat message naming the gate). The agent MUST NOT author, infer, or backfill these
+fields itself — "the checklist items are all true so I'll sign it" is not a valid
+sign-off. If no human response exists yet, `status` stays `pending`; do not advance
+`current_phase` past the gate. A `signed_by` value invented by the agent (e.g.
+"operator", "PR review") is a state corruption — treat any pre-existing such value
+as unsigned and re-ask before trusting it.
+
 ## G1 — threat-model (end of Think)
 - [ ] STRIDE applied per identified data flow.
 - [ ] Privacy data inventory: collected/stored/transmitted; retention per class. (Surfaces unresolved linked Discovery ideas; resolve or accept risk in state.gates.G1.notes)

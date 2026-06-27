@@ -74,4 +74,15 @@ Load the relevant file(s) before executing a command. Do not load all files at o
 | `references/agents.md` | Choosing sub-agents for a Discovery or Delivery task |
 | `references/on-first-use.md` | First-use initialization steps |
 
+---
+
+## Hard rules
+
+- `/ts-iteration start` is sequencing-only: it resolves epic order and writes
+  `.ai/iteration.json` with every epic `status=queued`, `active_epic=null`.
+  It NEVER calls `/ts-deliver init` and NEVER touches
+  `.ai/ts-deliver-router/state.json`.
+- Only `/ts-iteration next` drives the ts-deliver-router spine
+  (Think→...→Reflect), and only one epic at a time — the one held in
+  `active_epic`. The spine never auto-picks-up on `start`.
 

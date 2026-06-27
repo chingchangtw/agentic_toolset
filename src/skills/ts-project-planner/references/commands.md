@@ -186,6 +186,9 @@ Pulls status=ready, synced_to_plan=false from discovery.json → plan.json group
 
 ### `/ts-iteration start <release>`
 Loads release epics, resolves sequencing, writes .ai/iteration.json.
+Sequencing only — NEVER calls `/ts-deliver init` or touches
+`.ai/ts-deliver-router/state.json`. The spine only starts from
+`/ts-iteration next`.
 ```
 1. Read .ai/ts-project-planner/plan.json → filter epics for <release>
    → If empty: "No epics found for release <release> — run
@@ -203,6 +206,8 @@ Loads release epics, resolves sequencing, writes .ai/iteration.json.
 
 ### `/ts-iteration next`
 Next queued epic. Calls ts-deliver-router. Sequential — active_epic set → returns error.
+This is the ONLY command that drives the Think→...→Reflect spine, and it advances
+exactly one epic at a time (the one held in active_epic).
 ```
 1. Read .ai/iteration.json
    → If active_epic is already set: STOP (see above).

@@ -88,6 +88,10 @@ Do not load all registry-phase files at once.
 ## Hard safety (in core — never deferred to save tokens)
 - G1 (end of Think) and G2 (start of Ship) BLOCK at every autonomy level.
   100% checklist + human sign-off required. HIGH never auto-signs. Dry-run cannot sign.
+- Sign-off authenticity: `signed_by`/`signed_at` come ONLY from a human's literal
+  response to a blocking question asked this turn. The agent must never author,
+  infer, or backfill these fields itself, even when every checklist item is true.
+  No human response yet → gate stays `pending`; do not advance `current_phase`.
 - Dry-run cannot bypass min-schema; cannot persist.
 
 ## Quick reference
