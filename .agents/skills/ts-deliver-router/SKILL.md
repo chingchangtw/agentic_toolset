@@ -65,7 +65,7 @@ on invoke:
 0 if dry-run on: prefix [DRY-RUN]; state.json read-only; announce side effects;
    refuse sign-offs; emit DRY-RUN REPORT on session end.        [→ state.md]
 1 autonomy = read .ai/ts-deliver-router/autonomy || ask+save (DIAL).
-2 state = read .ai/ts-deliver-router/state.json.                              [→ state.md]
+2 state = read .ai/ts-deliver-router/state.json ONLY. Do NOT read history.jsonl. [→ state.md]
    missing|invalid-schema|stale → "phase unclear, manual review" + reason. STOP.
 3 P = current_phase. verify artifacts.P pass min-schema.        [→ edge-tests.md]
    any fail → "phase unclear, manual review" + specific failure. STOP.
@@ -76,8 +76,9 @@ on invoke:
    if P == Build: run same hook gating check for unknowns surfaced in always-checks.
 5 before exit P: every gate passed|signed_off;
    security gate: signed_off + 100% checklist; human even in HIGH. [→ security-gates.md]
-6 on exit: PHASE EXIT CONTRACT (atomic state.json write).       [→ state.md]
-   dry-run → simulate only.
+6 on exit: (a) atomic state.json write, slim format — no phase_history/ingest_log; [→ state.md]
+   (b) append phase_exit event to history.jsonl (non-fatal: warn, do not abort).
+   dry-run → simulate only; announce "would append history.jsonl".
 7 WHERE-AM-I (on "where am I", empty input, any status query):  [→ phases.md + registry.md]
    LINE 1  bracketed flow:
            Think → [ Plan ] → Build → Review → Test → Ship → Reflect

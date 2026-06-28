@@ -74,13 +74,13 @@ Do not load all registry-phase files at once.
 ## Router algorithm
 0 if dry-run: read-only, announce side effects, block sign-offs.
 1 autonomy = read `.ai/ts-deliver-router/autonomy` || ask.
-2 state = read `.ai/ts-deliver-router/state.json`. fail/stale → STOP.
+2 state = read `.ai/ts-deliver-router/state.json` ONLY. Do NOT read `history.jsonl`. fail/stale → STOP.
 3 P = current_phase. verify artifacts.
   if P == Think: check unknowns for hook criteria (a) blocks G1/G2, (b) affects >1 epic, (c) new external dep. If met, call `/ts-discover idea --from-router` (non-blocking).
 4 consult registry for P: run always, suggest rec.
   if P == Build: check unknowns surfaced in always-checks against same hook criteria.
 5 before exit P: all gates signed; G1/G2 require 100% check + human.
-6 on exit: atomic state write.
+6 on exit: (a) atomic state write (write tmp → rename, slim format — no phase_history/ingest_log); (b) append phase_exit event to history.jsonl (non-fatal: warn on failure, do not abort).
 7 where am i: show bracketed flow + active checks.
 8 honor switches.
 **RULE: never infer phase from artifacts. state.json is truth. Unsure → manual review.**
