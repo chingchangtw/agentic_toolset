@@ -39,7 +39,15 @@ Changes can be parked（暫存）— temporarily moved out of `openspec/changes/
 
 ## Project
 
-Framework for building and hosting AI agent skills, plugins, and MCP (Model Context Protocol) artifacts. Primary user: AI agent developers building Claude Code skills and tools.
+Starter framework for bootstrapping AI-agent-enabled TypeScript projects. Clone this repo
+to get a pre-wired structure for Claude Code skills, plugins, and MCP server implementations.
+
+Key architecture distinction:
+- `src/` — deliverable artifacts (skills, plugins, MCP) that users adopt into their own projects
+- `.agents/skills/` and `.claude/skills/` — THIS project's own dev environment (ts-deliver-router,
+  Spectra SDD, caveman). NOT part of what users receive.
+
+Primary user: developer building their own AI-agent project using this as a starting point.
 
 ## Stack
 
@@ -76,6 +84,10 @@ Types:      npm run type-check
 
 Skills are isolated by directory. Each skill owns its own submodules (e.g., `ts-deliver-router/` contains registry, state, phases, security-gates). `src/index.ts` exports only `core` and `types` — skills/plugins are not re-exported from root.
 
+> **Dev env note:** `.agents/skills/` and `.claude/skills/` are this project's own
+> development tooling — they power the ts-deliver-router + Spectra + caveman workflow
+> used to build agenticToolset itself. Do not confuse them with `src/skills/` (the deliverable).
+
 ## Hard Rules
 
 1. Run `npm run type-check` after every code change.
@@ -95,13 +107,14 @@ project-root/
 │   ├── LESSONS_LEARNED.md     → durable lessons (see goverance)
 │   ├── build-test-validate.md → build / test / validate recipes
 │   └── standards.md           → project-specific standards
+├── .agents/
+│   └── skills/                → this project's dev env (ts-deliver-router, Spectra, caveman skills)
 ├── .claude/
+│   ├── skills/                → same skills auto-loaded by Claude Code for dev sessions on this project
 │   ├── CLAUDE.md              → universal agent behaviour
 │   ├── goverance_CLAUDE.md    → DoD, registries, agent roles, workflow
 │   ├── hooks/                 → deterministic enforcement
 │   ├── commands/              → slash-command flows
-│   ├── skills/                → model-invokable, on-demand
-│   ├── agents/                → subagents with isolated context
 │   ├── settings.json          → permissions, model, hook registry
 │   └── settings.local.json    → personal settings, gitignored
 ├── docs/
@@ -119,7 +132,7 @@ project-root/
 ## Maintenance Checklist
 
 - Owner: tlchang
-- Last reviewed: 2026-06-10
+- Last reviewed: 2026-06-29
 
 <!-- code-review-graph MCP tools -->
 ## MCP Tools: code-review-graph

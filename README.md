@@ -1,27 +1,28 @@
 # Agentic Toolset
 
-A development framework for building and hosting AI agent skills, plugins, and MCP (Model Context Protocol) artifacts.
+Starter framework for AI-agent-enabled TypeScript projects. Clone it to get `src/skills/`,
+`src/plugins/`, and `src/mcp/` pre-wired for Claude Code skill development — with a
+built-in Spectra spec-driven development workflow for managing changes as you evolve it.
 
-## Project Structure
+## What You Get
+
+`src/` contains the deliverable — the skill implementations, plugin modules, and MCP
+servers that form the core of your project:
 
 ```
 src/
-├── skills/        # Agent skills implementations
-├── plugins/       # Plugin modules
-├── mcp/          # MCP server implementations
-├── core/         # Core utilities and framework
-├── utils/        # Helper functions
-└── types/        # TypeScript type definitions
-
-tests/
-├── unit/         # Unit tests
-└── integration/  # Integration tests
-
-.claude/         # Agent workflow configuration
-.ai/            # AI interaction history and logs
-docs/           # Documentation
-scripts/        # Build and utility scripts
+├── skills/        # Claude Code skill implementations
+├── plugins/       # Plugin modules extending core functionality
+├── mcp/           # MCP server implementations
+├── core/          # Base classes and framework interfaces
+├── utils/         # Helper functions
+└── types/         # Shared TypeScript definitions
 ```
+
+The `.agents/` and `.claude/` directories are this project's own development
+environment (ts-deliver-router 7-phase workflow + Spectra SDD + caveman skills).
+They're included as a working example of the meta-layer pattern — not part of what
+you'd ship to your users.
 
 ## Getting Started
 
