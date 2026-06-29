@@ -141,12 +141,13 @@ might use, not identifiers of one skill. Only skill-private directories
 (`.ai/ts-deliver-router/`, `.ai/ts-project-planner/`) and the skill/command/
 sub-agent identifiers themselves carry the prefix.
 
-`ts-deliver-router`'s `/ts-router *` commands kept "router" rather than
-becoming `/ts-deliver *` — "router" is retained from the new name
-(`ts-deliver-router` still ends in `-router`); only the descriptive prefix
-changed (`lifecycle`→`deliver`). The rename's deeper purpose: "deliver"
+`ts-deliver-router`'s commands use the `/ts-deliver:*` colon syntax
+(`/ts-deliver:init`, `/ts-deliver:refine`, `/ts-deliver:status`, `/ts-deliver:jump`).
+An earlier decision preserved "router" in the command names (`/ts-router *`);
+that was subsequently reversed — the commands now match the skill's
+`ts-deliver-` prefix. The rename's deeper purpose is unchanged: "deliver"
 positions this skill as the **Delivery**-track engine, the counterpart to
-`ts-project-planner`'s new **Discovery** track (`/ts-discover *`) — see §6.
+`ts-project-planner`'s **Discovery** track (`/ts-discover *`) — see §6.
 
 ---
 

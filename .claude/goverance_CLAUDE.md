@@ -18,6 +18,7 @@ A task is complete when:
 - Documentation is updated when public behaviour changes.
 - Type-check, lint, and tests all pass.
 - Verification was actually run — not asserted.
+- Ask: "Would a staff engineer approve this?" If no → revise before marking done.
 
 ## Release Readiness Gates
 - [ ] All tests pass on CI.
@@ -30,13 +31,14 @@ A task is complete when:
 - [ ] Security review pass (if touching authn / authz / crypto / input parsing).
 
 ## Implementation Workflow
-1. Restate the goal in one sentence.
-2. List impacted files and modules.
-3. Note assumptions, risks, and conflicts with current conventions.
+1. Restate the goal in one sentence. Write plan to `tasks/todo.md` with checkable items.
+2. Verify plan with user before starting implementation.
+3. List impacted files and modules. Note assumptions and conflicts with current conventions.
 4. Propose the smallest safe implementation path.
-5. Implement with minimal diffs.
-6. Self-review against the Definition of Done.
+5. Implement with minimal diffs. Mark each item complete as you finish it — not in a batch.
+6. Self-review against the Definition of Done (including the staff-engineer check).
 7. Suggest follow-up improvements only after the main task is complete.
+8. After any correction: update `.ai/LESSONS_LEARNED.md`. Ruthlessly iterate until mistake rate drops.
 
 ## Elegance Check Gate
 For non-trivial changes, pause and ask: "Is there a more elegant way?" before committing.

@@ -39,15 +39,17 @@ Changes can be parked（暫存）— temporarily moved out of `openspec/changes/
 
 ## Project
 
-Starter framework for bootstrapping AI-agent-enabled TypeScript projects. Clone this repo
-to get a pre-wired structure for Claude Code skills, plugins, and MCP server implementations.
+Distribution framework for Claude Code skills, hooks, and project scaffold templates.
+Authors build and maintain skills in `src/`; the build pipeline (`scripts/build-release.mjs`)
+packages them into `dist/release.zip` for distribution via GitHub Releases installer.
 
 Key architecture distinction:
-- `src/` — deliverable artifacts (skills, plugins, MCP) that users adopt into their own projects
+- `src/` — deliverable artifacts (skills, hooks, scaffold templates) packaged for end-user install
 - `.agents/skills/` and `.claude/skills/` — THIS project's own dev environment (ts-deliver-router,
-  Spectra SDD, caveman). NOT part of what users receive.
+  Spectra SDD, caveman). NOT part of what gets installed on user machines.
 
-Primary user: developer building their own AI-agent project using this as a starting point.
+Primary user: developer authoring Claude Code skills to distribute, OR end-user installing
+the toolset into their own project.
 
 ## Stack
 
@@ -75,18 +77,11 @@ Types:      npm run type-check
 
 ## Architecture
 
-- `src/skills/` — self-contained skill modules; each skill is independently deployable
-- `src/plugins/` — plugin modules extending core functionality
-- `src/mcp/` — MCP server implementations
-- `src/core/` — base classes and framework interfaces (exported via `src/index.ts`)
-- `src/types/` — shared TypeScript definitions (exported via `src/index.ts`)
-- `src/utils/` — reusable helpers
-
-Skills are isolated by directory. Each skill owns its own submodules (e.g., `ts-deliver-router/` contains registry, state, phases, security-gates). `src/index.ts` exports only `core` and `types` — skills/plugins are not re-exported from root.
+See `docs/architecture.md` for full architecture, skill catalogue, hook data flow, build/distribution pipeline, and repo layout.
 
 > **Dev env note:** `.agents/skills/` and `.claude/skills/` are this project's own
-> development tooling — they power the ts-deliver-router + Spectra + caveman workflow
-> used to build agenticToolset itself. Do not confuse them with `src/skills/` (the deliverable).
+> development tooling (ts-deliver-router + Spectra + caveman). Not packaged into
+> `release.zip` — do not confuse with `src/skills/` (the deliverable).
 
 ## Hard Rules
 
@@ -97,32 +92,11 @@ Skills are isolated by directory. Each skill owns its own submodules (e.g., `ts-
 
 ## Project File Structure
 
-```text
-project-root/
-├── CLAUDE.md                  → this file (project brief)
-├── CLAUDE.local.md            → personal overrides, gitignored
-├── .gitignore
-├── .ai/
-│   ├── ANTI_AI_STYLE.md       → style guard (referenced by global)
-│   ├── LESSONS_LEARNED.md     → durable lessons (see goverance)
-│   ├── build-test-validate.md → build / test / validate recipes
-│   └── standards.md           → project-specific standards
-├── .agents/
-│   └── skills/                → this project's dev env (ts-deliver-router, Spectra, caveman skills)
-├── .claude/
-│   ├── skills/                → same skills auto-loaded by Claude Code for dev sessions on this project
-│   ├── CLAUDE.md              → universal agent behaviour
-│   ├── goverance_CLAUDE.md    → DoD, registries, agent roles, workflow
-│   ├── hooks/                 → deterministic enforcement
-│   ├── commands/              → slash-command flows
-│   ├── settings.json          → permissions, model, hook registry
-│   └── settings.local.json    → personal settings, gitignored
-├── docs/
-│   └── architecture.md        → architecture deep-dive
-├── src/                       → application source
-├── tests/                     → test source
-└── openspec/                  → Spectra specs and change proposals
-```
+See `docs/architecture.md` → Repository Layout.
+
+## Ship (Release)
+
+See 'docs/architecture.md' → Build and Distribution.
 
 ## Out of Scope
 

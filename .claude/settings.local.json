@@ -23,7 +23,11 @@
       "Bash(code-review-graph *)",
       "Bash(git add *)",
       "Bash(git push *)",
-      "Bash(spectra new *)"
+      "Bash(spectra new *)",
+      "Bash(git *)",
+      "Bash(spectra instructions *)",
+      "Bash(spectra status *)",
+      "Bash(spectra analyze *)"
     ],
     "deny": [
       "Bash(sudo *)",
@@ -33,5 +37,8 @@
   },
   "enabledMcpjsonServers": [
     "code-review-graph"
-  ]
+  ],
+  "enabledPlugins": {
+    "ponytail@ponytail": true
+  }
 }
