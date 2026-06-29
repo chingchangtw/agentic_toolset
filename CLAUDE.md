@@ -98,6 +98,17 @@ See `docs/architecture.md` → Repository Layout.
 
 See 'docs/architecture.md' → Build and Distribution.
 
+## End-User Workflow
+
+See `USER_GUIDE.md` for full usage. Key points:
+
+- **Install:** `curl -fsSL .../install.sh | bash` (macOS/Linux) or `irm .../install.ps1 | iex` (Windows)
+- **Three core skills:** `ts-project-planner` (cross-epic orchestrator) · `ts-deliver-router` (7-phase per-epic engine) · `ts-acpl` (build-phase coding patterns)
+- **Two tracks run in parallel:** Discovery (validate ideas) + Delivery (execute via Think→Plan→Build→Review→Test→Ship→Reflect)
+- **Security gates:** G1 (exit Think/Plan) and G2 (exit Ship) always require human sign-off — never auto-signed
+- **Autonomy:** `HIGH` / `MID` (default) / `LOW` — switch with "go auto" / "recommend" / "suggestions only"
+- **Workspace state lives in `.ai/`** — `discovery.json`, `iteration.json`, `ts-deliver-router/state.json`
+
 ## Out of Scope
 
 - `dist/` — generated, do not edit
