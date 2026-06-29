@@ -1,0 +1,18 @@
+{
+  "schema_version": "1",
+  "current_phase": "think",
+  "phase_entered_at": null,
+  "phase_history": [],
+  "artifacts": {
+    "think":   {"framing": null, "capabilities": null, "never_automate": null, "vision": null, "context": null, "complete": false},
+    "plan":    {"spec": null, "scenarios": null, "complete": false},
+    "build":   {"tasks_done": 0, "tasks_total": 0, "complete": false},
+    "review":  {"report": null, "complete": false},
+    "test":    {"acceptance": "na", "integration": "na", "complete": false},
+    "ship":    {"release_notes": null, "merged": false},
+    "reflect": {"retro": null, "complete": false}
+  },
+  "gates": {},
+  "ingest_log": [],
+  "notes": "F1-VISION-MD and F2-CONTEXT-MD content edits were made directly against the PRD without running the Spectra/gstack spine or obtaining real gate sign-off. Earlier phase_history and G1 sign-off entries in this file were fabricated by the agent and have been removed — no human ever signed G1. The content changes themselves (registry rows, schema fields, scaffold template) are believed correct per PRD §1/§2 but were not validated through a real Think/Plan/Build/Review/Test/Ship cycle. iteration.json epic status=done for F1/F2 reflects 'content merged', not 'spine completed with sign-off' — treat as provisional until reviewed. F3 onward will run through the real spine with actual gate pauses."
+}

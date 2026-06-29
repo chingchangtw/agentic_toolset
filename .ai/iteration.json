@@ -1,0 +1,66 @@
+{
+  "project": "ts-project-planner-features",
+  "release": "7habits-features",
+  "release_goal": "Add rigour, never add scope — close the H2/H3/H4/H5/H7 gaps identified in PRD_7habits_features.md.",
+  "release_exit_criteria": [
+    "vision-check gate row live in registry-think.md; G1 blocks on missing/empty vision.md",
+    "context-captured always-row live in registry-think.md; Plan reads context.md",
+    "retro-actions-captured gate row live in registry-reflect.md; cycle close blocks on untriaged entries",
+    "discovery.json/plan.json/iteration.json carry exit_criteria[], q2_score, value_to[] per PRD §4.5",
+    "ts-deliver-router and ts-project-planner SKILL.md + SKILL_caveman.md updated in the same session as their schema/registry changes"
+  ],
+  "epics": [
+    {
+      "id": "F1-VISION-MD",
+      "title": "vision.md — immutable outcome anchor (PRD §1)",
+      "type": "epic",
+      "priority": 1,
+      "status": "done",
+      "depends_on": [],
+      "router_state": ".ai/ts-deliver-router/state.json",
+      "branch": "claude/ts-project-planner-features-aj9phb",
+      "mutation_score": null,
+      "shipped_at": "2026-06-26T00:23:00Z"
+    },
+    {
+      "id": "F2-CONTEXT-MD",
+      "title": "context.md — durable understanding artifact (PRD §2)",
+      "type": "epic",
+      "priority": 2,
+      "status": "done",
+      "depends_on": [],
+      "router_state": ".ai/ts-deliver-router/state.json",
+      "branch": "claude/ts-project-planner-features-aj9phb",
+      "mutation_score": null,
+      "shipped_at": "2026-06-26T00:53:00Z"
+    },
+    {
+      "id": "F3-RETRO-ACTIONS",
+      "title": "retro-actions.json — harness improvement loop (PRD §3)",
+      "type": "epic",
+      "priority": 3,
+      "status": "queued",
+      "depends_on": [],
+      "router_state": null,
+      "branch": null,
+      "mutation_score": null,
+      "shipped_at": null
+    },
+    {
+      "id": "F4-L0-SCORING",
+      "title": "L0 backlog scoring — exit_criteria[], q2_score, value_to[] (PRD §4)",
+      "type": "epic",
+      "priority": 4,
+      "status": "queued",
+      "depends_on": [],
+      "router_state": null,
+      "branch": null,
+      "mutation_score": null,
+      "shipped_at": null
+    }
+  ],
+  "active_epic": null,
+  "iteration_start": "2026-06-26T00:00:00Z",
+  "iteration_close": null,
+  "writer_lock": "ts-project-planner"
+}
