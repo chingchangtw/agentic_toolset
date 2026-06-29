@@ -16,6 +16,8 @@ Agentic Toolset has two concerns:
 
 There is no runtime server. Everything runs locally inside the user's Claude Code session.
 
+→ **End-user workflow guide:** [`USER_GUIDE.md`](USER_GUIDE.md)
+
 ---
 
 ## Features
