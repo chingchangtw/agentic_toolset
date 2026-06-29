@@ -91,7 +91,7 @@ npm install
 ### Building a release
 
 ```bash
-npm run release
+node scripts/build-release.mjs
 ```
 
 Produces `dist/release.zip` bundling skills, hooks, commands, and scaffold template.
