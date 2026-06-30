@@ -37,6 +37,16 @@ mkdir -p "${SKILLS_DIR}"
 if [[ -d skills ]]; then
   for skill_dir in skills/*/; do
     name="$(basename "${skill_dir}")"
+    if [[ "${name}" == "ondemand" ]]; then
+      mkdir -p "${SKILLS_DIR}/ondemand"
+      for ondemand_dir in "${skill_dir}"*/; do
+        [[ -d "${ondemand_dir}" ]] || continue
+        od_name="$(basename "${ondemand_dir}")"
+        cp -r "${ondemand_dir}" "${SKILLS_DIR}/ondemand/${od_name}"
+        echo "   ✓ skill (ondemand): ${od_name}"
+      done
+      continue
+    fi
     cp -r "${skill_dir}" "${SKILLS_DIR}/${name}"
     echo "   ✓ skill: ${name}"
   done

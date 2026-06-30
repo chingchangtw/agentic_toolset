@@ -44,18 +44,19 @@ mkdirSync(BUILD, { recursive: true });
 const skillsSrc = join(ROOT, 'src', 'skills');
 const skillsDest = join(BUILD, 'skills');
 
-function copySkillsDir(srcDir) {
+function copySkillsDir(srcDir, destDir = skillsDest) {
   for (const entry of readdirSync(srcDir)) {
     const full = join(srcDir, entry);
     if (!statSync(full).isDirectory()) continue;
-    // ondemand is a subdirectory of skills — recurse into it
     if (entry === 'ondemand') {
-      copySkillsDir(full);
+      const ondemandDest = join(destDir, 'ondemand');
+      mkdirSync(ondemandDest, { recursive: true });
+      copySkillsDir(full, ondemandDest);
       continue;
     }
     validateSkill(full, entry);
-    cp(full, join(skillsDest, entry));
-    console.log(`  skill: ${entry}`);
+    cp(full, join(destDir, entry));
+    console.log(`  skill: ${destDir === skillsDest ? '' : 'ondemand/'}${entry}`);
   }
 }
 
