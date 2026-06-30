@@ -13,7 +13,12 @@
 | `active_epic` | ts-deliver-router | ID of currently active epic, null if none |
 | `iteration_start` | ts-project-planner | ISO datetime when /ts-iteration start ran |
 | `iteration_close` | ts-project-planner | ISO datetime when /ts-iteration close ran, null if open |
-| `writer_lock` | both | "ts-project-planner" or "ts-deliver-router" — set before write, clear after |
+| `writer_lock` | both | "ts-project-planner" or "ts-deliver-router" — set before write, clear after; also covers active_phase, active_idea, dial, epic_dial_overrides, resume_log |
+| `active_phase` | ts-orchestrate | Current orchestration phase: `Discovery`, `Delivery`, or null |
+| `active_idea` | ts-orchestrate | ID of the idea currently in focus (e.g. "idea-003"), or null |
+| `dial` | ts-orchestrate | Orchestration autonomy level: `HIGH`, `MID`, or `LOW` |
+| `epic_dial_overrides` | ts-orchestrate | Object keyed by epic id — per-epic delivery DIAL override; global dial is fallback |
+| `resume_log` | ts-orchestrate | Array of resume events logged by /ts-orchestrate:resume |
 
 ### `epics[]` entry fields
 | Field | Owner | Description |

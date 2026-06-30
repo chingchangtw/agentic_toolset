@@ -12,8 +12,10 @@ CLAUDE_DIR="${HOME}/.claude"
 PROJECT_DIR=$(pwd)
 PROJECT_CLAUDE_DIR="${PROJECT_DIR}/.claude"
 HOOKS_DIR="${CLAUDE_DIR}/hooks"
+PROJECT_HOOKS_DIR="${PROJECT_CLAUDE_DIR}/hooks"
 SKILLS_DIR="${PROJECT_CLAUDE_DIR}/skills"
 SETTINGS="${CLAUDE_DIR}/settings.json"
+PROJECT_SETTINGS="${PROJECT_CLAUDE_DIR}/settings.json"
 TMPDIR_INSTALL="$(mktemp -d)"
 
 # ── download ──────────────────────────────────────────────────────────────────
@@ -52,6 +54,53 @@ if [[ -d hook ]]; then
   echo "   ✓ ts-session-guard.py"
   echo "   ✓ ts-statusline_bridge.py"
 fi
+
+# ── project hook (per-project: inject-workflow-state) ─────────────────────────
+
+echo "→ Installing project hook → ${PROJECT_HOOKS_DIR}/"
+mkdir -p "${PROJECT_HOOKS_DIR}"
+if [[ -d hook && -f hook/inject-workflow-state.sh ]]; then
+  cp hook/inject-workflow-state.sh "${PROJECT_HOOKS_DIR}/inject-workflow-state.sh"
+  chmod +x "${PROJECT_HOOKS_DIR}/inject-workflow-state.sh"
+  echo "   ✓ inject-workflow-state.sh"
+fi
+
+# ── project settings.json (UserPromptSubmit hook registration) ─────────────────
+
+echo "→ Patching ${PROJECT_SETTINGS}"
+mkdir -p "${PROJECT_CLAUDE_DIR}"
+
+python3 - "${PROJECT_SETTINGS}" << 'PYEOF2'
+import json, sys
+from pathlib import Path
+
+settings_path = Path(sys.argv[1])
+
+settings = {}
+if settings_path.exists():
+    try:
+        settings = json.loads(settings_path.read_text(encoding="utf-8"))
+    except Exception:
+        pass
+
+hook_cmd = 'bash "$CLAUDE_PROJECT_DIR/.claude/hooks/inject-workflow-state.sh"'
+hooks = settings.setdefault("hooks", {})
+ups   = hooks.setdefault("UserPromptSubmit", [])
+
+already = any(
+    hook.get("command") == hook_cmd
+    for entry in ups
+    for hook in entry.get("hooks", [])
+)
+if not already:
+    ups.append({"hooks": [{"type": "command", "command": hook_cmd}]})
+
+settings_path.write_text(
+    json.dumps(settings, indent=2, ensure_ascii=False),
+    encoding="utf-8"
+)
+print("   ✓ project settings.json patched")
+PYEOF2
 
 # ── settings.json ─────────────────────────────────────────────────────────────
 

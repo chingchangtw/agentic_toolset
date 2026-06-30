@@ -69,7 +69,7 @@ const hookSrc  = join(ROOT, 'src', 'hook');
 const hookDest = join(BUILD, 'hook');
 mkdirSync(hookDest, { recursive: true });
 
-for (const f of ['ts-session-guard.py', 'ts-statusline_bridge.py', 'ts-statusline_bridge.ps1', 'ts-statusline_wrapper.sh']) {
+for (const f of ['ts-session-guard.py', 'ts-statusline_bridge.py', 'ts-statusline_bridge.ps1', 'ts-statusline_wrapper.sh', 'inject-workflow-state.sh']) {
   const src = join(hookSrc, f);
   if (!existsSync(src)) { console.warn(`  SKIP (missing): ${f}`); continue; }
   cp(src, join(hookDest, f));
