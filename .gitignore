@@ -12,3 +12,5 @@ openspec/.vector-search.db*
 # release build artifacts
 dist/
 .release-build/
+
+node_modules/

@@ -74,4 +74,20 @@ Load the relevant file(s) before executing a command. Do not load all files at o
 | `references/agents.md` | Choosing sub-agents for a Discovery or Delivery task |
 | `references/on-first-use.md` | First-use initialization steps |
 
+---
 
+## Workflow Routing
+
+Use this table at session start to determine which skill sequence to activate.
+
+| Starting point | Size | Activate |
+|---|---|---|
+| New idea | Any | /ts-discover:idea |
+| Idea in Discovery | Small (bugfix/tweak) | /ts-discover:decide build → /ts-iteration:next → /ts-deliver:init --scope lean |
+| Idea in Discovery | Medium/Large | /ts-discover:explore → validate → decide → /ts-project:plan --sync → /ts-iteration:start → /ts-iteration:next |
+| Active epic | Any | /ts-deliver:status → /ts-deliver:refine (follow phase spine) |
+| Epic complete | Any | /ts-iteration:next (or /ts-iteration:close if last) → /ts-discover:status |
+
+HARD RULE: Never start /ts-deliver:init without an epic in iteration.json.active_epic.
+
+HARD RULE: Never mark epic done without G1 + G2 human sign-off.

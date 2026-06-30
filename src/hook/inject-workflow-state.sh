@@ -7,6 +7,25 @@ ITERATION="$PROJ/.ai/iteration.json"
 
 if [ -f "$DELIVER_STATE" ]; then
   PHASE=$(jq -r '.current_phase // "unknown"' "$DELIVER_STATE" 2>/dev/null) || exit 0
+
+  SCHEMA_VER=$(jq -r '.schema_version // empty' "$DELIVER_STATE" 2>/dev/null) || true
+  if [ -n "$SCHEMA_VER" ] && [ "$SCHEMA_VER" != "1" ]; then
+    echo "[BLOCKED] state schema version mismatch"
+    exit 0
+  fi
+
+  DRY_RUN=$(jq -r '.dry_run // false' "$DELIVER_STATE" 2>/dev/null) || true
+  if [ "$DRY_RUN" = "true" ] && [ "$PHASE" = "ship" ]; then
+    echo "[DRY-RUN] cannot sign security gate in dry-run mode"
+    exit 0
+  fi
+
+  GATE_STATUS=$(jq -r '.gates["sec-review"].status // empty' "$DELIVER_STATE" 2>/dev/null) || true
+  if [ "$GATE_STATUS" = "pending" ] && [ "$PHASE" = "ship" ]; then
+    echo "[BLOCKED] Ship blocked: sec-review gate not signed"
+    exit 0
+  fi
+
   EPIC=$(jq -r 'if .active_epic then .active_epic else "none" end' "$ITERATION" 2>/dev/null) || EPIC="none"
   echo "[WORKFLOW STATE] ts-deliver phase: $PHASE | active epic: $EPIC"
   case "$PHASE" in
