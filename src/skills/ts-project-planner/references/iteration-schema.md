@@ -1,6 +1,6 @@
 # Iteration Schema Reference
 
-## `.ai/iteration.json` — Full Field Reference
+## `.agents/iteration.json` — Full Field Reference
 
 ### Top-level fields
 | Field | Owner | Description |

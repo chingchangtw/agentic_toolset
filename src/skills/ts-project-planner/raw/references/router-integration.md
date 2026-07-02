@@ -6,8 +6,8 @@ When `/ts-iteration next` calls `/ts-deliver init`, it passes:
 
 ```
 type:               <from epic.type in iteration.json>
-domain_file:        .ai/domain.json
-risks_file:         .ai/risks.md
+domain_file:        .agents/domain.json
+risks_file:         .agents/risks.md
 acpl_pattern_group: <from domain.json, or from the originating discovery idea's
                       exploration_output if the epic came from --sync>
 phase_activation:   <derived from type — see Work Unit Types table>
@@ -50,7 +50,7 @@ This preserves a single point of decision authority over Discovery: only
 
 ### G1 gate enrichment
 
-ts-deliver-router reads `.ai/risks.md` during Review G1. Any `open` risk
+ts-deliver-router reads `.agents/risks.md` during Review G1. Any `open` risk
 relevant to the current epic is surfaced in the STRIDE checklist
 automatically. Separately, ts-deliver-router's G1 also surfaces (advisory,
 non-blocking) any `discovery.json` entry with `source_epic` = the current

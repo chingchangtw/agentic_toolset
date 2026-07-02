@@ -6,7 +6,7 @@ Loaded with every registry-<phase>.md call. Defines behavior shared across all p
 HIGH=auto: run chain end-to-end; stop only taste+security gates; print artifacts+token cost per phase.
 MID=recommend (DEFAULT): name phase + next skill(s)/checks; wait approve each step.
 LOW=suggest: name phase only; no skill names.
-First use→ask "Autonomy? HIGH/MID/LOW", save to `.ai/ts-deliver-router/autonomy`.
+First use→ask "Autonomy? HIGH/MID/LOW", save to `.agents/ts-deliver-router/autonomy`.
 Switch: "go auto"→HIGH | "recommend"→MID | "suggestions only"→LOW.
 Downshift always ok; upshift re-confirms before destructive/security step.
 Safety override: gates always pause for human even in HIGH; HIGH never auto-signs.

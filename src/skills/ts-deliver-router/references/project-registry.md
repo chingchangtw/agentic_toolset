@@ -11,13 +11,13 @@ what thresholds apply.
 ## Source-of-truth split
 
 - Template catalog: `registry/registry-<phase>.md` (all possible checks)
-- Project activation: `.ai/ts-deliver-router/registry.json` (active/optional/pending-setup/retired)
+- Project activation: `.agents/ts-deliver-router/registry.json` (active/optional/pending-setup/retired)
 - Router behavior: consult phase template for available checks, then project registry for
   tier and threshold at runtime
 
 This extends CHECKS REGISTRY. It does not introduce a fourth primitive.
 
-## `.ai/ts-deliver-router/registry.json` minimum model
+## `.agents/ts-deliver-router/registry.json` minimum model
 
 ```json
 {

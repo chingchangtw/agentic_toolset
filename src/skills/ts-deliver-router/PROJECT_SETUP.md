@@ -10,13 +10,13 @@ Copy the block below into your Claude Code Project's **Project Instructions**
 
 ### Workflow Hub
 This project uses ts-deliver-router as its workflow coordinator.
-Phase: read from `.ai/ts-deliver-router/state.json` — never infer from artifacts.
-Registry: read from `.ai/ts-deliver-router/registry.json` — check before routing.
-DIAL: read from `.ai/ts-deliver-router/autonomy` — default MID if missing.
+Phase: read from `.agents/ts-deliver-router/state.json` — never infer from artifacts.
+Registry: read from `.agents/ts-deliver-router/registry.json` — check before routing.
+DIAL: read from `.agents/ts-deliver-router/autonomy` — default MID if missing.
 
 On any "what next" / "where am I" / "which skill" query:
-1. Read .ai/ts-deliver-router/state.json → stale or missing → STOP, report reason
-2. Read .ai/ts-deliver-router/registry.json → missing → prompt /ts-deliver init
+1. Read .agents/ts-deliver-router/state.json → stale or missing → STOP, report reason
+2. Read .agents/ts-deliver-router/registry.json → missing → prompt /ts-deliver init
 3. Verify phase artifacts pass minimum-schema
 4. Consult CHECKS REGISTRY for current phase
 5. Respect DIAL setting
@@ -62,7 +62,7 @@ hook does not fire. Full spec: SKILL.md "Discovery Feedback Hook".
 
 ### Security Gates (always pause for human — no DIAL level bypasses)
 G1 (Review phase): STRIDE + OWASP + Semgrep zero H/C + Trivy secrets clean
-  + advisory linkage to .ai/discovery.json entries for this epic
+  + advisory linkage to .agents/discovery.json entries for this epic
 G2 (Test phase):   mutation score ≥ registry threshold + Trivy re-run clean
 
 ### Plugin Stack (fills former placeholders)

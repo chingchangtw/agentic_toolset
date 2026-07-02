@@ -27,7 +27,7 @@ Triggered by:
 ```json
 {
   "generated": "<ISO date>",
-  "source": ".ai/ts-deliver-router/registry.json",
+  "source": ".agents/ts-deliver-router/registry.json",
   "agents": [
     {
       "id": "copilot | codex | antigravity",

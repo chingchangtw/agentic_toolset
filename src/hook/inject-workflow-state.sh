@@ -2,8 +2,8 @@
 set -euo pipefail
 
 PROJ="${CLAUDE_PROJECT_DIR:-$(pwd)}"
-DELIVER_STATE="$PROJ/.ai/ts-deliver-router/state.json"
-ITERATION="$PROJ/.ai/iteration.json"
+DELIVER_STATE="$PROJ/.agents/ts-deliver-router/state.json"
+ITERATION="$PROJ/.agents/iteration.json"
 
 if [ -f "$DELIVER_STATE" ]; then
   PHASE=$(jq -r '.current_phase // "unknown"' "$DELIVER_STATE" 2>/dev/null) || exit 0

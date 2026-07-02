@@ -6,7 +6,7 @@ Three-layer dual-track agile project orchestrator that sits above ts-deliver-rou
 
 - **Layer D — Discovery:** Seed ideas, explore domains, validate assumptions, make
   build/kill/reduce-scope decisions. Produces a ready-for-delivery buffer
-  (`.ai/discovery.json`).
+  (`.agents/discovery.json`).
 - **Layer 0 — Backlog:** Decompose a project vision into a release map + epic
   backlog. Sync ready discoveries into `plan.json`.
 - **Layer 1 — Delivery:** Sequence epics into iterations, run ts-deliver-router
@@ -22,7 +22,7 @@ ts-project-planner/
 ├── SKILL_caveman.md                   ← Token-optimized variant
 ├── README.md                          ← This file
 └── references/
-    ├── workspace-spec.md              ← .ai/ layout contract + shared schemas
+    ├── workspace-spec.md              ← .agents/ layout contract + shared schemas
     ├── iteration-schema.md            ← iteration.json full reference + example
     ├── work-unit-profiles.md          ← Registry profiles: epic / refactor / bugfix
     └── discovery-kanban.md            ← Discovery stage criteria, WIP, stale, dedup
@@ -31,7 +31,7 @@ ts-project-planner/
 ## Workspace (shared with ts-deliver-router)
 
 ```
-.ai/                            ← workspace root
+.agents/                            ← workspace root
 ├── WORKSPACE.md                ← layout contract (created by /ts-deliver init)
 ├── discovery.json              ← Ready-for-Delivery buffer (this skill primary writer)
 ├── domain.json                 ← ES output (written by ts-event-storming-facilitator)
@@ -80,4 +80,4 @@ ts-project-planner/
 ## Prerequisites
 
 - `ts-deliver-router` installed (see ts-deliver-router change PRD)
-- `/ts-deliver init` creates `.ai/WORKSPACE.md` if not present
+- `/ts-deliver init` creates `.agents/WORKSPACE.md` if not present

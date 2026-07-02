@@ -59,7 +59,7 @@ Skills are isolated: no cross-skill imports, no shared state files between skill
 |-------|-------------|
 | `ts-orchestrate` | **Dual-track orchestrator — session entry point.** Orchestrates all 4 layers: Layer D (Discovery) → Layer 0 (Backlog) → Layer 1 (Sequencing) → Layer 2 (Delivery spine). `/ts-orchestrate:start WORK_TYPE AUTONOMY` sets active_epic + DIAL, routes to correct phase spine. `/ts-orchestrate:status` shows unified view of Discovery WIP + Delivery phase + pending gates. `/ts-orchestrate:next` enforces G1/G2 before phase advance (never auto-signs). |
 | `ts-project-planner` | **Discovery track planner.** Layer D (idea→explore→validate→decide) + Layer 0 (Backlog sync: `--new` / `--sync`) + Layer 1 (Delivery sequencing: `/ts-iteration:start\|next\|close`). Drives `ts-deliver-router` per epic. NOT the top-level orchestrator — that's `ts-orchestrate`. |
-| `ts-deliver-router` | **Delivery track engine.** 7-phase spine (Think→Plan→Build→Review→Test→Ship→Reflect); spine varies by epic type (bugfix=3, refactor=6, epic=7). Reads `.ai/ts-deliver-router/state.json` (slim: current phase); history in `.ai/ts-deliver-router/history.jsonl`. |
+| `ts-deliver-router` | **Delivery track engine.** 7-phase spine (Think→Plan→Build→Review→Test→Ship→Reflect); spine varies by epic type (bugfix=3, refactor=6, epic=7). Reads `.agents/ts-deliver-router/state.json` (slim: current phase); history in `.agents/ts-deliver-router/history.jsonl`. |
 | `ts-project-scaffolder` | Scaffolds a new project workspace from the standard template. Requires Spectra CLI. |
 | `ts-acpl` | AI Coding Pattern Language — pattern library bridging Problem Frame specs → AI-generated code → mutation-resistant output. |
 | `ts-project-init-advisor` | Analyzes an existing project and generates `PROJECT_INIT_PLAN.md` — an executable Claude Code setup plan (MCPs, skills, hooks, CLAUDE.md). |
@@ -87,8 +87,8 @@ hook types:
 
 ### UserPromptSubmit Hook — `inject-workflow-state.sh`
 
-Fires before each user prompt. Reads `.ai/ts-deliver-router/state.json` and
-`.ai/iteration.json` and injects a `[WORKFLOW STATE]` line into Claude's context on
+Fires before each user prompt. Reads `.agents/ts-deliver-router/state.json` and
+`.agents/iteration.json` and injects a `[WORKFLOW STATE]` line into Claude's context on
 every turn — giving `ts-orchestrate` the current phase and active epic without a file
 read per invocation.
 
@@ -160,7 +160,7 @@ Every turn:
 Before each prompt (two hooks fire in sequence):
   UserPromptSubmit event
     → inject-workflow-state.sh
-    → reads .ai/ts-deliver-router/state.json + .ai/iteration.json
+    → reads .agents/ts-deliver-router/state.json + .agents/iteration.json
     → injects [WORKFLOW STATE] + [NEXT] into Claude's additionalContext
     → (silent if no state files)
 
@@ -179,7 +179,7 @@ Before each prompt (two hooks fire in sequence):
 projects. It establishes the standard workspace layout:
 
 ```
-.ai/          — project standards, lessons learned, build recipes
+.agents/          — project standards, lessons learned, build recipes
 .claude/      — CLAUDE.md, governance, hooks, skills, settings
 .github/      — Copilot instructions
 docs/         — architecture, project init docs
@@ -269,7 +269,7 @@ subdirs via `tsconfig.json`. No cross-boundary relative imports (`../../`).
 - Every skill directory must have `SKILL.md` or the build aborts.
 - Hook scripts always exit 0 — hooks never block a Claude Code session.
 - `session_guard_state.json` is the shared runtime state between StatusLine bridge and session-guard hook.
-- `.ai/ts-deliver-router/state.json` is slim (current phase only, constant size). Full history lives in `.ai/ts-deliver-router/history.jsonl` (append-only, one line per phase exit).
+- `.agents/ts-deliver-router/state.json` is slim (current phase only, constant size). Full history lives in `.agents/ts-deliver-router/history.jsonl` (append-only, one line per phase exit).
 - `inject-workflow-state.sh` never echoes free-text fields — only enum values and IDs (prompt injection prevention).
 - Never invoke `/ts-deliver:init` without `active_epic` in `iteration.json` — ts-orchestrate enforces this at entry gate.
 - `dist/` is gitignored; `release/` is tracked source.

@@ -8,7 +8,7 @@ description: >
 
 # ts-deliver-router (caveman)
 
-Reads `.ai/ts-deliver-router/state.json` as truth. No inference.
+Reads `.agents/ts-deliver-router/state.json` as truth. No inference.
 Spine: Think→Plan→Build→Review→Test→Ship→Reflect.
 All checks lazy-loaded per registry list.
 
@@ -19,8 +19,8 @@ All checks lazy-loaded per registry list.
 
 ## Router Algorithm
 0 if dry-run: read-only, announce side effects, block sign-offs.
-1 autonomy = read `.ai/ts-deliver-router/autonomy` || ask.
-2 state = read `.ai/ts-deliver-router/state.json`. fail/stale → STOP.
+1 autonomy = read `.agents/ts-deliver-router/autonomy` || ask.
+2 state = read `.agents/ts-deliver-router/state.json`. fail/stale → STOP.
 3 P = current_phase. verify artifacts.
   if P == Think: check unknowns for hook criteria (a) blocks G1/G2, (b) affects >1 epic, (c) new external dep. If met, call `/ts-discover idea --from-router` (non-blocking).
 4 consult registry for P: run always, suggest rec.

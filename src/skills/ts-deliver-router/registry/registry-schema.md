@@ -1,6 +1,6 @@
 # Registry Schema Reference
 
-## `.ai/ts-deliver-router/registry.json` — Full Field Reference
+## `.agents/ts-deliver-router/registry.json` — Full Field Reference
 
 ### Top-level fields
 
@@ -88,7 +88,7 @@
 
 ---
 
-## `.ai/ts-deliver-router/registry.log` — Refinement History Format
+## `.agents/ts-deliver-router/registry.log` — Refinement History Format
 
 ```json
 [
@@ -108,7 +108,7 @@
 
 ---
 
-## `.ai/ts-deliver-router/state.json` — Phase State Format
+## `.agents/ts-deliver-router/state.json` — Phase State Format
 
 ```json
 {
