@@ -13,12 +13,12 @@ Layer D — Discovery (this skill)
               ▼
 Layer 0 — Backlog (this skill)
   /ts-project:plan --new   → vision interview → seed Discovery with candidate ideas
-  /ts-project:plan --sync  → pull status=ready items → .agents/ts-project-planner/plan.json
+  /ts-project:plan --sync  → pull status=ready items → .ai/ts-project-planner/plan.json
   /ts-project:status       → cross-iteration progress
   /ts-project:refine       → update backlog after each iteration
 
 Layer 1 — Delivery (this skill, orchestrates Layer 2)
-  /ts-iteration:start <release>  → load epics → .agents/iteration.json
+  /ts-iteration:start <release>  → load epics → .ai/iteration.json
   /ts-iteration:next             → advance to next epic → /ts-deliver:init
   /ts-iteration:close            → release tag + retro + promote next
 

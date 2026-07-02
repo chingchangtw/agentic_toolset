@@ -38,7 +38,7 @@ A task is complete when:
 5. Implement with minimal diffs. Mark each item complete as you finish it — not in a batch.
 6. Self-review against the Definition of Done (including the staff-engineer check).
 7. Suggest follow-up improvements only after the main task is complete.
-8. After any correction: update `.agents/LESSONS_LEARNED.md`. Ruthlessly iterate until mistake rate drops.
+8. After any correction: update `.ai/LESSONS_LEARNED.md`. Ruthlessly iterate until mistake rate drops.
 
 ## Elegance Check Gate
 For non-trivial changes, pause and ask: "Is there a more elegant way?" before committing.
@@ -103,7 +103,7 @@ After each non-trivial task, silently evaluate:
 - What was unclear and should be clarified earlier next time?
 - What pattern or utility should be extracted for reuse?
 
-Append durable lessons to `.agents/LESSONS_LEARNED.md` under one of:
+Append durable lessons to `.ai/LESSONS_LEARNED.md` under one of:
 - **Mistake** — what went wrong.
 - **Signal missed** — what should have been a stop-sign.
 - **Better rule** — a one-line rule for `.claude/CLAUDE.md` or `../CLAUDE.md`.

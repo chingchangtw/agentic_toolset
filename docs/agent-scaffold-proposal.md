@@ -92,7 +92,7 @@ references/agent-scaffold.md before executing any phase.
 One directory per agent where `tier = "active" | "optional"`.
 
 `.agent/` is the **shared handoff layer** — orchestrator writes, muscles read.
-Mirrors the `.agents/` pattern: `.agents/` is shared state, `.agents/ts-deliver-router/` is
+Mirrors the `.ai/` pattern: `.ai/` is shared state, `.ai/ts-deliver-router/` is
 private. `.agent/` is shared contracts, `.claude/` is Claude Code's private namespace.
 
 ---
@@ -128,7 +128,7 @@ Triggered by:
 ```json
 {
   "generated": "<ISO date>",
-  "source": ".agents/ts-deliver-router/registry.json",
+  "source": ".ai/ts-deliver-router/registry.json",
   "agents": [
     {
       "id": "copilot | codex | antigravity",

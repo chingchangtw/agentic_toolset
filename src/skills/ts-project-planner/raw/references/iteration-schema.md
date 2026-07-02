@@ -1,6 +1,6 @@
 # Iteration Schema Reference
 
-## `.agents/iteration.json` — Full Field Reference
+## `.ai/iteration.json` — Full Field Reference
 
 ### Top-level fields
 

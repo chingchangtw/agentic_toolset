@@ -1,4 +1,4 @@
-# .agents/WORKSPACE.md — Shared Skill Workspace
+# .ai/WORKSPACE.md — Shared Skill Workspace
 
 This directory is the shared working space for all skills in this project.
 Every skill that participates reads this file on first use to understand
@@ -9,7 +9,7 @@ the layout contract.
 ## Directory Convention
 
 ```
-.agents/
+.ai/
 │
 ├── WORKSPACE.md              ← this file — layout contract for all skills
 │
@@ -130,7 +130,7 @@ existing entry.*
       "priority": 1,
       "status": "queued|active|done|deferred",
       "depends_on": ["<epic-id>"],
-      "router_state": "<path to .agents/ts-deliver-router/state.json snapshot or null>",
+      "router_state": "<path to .ai/ts-deliver-router/state.json snapshot or null>",
       "branch": "<feat/name or null>",
       "mutation_score": null,
       "shipped_at": null

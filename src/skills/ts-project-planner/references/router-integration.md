@@ -4,8 +4,8 @@
 `/ts-iteration next` passes to `/ts-deliver init`:
 ```
 type:               <from epic.type in iteration.json>
-domain_file:        .agents/domain.json
-risks_file:         .agents/risks.md
+domain_file:        .ai/domain.json
+risks_file:         .ai/risks.md
 acpl_pattern_group: <from domain.json, or from the originating discovery idea's
                       exploration_output if the epic came from --sync>
 phase_activation:   <derived from type — see Work Unit Types table>
@@ -34,4 +34,4 @@ directly)
 ```
 Single point of decision authority: only `/ts-discover decide` (human-invoked) can move idea to `ready`/`killed`/`reduce-scope`.
 ### G1 gate enrichment
-ts-deliver-router reads `.agents/risks.md` at Review G1 — open risks surfaced in STRIDE checklist. Also surfaces (advisory, non-blocking) any `discovery.json` entry with `source_epic` = active epic and `status` not in `{ready, killed}`.
+ts-deliver-router reads `.ai/risks.md` at Review G1 — open risks surfaced in STRIDE checklist. Also surfaces (advisory, non-blocking) any `discovery.json` entry with `source_epic` = active epic and `status` not in `{ready, killed}`.

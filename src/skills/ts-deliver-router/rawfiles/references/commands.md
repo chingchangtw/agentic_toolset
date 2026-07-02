@@ -5,9 +5,9 @@
 Initializes project router state and project registry.
 
 Writes:
-- `.agents/ts-deliver-router/registry.json`
-- `.agents/ts-deliver-router/state.json`
-- `.agents/ts-deliver-router/autonomy` (if missing)
+- `.ai/ts-deliver-router/registry.json`
+- `.ai/ts-deliver-router/state.json`
+- `.ai/ts-deliver-router/autonomy` (if missing)
 
 Required outputs:
 - selected lifecycle stage
@@ -19,8 +19,8 @@ Required outputs:
 Refines project registry based on phase history and gate outcomes.
 
 Writes:
-- updated `.agents/ts-deliver-router/registry.json`
-- append entry to `.agents/ts-deliver-router/registry.log`
+- updated `.ai/ts-deliver-router/registry.json`
+- append entry to `.ai/ts-deliver-router/registry.log`
 
 Required prompts:
 - promote/demote tool tier
@@ -42,7 +42,7 @@ Does NOT read `history.jsonl`.
 
 ### `/ts-deliver status --history`
 
-Reads `.agents/ts-deliver-router/history.jsonl` and renders a phase transition table.
+Reads `.ai/ts-deliver-router/history.jsonl` and renders a phase transition table.
 
 Must show:
 - All rows from `history.jsonl` with event type `phase_exit`

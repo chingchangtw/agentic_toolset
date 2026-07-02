@@ -34,11 +34,11 @@ ts-deliver-router re-enters Discovery when Delivery surfaces a new unknown.
 
 ## Workspace
 
-All artifacts follow the `.agents/` workspace convention defined in
+All artifacts follow the `.ai/` workspace convention defined in
 `references/workspace-spec.md`. Read it before first use.
 
 ```
-.agents/                          ← workspace root
+.ai/                          ← workspace root
 ├── domain.json               ← shared: ES domain model (read here)
 ├── discovery.json            ← shared: Discovery backlog + Ready-for-Delivery buffer
 ├── iteration.json            ← shared: current release state (primary writer)
@@ -64,7 +64,7 @@ Load the relevant file(s) before executing a command. Do not load all files at o
 
 | File | Load when |
 |---|---|
-| `references/workspace-spec.md` | First use — `.agents/` layout contract, schemas, R/W matrix |
+| `references/workspace-spec.md` | First use — `.ai/` layout contract, schemas, R/W matrix |
 | `references/commands.md` | Any command invoked — step-by-step procedures for all commands |
 | `references/discovery-state.md` | Any `/ts-discover` command — state machine schema and transitions |
 | `references/discovery-kanban.md` | `/ts-discover explore/validate/decide/status` — stage criteria, WIP, stale rule, dedup |

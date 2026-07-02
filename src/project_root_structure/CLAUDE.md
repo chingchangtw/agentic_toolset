@@ -50,7 +50,7 @@ project-root/
 ├── CLAUDE.md                  → this file (project brief)
 ├── CLAUDE.local.md            → personal overrides, gitignored
 ├── .gitignore
-├── .agents/
+├── .ai/
 │   ├── ANTI_AI_STYLE.md       → style guard (referenced by global)
 │   ├── LESSONS_LEARNED.md     → durable lessons (see goverance)
 │   ├── build-test-validate.md → build / test / validate recipes
@@ -99,7 +99,7 @@ Detailed 7-step workflow, Definition of Done, and Release Readiness gates live i
 
 ## Maintenance Checklist
 - Review monthly. Drop rules that haven't prevented a specific mistake in 90 days.
-- After every user correction → add a lesson to `.agents/LESSONS_LEARNED.md` (see `.claude/goverance_CLAUDE.md`).
+- After every user correction → add a lesson to `.ai/LESSONS_LEARNED.md` (see `.claude/goverance_CLAUDE.md`).
 - Promote stable lessons into a Hard Rule above when the pattern recurs.
 - Owner: <FILL IN: name / team responsible for this file.>
 - Last reviewed: <FILL IN: YYYY-MM-DD>.

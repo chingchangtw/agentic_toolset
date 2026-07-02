@@ -26,7 +26,7 @@ verifies, gates, and dispatches.
   `apply`(Build)/`archive`(Ship); `ingest` = cross-cutting sub-loop, not a phase.
 - **Hub/muscle split:** Claude Code orchestrates, judges, runs gates.
   Copilot/Gemini do cheap implementation, docs, git mechanics.
-- **State as truth:** `.agents/ts-deliver-router/state.json`, written by each
+- **State as truth:** `.ai/ts-deliver-router/state.json`, written by each
   phase on exit. **Never inferred from artifacts.** Missing/stale/invalid →
   "phase unclear, manual review" + reason, STOP.
 
@@ -34,9 +34,9 @@ verifies, gates, and dispatches.
 
 | | Purpose | Stored in |
 |---|---|---|
-| **DIAL** | Autonomy: HIGH(auto)/MID(recommend, default)/LOW(suggest) | `.agents/ts-deliver-router/autonomy` |
+| **DIAL** | Autonomy: HIGH(auto)/MID(recommend, default)/LOW(suggest) | `.ai/ts-deliver-router/autonomy` |
 | **CHECKS REGISTRY** | Template catalogue: always/gate/rec per phase | `SKILL.md` table |
-| **PROJECT REGISTRY** | Per-project live tool collection + gate config | `.agents/ts-deliver-router/registry.json` |
+| **PROJECT REGISTRY** | Per-project live tool collection + gate config | `.ai/ts-deliver-router/registry.json` |
 | **Discovery Feedback Hook** *(not a primitive — one hook)* | Push unresolved unknowns to `ts-project-planner`'s Discovery track | `/ts-discover idea --from-router` |
 
 ### Two named security gates
@@ -77,7 +77,7 @@ boundary intact and the signal timely.
 Spine:        gstack 7 phases (fixed)
 BDD:          Spectra nested (discuss/propose/apply/ingest/archive)
 Hub/muscle:   Claude Code / Copilot+Gemini
-State:        .agents/ts-deliver-router/state.json (truth, never inferred)
+State:        .ai/ts-deliver-router/state.json (truth, never inferred)
 Primitives:   DIAL, CHECKS REGISTRY, PROJECT REGISTRY
 Hook:         Discovery Feedback Hook (Think+Build, gated a/b/c, non-blocking)
 Gates:        G1 (Think exit, STRIDE+OWASP), G2 (Test, mutation threshold)
@@ -85,7 +85,7 @@ Sub-agents:   ts-event-storming-facilitator, ts-spec-validator,
               ts-ddd-tactical-validator, ts-mutation-analyst
 MCPs:         Atlassian Rovo, code-review-graph (required), GitHub MCP
 Plugins:      Semgrep (SAST), Trivy (dep/secrets), Stryker/PITest/mutmut (mutation)
-Workspace:    .agents/ (shared root) + .agents/ts-deliver-router/ (private)
+Workspace:    .ai/ (shared root) + .ai/ts-deliver-router/ (private)
 ```
 
 ---
@@ -98,14 +98,14 @@ Workspace:    .agents/ (shared root) + .agents/ts-deliver-router/ (private)
 Feature: Router reads state.json as the only source of truth
 
   Scenario: Missing state.json
-    Given .agents/ts-deliver-router/state.json does not exist
+    Given .ai/ts-deliver-router/state.json does not exist
     When user asks "what next?"
     Then router responds "phase unclear, manual review — state.json missing.
       Run /ts-router init."
     And no phase is inferred from artifacts
 
   Scenario: Stale state.json
-    Given .agents/ts-deliver-router/state.json declares current_phase=plan with
+    Given .ai/ts-deliver-router/state.json declares current_phase=plan with
       artifact spec/scenarios.md
     And spec/scenarios.md's mtime is newer than state.json's mtime
     When user asks "what next?"
@@ -129,11 +129,11 @@ Feature: Router reads state.json as the only source of truth
 Feature: DIAL governs how much the router does without asking
 
   Scenario: First use — DIAL not yet set
-    Given .agents/ts-deliver-router/autonomy does not exist
+    Given .ai/ts-deliver-router/autonomy does not exist
     When /ts-router init runs
     Then router asks "Autonomy level? HIGH (auto) / MID (recommend, default) /
       LOW (suggest)"
-    And writes the answer to .agents/ts-deliver-router/autonomy
+    And writes the answer to .ai/ts-deliver-router/autonomy
 
   Scenario: HIGH mode still pauses for security gates
     Given autonomy=HIGH
@@ -189,7 +189,7 @@ Feature: Checks are typed always/gate/rec, attached per phase
 Feature: /ts-router init creates the live per-project registry
 
   Scenario: Init interview
-    Given no .agents/ts-deliver-router/registry.json exists
+    Given no .ai/ts-deliver-router/registry.json exists
     When /ts-router init runs
     Then router asks: project type / stack / external systems / frontend? /
       lifecycle stage (spike/active/stabilizing/maintenance)
@@ -253,7 +253,7 @@ Feature: Think/Build push unresolved unknowns to Discovery
 
   Scenario: G1 surfaces (advisory) a linked Discovery item
     Given idea-007 (source_epic=EPIC-GL-CORE, "Tax API reliability") has
-      status=idea in .agents/discovery.json
+      status=idea in .ai/discovery.json
     And current_phase=review, evaluating G1 for EPIC-GL-CORE
     When the G1 checklist runs
     Then router surfaces "idea-007 is unresolved in Discovery and linked to
@@ -351,9 +351,9 @@ Feature: Router algorithm
   Scenario: Six-step routing logic
     Given any "what next" / "where am I" / phase-advance request
     Then the router performs, in order:
-      1. Read .agents/ts-deliver-router/state.json (missing/stale → STOP)
-      2. Read .agents/ts-deliver-router/registry.json (missing → prompt init);
-         also read .agents/iteration.json and .agents/risks.md if present
+      1. Read .ai/ts-deliver-router/state.json (missing/stale → STOP)
+      2. Read .ai/ts-deliver-router/registry.json (missing → prompt init);
+         also read .ai/iteration.json and .ai/risks.md if present
       3. Verify current phase artifacts pass minimum-schema (fail → STOP)
       4. Consult CHECKS REGISTRY (run always, surface rec, enforce gate);
          [Think+Build only] evaluate Discovery Feedback Hook gating
@@ -441,7 +441,7 @@ unzip ts-deliver-router.skill -d .claude/skills/ts-deliver-router/
 # 2. First use in a project
 /ts-router init
 # → interview: project type, stack, lifecycle stage, mutation threshold,
-#   security gates → writes .agents/ts-deliver-router/{state,autonomy,registry}.json
+#   security gates → writes .ai/ts-deliver-router/{state,autonomy,registry}.json
 
 # 3. Drive the spine
 "what next?"  →  Think (ts-event-storming-facilitator if tier=active)

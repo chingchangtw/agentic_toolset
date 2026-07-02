@@ -1,5 +1,5 @@
 ## Discovery State Machine
-`.agents/discovery.json` — Discovery backlog. All `/ts-discover` commands operate on this.
+`.ai/discovery.json` — Discovery backlog. All `/ts-discover` commands operate on this.
 ### Schema
 ```json
 {

@@ -3,8 +3,8 @@ name: ts-project-planner
 description: >
   Three-layer project orchestrator implementing dual-track agile. Layer D
   (Discovery) runs Idea → Explore → Validate → Decide to produce a
-  Ready-for-Delivery buffer (.agents/discovery.json). Layer 0 (Backlog) syncs ready
-  items into a release map + epic backlog (.agents/ts-project-planner/plan.json).
+  Ready-for-Delivery buffer (.ai/discovery.json). Layer 0 (Backlog) syncs ready
+  items into a release map + epic backlog (.ai/ts-project-planner/plan.json).
   Layer 1 (Delivery) sequences epics per release and drives ts-deliver-router as
   a per-epic sub-loop. Activate whenever a user wants to plan a large project,
   run discovery on an idea, decide whether to build/kill/reduce-scope something,
@@ -15,7 +15,7 @@ description: >
   epics are next", "plan my MVP", "start iteration", "what's in discovery",
   "what's the status across all epics", "break this down into manageable
   pieces". Works with ts-deliver-router — do NOT replace it. Reads and writes
-  shared artifacts in .agents/ workspace root per WORKSPACE.md convention.
+  shared artifacts in .ai/ workspace root per WORKSPACE.md convention.
 ---
 
 # ts-project-planner
@@ -41,11 +41,11 @@ ts-deliver-router re-enters Discovery when Delivery surfaces a new unknown.
 
 ## Workspace
 
-All artifacts follow the `.agents/` workspace convention defined in
+All artifacts follow the `.ai/` workspace convention defined in
 `references/workspace-spec.md`. Read it before first use.
 
 ```
-.agents/                          ← workspace root
+.ai/                          ← workspace root
 ├── domain.json               ← shared: ES domain model (read here)
 ├── discovery.json            ← shared: Discovery backlog + Ready-for-Delivery buffer
 ├── iteration.json            ← shared: current release state (primary writer)
@@ -75,12 +75,12 @@ Layer D — Discovery (this skill)
               ▼
 Layer 0 — Backlog (this skill)
   /ts-project plan --new   → vision interview → seed Discovery with candidate ideas
-  /ts-project plan --sync  → pull status=ready items → .agents/ts-project-planner/plan.json
+  /ts-project plan --sync  → pull status=ready items → .ai/ts-project-planner/plan.json
   /ts-project status       → cross-iteration progress
   /ts-project refine       → update backlog after each iteration
 
 Layer 1 — Delivery (this skill, orchestrates Layer 2)
-  /ts-iteration start <release>  → load epics → .agents/iteration.json
+  /ts-iteration start <release>  → load epics → .ai/iteration.json
   /ts-iteration next             → advance to next epic → /ts-deliver init
   /ts-iteration close            → release tag + retro + promote next
 
@@ -96,7 +96,7 @@ Load the relevant file(s) before executing a command. Do not load all files at o
 
 | File | Load when |
 |---|---|
-| `references/workspace-spec.md` | First use — `.agents/` layout contract, schemas, R/W matrix |
+| `references/workspace-spec.md` | First use — `.ai/` layout contract, schemas, R/W matrix |
 | `references/commands.md` | Any command invoked — step-by-step procedures for all commands |
 | `references/discovery-state.md` | Any `/ts-discover` command — state machine schema and transitions |
 | `references/discovery-kanban.md` | `/ts-discover explore/validate/decide/status` — stage criteria, WIP, stale rule, dedup |

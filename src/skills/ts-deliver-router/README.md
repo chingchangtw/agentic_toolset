@@ -31,7 +31,7 @@ Place the skill folder at **`.claude/skills/ts-deliver-router/`** in your repo. 
 
 Trigger by asking naturally ("what's next?", "where am I?", "which skill?") or explicitly with `/ts-deliver-router`. Matching is driven by the `description` in the YAML frontmatter — identical mechanism across all three tools.
 
-> **Cross-tool state:** Claude Code and Copilot keep separate sessions and don't share chat history. They stay consistent by reading the same on-disk autonomy file (`.agents/ts-deliver-router/autonomy`).
+> **Cross-tool state:** Claude Code and Copilot keep separate sessions and don't share chat history. They stay consistent by reading the same on-disk autonomy file (`.ai/ts-deliver-router/autonomy`).
 
 ---
 
@@ -46,7 +46,7 @@ The same SOP drives all three levels — only how much the router *does for you 
 | **LOW** | Suggest | Names the **lifecycle stage only** — no skill names. Pure "you are here." |
 
 - **Asks** on first use in a project (no saved preference).
-- **Remembers** by writing `HIGH`/`MID`/`LOW` to `.agents/ts-deliver-router/autonomy`.
+- **Remembers** by writing `HIGH`/`MID`/`LOW` to `.ai/ts-deliver-router/autonomy`.
 - **Switches** anytime: "go auto" → HIGH, "recommend mode" → MID, "suggestions only" → LOW. Downshift to LOW always allowed; upshift to HIGH re-confirms before the next destructive/security step.
 - **Safety override:** the two security gates pause for human sign-off **regardless of level**, even HIGH. The dial controls convenience, never safety.
 

@@ -1,6 +1,6 @@
 # Phase Exit Contracts
 
-Every phase exit MUST atomically write `.agents/ts-deliver-router/state.json` with the fields below.
+Every phase exit MUST atomically write `.ai/ts-deliver-router/state.json` with the fields below.
 If any required field is missing → router treats state as invalid on next read.
 
 ---

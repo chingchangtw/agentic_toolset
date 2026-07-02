@@ -153,11 +153,11 @@ and the gate-enforcing phase advancer (`/ts-orchestrate:next`). The earlier desc
 `ts-project-planner` as "dual-track agile orchestrator" referred to its internal Discovery
 track layering — it is not the top-level orchestrator; `ts-orchestrate` is.
 
-The shared workspace root `.agents/` and generic shared artifacts (`domain.json`,
+The shared workspace root `.ai/` and generic shared artifacts (`domain.json`,
 `iteration.json`, `risks.md`, `discovery.json`, `decisions/`, `WORKSPACE.md`)
 deliberately stayed **unprefixed** — they're conventions any future skill
 might use, not identifiers of one skill. Only skill-private directories
-(`.agents/ts-deliver-router/`, `.agents/ts-project-planner/`) and the skill/command/
+(`.ai/ts-deliver-router/`, `.ai/ts-project-planner/`) and the skill/command/
 sub-agent identifiers themselves carry the prefix.
 
 `ts-deliver-router`'s commands use the `/ts-deliver:*` colon syntax
@@ -182,7 +182,7 @@ agile, per Aktia) determines.
 
 **Layer D — Discovery** (new). `/ts-discover idea → explore → validate →
 decide [build|kill|keep-learning|reduce-scope]`. Produces a Ready-for-Delivery
-buffer: `.agents/discovery.json`, entries with `status=ready`.
+buffer: `.ai/discovery.json`, entries with `status=ready`.
 
 **Layer 0 — Backlog** (role clarified). `/ts-project plan --new` now seeds
 Discovery with *candidate ideas*, not epics. `/ts-project plan --sync` pulls
@@ -337,7 +337,7 @@ determines which layer to activate first.
 
 ### Core mechanism — `[WORKFLOW STATE]` hook
 
-ts-orchestrate does not call `jq .agents/ts-deliver-router/state.json` directly.
+ts-orchestrate does not call `jq .ai/ts-deliver-router/state.json` directly.
 Instead it reads the `[WORKFLOW STATE]` prefix injected by the
 `inject-workflow-state.sh` hook (see §10) into every Claude Code prompt. This
 keeps the skill's token cost flat — no file reads, no jq calls on every turn.
@@ -454,7 +454,7 @@ A separate design session explored two extensions, deliberately scoped as
 *extensions to existing primitives*, not new primitives — analyzed and
 recorded, **not yet merged** into any `SKILL.md`:
 
-**Phase-branch/tag strategy.** `.agents/ts-deliver-router/state.json` is truth
+**Phase-branch/tag strategy.** `.ai/ts-deliver-router/state.json` is truth
 but a single mutable file. A git tag at every phase exit
 (`lifecycle/<phase>/<cycle-id>`) gives a hard, immutable checkpoint —
 extension of the Phase Exit Contract, one new `state.json` field
@@ -527,14 +527,14 @@ fire after Review (to show which ingest deltas review findings triggered).
 │    /ts-iteration:close   │
 └──────────────────────────┘
 
-Shared workspace: .agents/ (root, unprefixed)
+Shared workspace: .ai/ (root, unprefixed)
   domain.json · discovery.json · iteration.json · risks.md · decisions/ · WORKSPACE.md
 
 Private:
-  .agents/ts-deliver-router/state.json     ← slim: current phase only
-  .agents/ts-deliver-router/history.jsonl  ← append-only: one line per phase exit
-  .agents/ts-project-planner/plan.json
-  .agents/ts-project-planner/retrospectives/
+  .ai/ts-deliver-router/state.json     ← slim: current phase only
+  .ai/ts-deliver-router/history.jsonl  ← append-only: one line per phase exit
+  .ai/ts-project-planner/plan.json
+  .ai/ts-project-planner/retrospectives/
 
 inject-workflow-state.sh (UserPromptSubmit hook):
   reads state.json + iteration.json → injects [WORKFLOW STATE] + [NEXT] every prompt turn

@@ -1,13 +1,13 @@
 # reference: workspace contract
 
-Shared workspace root: `.agents/`.
+Shared workspace root: `.ai/`.
 
 ## Router-owned paths
 
-- `.agents/ts-deliver-router/state.json`
-- `.agents/ts-deliver-router/autonomy`
-- `.agents/ts-deliver-router/registry.json`
-- `.agents/ts-deliver-router/registry.log`
+- `.ai/ts-deliver-router/state.json`
+- `.ai/ts-deliver-router/autonomy`
+- `.ai/ts-deliver-router/registry.json`
+- `.ai/ts-deliver-router/registry.log`
 
 ## Cross-skill expectations
 
@@ -23,7 +23,7 @@ Runtime artifact, generated per project. NOT checked into skill source repo.
 |---|---|
 | Owner (writer) | ts-deliver-router orchestrator (via `references/agent-scaffold.md`) |
 | Consumer (reader) | Muscle agents (Copilot, Codex, Antigravity) |
-| Analogous to | `.agents/` (shared state) — not `.claude/` (Claude Code private namespace) |
+| Analogous to | `.ai/` (shared state) — not `.claude/` (Claude Code private namespace) |
 
 Layout:
 ```

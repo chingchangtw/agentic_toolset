@@ -3,7 +3,7 @@ name: ts-deliver-router
 description: >
   Thin coordinator over verified state. Drives gstack 7-phase flow (Think→Plan→
   Build→Review→Test→Ship→Reflect) with Spectra BDD skills (discuss/propose/apply/
-  ingest/archive) nested inside specific phases. Reads .agents/ts-deliver-router/state.json as truth
+  ingest/archive) nested inside specific phases. Reads .ai/ts-deliver-router/state.json as truth
   (never infers phase from artifacts), enforces named security-gate checklists, and
   routes via the DIAL, CHECKS REGISTRY, and DRY-RUN primitives. Activate when user
   builds or refactors software with agents and asks "what next", "which skill",
@@ -13,7 +13,7 @@ description: >
 
 # ts-deliver-router (core)
 
-Thin coordinator. Reads `.agents/ts-deliver-router/state.json` as truth (NEVER infers phase from artifacts),
+Thin coordinator. Reads `.ai/ts-deliver-router/state.json` as truth (NEVER infers phase from artifacts),
 runs registry checks for the current phase, blocks on named security gates before anything
 irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 
@@ -43,13 +43,13 @@ irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 | GitHub MCP traceability operations by phase | `references/github-mcp.md` |
 | sub-agent build specs | `references/sub-agents.md` |
 | full phase-exit examples aligned to state schema v1 | `references/phase-exit-contracts.md` |
-| shared `.agents/` workspace contract and cross-skill boundaries | `references/workspace.md` |
+| shared `.ai/` workspace contract and cross-skill boundaries | `references/workspace.md` |
 
 On "what's next": load state.md first, then registry/index.md + registry-<phase>.md for the active phase.
 Do not load all registry-phase files at once.
 
 ## PRIMITIVE INTERFACES
-- **DIAL** — HIGH(auto) / MID(recommend, DEFAULT) / LOW(suggest). Read `.agents/ts-deliver-router/autonomy`;
+- **DIAL** — HIGH(auto) / MID(recommend, DEFAULT) / LOW(suggest). Read `.ai/ts-deliver-router/autonomy`;
   ask+save on first use. Gates ALWAYS pause for human even in HIGH; HIGH never auto-signs.
   Switch: "go auto" / "recommend" / "suggestions only".
 - **CHECKS REGISTRY** — one row per check (always/gate/rec). Add activity = append 1 row
@@ -65,8 +65,8 @@ Do not load all registry-phase files at once.
 on invoke:
 0 if dry-run on: prefix [DRY-RUN]; state.json read-only; announce side effects;
    refuse sign-offs; emit DRY-RUN REPORT on session end.        [→ state.md]
-1 autonomy = read .agents/ts-deliver-router/autonomy || ask+save (DIAL).
-2 state = read .agents/ts-deliver-router/state.json.                              [→ state.md]
+1 autonomy = read .ai/ts-deliver-router/autonomy || ask+save (DIAL).
+2 state = read .ai/ts-deliver-router/state.json.                              [→ state.md]
    missing|invalid-schema|stale → "phase unclear, manual review" + reason. STOP.
 3 P = current_phase. verify artifacts.P pass min-schema.        [→ edge-tests.md]
    any fail → "phase unclear, manual review" + specific failure. STOP.

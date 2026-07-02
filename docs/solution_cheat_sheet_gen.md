@@ -8,7 +8,7 @@ LAYOUT (top to bottom, full-width):
 
 1. IDE TOP BAR
    - macOS traffic-light dots (left)
-   - File tabs: README.md · CLAUDE.md · .agents/ts-deliver-router/state.json · .agents/iteration.json
+   - File tabs: README.md · CLAUDE.md · .ai/ts-deliver-router/state.json · .ai/iteration.json
    - Right side: [WORKFLOW STATE] chip (phase + active_epic) · DIAL badge (HIGH/MID/LOW)
 
 2. ORCHESTRATE BAND — ts-orchestrate (full width, ~110px tall)
@@ -95,7 +95,7 @@ LAYOUT (top to bottom, full-width):
 
    Review  §4 🔎  Staff-engineer bug pass. Tags: CHECKS REGISTRY, spectra:ingest
      gstack:/review staff-engineer pass
-     report → .agents/review/report.md  (skipped on bugfix)
+     report → .ai/review/report.md  (skipped on bugfix)
 
    Test    §5 🧪  Run G/W/T acceptance tests. Tags: Spectra BDD, state.json
      run G/W/T from Plan scenarios

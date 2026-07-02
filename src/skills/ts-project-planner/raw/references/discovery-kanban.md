@@ -72,7 +72,7 @@ perspective.
 **Entry:** `/ts-discover decide <id> kill` from `exploring` or `validating`.
 
 **Contains:** Unchanged from prior stage, plus `decision="kill"`. An ADR is
-written to `.agents/decisions/` documenting the rationale.
+written to `.ai/decisions/` documenting the rationale.
 
 **Exit:** None — terminal state. Entry remains in `discovery.json` for audit;
 never deleted.
