@@ -57,7 +57,7 @@ Skills are isolated: no cross-skill imports, no shared state files between skill
 
 | Skill | Description |
 |-------|-------------|
-| `ts-orchestrate` | **Dual-track orchestrator — session entry point.** Reads `[WORKFLOW STATE]` hook each turn. `/ts-orchestrate:start` sets active_epic + DIAL + phase spine by epic type. `/ts-orchestrate:status` shows unified Discovery + Delivery view. `/ts-orchestrate:next` enforces G1/G2 gate sign-off before phase advance. Sits above both tracks. |
+| `ts-orchestrate` | **Dual-track orchestrator — session entry point.** Orchestrates all 4 layers: Layer D (Discovery) → Layer 0 (Backlog) → Layer 1 (Sequencing) → Layer 2 (Delivery spine). `/ts-orchestrate:start WORK_TYPE AUTONOMY` sets active_epic + DIAL, routes to correct phase spine. `/ts-orchestrate:status` shows unified view of Discovery WIP + Delivery phase + pending gates. `/ts-orchestrate:next` enforces G1/G2 before phase advance (never auto-signs). |
 | `ts-project-planner` | **Discovery track planner.** Layer D (idea→explore→validate→decide) + Layer 0 (Backlog sync: `--new` / `--sync`) + Layer 1 (Delivery sequencing: `/ts-iteration:start\|next\|close`). Drives `ts-deliver-router` per epic. NOT the top-level orchestrator — that's `ts-orchestrate`. |
 | `ts-deliver-router` | **Delivery track engine.** 7-phase spine (Think→Plan→Build→Review→Test→Ship→Reflect); spine varies by epic type (bugfix=3, refactor=6, epic=7). Reads `.ai/ts-deliver-router/state.json` (slim: current phase); history in `.ai/ts-deliver-router/history.jsonl`. |
 | `ts-project-scaffolder` | Scaffolds a new project workspace from the standard template. Requires Spectra CLI. |

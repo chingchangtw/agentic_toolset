@@ -103,6 +103,7 @@ See 'docs/architecture.md' → Build and Distribution.
 See `USER_GUIDE.md` for full usage. Key points:
 
 - **Install:** `curl -fsSL .../install.sh | bash` (macOS/Linux) or `irm .../install.ps1 | iex` (Windows)
+- **Session start:** `/ts-orchestrate:start WORK_TYPE=EPIC|REFACTOR|BUGFIX AUTONOMY=HIGH|MID|LOW` — always the entry point; routes to correct layer and phase spine
 - **Four core skills:** `ts-orchestrate` (**dual-track orchestrator** — session entry point, unified status, gate enforcement) · `ts-project-planner` (Discovery track planner: Layer D/0/1) · `ts-deliver-router` (Delivery track engine: 7-phase per-epic spine, varies by epic type) · `ts-acpl` (build-phase coding patterns)
 - **inject-workflow-state hook:** UserPromptSubmit hook auto-injects `[WORKFLOW STATE] ts-deliver phase: <phase> | active epic: <id>` + `[NEXT]` guidance every prompt turn — ts-orchestrate reads this instead of re-reading state files
 - **Two tracks run in parallel:** Discovery (validate ideas) + Delivery (execute via Think→Plan→Build→Review→Test→Ship→Reflect; bugfix uses lean 3-phase spine)
