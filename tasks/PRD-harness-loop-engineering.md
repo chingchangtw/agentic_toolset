@@ -78,8 +78,11 @@ template); HLEF ships as one of its deliverable skills — working name **`ts-hl
 
 1. **Authoring** (this repo) — everything static lives inside the skill directory under
    `src/`, so the build pipeline packages it into `release.zip`.
-2. **Installed** (end-user machine) — the installer copies the skill to
-   `.claude/skills/ondemand/` and the hooks to the project's `.claude/hooks/`.
+2. **Installed** (end-user project) — the installer copies, per project, the skill to
+   `[project root]/.claude/skills/ondemand/` and the hooks to
+   `[project root]/.claude/hooks/`. Nothing HLEF installs machine-globally
+   (no `~/.claude/`); each project carries its own copy and can be on a
+   different version.
 3. **Runtime** (end-user project) — state files are generated lazily by the skill on
    first run under `[project root]/.agents/hlef/`. They are never checked into this repo.
 
