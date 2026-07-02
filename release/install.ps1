@@ -151,17 +151,20 @@ Write-Host "   ✓ settings.json patched"
 
 $ScaffoldSrc = "$TmpDir\scaffold"
 if (Test-Path $ScaffoldSrc) {
-    $answer = Read-Host "→ Scaffold project root? Copy templates to current dir ($PWD) [y/N]"
-    if ($answer -match '^[yY]') {
+    if ($env:SCAFFOLD -eq "y") {
+        Write-Host "→ Scaffolding project root (SCAFFOLD=y): $PWD"
         foreach ($item in Get-ChildItem -Path $ScaffoldSrc) {
             $dest = Join-Path $PWD $item.Name
-            if (Test-Path $dest) {
-                $ow = Read-Host "   $($item.Name) already exists — overwrite? [y/N]"
-                if ($ow -notmatch '^[yY]') { Write-Host "   skip $($item.Name)"; continue }
+            if ((Test-Path $dest) -and ($env:SCAFFOLD_OVERWRITE -ne "y")) {
+                Write-Host "   skip $($item.Name) (already exists — set SCAFFOLD_OVERWRITE=y to replace)"
+                continue
             }
             Copy-Item -Path $item.FullName -Destination $dest -Recurse -Force
             Write-Host "   ✓ $($item.Name)"
         }
+    } else {
+        Write-Host "→ Scaffold templates available but skipped (non-interactive install)."
+        Write-Host "   Re-run with `$env:SCAFFOLD='y' to copy them into $PWD"
     }
 }
 

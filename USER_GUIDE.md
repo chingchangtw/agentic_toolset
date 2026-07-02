@@ -55,9 +55,17 @@ curl -fsSL https://github.com/chingchangtw/agentic_toolset/releases/latest/downl
 
 The installer:
 1. Downloads and extracts `release.zip` from GitHub Releases
-2. Copies skills → `~/.claude/skills/`
+2. Copies skills → `<project>/.claude/skills/` (project-scoped, not global)
 3. Copies hooks → `~/.claude/hooks/`
 4. Patches `~/.claude/settings.json` with hook registrations
+5. Skips scaffold templates by default (piped installs have no interactive stdin) — opt in with `SCAFFOLD=y`:
+   ```bash
+   curl -fsSL https://github.com/chingchangtw/agentic_toolset/releases/latest/download/install.sh | SCAFFOLD=y bash
+   ```
+   ```powershell
+   $env:SCAFFOLD='y'; irm https://github.com/chingchangtw/agentic_toolset/releases/latest/download/install.ps1 | iex
+   ```
+   Add `SCAFFOLD_OVERWRITE=y` to replace files already present in the target directory.
 
 After install, restart Claude Code and initialize your project (see [First Use](#first-use)).
 

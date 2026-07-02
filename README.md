@@ -83,7 +83,7 @@ curl -fsSL https://github.com/chingchangtw/agentic_toolset/releases/latest/downl
 irm https://github.com/chingchangtw/agentic_toolset/releases/latest/download/install.ps1 | iex
 ```
 
-The installer downloads `release.zip`, copies skills → `~/.claude/skills/`, hooks → `~/.claude/hooks/`, and patches `~/.claude/settings.json` with hook registrations.
+The installer downloads `release.zip`, copies skills → `<project>/.claude/skills/` (project-scoped), hooks → `~/.claude/hooks/`, and patches `~/.claude/settings.json` with hook registrations. Scaffold templates are skipped by default under piped install (no interactive stdin) — opt in with `SCAFFOLD=y curl ... | bash` (or `$env:SCAFFOLD='y'` before `irm ... | iex` on Windows); add `SCAFFOLD_OVERWRITE=y` to replace existing files.
 
 ### Developer setup (from source)
 

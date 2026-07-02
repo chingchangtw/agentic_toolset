@@ -219,18 +219,25 @@ PYEOF
 # ── scaffold ──────────────────────────────────────────────────────────────────
 
 if [[ -d scaffold ]]; then
-  echo "→ Scaffold project root? Copy templates to current directory: $(pwd)"
-  read -r -p "   Scaffold here? [y/N] " SCAFFOLD_ANSWER
-  if [[ "${SCAFFOLD_ANSWER,,}" == "y" ]]; then
+  if [[ "${SCAFFOLD:-}" == "y" ]]; then
+    echo "→ Scaffolding project root (SCAFFOLD=y): $(pwd)"
     for item in scaffold/*; do
       name="$(basename "${item}")"
       if [[ -e "${name}" ]]; then
-        read -r -p "   ${name} already exists — overwrite? [y/N] " OW
-        [[ "${OW,,}" != "y" ]] && echo "   skip ${name}" && continue
+        if [[ "${SCAFFOLD_OVERWRITE:-}" == "y" ]]; then
+          echo "   ✓ ${name} (overwritten)"
+        else
+          echo "   skip ${name} (already exists — set SCAFFOLD_OVERWRITE=y to replace)"
+          continue
+        fi
       fi
       cp -r "${item}" "./${name}"
       echo "   ✓ ${name}"
     done
+  else
+    echo "→ Scaffold templates available but skipped (non-interactive install)."
+    echo "   Re-run with SCAFFOLD=y to copy them into $(pwd):"
+    echo "     curl -fsSL ${RELEASE_URL%/release.zip}/install.sh | SCAFFOLD=y bash"
   fi
 fi
 
