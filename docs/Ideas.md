@@ -321,6 +321,20 @@ also wrong. ts-orchestrate is the seam: it delegates Discovery internals to
 ts-project-planner and phase execution to ts-deliver-router, while owning
 session start, combined status, gate enforcement, and phase advancement.
 
+**ts-orchestrate orchestrates all 4 layers:**
+
+| Layer | Owner | ts-orchestrate role |
+|---|---|---|
+| Layer D — Discovery | ts-project-planner | surfaces Discovery WIP in `:status`; routes new idea → `/ts-discover:idea` |
+| Layer 0 — Backlog | ts-project-planner | surfaces sync-ready buffer; routes → `/ts-project:plan --sync` |
+| Layer 1 — Sequencing | ts-project-planner | advances iteration; routes → `/ts-iteration:next` → `/ts-deliver:init` |
+| Layer 2 — Delivery | ts-deliver-router | routes WORK_TYPE → correct phase spine; enforces G1/G2 on `:next` |
+
+`:status` is the cross-layer readout of all 4 layers. `:next` advances whichever
+layer is currently active (Discovery → decide, Sequencing → next epic, Delivery →
+next phase). `:start` is the session entry that sets WORK_TYPE + AUTONOMY and
+determines which layer to activate first.
+
 ### Core mechanism — `[WORKFLOW STATE]` hook
 
 ts-orchestrate does not call `jq .ai/ts-deliver-router/state.json` directly.

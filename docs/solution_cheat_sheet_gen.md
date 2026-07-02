@@ -19,10 +19,14 @@ LAYOUT (top to bottom, full-width):
          → writes active_epic + dial to iteration.json, initializes state.json, routes spine
        /ts-orchestrate:status → unified view: Discovery WIP + Delivery phase + pending gates
        /ts-orchestrate:next   → enforced phase advance with gate checks (refuses if gate unsigned)
-     Col B — Epic-Type Routing (spine by WORK_TYPE):
-       BUGFIX   → Think → Build → Ship                           (no gates, lean path)
-       REFACTOR → Think → Plan → Build → Review → Ship → Reflect (G1 at Think→Plan)
-       EPIC     → Think → Plan → Build → Review → Test → Ship → Reflect (G1 + G2)
+     Col B — Dual-Track Orchestration Flow:
+       Layer D  (Discovery)   /ts-discover:idea → explore → validate → decide
+       Layer 0  (Backlog)     /ts-project:plan --sync  →  release map
+       Layer 1  (Sequencing)  /ts-iteration:start → next → /ts-deliver:init → close
+       Layer 2  (Delivery)    spine by WORK_TYPE:
+         BUGFIX   → Think → Build → Ship                           (no gates)
+         REFACTOR → Think → Plan → Build → Review → Ship → Reflect (G1)
+         EPIC     → Think → Plan → Build → Review → Test → Ship → Reflect (G1+G2)
      Col C — Gate Rules + Hard Rules:
        G1 threat-model: blocks Think→Plan for REFACTOR + EPIC. NEVER auto-signed.
        G2 sec-review:   blocks Ship for EPIC only. NEVER auto-signed.
