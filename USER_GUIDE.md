@@ -210,10 +210,10 @@ echoes free-text fields (prompt injection prevention).
 
 ## Workspace Layout
 
-Skills write to a shared `.ai/` directory in your project root:
+Skills write to a shared `.agents/` directory in your project root:
 
 ```
-.ai/
+.agents/
 ├── domain.json               — event-storming domain model
 ├── discovery.json            — Discovery backlog + Ready-for-Delivery buffer
 ├── iteration.json            — release state: active_epic, dial, epics (written by ts-orchestrate + ts-project-planner)

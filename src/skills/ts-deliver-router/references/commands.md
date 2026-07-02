@@ -5,9 +5,9 @@
 Initializes project router state and project registry.
 
 Writes:
-- `.ai/ts-deliver-router/registry.json`
-- `.ai/ts-deliver-router/state.json`
-- `.ai/ts-deliver-router/autonomy` (if missing)
+- `.agents/ts-deliver-router/registry.json`
+- `.agents/ts-deliver-router/state.json`
+- `.agents/ts-deliver-router/autonomy` (if missing)
 
 Required outputs:
 - selected lifecycle stage
@@ -24,8 +24,8 @@ Ask: "Muscle agents? (copilot / codex / antigravity / none)"
 Refines project registry based on phase history and gate outcomes.
 
 Writes:
-- updated `.ai/ts-deliver-router/registry.json`
-- append entry to `.ai/ts-deliver-router/registry.log`
+- updated `.agents/ts-deliver-router/registry.json`
+- append entry to `.agents/ts-deliver-router/registry.log`
 
 Required prompts:
 - promote/demote tool tier
@@ -69,7 +69,7 @@ Backward jump (target behind current):
 - Warn: "Jumping back to <phase>. Advancing forward again will require gate re-checks."
 
 Writes (on success):
-- `.ai/ts-deliver-router/state.json` — updates `current_phase` to target
+- `.agents/ts-deliver-router/state.json` — updates `current_phase` to target
 
 Required output:
 - Gate replay summary (each gate checked: ✓ pass / ✗ blocked)

@@ -21,7 +21,7 @@ Two ideas proposed by operator:
 
 ### Idea A: Phase-branch/tag strategy
 
-**What it solves:** Reproducibility and rollback. `.ai/ts-deliver-router/state.json` is
+**What it solves:** Reproducibility and rollback. `.agents/ts-deliver-router/state.json` is
 truth but it's a single mutable file. A phase-tag gives a hard checkpoint
 you can `git checkout` to reconstruct the entire working tree as it was when
 that phase exited. Also gives Copilot/Gemini a clean isolation surface.
@@ -278,7 +278,7 @@ review findings. Currently Reflect-only. Revisit after first cycle completes.
 | GCC | github.com/faugustdev/git-context-controller | MIT | `npx skills add faugustdev/git-context-controller` |
 | GNAP | github.com/farol-team/gnap | MIT | 4 JSON files in repo |
 | code-review-graph | github.com/tirth8205/code-review-graph | — | `pip install code-review-graph` |
-| better-code-review-graph | glama.ai/mcp/servers/w1z9fju964 | MIT | MCP server config |
+| better-code-review-graph | glama.agents/mcp/servers/w1z9fju964 | MIT | MCP server config |
 | Codebase-Memory | arxiv.org/abs/2603.27277 | OSS | C binary / MCP |
 
 ---

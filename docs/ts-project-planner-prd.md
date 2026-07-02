@@ -36,7 +36,7 @@ have absorbed cheaply.
 **Layer D — Discovery** *(new)*
 `/ts-discover idea` → `explore` → `validate` → `decide` (build / kill /
 keep-learning / reduce-scope). Produces a Ready-for-Delivery buffer
-(`.ai/discovery.json`, `status=ready`).
+(`.agents/discovery.json`, `status=ready`).
 
 **Layer 0 — Backlog** *(renamed, role clarified)*
 `/ts-project plan --new` seeds Discovery with candidate ideas (not epics).
@@ -101,12 +101,12 @@ force a build/kill/reduce-scope choice.
 
 ```
 New skill:       ts-project-planner (3 layers: Discovery / Backlog / Delivery)
-New artifact:    .ai/discovery.json (Ready-for-Delivery buffer)
+New artifact:    .agents/discovery.json (Ready-for-Delivery buffer)
 New commands:    /ts-discover idea|explore|validate|decide|status
                  /ts-discover idea --from-router (feedback hook target)
 Renamed cmds:    /ts-project plan[--new|--sync]|status|refine
                  /ts-iteration start|next|status|close
-Renamed dirs:    .ai/ts-project-planner/ (was .ai/project-planner/)
+Renamed dirs:    .agents/ts-project-planner/ (was .agents/project-planner/)
 Write ownership: ts-project-planner owns discovery.json + plan.json (full)
                  ts-deliver-router may APPEND to discovery.json only via
                    --from-router hook (append-only, dedup-checked)
@@ -127,12 +127,12 @@ Feature: /ts-discover idea seeds the discovery backlog
     Given user runs /ts-project plan --new "ERP for 200-employee manufacturer —
       Finance, Procurement, Inventory, HR/Payroll, Sales, Manufacturing"
     When the command completes
-    Then .ai/discovery.json is created with 6 entries, status=idea each
+    Then .agents/discovery.json is created with 6 entries, status=idea each
     And each entry has a title matching one named module
-    And .ai/project-planner/plan.json is NOT yet written (no ready items exist)
+    And .agents/project-planner/plan.json is NOT yet written (no ready items exist)
 
   Scenario: Single idea added ad-hoc
-    Given .ai/discovery.json already exists
+    Given .agents/discovery.json already exists
     When user runs /ts-discover idea "Self-service password reset portal"
     Then a new entry is appended with status=idea
     And the entry has a generated id following the existing id sequence
@@ -186,7 +186,7 @@ Feature: /ts-discover decide — Decision Point
     And validation_output.feasibility = "infeasible — depends on unstable Inventory model"
     When user runs /ts-discover decide idea-006 kill
     Then idea-006.status becomes "killed"
-    And .ai/decisions/ADR-NNN.md is created documenting the kill rationale
+    And .agents/decisions/ADR-NNN.md is created documenting the kill rationale
     And the entry remains in discovery.json for audit (not deleted)
 
   Scenario: decide reduce-scope splits an idea
@@ -282,7 +282,7 @@ Feature: /ts-iteration commands drive ts-deliver-router per epic
     Given plan.json release "MVP" has epics EPIC-GL-CORE (no deps),
       EPIC-PROCUREMENT-CORE and EPIC-INVENTORY-CORE (both depend_on EPIC-GL-CORE)
     When user runs /ts-iteration start MVP
-    Then .ai/iteration.json is written with epics ordered:
+    Then .agents/iteration.json is written with epics ordered:
       [EPIC-GL-CORE, EPIC-PROCUREMENT-CORE, EPIC-INVENTORY-CORE]
     And all epics status=queued, active_epic=null
     And GitHub MCP creates milestone "MVP"
@@ -297,7 +297,7 @@ Feature: /ts-iteration commands drive ts-deliver-router per epic
       | type               | epic                     |
       | acpl_pattern_group | G2+G3                    |
       | branch_name        | feat/gl-core             |
-      | risks_file         | .ai/risks.md             |
+      | risks_file         | .agents/risks.md             |
       | phase_activation   | all 7 phases             |
 
   Scenario: Write-back respects field ownership
@@ -311,7 +311,7 @@ Feature: /ts-iteration commands drive ts-deliver-router per epic
     Given all MVP epics are status=done
     When user runs /ts-iteration close
     Then GitHub MCP creates release tag v0.1.0-mvp
-    And retro written to .ai/ts-project-planner/retrospectives/MVP-retro.md
+    And retro written to .agents/ts-project-planner/retrospectives/MVP-retro.md
     And router suggests "Run /ts-discover status — Discovery has been running in
       parallel; check for new ready items for Iter2"
 ```
@@ -345,7 +345,7 @@ Feature: Skill package structure
 Feature: discovery.json schema and write ownership
 
   Scenario: Schema includes feedback-hook fields
-    Given .ai/discovery.json schema in workspace-spec.md
+    Given .agents/discovery.json schema in workspace-spec.md
     Then each idea entry includes: id, title, status, source_epic (nullable),
       keep_learning_count, riskiest_assumptions[], exploration_output,
       validation_output, decision, ready_epics[], synced_to_plan, notes
@@ -361,11 +361,11 @@ Feature: discovery.json schema and write ownership
 Feature: Renamed directories
 
   Scenario: Private state directory renamed
-    Given the prior project-planner used .ai/project-planner/
+    Given the prior project-planner used .agents/project-planner/
     When ts-project-planner is installed
-    Then private state is written to .ai/ts-project-planner/
-    And plan.json lives at .ai/ts-project-planner/plan.json
-    And retrospectives/ lives at .ai/ts-project-planner/retrospectives/
+    Then private state is written to .agents/ts-project-planner/
+    And plan.json lives at .agents/ts-project-planner/plan.json
+    And retrospectives/ lives at .agents/ts-project-planner/retrospectives/
 ```
 
 ---
@@ -432,7 +432,7 @@ Test phase entry — no post-archive edits.
 unzip ts-project-planner.skill -d ~/.claude/skills/ts-project-planner/
 
 # 2. Prerequisite: ts-deliver-router installed (see its change PRD)
-/ts-router init   # creates .ai/WORKSPACE.md if not present
+/ts-router init   # creates .agents/WORKSPACE.md if not present
 
 # 3. Start discovery for a new giant project
 /ts-project plan --new "<vision>"

@@ -1,6 +1,6 @@
 ## Discovery State Machine
 
-`.ai/discovery.json` holds the Discovery backlog — the data model that all
+`.agents/discovery.json` holds the Discovery backlog — the data model that all
 `/ts-discover` commands operate on.
 
 ### Schema

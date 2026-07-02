@@ -1,4 +1,4 @@
-# .ai/WORKSPACE.md — Shared Skill Workspace
+# .agents/WORKSPACE.md — Shared Skill Workspace
 
 Shared working space for all skills. Read on first use.
 
@@ -7,7 +7,7 @@ Shared working space for all skills. Read on first use.
 ## Directory Convention
 
 ```
-.ai/
+.agents/
 │
 ├── WORKSPACE.md              ← this file — layout contract for all skills
 │
@@ -123,7 +123,7 @@ ts-deliver-router APPEND-ONLY via `/ts-discover idea --from-router` (dedup-check
       "priority": 1,
       "status": "queued|active|done|deferred",
       "depends_on": ["<epic-id>"],
-      "router_state": "<path to .ai/ts-deliver-router/state.json snapshot or null>",
+      "router_state": "<path to .agents/ts-deliver-router/state.json snapshot or null>",
       "branch": "<feat/name or null>",
       "mutation_score": null,
       "shipped_at": null
