@@ -57,8 +57,9 @@ Skills are isolated: no cross-skill imports, no shared state files between skill
 
 | Skill | Description |
 |-------|-------------|
-| `ts-deliver-router` | 6-phase delivery flow (Think→Plan→Build→Review→Test→Ship→Reflect). Coordinates Spectra BDD skills within phases. Reads `.ai/ts-deliver-router/state.json` as ground truth. |
-| `ts-project-planner` | Dual-track agile orchestrator. Manages Discovery → Backlog → Delivery layers. Drives `ts-deliver-router` per epic. |
+| `ts-orchestrate` | **Dual-track orchestrator — session entry point.** Reads `[WORKFLOW STATE]` hook each turn. `/ts-orchestrate:start` sets active_epic + DIAL + phase spine by epic type. `/ts-orchestrate:status` shows unified Discovery + Delivery view. `/ts-orchestrate:next` enforces G1/G2 gate sign-off before phase advance. Sits above both tracks. |
+| `ts-project-planner` | **Discovery track planner.** Layer D (idea→explore→validate→decide) + Layer 0 (Backlog sync: `--new` / `--sync`) + Layer 1 (Delivery sequencing: `/ts-iteration:start\|next\|close`). Drives `ts-deliver-router` per epic. NOT the top-level orchestrator — that's `ts-orchestrate`. |
+| `ts-deliver-router` | **Delivery track engine.** 7-phase spine (Think→Plan→Build→Review→Test→Ship→Reflect); spine varies by epic type (bugfix=3, refactor=6, epic=7). Reads `.ai/ts-deliver-router/state.json` (slim: current phase); history in `.ai/ts-deliver-router/history.jsonl`. |
 | `ts-project-scaffolder` | Scaffolds a new project workspace from the standard template. Requires Spectra CLI. |
 | `ts-acpl` | AI Coding Pattern Language — pattern library bridging Problem Frame specs → AI-generated code → mutation-resistant output. |
 | `ts-project-init-advisor` | Analyzes an existing project and generates `PROJECT_INIT_PLAN.md` — an executable Claude Code setup plan (MCPs, skills, hooks, CLAUDE.md). |
@@ -81,8 +82,27 @@ directory contains reference docs for slash commands that surface specific skill
 
 ## Hooks
 
-Hooks are scripts that Claude Code executes at lifecycle events. This project ships two
+Hooks are scripts that Claude Code executes at lifecycle events. This project ships three
 hook types:
+
+### UserPromptSubmit Hook — `inject-workflow-state.sh`
+
+Fires before each user prompt. Reads `.ai/ts-deliver-router/state.json` and
+`.ai/iteration.json` and injects a `[WORKFLOW STATE]` line into Claude's context on
+every turn — giving `ts-orchestrate` the current phase and active epic without a file
+read per invocation.
+
+Output format:
+```
+[WORKFLOW STATE] ts-deliver phase: <phase> | active epic: <id>
+[NEXT] Run /ts-deliver:refine after <phase-specific guidance>
+```
+
+Discovery mode (no `state.json`): `[WORKFLOW STATE] Discovery | dial: <dial> | active_epic: <id or none>`
+
+No state files → silent (empty stdout). Free-text fields (`notes`, etc.) are never
+echoed — prompt injection safety. Installs to `${PROJECT_CLAUDE_DIR}/hooks/`
+(project-scoped, not global). Install is idempotent.
 
 ### UserPromptSubmit Hook — `ts-session-guard`
 
@@ -137,7 +157,13 @@ Every turn:
     → writes context_pct to session_guard_state.json
     → prints status bar
 
-Before each prompt:
+Before each prompt (two hooks fire in sequence):
+  UserPromptSubmit event
+    → inject-workflow-state.sh
+    → reads .ai/ts-deliver-router/state.json + .ai/iteration.json
+    → injects [WORKFLOW STATE] + [NEXT] into Claude's additionalContext
+    → (silent if no state files)
+
   UserPromptSubmit event
     → ts-session-guard.py / ts-session-guard.ps1
     → reads transcript for message count
@@ -220,11 +246,16 @@ gh release create vX.Y.Z dist/release.zip release/install.sh release/install.ps1
 
 ---
 
-## TypeScript Framework (Stub)
+## TypeScript Framework
 
-`src/core/`, `src/types/`, `src/utils/`, `src/mcp/`, `src/plugins/` exist as stubs for
-a TypeScript framework layer. Currently unexpanded. `src/index.ts` re-exports `core` and
-`types` only.
+`src/core/`, `src/types/`, `src/mcp/`, `src/plugins/` exist as stubs. `src/utils/` has
+real implementations:
+
+| File | Exports |
+|------|---------|
+| `src/utils/phase-routing.ts` | `getPhaseList(epicType: "bugfix" \| "refactor" \| "epic"): string[]` — maps epic type to ordered phase array (bugfix→3, refactor→6, epic→7 phases) |
+
+`src/index.ts` re-exports `core` and `types` only.
 
 Path aliases (`@skills/*`, `@plugins/*`, `@mcp/*`, `@utils/*`, `@types/*`) map to `src/`
 subdirs via `tsconfig.json`. No cross-boundary relative imports (`../../`).
@@ -237,5 +268,8 @@ subdirs via `tsconfig.json`. No cross-boundary relative imports (`../../`).
 - `src/index.ts` exports only `core` and `types` — skill modules are not re-exported.
 - Every skill directory must have `SKILL.md` or the build aborts.
 - Hook scripts always exit 0 — hooks never block a Claude Code session.
-- The state file (`session_guard_state.json`) is the only shared runtime state between hooks.
+- `session_guard_state.json` is the shared runtime state between StatusLine bridge and session-guard hook.
+- `.ai/ts-deliver-router/state.json` is slim (current phase only, constant size). Full history lives in `.ai/ts-deliver-router/history.jsonl` (append-only, one line per phase exit).
+- `inject-workflow-state.sh` never echoes free-text fields — only enum values and IDs (prompt injection prevention).
+- Never invoke `/ts-deliver:init` without `active_epic` in `iteration.json` — ts-orchestrate enforces this at entry gate.
 - `dist/` is gitignored; `release/` is tracked source.

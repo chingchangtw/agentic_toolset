@@ -103,11 +103,12 @@ See 'docs/architecture.md' → Build and Distribution.
 See `USER_GUIDE.md` for full usage. Key points:
 
 - **Install:** `curl -fsSL .../install.sh | bash` (macOS/Linux) or `irm .../install.ps1 | iex` (Windows)
-- **Three core skills:** `ts-project-planner` (cross-epic orchestrator) · `ts-deliver-router` (7-phase per-epic engine) · `ts-acpl` (build-phase coding patterns)
-- **Two tracks run in parallel:** Discovery (validate ideas) + Delivery (execute via Think→Plan→Build→Review→Test→Ship→Reflect)
-- **Security gates:** G1 (exit Think/Plan) and G2 (exit Ship) always require human sign-off — never auto-signed
-- **Autonomy:** `HIGH` / `MID` (default) / `LOW` — switch with "go auto" / "recommend" / "suggestions only"
-- **Workspace state lives in `.ai/`** — `discovery.json`, `iteration.json`, `ts-deliver-router/state.json`
+- **Four core skills:** `ts-orchestrate` (**dual-track orchestrator** — session entry point, unified status, gate enforcement) · `ts-project-planner` (Discovery track planner: Layer D/0/1) · `ts-deliver-router` (Delivery track engine: 7-phase per-epic spine, varies by epic type) · `ts-acpl` (build-phase coding patterns)
+- **inject-workflow-state hook:** UserPromptSubmit hook auto-injects `[WORKFLOW STATE] ts-deliver phase: <phase> | active epic: <id>` + `[NEXT]` guidance every prompt turn — ts-orchestrate reads this instead of re-reading state files
+- **Two tracks run in parallel:** Discovery (validate ideas) + Delivery (execute via Think→Plan→Build→Review→Test→Ship→Reflect; bugfix uses lean 3-phase spine)
+- **Security gates:** G1 (threat-model, blocks Think→Plan for refactor+epic) and G2 (sec-review, blocks Ship for epic) always require human sign-off — never auto-signed at any autonomy level
+- **Autonomy (DIAL):** `HIGH` / `MID` (default) / `LOW` — switch with "go auto" / "recommend" / "suggestions only"
+- **Workspace state lives in `.ai/`** — `discovery.json`, `iteration.json`, `ts-deliver-router/state.json` (slim: current phase), `ts-deliver-router/history.jsonl` (phase exit audit log)
 
 ## Out of Scope
 
@@ -117,7 +118,7 @@ See `USER_GUIDE.md` for full usage. Key points:
 ## Maintenance Checklist
 
 - Owner: tlchang
-- Last reviewed: 2026-06-29
+- Last reviewed: 2026-07-02
 
 <!-- code-review-graph MCP tools -->
 ## MCP Tools: code-review-graph

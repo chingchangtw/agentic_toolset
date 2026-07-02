@@ -1,7 +1,7 @@
 # Ideas — Agentic Dev Workflow Hub (Consolidated Design Record)
 
 This is the single design record for the **ts- skill family**: `ts-deliver-router`,
-`ts-project-planner`, and `ts-acpl`. It supersedes the original `Ideas.md`,
+`ts-project-planner`, `ts-orchestrate`, and `ts-acpl`. It supersedes the original `Ideas.md`,
 the `DISCUSSION_code_graph_registry.md` design session, and all interim
 rename/change PRDs — those reasoning trails are folded in here. The goal is to
 preserve *why* the design looks the way it does, not just the artifacts
@@ -81,6 +81,18 @@ missing, stale (any declared artifact's mtime > state.json mtime), or invalid
 original bug class: a half-written spec (3/5 scenarios missing `Then`) used to
 look complete enough to advance to Build.
 
+**Slim state.json + history.jsonl split (shipped 2026-06-28).** `state.json`
+was growing unbounded as `phase_history` and `ingest_log` arrays accumulated
+across a long epic — every router invocation loaded the full file. **Decision:
+slim the live file, append-only the audit trail.** `state.json` now contains
+only `schema_version`, `current_phase`, `phase_entered_at`, `artifacts`, and
+`gates` — constant size regardless of how many phases have passed. Each phase
+exit appends one JSON event to `history.jsonl` (`event`, `ts`, `from`, `to`,
+`artifacts_at_exit`). The router reads `state.json` on every turn; it reads
+`history.jsonl` only on `/ts-deliver:status --history`. DRY-RUN announces
+`[DRY-RUN] would append history.jsonl` without writing. History append failure
+is non-blocking — phase exit completes with a warning.
+
 **Two named security gates, not "lean on critical-thinker."** G1
 (threat-model, end of Think) and G2 (sec-review, start of Ship) became
 explicit, recorded checklists writing to `state.gates[id].checklist_results`.
@@ -104,8 +116,8 @@ bypass minimum-schema verification.
 
 **PROJECT REGISTRY primitive** (added later, alongside the rename below):
 DIAL and CHECKS REGISTRY described *templates*; PROJECT REGISTRY is the
-per-project *live* collection — initialized via `/ts-router init`, refined at
-every Reflect via `/ts-router refine`, with an append-only `registry.log`
+per-project *live* collection — initialized via `/ts-deliver:init`, refined at
+every Reflect via `/ts-deliver:refine`, with an append-only `registry.log`
 audit trail.
 
 ---
@@ -121,7 +133,7 @@ other in the same session; a spec that differs between "readable" and
 
 ---
 
-## 5. The ts- Family — Why a Prefix, Why Three Skills
+## 5. The ts- Family — Why a Prefix, Why Four Skills
 
 Once a second skill (`ts-project-planner`) and a third (`ts-acpl`) existed
 alongside the router, a namespace became necessary — a single skill doesn't
@@ -130,9 +142,16 @@ and skill-private workspace directories took the `ts-` prefix:
 
 | Role | Skill |
 |---|---|
-| Per-epic 7-phase engine | **`ts-deliver-router`** (originally `lifecycle-router`) |
-| Build-time coding discipline | **`ts-acpl`** (AI Coding Pattern Language) |
-| Cross-epic orchestrator, dual-track agile | **`ts-project-planner`** |
+| **Dual-track orchestrator** (session entry point; sees both Discovery + Delivery) | **`ts-orchestrate`** |
+| Discovery track planner (Layer D/0/1 internals) | **`ts-project-planner`** |
+| Delivery track engine (per-epic 7-phase spine) | **`ts-deliver-router`** (originally `lifecycle-router`) |
+| Build-phase coding discipline | **`ts-acpl`** (AI Coding Pattern Language) |
+
+`ts-orchestrate` sits above both tracks. It is the canonical session entry point (`/ts-orchestrate:start`),
+the unified status hub that combines Discovery + Delivery state (`/ts-orchestrate:status`),
+and the gate-enforcing phase advancer (`/ts-orchestrate:next`). The earlier description of
+`ts-project-planner` as "dual-track agile orchestrator" referred to its internal Discovery
+track layering — it is not the top-level orchestrator; `ts-orchestrate` is.
 
 The shared workspace root `.ai/` and generic shared artifacts (`domain.json`,
 `iteration.json`, `risks.md`, `discovery.json`, `decisions/`, `WORKSPACE.md`)
@@ -285,14 +304,144 @@ Spectra BDD, code-review-graph MCP): gstack/Spectra/code-review-graph/caveman
 
 ---
 
-## 9. Explored But Not Yet Merged — Code-Graph / Dev-Graph
+## 9. ts-orchestrate — Dual-Track Orchestrator (shipped 2026-07-01)
+
+`ts-orchestrate` is the fourth skill in the ts- family and the **top-level
+dual-track orchestrator** — the session entry point that sits above both
+`ts-project-planner` (Discovery track) and `ts-deliver-router` (Delivery
+track). It is the only skill that has a unified view of both tracks
+simultaneously.
+
+**Why a separate skill, not extending ts-deliver-router or ts-project-planner?**
+ts-deliver-router owns the per-epic spine; adding cross-layer awareness there
+would mean it needs to know about discovery state — a responsibility violation.
+ts-project-planner manages Discovery internals (Layer D/0/1); making it the
+session entry point would mean it owns phase advancement and security gates —
+also wrong. ts-orchestrate is the seam: it delegates Discovery internals to
+ts-project-planner and phase execution to ts-deliver-router, while owning
+session start, combined status, gate enforcement, and phase advancement.
+
+### Core mechanism — `[WORKFLOW STATE]` hook
+
+ts-orchestrate does not call `jq .ai/ts-deliver-router/state.json` directly.
+Instead it reads the `[WORKFLOW STATE]` prefix injected by the
+`inject-workflow-state.sh` hook (see §10) into every Claude Code prompt. This
+keeps the skill's token cost flat — no file reads, no jq calls on every turn.
+
+**Entry gate:** if hook shows `active epic: none` → emit
+`[BLOCKED] No active epic in iteration.json.active_epic. Run /ts-project:plan --new to create one.`
+and refuse `/ts-deliver:init`.
+
+### Epic-type routing
+
+ts-orchestrate reads `epic.type` from `iteration.json` and routes to the
+correct phase spine:
+
+| `epic.type` | Phase spine | Gates |
+|---|---|---|
+| `bugfix` | Think → Build → Ship | None (lean path) |
+| `refactor` | Think → Plan → Build → Review → Ship → Reflect | G1 (Think→Plan) |
+| `epic` | Think → Plan → Build → Review → Test → Ship → Reflect | G1 (Think→Plan) + G2 (Ship) |
+
+**Why three spines, not one?** A bugfix that runs through Review, Test, and
+Reflect at the same DIAL level as a greenfield epic wastes time and burns
+token budget. But making DIAL alone control which phases run conflates
+*confidence* (how much oversight) with *scope* (which activities matter).
+Three named spines with explicit gate lists is legible, auditable, and
+requires no heuristic.
+
+**Implementation:** `src/utils/phase-routing.ts` exports
+`getPhaseList(epicType: "bugfix" | "refactor" | "epic"): string[]` — a pure
+function over the three fixed arrays. The skill reads this via TypeScript;
+the `SKILL.md` documents the same table.
+
+### Commands
+
+- `/ts-orchestrate:start WORK_TYPE=EPIC|REFACTOR|BUGFIX AUTONOMY=HIGH|MID|LOW` — session entry point; writes `active_epic` + `dial` to `iteration.json`, initializes `state.json` with `current_phase: "think"`, routes to correct phase spine, outputs first `[WORKFLOW STATE]`
+- `/ts-orchestrate:status` — **unified dual-track view**: reads `[WORKFLOW STATE]` (Delivery) + `discovery.json` (Discovery); shows WIP idea count, next unvalidated idea, active epic, current phase, DIAL, and pending gates
+- `/ts-orchestrate:next` — enforced phase advancement with gate checks (refuses if G1/G2 unsigned; never auto-signs)
+
+### Autonomy levels
+
+| Level | Behavior |
+|---|---|
+| HIGH | Auto-advance after gate sign-off; never auto-sign gates |
+| MID | Recommend next action; user confirms phase advances |
+| LOW | Wait for explicit user command at every step |
+
+### Feedback loop (Reflect → Discovery)
+
+After Reflect: mark epic `done` in iteration.json → write entry to
+`discovery.json` with `source_epic` field → run `/ts-iteration:next` (or
+`/ts-iteration:close`). Discovery resumes with the completed epic as context.
+
+---
+
+## 10. inject-workflow-state Hook (shipped 2026-06-30)
+
+**Problem:** every session Claude Code starts cold. The agent must re-read
+`state.json` + `iteration.json` before it can answer "where are we?" — wasted
+tokens and a step that requires the human to remember to ask. ts-orchestrate
+needs phase + epic context on every prompt turn, not just session start.
+
+**Solution:** `inject-workflow-state.sh` is a `UserPromptSubmit` hook that
+runs on every Claude Code prompt. It writes a `[WORKFLOW STATE]` prefix line
+into the prompt context.
+
+### Output format
+
+```
+[WORKFLOW STATE] ts-deliver phase: <phase> | active epic: <id>
+[NEXT] Run /ts-deliver:refine after <phase-specific guidance>
+```
+
+Discovery mode (no `state.json`):
+```
+[WORKFLOW STATE] Discovery | dial: <dial> | active_epic: <id or none>
+```
+
+No state files: hook emits nothing (silent).
+
+### Design decisions
+
+- **Reads from two files:** `state.json` (phase) + `iteration.json`
+  (`active_epic`). `active_epic` is NOT in `state.json` — it lives in
+  `iteration.json` because iteration sequencing owns it, not the per-epic
+  router.
+- **Free-text fields are never echoed.** `iteration.json.epics[].notes` and
+  any other free-text field are suppressed to prevent prompt injection.
+  Only enum values and IDs are emitted.
+- **Silent on error.** `jq` unavailable, malformed JSON, missing files → no
+  stdout, no stderr. Claude Code sees an empty hook output and continues.
+- **Project-scoped, not global.** Installs to `${PROJECT_CLAUDE_DIR}/hooks/`,
+  not `~/.claude/hooks/`. Each project has independent hook state.
+- **Idempotent install.** `install.sh` checks for existing `UserPromptSubmit`
+  entry before adding — re-running install never duplicates.
+
+### `[NEXT]` guidance per phase
+
+| `current_phase` | `[NEXT]` content |
+|---|---|
+| think | `Run /ts-deliver:refine after Spectra:discuss + G1 threat-model sign-off` |
+| plan | `Run /ts-deliver:refine after Spectra:propose + design review` |
+| build | `Run /ts-deliver:refine after Spectra:apply + test coverage gate` |
+| review | `Run /ts-deliver:refine after staff-review report` |
+| test | `Run /ts-deliver:refine after acceptance + integration gates` |
+| ship | `Run /ts-deliver:refine after Spectra:archive + G2 sec-review sign-off` |
+| reflect | `Run /ts-iteration:next (or /ts-iteration:close if last epic)` |
+
+Unknown phase value → `[NEXT] Unknown phase: <value> — check state.json`.
+
+---
+
+## 11. Explored But Not Yet Merged — Code-Graph / Dev-Graph
 
 A separate design session explored two extensions, deliberately scoped as
 *extensions to existing primitives*, not new primitives — analyzed and
 recorded, **not yet merged** into any `SKILL.md`:
 
-**Phase-branch/tag strategy.** `.router/state.json` (now `.ai/ts-deliver-router/
-state.json`) is truth but a single mutable file. A git tag at every phase exit
+**Phase-branch/tag strategy.** `.ai/ts-deliver-router/state.json` is truth
+but a single mutable file. A git tag at every phase exit
 (`lifecycle/<phase>/<cycle-id>`) gives a hard, immutable checkpoint —
 extension of the Phase Exit Contract, one new `state.json` field
 (`phase_tag`, schema v1→v2), one new registry row (`phase-tag`, cross-cutting
@@ -330,53 +479,63 @@ fire after Review (to show which ingest deltas review findings triggered).
 
 ---
 
-## 10. Final Architecture
+## 12. Final Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│ ts-project-planner                                                    │
-│                                                                         │
-│  Layer D — Discovery (continuous, irregular cadence)                  │
-│    /ts-discover idea|explore|validate|decide|status                   │
-│    /ts-discover idea --from-router  ◄──────────────────────┐          │
-│         │ status=ready                                       │          │
-│         ▼                                                     │          │
-│  Layer 0 — Backlog                                            │          │
-│    /ts-project plan --new   (seeds Discovery)                │          │
-│    /ts-project plan --sync  (ready → plan.json epics)        │          │
-│         │                                                     │          │
-│         ▼                                                     │          │
-│  Layer 1 — Delivery (release cadence)                         │          │
-│    /ts-iteration start/next/close ───────────────────────────┘          │
-└──────────────────────────│─────────────────────────────────────────────┘
-                            │ /ts-router init (per epic)
-                            ▼
-┌─────────────────────────────────────────────────────────────────────┐
-│ ts-deliver-router  (Layer 2 — per-epic 7-phase spine)                 │
-│                                                                         │
-│  Think → Plan → Build → Review → Test → Ship → Reflect                │
-│   │G1▲           │              │G1▼     │G2▼                          │
-│   │              ▼              │                                      │
-│   │         ts-acpl (Build discipline, 20 patterns / 5 groups)         │
-│   │                                                                     │
-│   └── Discovery Feedback Hook (gated a/b/c, non-blocking) ─────────────┘
-└─────────────────────────────────────────────────────────────────────┘
+│ ts-orchestrate  (cross-layer coordinator)                             │
+│                                                                       │
+│  Reads [WORKFLOW STATE] from inject-workflow-state.sh hook            │
+│  Routes epic.type → phase spine   Gates: G1 (refactor+epic) /        │
+│  /ts-orchestrate:start|status|next             G2 (epic only)        │
+└──────────┬──────────────────────────────────────────┬───────────────┘
+           │                                           │
+           ▼                                           ▼
+┌──────────────────────────┐          ┌──────────────────────────────┐
+│ ts-project-planner       │          │ ts-deliver-router             │
+│                          │          │  (Layer 2 — per-epic spine)   │
+│  Layer D — Discovery     │          │                               │
+│    /ts-discover:idea     │          │  Think → Plan → Build →       │
+│    /ts-discover:explore  │          │  Review → Test → Ship →       │
+│    /ts-discover:validate │          │  Reflect                      │
+│    /ts-discover:decide   │          │   │G1▲          │G1▼  │G2▼   │
+│    /ts-discover:status   │          │              ts-acpl           │
+│         │ status=ready   │          │   └─ Discovery Feedback Hook ─┘
+│         ▼                │          │      (gated a/b/c, non-blocking)
+│  Layer 0 — Backlog       │          └──────────────────────────────┘
+│    /ts-project:plan --new│
+│    /ts-project:plan --sync◄─────────────────────── discovery.json
+│         │                │          ▲
+│         ▼                │          │ append-only (hook: /ts-discover idea --from-router)
+│  Layer 1 — Delivery      │──────────┘
+│    /ts-iteration:start   │
+│    /ts-iteration:next ───┼──────────► /ts-deliver:init (per epic)
+│    /ts-iteration:close   │
+└──────────────────────────┘
 
-Shared workspace: .ai/ (root, unprefixed) — domain.json, discovery.json,
-iteration.json, risks.md, decisions/, WORKSPACE.md
-Private: .ai/ts-deliver-router/, .ai/ts-project-planner/
+Shared workspace: .ai/ (root, unprefixed)
+  domain.json · discovery.json · iteration.json · risks.md · decisions/ · WORKSPACE.md
+
+Private:
+  .ai/ts-deliver-router/state.json     ← slim: current phase only
+  .ai/ts-deliver-router/history.jsonl  ← append-only: one line per phase exit
+  .ai/ts-project-planner/plan.json
+  .ai/ts-project-planner/retrospectives/
+
+inject-workflow-state.sh (UserPromptSubmit hook):
+  reads state.json + iteration.json → injects [WORKFLOW STATE] + [NEXT] every prompt turn
 ```
 
 ---
 
-## 11. Open Items Carried Forward
+## 13. Open Items Carried Forward
 
 - Fill registry placeholders (`<SAST tool>`, `<dep/secrets scanner>`,
   `<mutation tool>`) per real project stack — currently Semgrep/Trivy/
   Stryker-PITest-mutmut as defaults.
 - Privacy-review skill: dedicated check vs. fold into `gstack:/cso` +
   `critical-thinker` — still undecided.
-- Code-graph/dev-graph registry rows (§9) — analyzed, not merged; open
+- Code-graph/dev-graph registry rows (§11) — analyzed, not merged; open
   questions Q1-Q3 unresolved.
 - Monthly refresh of spine + harvested libraries (gstack, Spectra,
   superpowers, code-review-graph, conditionally mattpocock/addyosmani).
@@ -387,3 +546,8 @@ Private: .ai/ts-deliver-router/, .ai/ts-project-planner/
   (`references/sub-agents.md`) but not yet built as `.claude/agents/*.md`
   files.
 - GitHub MCP not yet configured in any real project (`tier=pending-setup`).
+- `ts-orchestrate:status` cross-layer view format not yet finalized — open
+  question on whether to render as Mermaid diagram or tabular status block.
+- `inject-workflow-state.sh` — iteration.json orchestration fields
+  (`active_phase`, `active_idea`, `dial`, `epic_dial_overrides`, `resume_log`)
+  documented in `iteration-schema.md` but not yet wired into hook output.
