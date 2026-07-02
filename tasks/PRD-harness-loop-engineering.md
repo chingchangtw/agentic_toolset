@@ -1,10 +1,12 @@
 # PRD: Harness & Loop Engineering Framework (HLEF)
 
-**Document Version:** 1.2  
+**Document Version:** 1.4  
 **Date:** 2026-07-02  
 **Changelog:**
 - v1.1 — added Module 5 (Loop Engineering), generator-evaluator verification, deterministic gates, comprehension-debt guardrail, multi-scale constraint ladder. Source: `tasks/ideasHarness.md` discussions.
 - v1.2 — aligned with the ts- family architecture updates of 2026-07-02 (`docs/Ideas.md`, `docs/architecture.md`, `CLAUDE.md`): `ts-orchestrate` as session entry + gate enforcer, slim state + `history.jsonl` convention, `[WORKFLOW STATE]` hook pattern, epic-type phase spines, G2 location fix.
+- v1.3 — restructured for this repo's distribution-framework role: HLEF is the `ts-hlef` on-demand skill, all static artifacts authored under `src/` (skill `references/`, hooks in `src/hook/`), runtime state generated lazily in the end-user project. Workspace root renamed `.ai/` → `.agents/`.
+- v1.4 — judged against the `ideasHarness.md` thesis + Agentic Harness Framework draft: deterministic enforcers now mandatory for Tier 0/1 guardrails, generator-evaluator split promoted to a cross-module invariant, verification pulled forward to S1, executable `done_definition`, `context_sources` + `retry_ceiling` schema fields, corrective feedback loops, circuit breakers, Rule of Two HITL node, demo-log format, Open Questions section.
 
 **Owner:** Tony (CAO, Synaptics)  
 **Target Runtime:** Claude Code CLI (multi-agent, agentic architecture)  
@@ -14,9 +16,14 @@
 
 ## 1. Executive Summary
 
-HLEF is a **full-stack, CLI-operable practice environment** that implements the four-module curriculum of the *Harness & Loop Engineering* course directly inside Claude Code, plus a fifth Loop Engineering module distilled from field practice (`tasks/ideasHarness.md`). It provides runnable practice exercises, agent scaffolding, guardrails infrastructure, multi-agent orchestration patterns, and a self-evolution memory loop — all wired into the ts- skill family (session entry and gate enforcement via `ts-orchestrate`, per-epic delivery via `ts-deliver-router`) and the `.ai/` workspace convention already established in the Synaptics skill ecosystem.
+HLEF is a **full-stack, CLI-operable practice environment** that implements the four-module curriculum of the *Harness & Loop Engineering* course directly inside Claude Code, plus a fifth Loop Engineering module distilled from field practice (`tasks/ideasHarness.md`). It provides runnable practice exercises, agent scaffolding, guardrails infrastructure, multi-agent orchestration patterns, and a self-evolution memory loop — all wired into the ts- skill family (session entry and gate enforcement via `ts-orchestrate`, per-epic delivery via `ts-deliver-router`) and the `.agents/` workspace convention (renamed from `.ai/`, 2026-07-02) already established in the Synaptics skill ecosystem. HLEF ships as the `ts-hlef` on-demand skill of this distribution framework — see §5 for the authoring/installed/runtime split.
 
 The project is not a tutorial viewer. It is an **operational harness** the user runs to complete course practices, accumulate institutional knowledge from mistakes, and graduate course concepts into production skill patterns.
+
+The framework operationalizes **Agent = Model + Harness**: the model supplies raw
+capability; the harness supplies structural bounds, phase gates, and autonomous
+verification loops. Its target failure mode is "vibe coding" — accepting AI output
+unread until comprehension rot and verification debt make the system untroubleshootable.
 
 The design follows a two-layer thesis:
 
@@ -55,7 +62,7 @@ Modules 1–4 build the harness. Module 5 (new in v1.1) closes the loop.
 ### Out of Scope (v1)
 - UI dashboard or web frontend
 - Integration with external SaaS beyond Atlassian (already handled by `atlassian-rest-api` skill)
-- LLM provider switching (Claude Code is the spine; muscle agents follow existing architecture)
+- LLM provider switching and a centralized LLM-proxy/orchestration layer (Claude Code is the spine; muscle agents follow existing architecture). The proxy layer is the standard enterprise pattern for cost/model routing — **deferred, not rejected**; revisit when multi-model muscle usage grows.
 
 ---
 
@@ -71,67 +78,93 @@ Modules 1–4 build the harness. Module 5 (new in v1.1) closes the loop.
 
 ## 5. Architecture Overview
 
+HLEF is **not a standalone project**. This repo is a distribution framework (project
+template); HLEF ships as one of its deliverable skills — working name **`ts-hlef`**
+(ts- family prefix). Three locations must never be conflated:
+
+1. **Authoring** (this repo) — everything static lives inside the skill directory under
+   `src/`, so the build pipeline packages it into `release.zip`.
+2. **Installed** (end-user project) — the installer copies, per project, the skill to
+   `[project root]/.claude/skills/ondemand/` and the hooks to
+   `[project root]/.claude/hooks/`. Nothing HLEF installs machine-globally
+   (no `~/.claude/`); each project carries its own copy and can be on a
+   different version.
+3. **Runtime** (end-user project) — state files are generated lazily by the skill on
+   first run under `[project root]/.agents/hlef/`. They are never checked into this repo.
+
+> Workspace-root note: the shared runtime workspace was renamed `.ai/` → `.agents/`
+> (decision 2026-07-02). `docs/architecture.md`, `CLAUDE.md`, `docs/Ideas.md`, and
+> `inject-workflow-state.sh` still say `.ai/` — updating them is follow-up work outside
+> this PRD.
+
+### 5.1 Authoring layout (this repo → packaged into `release.zip`)
+
 ```
-HLEF Project Root
-├── .ai/                          ← shared ts- family workspace (unprefixed root convention)
-│   ├── ts-deliver-router/
-│   │   ├── state.json            ← slim: current phase only
-│   │   └── history.jsonl         ← append-only phase-exit audit log
-│   ├── iteration.json            ← active_epic + DIAL (owned by sequencing, not the router)
-│   └── hlef/                     ← HLEF-specific workspace
-│       ├── config.json           ← project config (DIAL level, guardrail tier, agent roster)
-│       ├── incident-log.md       ← append-only incident audit trail
-│       ├── evolution-log.md      ← error→lesson→fix records
-│       ├── loop-triage.md        ← persistent loop memory: findings, priorities, task status
-│       └── agent-roster.json     ← registered agents + capability boundaries
-│
-├── harness/                      ← Module 1: Harness definitions
-│   ├── agent-work-packages/      ← One .md per virtual employee definition
-│   ├── behaviour-boundaries.md   ← Shared constraint registry
-│   └── harness-schema.json       ← JSON schema for a valid agent work package
-│
-├── guardrails/                   ← Module 2: Internal controls
-│   ├── guardrail-registry.md     ← All guardrail rules, tiers, enforcement level
-│   ├── hitl-nodes.json           ← High-risk nodes requiring human sign-off
-│   ├── incident-handler.md       ← Incident response SOP
-│   └── post-incident-template.md ← Learning loop trigger template
-│
-├── orchestration/                ← Module 3: Multi-agent patterns
-│   ├── patterns/
-│   │   ├── manager-dispatch.md
-│   │   ├── pipeline.md
-│   │   ├── reviewer.md
-│   │   ├── debate.md
-│   │   └── committee.md
-│   └── workflows/
-│       ├── research-to-deck/     ← Practice: research → presentation multi-agent flow
-│       └── manager-dispatch-rules.md
-│
-├── evolution/                    ← Module 4: Self-evolution
-│   ├── error-taxonomy.md         ← Categorised error types
-│   ├── skill-evolution-hook.md   ← How errors feed skill updates
-│   └── anti-dogma-check.md       ← Prevents over-generalisation from small samples
-│
-├── loop/                         ← Module 5: Loop engineering
-│   ├── five-moves.md             ← Discovery / Handoff / Verification / Persistence / Scheduling
-│   ├── generator-evaluator.md    ← Split-role verification contract
-│   ├── hard-stops.md             ← Deterministic gates + hard-stop conditions
-│   ├── comprehension-debt.md     ← Daily human sampling protocol
-│   └── schedules/                ← Cron / automation definitions per loop
-│
-├── practices/                    ← All 8 runnable practices
-│   ├── P1-agent-work-package.md
-│   ├── P2-hitl-approval-flow.md
-│   ├── P3-post-incident-learning.md
-│   ├── P4-research-to-deck-workflow.md
-│   ├── P5-manager-dispatch-rules.md
-│   ├── P6-skill-evolution.md
-│   ├── P7-full-harness-integration.md (capstone)
-│   └── P8-scheduled-loop.md      ← Module 5: scheduled generator→evaluator loop
-│
-├── SKILL.md                      ← Claude Code skill entry point
-└── README.md                     ← Setup and quick-start guide
+src/
+├── skills/ondemand/ts-hlef/          ← self-contained skill, on-demand loaded
+│   ├── SKILL.md                      ← Claude Code skill entry point
+│   ├── SKILL_caveman.md              ← token-optimized twin (family convention, Ideas.md §4)
+│   ├── README.md                     ← setup and quick-start guide
+│   └── references/
+│       ├── harness/                  ← Module 1: harness definitions
+│       │   ├── harness-schema.json   ← JSON schema for a valid agent work package
+│       │   └── behaviour-boundaries.md ← shared constraint registry (template)
+│       ├── guardrails/               ← Module 2: templates + SOPs
+│       │   ├── guardrail-registry.md ← 10 starter rules (template)
+│       │   ├── hitl-nodes.json       ← 5 starter HITL nodes (template)
+│       │   ├── incident-handler.md   ← incident response SOP
+│       │   └── post-incident-template.md
+│       ├── orchestration/            ← Module 3: pattern library
+│       │   ├── patterns/             ← manager-dispatch / pipeline / reviewer / debate / committee
+│       │   └── workflows/research-to-deck/  ← 5 agent definitions
+│       ├── evolution/                ← Module 4: self-evolution method
+│       │   ├── error-taxonomy.md
+│       │   ├── skill-evolution-hook.md
+│       │   └── anti-dogma-check.md
+│       ├── loop/                     ← Module 5: loop engineering
+│       │   ├── five-moves.md
+│       │   ├── generator-evaluator.md
+│       │   ├── hard-stops.md
+│       │   ├── comprehension-debt.md
+│       │   └── schedules/            ← starter cron/automation templates
+│       └── practices/                ← P1–P8 runnable practice guides
+├── hook/
+│   ├── validate-work-package.sh      ← Feature 1.1 G0 schema-validation hook (+ .ps1)
+│   └── inject-loop-state.sh          ← Module 5 [LOOP STATE] UserPromptSubmit hook (+ .ps1)
+└── commands/                         ← optional slash-command stubs surfacing practices
 ```
+
+### 5.2 Runtime layout (end-user project — generated, never in this repo)
+
+```
+[project root]/
+├── .claude/
+│   ├── skills/ondemand/ts-hlef/      ← installed by install.sh / install.ps1
+│   └── hooks/                        ← validate-work-package + inject-loop-state (project-scoped)
+└── .agents/                          ← shared ts- family runtime workspace (was .ai/)
+    ├── ts-deliver-router/
+    │   ├── state.json                ← slim: current phase only
+    │   └── history.jsonl             ← append-only phase-exit audit log
+    ├── iteration.json                ← active_epic + DIAL (owned by sequencing, not the router)
+    └── hlef/                         ← HLEF runtime state, created lazily on first run
+        ├── config.json               ← project config (DIAL level, guardrail tier, agent roster)
+        ├── agent-work-packages/      ← user-created work packages (one .json per virtual employee)
+        ├── guardrail-registry.md     ← instantiated from shipped template
+        ├── behaviour-boundaries.md   ← instantiated from shipped template
+        ├── hitl-nodes.json           ← live HITL registry (seeded from template)
+        ├── incident-log.md           ← append-only incident audit trail
+        ├── evolution-log.md          ← error→lesson→fix records
+        ├── loop-triage.md            ← persistent loop memory: findings, priorities, task status
+        ├── research-to-deck-state.json
+        └── agent-roster.json         ← registered agents + capability boundaries
+```
+
+Templates ship read-only inside the skill's `references/`; live, editable copies are
+instantiated into `.agents/hlef/` on first run. This keeps the shipped skill pristine
+and upgradeable — an installer update never overwrites user state.
+
+In the module sections below, template paths are relative to
+`src/skills/ondemand/ts-hlef/references/`; runtime paths are anchored at `.agents/hlef/`.
 
 ---
 
@@ -145,7 +178,7 @@ HLEF Project Root
 
 #### Feature 1.1 — Agent Work Package Schema
 
-- **File:** `harness/harness-schema.json`
+- **File:** `harness/harness-schema.json` (shipped template)
 - **Fields (required):**
   - `agent_id` — unique identifier
   - `role` — job title / function description
@@ -155,13 +188,15 @@ HLEF Project Root
   - `escalation_trigger` — conditions that force HITL handoff
   - `token_budget` — soft and hard limits
   - `dial_level` — default DIAL autonomy (HIGH / MID / LOW)
-  - `done_definition` — machine-checkable completion criteria (a harness must define what "done" is; the agent never decides this for itself)
+  - `done_definition` — the acceptance condition as an **executable command whose exit code 0 is "done"** (test suite, lint, schema check). Never a natural-language judgment; the agent never decides this for itself
   - `recovery_protocol` — what the agent does on failure (retry / rollback / escalate), so a failed run degrades predictably instead of improvising
-- **Validation rule:** Claude Code hook validates schema on `agent-work-package` creation. Invalid packages are blocked (G0 gate equivalent).
+  - `context_sources` — the exact repository/doc slices injected before planning (grounding contract — arming a run means feeding the *right minimal* context, not the most)
+  - `retry_ceiling` — max autonomous correction attempts per gate failure (default 3) before the circuit breaker stops the run and escalates per `recovery_protocol`
+- **Validation rule:** Claude Code hook validates schema on `agent-work-package` creation. Invalid packages are blocked (G0 gate equivalent). Hook source is `src/hook/validate-work-package.sh` (+ `.ps1`), installed project-scoped to `.claude/hooks/` like `inject-workflow-state.sh`.
 
 #### Feature 1.2 — Behaviour Boundary Registry
 
-- **File:** `harness/behaviour-boundaries.md`
+- **File:** `harness/behaviour-boundaries.md` (shipped template → instantiated to `.agents/hlef/behaviour-boundaries.md` on first run)
 - **Content:** Human-readable rules shared across all agents. Written as numbered constraints, each with an `enforcement_level` tag: `[BLOCK]`, `[WARN]`, `[LOG]`.
 - **Usage pattern:** Agents load `behaviour-boundaries.md` as mandatory context before any task.
 
@@ -184,7 +219,7 @@ observed errors, so team know-how sediments into the constraints over time.
 #### Practice P1 — Design a Complete Agent Work Package
 
 - **Input:** User provides: role name, high-level task description
-- **Output:** A fully validated `agent-work-package.json` written to `harness/agent-work-packages/`
+- **Output:** A fully validated `agent-work-package.json` written to `.agents/hlef/agent-work-packages/`
 - **Guided steps inside the practice file:**
   1. Define role and scope
   2. Enumerate permitted tools
@@ -202,24 +237,30 @@ observed errors, so team know-how sediments into the constraints over time.
 
 #### Feature 2.1 — Guardrail Registry
 
-- **File:** `guardrails/guardrail-registry.md`
+- **File:** `guardrails/guardrail-registry.md` (shipped template with 10 starter rules → instantiated to `.agents/hlef/guardrail-registry.md`)
 - **Guardrail tiers:**
 
-| Tier | Label | Enforcement |
-|---|---|---|
-| 0 | Hard Block | Agent cannot proceed; task aborted |
-| 1 | HITL Required | Task paused; human must sign off |
-| 2 | Warn + Log | Proceeds with warning written to `incident-log.md` |
-| 3 | Log Only | Silent audit trail entry |
+| Tier | Label | Enforcement | Mechanism (required) |
+|---|---|---|---|
+| 0 | Hard Block | Agent cannot proceed; task aborted | **Deterministic only** — hook / script / CI hard-failure. Prose-only is invalid at this tier |
+| 1 | HITL Required | Task paused; human must sign off | Deterministic trigger + human sign-off |
+| 2 | Warn + Log | Proceeds with warning written to `incident-log.md` | Deterministic or prompt-level |
+| 3 | Log Only | Silent audit trail entry | Prompt-level allowed |
 
 - **Rule format per entry:**
   ```
-  GR-NNN | [TIER] | Trigger condition | Enforcement action | Related agents
+  GR-NNN | [TIER] | Trigger condition | Enforcement action | Enforcer (hook/script/CI/prompt) | Related agents
   ```
+- **Prose is probabilistic.** A rule whose only mechanism is "the agent loaded the registry
+  as context" is a request, not a guardrail — its failure mode is exactly error class E3.
+  Every Tier 0/1 entry MUST name its deterministic enforcer; the registry template rejects
+  entries without one. Deterministic gates fail hard (CI failure, never a warning), and
+  inline-disable escape hatches (`// eslint-disable-next-line` and equivalents) are
+  themselves treated as Tier 0 violations.
 
 #### Feature 2.2 — HITL Node Definitions
 
-- **File:** `guardrails/hitl-nodes.json`
+- **File:** `guardrails/hitl-nodes.json` (5 starter nodes shipped as template → live registry at `.agents/hlef/hitl-nodes.json`)
 - **Each node contains:**
   - `node_id`
   - `description` — what decision point this is
@@ -228,17 +269,18 @@ observed errors, so team know-how sediments into the constraints over time.
   - `timeout_seconds` — escalation if no response
   - `fallback_action` — what happens on timeout (abort / escalate / log)
 - **Integration:** HITL nodes are registered as `gate` rows in the CHECKS REGISTRY, instantiated per project via the PROJECT REGISTRY (`/ts-deliver:init`, refined at Reflect via `/ts-deliver:refine`). Enforcement is `/ts-orchestrate:next` — it refuses phase advance while a required gate is unsigned and never auto-signs at any DIAL level.
+- **Rule of Two (lethal-trifecta prevention):** one of the 5 starter nodes is permanent — HITL fires whenever a single task simultaneously combines (1) reading untrusted input, (2) accessing sensitive data, and (3) modifying state. Any two are tolerable; all three require a human pause.
 
 #### Feature 2.3 — Incident Handler & Post-Incident Learning
 
 - **File:** `guardrails/incident-handler.md` — SOP: detect → contain → investigate → document → evolve
 - **File:** `guardrails/post-incident-template.md` — Structured template triggering Module 4 loop
-- **Audit trail:** All incidents append to `.ai/hlef/incident-log.md` with timestamp, agent_id, guardrail triggered, action taken, human reviewer.
+- **Audit trail:** All incidents append to `.agents/hlef/incident-log.md` with timestamp, agent_id, guardrail triggered, action taken, human reviewer.
 
 #### Practice P2 — Design HITL Approval Flow
 
 - **Scenario:** A Manager Agent wants to delete files in production. Design the HITL checkpoint.
-- **Output:** One HITL node entry in `hitl-nodes.json` + one guardrail entry in `guardrail-registry.md`
+- **Output:** One HITL node entry in `.agents/hlef/hitl-nodes.json` + one guardrail entry in `.agents/hlef/guardrail-registry.md`
 
 #### Practice P3 — Post-Incident Learning Flow
 
@@ -270,9 +312,15 @@ Each pattern file in `orchestration/patterns/` contains:
 | Debate | `debate.md` | High | High-stakes decisions needing dissent |
 | Committee | `committee.md` | High | High-risk output sign-off |
 
+All patterns follow **Plan-Execute-Verify (PEV)** role separation: a structured plan with
+surfaced assumptions precedes any file touch, and the Reviewer/Evaluator role inherits
+Feature 5.2's evaluator contract — fresh context, skeptic brief, verification by action.
+The generator-evaluator split is a **cross-module CHECKS REGISTRY invariant** (an `always`
+row applying wherever output is accepted), not a Module 5-only feature.
+
 #### Feature 3.2 — Research-to-Deck Workflow
 
-- **Directory:** `orchestration/workflows/research-to-deck/`
+- **Directory:** `orchestration/workflows/research-to-deck/` (shipped agent definitions)
 - **Agents in this workflow:**
   - `research-agent` — searches, summarises sources
   - `structure-agent` — builds outline from research
@@ -280,7 +328,7 @@ Each pattern file in `orchestration/patterns/` contains:
   - `reviewer-agent` — checks factual accuracy and consistency
   - `deck-builder-agent` — renders to pptx (using existing `pptx` skill)
 - **Orchestration pattern used:** Pipeline → Reviewer
-- **State file:** `.ai/hlef/research-to-deck-state.json`
+- **State file:** `.agents/hlef/research-to-deck-state.json`
 
 #### Practice P4 — Research-to-Deck Multi-Agent Workflow
 
@@ -289,7 +337,7 @@ Each pattern file in `orchestration/patterns/` contains:
 
 #### Practice P5 — Manager Agent Dispatch Rules
 
-- **Output:** A `manager-dispatch-rules.md` defining: task taxonomy, agent selection logic, priority queue rules, overflow handling, timeout policy.
+- **Output:** A `manager-dispatch-rules.md` (written to `.agents/hlef/` — user-produced artifact) defining: task taxonomy, agent selection logic, priority queue rules, overflow handling, timeout policy.
 
 ---
 
@@ -323,7 +371,7 @@ Each pattern file in `orchestration/patterns/` contains:
 
 #### Feature 4.3 — Evolution Log
 
-- **File:** `.ai/hlef/evolution-log.md` (append-only)
+- **File:** `.agents/hlef/evolution-log.md` (append-only, created lazily on first run)
 - **Entry format:**
   ```
   ## EVO-NNN | YYYY-MM-DD
@@ -356,8 +404,8 @@ keeps them honest without a human watching every turn.
 | Discovery | The loop finds its own work via skills (triage, backlog scan) instead of waiting for a prompt | Triage skill writes candidates to `loop-triage.md` |
 | Handoff | Parallel tasks are isolated so runs cannot trample each other | One git worktree per dispatched task |
 | Verification | An independent quality check gates every iteration | Feature 5.2 generator-evaluator split |
-| Persistence | State is written to disk, outside the chat — the agent forgets, the repository does not | `.ai/hlef/loop-triage.md` (append-only findings, priorities, task status) |
-| Scheduling | Runs are triggered by automations/cron, not by a human | `loop/schedules/` definitions |
+| Persistence | State is written to disk, outside the chat — the agent forgets, the repository does not | `.agents/hlef/loop-triage.md` (append-only findings, priorities, task status) |
+| Scheduling | Runs are triggered by automations/cron, not by a human | Templates in `loop/schedules/`; live definitions in `.agents/hlef/schedules/` |
 
 Loop state is surfaced to the session the same way workflow state already is: following
 the `inject-workflow-state.sh` precedent, a UserPromptSubmit hook injects a `[LOOP STATE]`
@@ -373,12 +421,14 @@ hook family's prompt-injection rule).
 - **Fresh context ("amnesiac reviewer"):** the evaluator starts in a clean session with no memory of the generator's reasoning — the same effect as asking an uninvolved colleague. Cross-model review (e.g. Codex CLI from the existing muscle roster) is preferred where available, since a different model does not share the generator's blind spots.
 - **Verification by action, not reading:** the evaluator may not judge output by "looks right." It must *execute* — run the tests, drive Playwright/MCP tools, inspect actual results.
 - **Hard-stop condition** (`loop/hard-stops.md`): the loop keeps iterating until an independent check confirms tests pass and the linter is clean. The generator can never self-certify done — that is error class E7.
+- **Scope:** this split is registered as an `always` CHECKS REGISTRY row and applies to every module's output acceptance (Module 3's reviewer-agent included), not just loop iterations.
 
 #### Feature 5.3 — Deterministic Gates
 
 - **File:** `loop/hard-stops.md`
 - Probabilistic LLM steps are interleaved with strict, deterministic pipeline gates. Anything rule-bound — lint, schema validation, test execution, commit hygiene — stays in scripts, out of the LLM's hands (the Stripe "Minions" precedent: reliability comes from pipeline constraints, not model size).
 - Every loop iteration ends in a deterministic gate script. The existing G0 schema-validation hook is the template; the loop extends it to lint + test checks.
+- **Corrective feedback loop:** when a gate fails, the exact error output (compiler / linter / test message) is fed back into the generator's next attempt for autonomous correction — no human needed for mechanical fixes. Bounded by the work package's `retry_ceiling` (default 3): on ceiling breach the circuit breaker stops the run, logs an incident, and escalates per `recovery_protocol`. An agent must never spin unattended on an unsolvable bug (token-blowout guard; `token_budget` is the second, daily-scale breaker).
 
 #### Feature 5.4 — Comprehension-Debt Guardrail
 
@@ -392,7 +442,7 @@ hook family's prompt-injection rule).
 #### Practice P8 — Scheduled Generator→Evaluator Loop
 
 - **Input:** A small recurring task (e.g., triage open TODOs in a repo)
-- **Output:** One schedule entry in `loop/schedules/`, one completed loop run in which the evaluator rejected at least one generator artifact before final acceptance, persisted state in `loop-triage.md`, and a deterministic-gate log
+- **Output:** One schedule entry in `.agents/hlef/schedules/`, one completed loop run in which the evaluator rejected at least one generator artifact before final acceptance, persisted state in `loop-triage.md`, and a deterministic-gate log
 - **Success criteria:** No self-certification occurred (no E7); loop state survives session end and is readable by the next run.
 
 ---
@@ -418,7 +468,7 @@ hook family's prompt-injection rule).
 | Per-epic delivery spine | `ts-deliver-router` | 7-phase spine, varies by epic type (bugfix=3 / refactor=6 / epic=7); already production |
 | Agent runtime | Claude Code CLI | Target runtime per project brief |
 | Muscle agents | GitHub Copilot CLI, Codex CLI (existing) | Existing multi-agent architecture |
-| State management | Slim live state (`.ai/hlef/*.json`) + append-only history | Mirrors the `state.json` + `history.jsonl` split shipped in `ts-deliver-router` (2026-06-28) |
+| State management | Slim live state (`.agents/hlef/*.json`) + append-only history | Mirrors the `state.json` + `history.jsonl` split shipped in `ts-deliver-router` (2026-06-28); workspace root renamed `.ai/` → `.agents/` |
 | Audit trail | Append-only `.md` files | Human-readable, git-diffable |
 | Schema validation | JSON Schema (harness-schema.json) | Lightweight, Claude Code native |
 | Presentation output | `pptx` skill (existing) | Already in skill library |
@@ -432,19 +482,26 @@ hook family's prompt-injection rule).
 
 ## 8. File-by-File Build Checklist
 
+All paths are authoring paths in this repo. `SKILL_ROOT` = `src/skills/ondemand/ts-hlef/`;
+unprefixed paths below are relative to `SKILL_ROOT/references/`. Runtime files
+(`.agents/hlef/*`) are **not** on this checklist — they are created lazily by the skill's
+first-run init logic, never checked in.
+
 ### Phase 1 — Foundation (Build first)
-- [ ] `README.md` — setup and quick-start
-- [ ] `SKILL.md` — Claude Code entry point
-- [ ] `.ai/hlef/config.json` — project config
+- [ ] `SKILL_ROOT/SKILL.md` — Claude Code entry point, incl. first-run init logic (create `.agents/hlef/` state files + instantiate templates)
+- [ ] `SKILL_ROOT/SKILL_caveman.md` — token-optimized twin (family convention)
+- [ ] `SKILL_ROOT/README.md` — setup and quick-start
 - [ ] `harness/harness-schema.json` — agent work package schema
-- [ ] `harness/behaviour-boundaries.md` — shared constraint registry
+- [ ] `harness/behaviour-boundaries.md` — shared constraint registry (template)
+- [ ] `src/hook/validate-work-package.sh` + `.ps1` — G0 schema-validation hook
+- [ ] Release-manifest entry for `ts-hlef` + both hook files (packaging is manifest-driven)
 
 ### Phase 2 — Guardrails
-- [ ] `guardrails/guardrail-registry.md` — populated with 10 starter rules
-- [ ] `guardrails/hitl-nodes.json` — 5 starter HITL nodes
+- [ ] `guardrails/guardrail-registry.md` — template with 10 starter rules
+- [ ] `guardrails/hitl-nodes.json` — template with 5 starter HITL nodes
 - [ ] `guardrails/incident-handler.md` — SOP
 - [ ] `guardrails/post-incident-template.md`
-- [ ] `.ai/hlef/incident-log.md` — empty, with header
+- [ ] First-run init: seed `.agents/hlef/incident-log.md` header (skill logic, not a checked-in file)
 
 ### Phase 3 — Orchestration
 - [ ] `orchestration/patterns/manager-dispatch.md`
@@ -452,14 +509,13 @@ hook family's prompt-injection rule).
 - [ ] `orchestration/patterns/reviewer.md`
 - [ ] `orchestration/patterns/debate.md`
 - [ ] `orchestration/patterns/committee.md`
-- [ ] `orchestration/workflows/research-to-deck/` (5 agent definitions + state file)
-- [ ] `orchestration/workflows/manager-dispatch-rules.md`
+- [ ] `orchestration/workflows/research-to-deck/` (5 agent definitions)
 
 ### Phase 4 — Evolution
 - [ ] `evolution/error-taxonomy.md`
 - [ ] `evolution/skill-evolution-hook.md`
 - [ ] `evolution/anti-dogma-check.md`
-- [ ] `.ai/hlef/evolution-log.md` — empty, with header
+- [ ] First-run init: seed `.agents/hlef/evolution-log.md` header (skill logic)
 
 ### Phase 5 — Practices
 - [ ] `practices/P1-agent-work-package.md`
@@ -475,8 +531,9 @@ hook family's prompt-injection rule).
 - [ ] `loop/generator-evaluator.md`
 - [ ] `loop/hard-stops.md`
 - [ ] `loop/comprehension-debt.md`
-- [ ] `loop/schedules/` — one starter schedule definition
-- [ ] `.ai/hlef/loop-triage.md` — empty, with header
+- [ ] `loop/schedules/` — one starter schedule template
+- [ ] `src/hook/inject-loop-state.sh` + `.ps1` — `[LOOP STATE]` UserPromptSubmit hook
+- [ ] First-run init: seed `.agents/hlef/loop-triage.md` header (skill logic)
 - [ ] `practices/P8-scheduled-loop.md`
 
 ---
@@ -509,11 +566,11 @@ while the capstone P7 runs the full 7-phase epic spine with G1 + G2.
 | Token efficiency | Each agent work package MUST declare a `token_budget`. Practices warn if budget is exceeded. |
 | Auditability | All guardrail events, HITL decisions, and evolution changes are append-only log entries (never deleted). |
 | Portability | All files are plain Markdown or JSON. No binary dependencies beyond the `pptx` skill. |
-| Extensibility | New agents are added by creating one `.json` file in `harness/agent-work-packages/` — no spine changes needed. |
+| Extensibility | New agents are added by creating one `.json` file in `.agents/hlef/agent-work-packages/` — no spine changes, no reinstall needed. |
 | Backward compatibility | HLEF operates as a peer skill alongside the ts- family (`ts-orchestrate` / `ts-project-planner` / `ts-deliver-router` / `ts-acpl`), not a replacement. |
 | Independent verification | The agent that generates an artifact never certifies it done (E7). Evaluator verification is by action, in fresh context. |
 | Comprehension debt | A human reads a daily representative sample of loop output. Architecture decisions are never delegated to the loop. |
-| Measurement | Progress is tracked by demo velocity (runnable end-to-end results), not PR counts or lines of code. |
+| Measurement | Progress is tracked by demo velocity (runnable end-to-end results), not PR counts or lines of code. Each completed demo appends an entry to `.agents/hlef/loop-triage.md`: `DEMO-NNN \| date \| what ran \| how verified` — velocity is countable, not asserted. |
 
 ---
 
@@ -537,16 +594,41 @@ development itself runs on the spine it teaches.
 
 | Sprint | Deliverables | Exit Criterion |
 |---|---|---|
-| S1 | Foundation files + P1 practice runnable | P1 produces a valid agent work package |
+| S1 | Foundation files + **minimal 5.2/5.3** (evaluator brief + one deterministic gate script) + P1 runnable | P1 produces a valid agent work package, accepted by an evaluator that is not its generator |
 | S2 | Guardrails + HITL + P2 + P3 | P2 and P3 produce logged guardrail and incident entries |
 | S3 | Orchestration patterns + P4 + P5 | P4 runs 5-agent research-to-deck end-to-end |
 | S4 | Evolution loop + P6 | P6 closes one evolution log entry |
 | S5 | Capstone P7 | Full integration scenario runs with all four harness modules active |
-| S6 | Loop module + P8 | P8 runs a scheduled loop with at least one evaluator rejection, a passing deterministic gate, and state persisted across sessions |
+| S6 | Remaining loop moves (Discovery, Handoff, Scheduling) + P8 | P8 runs a scheduled loop with at least one evaluator rejection, a passing deterministic gate, and state persisted across sessions |
+
+Verification lands in S1, not S6 — otherwise HLEF itself would be built for five sprints
+under the exact condition it forbids (generator grading its own output, error class E7).
 
 ---
 
-## 13. Appendix — Syllabus-to-PRD Traceability
+## 13. Open Questions (Research Backlog)
+
+Carried from the harness gap analysis. These are unresolved by design — the PRD ships
+without pretending to answer them:
+
+1. **Incident remediation for unread auto-generated code.** If the preventative guards
+   fail and a subtle bug ships, how do humans troubleshoot and hotfix a codebase they
+   never manually authored? The Module 2 incident SOP assumes an investigator with a
+   mental map; mandatory sample reading slows the erosion of that map but does not
+   guarantee it covers the failing region.
+2. **Securing autonomous Discovery from prompt injection.** The loop's Discovery move
+   reads external surfaces (issues, CI logs) for new work — adversarial content embedded
+   there could hijack the agent. Partial mitigations exist (the hook family's enum/ID-only
+   output rule; the Rule of Two node pauses the trifecta), but safe *ingestion* of
+   untrusted work items is unsolved.
+3. **Residual bias in LLM-as-judge.** The evaluator is still an LLM. Deterministic gates,
+   verification by action, and cross-model review shrink the surface it judges
+   subjectively — but calibration noise on non-verifiable qualities (readability,
+   design fit) cannot currently be eliminated, only bounded.
+
+---
+
+## 14. Appendix — Syllabus-to-PRD Traceability
 
 | Syllabus Practice | PRD Practice | Module |
 |---|---|---|
@@ -561,4 +643,4 @@ development itself runs on the spine it teaches.
 
 ---
 
-*End of PRD v1.2*
+*End of PRD v1.4*
