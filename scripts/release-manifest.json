@@ -1,0 +1,79 @@
+{
+  "version": "1",
+  "skills": [
+    {
+      "name": "ts-project-init-advisor",
+      "src": "src/skills/ondemand/ts-project-init-advisor",
+      "dest": "skills/ondemand/ts-project-init-advisor"
+    },
+    {
+      "name": "ts-acpl",
+      "src": "src/skills/ts-acpl",
+      "dest": "skills/ts-acpl"
+    },
+    {
+      "name": "ts-deliver-router",
+      "src": "src/skills/ts-deliver-router",
+      "dest": "skills/ts-deliver-router"
+    },
+    {
+      "name": "ts-orchestrate",
+      "src": "src/skills/ts-orchestrate",
+      "dest": "skills/ts-orchestrate"
+    },
+    {
+      "name": "ts-project-planner",
+      "src": "src/skills/ts-project-planner",
+      "dest": "skills/ts-project-planner"
+    },
+    {
+      "name": "ts-project-scaffolder",
+      "src": "src/skills/ts-project-scaffolder",
+      "dest": "skills/ts-project-scaffolder"
+    }
+  ],
+  "hooks": [
+    {
+      "name": "inject-workflow-state.sh",
+      "src": "src/hook/inject-workflow-state.sh",
+      "dest": "hook/inject-workflow-state.sh",
+      "scope": "project"
+    },
+    {
+      "name": "ts-session-guard.ps1",
+      "src": "src/hook/ts-session-guard.ps1",
+      "dest": "hook/ts-session-guard.ps1",
+      "scope": "user"
+    },
+    {
+      "name": "ts-session-guard.py",
+      "src": "src/hook/ts-session-guard.py",
+      "dest": "hook/ts-session-guard.py",
+      "scope": "user"
+    },
+    {
+      "name": "ts-statusline_bridge.ps1",
+      "src": "src/hook/ts-statusline_bridge.ps1",
+      "dest": "hook/ts-statusline_bridge.ps1",
+      "scope": "user"
+    },
+    {
+      "name": "ts-statusline_bridge.py",
+      "src": "src/hook/ts-statusline_bridge.py",
+      "dest": "hook/ts-statusline_bridge.py",
+      "scope": "user"
+    },
+    {
+      "name": "ts-statusline_wrapper.ps1",
+      "src": "src/hook/ts-statusline_wrapper.ps1",
+      "dest": "hook/ts-statusline_wrapper.ps1",
+      "scope": "user"
+    },
+    {
+      "name": "ts-statusline_wrapper.sh",
+      "src": "src/hook/ts-statusline_wrapper.sh",
+      "dest": "hook/ts-statusline_wrapper.sh",
+      "scope": "user"
+    }
+  ]
+}

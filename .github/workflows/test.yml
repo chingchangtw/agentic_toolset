@@ -27,3 +27,9 @@ jobs:
           for id in S1 S2 S3 S4 S5 S6 S7 S8 S9; do
             bash scripts/run-scenario.sh $id
           done
+
+      - name: Build release zip
+        run: npm run release
+
+      - name: Verify install parity
+        run: node scripts/verify-install.mjs

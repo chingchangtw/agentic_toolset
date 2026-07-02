@@ -12,7 +12,7 @@
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "type-check": "tsc --noEmit",
-     "release": "node scripts/build-release.mjs"
+     "release": "node scripts/generate-manifest.mjs && node scripts/build-release.mjs"
   },
   "keywords": [
     "ai",

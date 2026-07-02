@@ -24,29 +24,77 @@ if ($env:GITHUB_TOKEN) { $Headers["Authorization"] = "Bearer $env:GITHUB_TOKEN" 
 Invoke-WebRequest -Uri $ReleaseUrl -OutFile "$TmpDir\release.zip" -Headers $Headers
 Expand-Archive -Path "$TmpDir\release.zip" -DestinationPath $TmpDir -Force
 
-# ── skills ────────────────────────────────────────────────────────────────────
+# ── skills & hooks (manifest-driven, or legacy fallback for old zips) ─────────
 
-Write-Host "→ Installing skills → $SkillsDir\"
-New-Item -ItemType Directory -Path $SkillsDir -Force | Out-Null
-$SkillsSrc = "$TmpDir\skills"
-if (Test-Path $SkillsSrc) {
-    foreach ($skillDir in Get-ChildItem -Path $SkillsSrc -Directory) {
-        $dest = Join-Path $SkillsDir $skillDir.Name
-        Copy-Item -Path $skillDir.FullName -Destination $dest -Recurse -Force
-        Write-Host "   ✓ skill: $($skillDir.Name)"
+$ManifestPath = "$TmpDir\manifest.json"
+if (Test-Path $ManifestPath) {
+
+    # ── skills (manifest-driven) ─────────────────────────────────────────────────
+
+    Write-Host "→ Installing skills → $SkillsDir\"
+    New-Item -ItemType Directory -Path $SkillsDir -Force | Out-Null
+    $manifest = Get-Content $ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+    foreach ($entry in $manifest.skills) {
+        $installSubpath = $entry.dest.Substring("skills/".Length).Replace("/", "\")
+        $src = Join-Path $TmpDir $entry.dest.Replace("/", "\")
+        $dst = Join-Path $SkillsDir $installSubpath
+        New-Item -ItemType Directory -Path (Split-Path $dst -Parent) -Force | Out-Null
+        Copy-Item -Path $src -Destination $dst -Recurse -Force
+        Write-Host "   ✓ skill: $($entry.dest.Substring('skills/'.Length))"
     }
-}
 
-# ── hooks ─────────────────────────────────────────────────────────────────────
+    # ── hooks (manifest-driven, routed by scope) ──────────────────────────────────
 
-Write-Host "→ Installing hooks → $HooksDir\"
-New-Item -ItemType Directory -Path $HooksDir -Force | Out-Null
-$HookSrc = "$TmpDir\hook"
-if (Test-Path $HookSrc) {
-    Copy-Item "$HookSrc\ts-session-guard.ps1"     "$HooksDir\ts-session-guard.ps1"  -Force
-    Copy-Item "$HookSrc\ts-statusline_bridge.ps1" "$HooksDir\ts-statusline_bridge.ps1" -Force
-    Write-Host "   ✓ ts-session-guard.ps1"
-    Write-Host "   ✓ ts-statusline_bridge.ps1"
+    Write-Host "→ Installing hooks..."
+    New-Item -ItemType Directory -Path $HooksDir -Force | Out-Null
+    $ProjectHooksDir = "$ProjectClaudeDir\hooks"
+    New-Item -ItemType Directory -Path $ProjectHooksDir -Force | Out-Null
+    foreach ($entry in $manifest.hooks) {
+        $src = Join-Path $TmpDir $entry.dest.Replace("/", "\")
+        if ($entry.scope -eq "project") {
+            $dst = Join-Path $ProjectHooksDir $entry.name
+        } else {
+            $dst = Join-Path $HooksDir $entry.name
+        }
+        Copy-Item -Path $src -Destination $dst -Force
+        Write-Host "   ✓ hook ($($entry.scope)): $($entry.name)"
+    }
+
+} else {
+
+    # ── legacy fallback: old zip without manifest.json ────────────────────────────
+
+    Write-Host "→ Installing skills → $SkillsDir\"
+    New-Item -ItemType Directory -Path $SkillsDir -Force | Out-Null
+    $SkillsSrc = "$TmpDir\skills"
+    if (Test-Path $SkillsSrc) {
+        foreach ($skillDir in Get-ChildItem -Path $SkillsSrc -Directory) {
+            if ($skillDir.Name -eq "ondemand") {
+                $ondemandDest = Join-Path $SkillsDir "ondemand"
+                New-Item -ItemType Directory -Path $ondemandDest -Force | Out-Null
+                foreach ($odDir in Get-ChildItem -Path $skillDir.FullName -Directory) {
+                    $dest = Join-Path $ondemandDest $odDir.Name
+                    Copy-Item -Path $odDir.FullName -Destination $dest -Recurse -Force
+                    Write-Host "   ✓ skill (ondemand): $($odDir.Name)"
+                }
+                continue
+            }
+            $dest = Join-Path $SkillsDir $skillDir.Name
+            Copy-Item -Path $skillDir.FullName -Destination $dest -Recurse -Force
+            Write-Host "   ✓ skill: $($skillDir.Name)"
+        }
+    }
+
+    Write-Host "→ Installing hooks → $HooksDir\"
+    New-Item -ItemType Directory -Path $HooksDir -Force | Out-Null
+    $HookSrc = "$TmpDir\hook"
+    if (Test-Path $HookSrc) {
+        Copy-Item "$HookSrc\ts-session-guard.ps1"     "$HooksDir\ts-session-guard.ps1"  -Force
+        Copy-Item "$HookSrc\ts-statusline_bridge.ps1" "$HooksDir\ts-statusline_bridge.ps1" -Force
+        Write-Host "   ✓ ts-session-guard.ps1"
+        Write-Host "   ✓ ts-statusline_bridge.ps1"
+    }
+
 }
 
 # ── settings.json ─────────────────────────────────────────────────────────────

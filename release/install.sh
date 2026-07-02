@@ -30,49 +30,90 @@ curl "${CURL_ARGS[@]}" "${RELEASE_URL}"
 cd "${TMPDIR_INSTALL}"
 unzip -q release.zip
 
-# ── skills ────────────────────────────────────────────────────────────────────
+# ── skills & hooks (manifest-driven, or legacy fallback for old zips) ─────────
 
-echo "→ Installing skills → ${SKILLS_DIR}/"
-mkdir -p "${SKILLS_DIR}"
-if [[ -d skills ]]; then
-  for skill_dir in skills/*/; do
-    name="$(basename "${skill_dir}")"
-    if [[ "${name}" == "ondemand" ]]; then
-      mkdir -p "${SKILLS_DIR}/ondemand"
-      for ondemand_dir in "${skill_dir}"*/; do
-        [[ -d "${ondemand_dir}" ]] || continue
-        od_name="$(basename "${ondemand_dir}")"
-        cp -r "${ondemand_dir}" "${SKILLS_DIR}/ondemand/${od_name}"
-        echo "   ✓ skill (ondemand): ${od_name}"
-      done
-      continue
+if [[ -f manifest.json ]]; then
+
+  # ── skills (manifest-driven) ─────────────────────────────────────────────────
+
+  echo "→ Installing skills → ${SKILLS_DIR}/"
+  mkdir -p "${SKILLS_DIR}"
+  while IFS=$'\t' read -r dest_path install_subpath; do
+    mkdir -p "${SKILLS_DIR}/$(dirname "${install_subpath}")"
+    cp -r "${dest_path}" "${SKILLS_DIR}/${install_subpath}"
+    echo "   ✓ skill: ${install_subpath}"
+  done < <(python3 -c "
+import json, sys
+m = json.load(open('manifest.json'))
+for e in m['skills']:
+    install_subpath = e['dest'][len('skills/'):]
+    print(e['dest'] + '\t' + install_subpath)
+")
+
+  # ── hooks (manifest-driven, routed by scope) ──────────────────────────────────
+
+  echo "→ Installing hooks..."
+  mkdir -p "${HOOKS_DIR}"
+  mkdir -p "${PROJECT_HOOKS_DIR}"
+  while IFS=$'\t' read -r dest_path scope name; do
+    if [[ "${scope}" == "project" ]]; then
+      target_dir="${PROJECT_HOOKS_DIR}"
+    else
+      target_dir="${HOOKS_DIR}"
     fi
-    cp -r "${skill_dir}" "${SKILLS_DIR}/${name}"
-    echo "   ✓ skill: ${name}"
-  done
-fi
+    cp "${dest_path}" "${target_dir}/${name}"
+    chmod +x "${target_dir}/${name}"
+    echo "   ✓ hook (${scope}): ${name}"
+  done < <(python3 -c "
+import json, sys
+m = json.load(open('manifest.json'))
+for e in m['hooks']:
+    print(e['dest'] + '\t' + e['scope'] + '\t' + e['name'])
+")
 
-# ── hooks ─────────────────────────────────────────────────────────────────────
+else
 
-echo "→ Installing hooks → ${HOOKS_DIR}/"
-mkdir -p "${HOOKS_DIR}"
-if [[ -d hook ]]; then
-  cp hook/ts-session-guard.py    "${HOOKS_DIR}/ts-session-guard.py"
-  cp hook/ts-statusline_bridge.py "${HOOKS_DIR}/ts-statusline_bridge.py"
-  chmod +x "${HOOKS_DIR}/ts-session-guard.py"
-  chmod +x "${HOOKS_DIR}/ts-statusline_bridge.py"
-  echo "   ✓ ts-session-guard.py"
-  echo "   ✓ ts-statusline_bridge.py"
-fi
+  # ── legacy fallback: old zip without manifest.json ────────────────────────────
 
-# ── project hook (per-project: inject-workflow-state) ─────────────────────────
+  echo "→ Installing skills → ${SKILLS_DIR}/"
+  mkdir -p "${SKILLS_DIR}"
+  if [[ -d skills ]]; then
+    for skill_dir in skills/*/; do
+      name="$(basename "${skill_dir}")"
+      if [[ "${name}" == "ondemand" ]]; then
+        mkdir -p "${SKILLS_DIR}/ondemand"
+        for ondemand_dir in "${skill_dir}"*/; do
+          [[ -d "${ondemand_dir}" ]] || continue
+          od_name="$(basename "${ondemand_dir}")"
+          cp -r "${ondemand_dir}" "${SKILLS_DIR}/ondemand/${od_name}"
+          echo "   ✓ skill (ondemand): ${od_name}"
+        done
+        continue
+      fi
+      cp -r "${skill_dir}" "${SKILLS_DIR}/${name}"
+      echo "   ✓ skill: ${name}"
+    done
+  fi
 
-echo "→ Installing project hook → ${PROJECT_HOOKS_DIR}/"
-mkdir -p "${PROJECT_HOOKS_DIR}"
-if [[ -d hook && -f hook/inject-workflow-state.sh ]]; then
-  cp hook/inject-workflow-state.sh "${PROJECT_HOOKS_DIR}/inject-workflow-state.sh"
-  chmod +x "${PROJECT_HOOKS_DIR}/inject-workflow-state.sh"
-  echo "   ✓ inject-workflow-state.sh"
+  echo "→ Installing hooks → ${HOOKS_DIR}/"
+  mkdir -p "${HOOKS_DIR}"
+  if [[ -d hook ]]; then
+    cp hook/ts-session-guard.py    "${HOOKS_DIR}/ts-session-guard.py"
+    cp hook/ts-statusline_bridge.py "${HOOKS_DIR}/ts-statusline_bridge.py"
+    chmod +x "${HOOKS_DIR}/ts-session-guard.py"
+    chmod +x "${HOOKS_DIR}/ts-statusline_bridge.py"
+    echo "   ✓ ts-session-guard.py"
+    echo "   ✓ ts-statusline_bridge.py"
+  fi
+
+  echo "→ Installing project hook → ${PROJECT_HOOKS_DIR}/"
+  mkdir -p "${PROJECT_HOOKS_DIR}"
+  if [[ -d hook && -f hook/inject-workflow-state.sh ]]; then
+    cp hook/inject-workflow-state.sh "${PROJECT_HOOKS_DIR}/inject-workflow-state.sh"
+    chmod +x "${PROJECT_HOOKS_DIR}/inject-workflow-state.sh"
+    echo "   ✓ inject-workflow-state.sh"
+  fi
+
 fi
 
 # ── project settings.json (UserPromptSubmit hook registration) ─────────────────

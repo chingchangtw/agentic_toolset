@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 /**
  * build-release.mjs
- * Bundles src/skills/, src/hook/, src/commands/, src/project_root_structure/ into release.zip
- * for GitHub Releases distribution. Run: node scripts/build-release.mjs
+ * Reads scripts/release-manifest.json and bundles declared skills, hooks, commands,
+ * and scaffold into dist/release.zip for GitHub Releases distribution.
+ * Run: node scripts/build-release.mjs  (or via `npm run release`)
  */
-import { cpSync, mkdirSync, rmSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { cpSync, mkdirSync, rmSync, existsSync, readFileSync, statSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,11 +14,21 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const BUILD = join(ROOT, '.release-build');
 const OUT   = join(ROOT, 'dist', 'release.zip');
+const MANIFEST_PATH = join(__dirname, 'release-manifest.json');
 
-// ── helpers ──────────────────────────────────────────────────────────────────
+// ── read manifest ─────────────────────────────────────────────────────────────
+
+if (!existsSync(MANIFEST_PATH)) {
+  console.error('scripts/release-manifest.json not found — run generate-manifest first');
+  process.exit(1);
+}
+
+const manifest = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'));
+
+// ── helpers ───────────────────────────────────────────────────────────────────
 
 function cp(src, dest) {
-  if (!existsSync(src)) { console.warn(`SKIP (missing): ${src}`); return; }
+  if (!existsSync(src)) { console.warn(`  SKIP (missing): ${src}`); return; }
   mkdirSync(dirname(dest), { recursive: true });
   const stat = statSync(src);
   if (stat.isDirectory()) {
@@ -39,45 +50,33 @@ function validateSkill(skillDir, name) {
 if (existsSync(BUILD)) rmSync(BUILD, { recursive: true });
 mkdirSync(BUILD, { recursive: true });
 
-// ── 1. skills ─────────────────────────────────────────────────────────────────
-
-const skillsSrc = join(ROOT, 'src', 'skills');
-const skillsDest = join(BUILD, 'skills');
-
-function copySkillsDir(srcDir, destDir = skillsDest) {
-  for (const entry of readdirSync(srcDir)) {
-    const full = join(srcDir, entry);
-    if (!statSync(full).isDirectory()) continue;
-    if (entry === 'ondemand') {
-      const ondemandDest = join(destDir, 'ondemand');
-      mkdirSync(ondemandDest, { recursive: true });
-      copySkillsDir(full, ondemandDest);
-      continue;
-    }
-    validateSkill(full, entry);
-    cp(full, join(destDir, entry));
-    console.log(`  skill: ${destDir === skillsDest ? '' : 'ondemand/'}${entry}`);
-  }
-}
+// ── 1. skills (manifest-driven) ───────────────────────────────────────────────
 
 console.log('── skills ───────────────────────────────────────────────────────────────────');
-copySkillsDir(skillsSrc);
-
-// ── 2. hooks ──────────────────────────────────────────────────────────────────
-
-console.log('── hooks ────────────────────────────────────────────────────────────────────');
-const hookSrc  = join(ROOT, 'src', 'hook');
-const hookDest = join(BUILD, 'hook');
-mkdirSync(hookDest, { recursive: true });
-
-for (const f of ['ts-session-guard.py', 'ts-statusline_bridge.py', 'ts-statusline_bridge.ps1', 'ts-statusline_wrapper.sh', 'inject-workflow-state.sh']) {
-  const src = join(hookSrc, f);
-  if (!existsSync(src)) { console.warn(`  SKIP (missing): ${f}`); continue; }
-  cp(src, join(hookDest, f));
-  console.log(`  hook: ${f}`);
+for (const entry of manifest.skills) {
+  const srcPath = join(ROOT, entry.src);
+  const destPath = join(BUILD, entry.dest);
+  if (!existsSync(srcPath)) { console.warn(`  SKIP (missing): ${entry.src}`); continue; }
+  validateSkill(srcPath, entry.name);
+  cp(srcPath, destPath);
+  console.log(`  skill: ${entry.dest}`);
 }
 
-// ── 3. commands ───────────────────────────────────────────────────────────────
+// ── 2. hooks (manifest-driven) ────────────────────────────────────────────────
+
+console.log('── hooks ────────────────────────────────────────────────────────────────────');
+for (const entry of manifest.hooks) {
+  const srcPath = join(ROOT, entry.src);
+  const destPath = join(BUILD, entry.dest);
+  cp(srcPath, destPath);
+  if (existsSync(srcPath)) console.log(`  hook: ${entry.name}`);
+}
+
+// ── 3. manifest.json at zip root ──────────────────────────────────────────────
+
+cpSync(MANIFEST_PATH, join(BUILD, 'manifest.json'));
+
+// ── 4. commands ───────────────────────────────────────────────────────────────
 
 console.log('── commands ─────────────────────────────────────────────────────────────────');
 const commandsSrc  = join(ROOT, 'src', 'commands');
@@ -89,7 +88,7 @@ if (existsSync(commandsSrc)) {
   console.warn('  SKIP (missing): src/commands');
 }
 
-// ── 4. scaffold ───────────────────────────────────────────────────────────────
+// ── 5. scaffold ───────────────────────────────────────────────────────────────
 
 console.log('── scaffold ─────────────────────────────────────────────────────────────────');
 const scaffoldSrc  = join(ROOT, 'src', 'project_root_structure');
@@ -97,7 +96,7 @@ const scaffoldDest = join(BUILD, 'scaffold');
 cp(scaffoldSrc, scaffoldDest);
 console.log('  scaffold: project_root_structure → scaffold/');
 
-// ── 5. zip ────────────────────────────────────────────────────────────────────
+// ── 6. zip ────────────────────────────────────────────────────────────────────
 
 console.log('── zip ──────────────────────────────────────────────────────────────────────');
 mkdirSync(join(ROOT, 'dist'), { recursive: true });
