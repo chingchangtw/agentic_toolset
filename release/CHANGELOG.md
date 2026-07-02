@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.1.2 — Dual-track orchestration, inject-workflow-state hook, .agents/ workspace
+
+- feat(skill): add ts-orchestrate — dual-track orchestrator, session entry point for all WORK_TYPEs
+- feat(hook): add inject-workflow-state.sh — injects [WORKFLOW STATE] + [NEXT] into every prompt turn
+- refactor: rename end-user workspace root from .ai/ to .agents/ across all skills, hooks, docs
+- refactor(scaffold): rename scaffold/.agent/ to .agents/ for consistency
+- docs(readme): rewrite with dual-track model, 4-layer orchestration table, corrected skill count (6)
+- fix: add empty export{} to stub modules (src/core, src/types) to fix TS2306 build error
+
 ## v0.1.1 — Bugfixes and release pipeline cleanup
 
 - fix(hook): repair ts-statusline bridge silent failures (null context_window, token fallback)

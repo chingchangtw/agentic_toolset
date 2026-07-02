@@ -3,7 +3,7 @@
 A structured workflow framework for developing software products with AI coding agents
 (Claude Code, Copilot, Gemini) — from first idea to shipped release.
 
-![version](https://img.shields.io/badge/version-0.1.1-blue)
+![version](https://img.shields.io/badge/version-0.1.2-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 > **Visual reference:** Open [`docs/solution_cheat_sheet.html`](docs/solution_cheat_sheet.html)
