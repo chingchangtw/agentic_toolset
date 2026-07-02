@@ -220,10 +220,11 @@ PYEOF
 
 if [[ -d scaffold ]]; then
   if [[ "${SCAFFOLD:-}" == "y" ]]; then
-    echo "→ Scaffolding project root (SCAFFOLD=y): $(pwd)"
+    echo "→ Scaffolding project root (SCAFFOLD=y): ${PROJECT_DIR}"
     for item in scaffold/*; do
       name="$(basename "${item}")"
-      if [[ -e "${name}" ]]; then
+      dest="${PROJECT_DIR}/${name}"
+      if [[ -e "${dest}" ]]; then
         if [[ "${SCAFFOLD_OVERWRITE:-}" == "y" ]]; then
           echo "   ✓ ${name} (overwritten)"
         else
@@ -231,12 +232,12 @@ if [[ -d scaffold ]]; then
           continue
         fi
       fi
-      cp -r "${item}" "./${name}"
+      cp -r "${item}" "${dest}"
       echo "   ✓ ${name}"
     done
   else
     echo "→ Scaffold templates available but skipped (non-interactive install)."
-    echo "   Re-run with SCAFFOLD=y to copy them into $(pwd):"
+    echo "   Re-run with SCAFFOLD=y to copy them into ${PROJECT_DIR}:"
     echo "     curl -fsSL ${RELEASE_URL%/release.zip}/install.sh | SCAFFOLD=y bash"
   fi
 fi
