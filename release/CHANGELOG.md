@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.5 — Fix broken python3 resolution in install.sh
+
+- fix(install): probe for a working python3 interpreter instead of trusting bare `python3` on PATH — a broken/mismatched-arch interpreter earlier on PATH (e.g. stale x86_64 miniconda under Rosetta) got SIGKILL'd with no diagnostics, surfacing as a silent UserPromptSubmit hook failure in Claude Code
+- fix(install): hook idempotency check now matches by script path instead of exact command string, preventing duplicate hook registrations across re-installs
+
 ## v0.1.2 — Dual-track orchestration, inject-workflow-state hook, .agents/ workspace
 
 - feat(skill): add ts-orchestrate — dual-track orchestrator, session entry point for all WORK_TYPEs
