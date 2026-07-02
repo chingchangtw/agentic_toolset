@@ -1,8 +1,11 @@
 # PRD: Harness & Loop Engineering Framework (HLEF)
 
-**Document Version:** 1.1  
+**Document Version:** 1.2  
 **Date:** 2026-07-02  
-**Changelog:** v1.1 — added Module 5 (Loop Engineering), generator-evaluator verification, deterministic gates, comprehension-debt guardrail, multi-scale constraint ladder. Source: `tasks/ideasHarness.md` discussions.  
+**Changelog:**
+- v1.1 — added Module 5 (Loop Engineering), generator-evaluator verification, deterministic gates, comprehension-debt guardrail, multi-scale constraint ladder. Source: `tasks/ideasHarness.md` discussions.
+- v1.2 — aligned with the ts- family architecture updates of 2026-07-02 (`docs/Ideas.md`, `docs/architecture.md`, `CLAUDE.md`): `ts-orchestrate` as session entry + gate enforcer, slim state + `history.jsonl` convention, `[WORKFLOW STATE]` hook pattern, epic-type phase spines, G2 location fix.
+
 **Owner:** Tony (CAO, Synaptics)  
 **Target Runtime:** Claude Code CLI (multi-agent, agentic architecture)  
 **Design Principle:** *Add rigour, never add scope.*
@@ -11,7 +14,7 @@
 
 ## 1. Executive Summary
 
-HLEF is a **full-stack, CLI-operable practice environment** that implements the four-module curriculum of the *Harness & Loop Engineering* course directly inside Claude Code, plus a fifth Loop Engineering module distilled from field practice (`tasks/ideasHarness.md`). It provides runnable practice exercises, agent scaffolding, guardrails infrastructure, multi-agent orchestration patterns, and a self-evolution memory loop — all wired into the `ts-deliver-router` spine and the `.ai/` workspace convention already established in the Synaptics skill ecosystem.
+HLEF is a **full-stack, CLI-operable practice environment** that implements the four-module curriculum of the *Harness & Loop Engineering* course directly inside Claude Code, plus a fifth Loop Engineering module distilled from field practice (`tasks/ideasHarness.md`). It provides runnable practice exercises, agent scaffolding, guardrails infrastructure, multi-agent orchestration patterns, and a self-evolution memory loop — all wired into the ts- skill family (session entry and gate enforcement via `ts-orchestrate`, per-epic delivery via `ts-deliver-router`) and the `.ai/` workspace convention already established in the Synaptics skill ecosystem.
 
 The project is not a tutorial viewer. It is an **operational harness** the user runs to complete course practices, accumulate institutional knowledge from mistakes, and graduate course concepts into production skill patterns.
 
@@ -70,10 +73,11 @@ Modules 1–4 build the harness. Module 5 (new in v1.1) closes the loop.
 
 ```
 HLEF Project Root
-├── .ai/                          ← ts-deliver-router + ts-project-planner workspace
+├── .ai/                          ← shared ts- family workspace (unprefixed root convention)
 │   ├── ts-deliver-router/
-│   │   ├── state.json
-│   │   └── autonomy
+│   │   ├── state.json            ← slim: current phase only
+│   │   └── history.jsonl         ← append-only phase-exit audit log
+│   ├── iteration.json            ← active_epic + DIAL (owned by sequencing, not the router)
 │   └── hlef/                     ← HLEF-specific workspace
 │       ├── config.json           ← project config (DIAL level, guardrail tier, agent roster)
 │       ├── incident-log.md       ← append-only incident audit trail
@@ -223,7 +227,7 @@ observed errors, so team know-how sediments into the constraints over time.
   - `required_approver` — role that must sign off
   - `timeout_seconds` — escalation if no response
   - `fallback_action` — what happens on timeout (abort / escalate / log)
-- **Integration:** `ts-deliver-router` G1/G2 gate mechanism is the enforcement spine. HITL nodes are registered as `gate` checks in the CHECKS REGISTRY.
+- **Integration:** HITL nodes are registered as `gate` rows in the CHECKS REGISTRY, instantiated per project via the PROJECT REGISTRY (`/ts-deliver:init`, refined at Reflect via `/ts-deliver:refine`). Enforcement is `/ts-orchestrate:next` — it refuses phase advance while a required gate is unsigned and never auto-signs at any DIAL level.
 
 #### Feature 2.3 — Incident Handler & Post-Incident Learning
 
@@ -355,6 +359,11 @@ keeps them honest without a human watching every turn.
 | Persistence | State is written to disk, outside the chat — the agent forgets, the repository does not | `.ai/hlef/loop-triage.md` (append-only findings, priorities, task status) |
 | Scheduling | Runs are triggered by automations/cron, not by a human | `loop/schedules/` definitions |
 
+Loop state is surfaced to the session the same way workflow state already is: following
+the `inject-workflow-state.sh` precedent, a UserPromptSubmit hook injects a `[LOOP STATE]`
+prefix line each turn — echoing only enum values and IDs, never free-text fields (the
+hook family's prompt-injection rule).
+
 #### Feature 5.2 — Generator-Evaluator Split
 
 - **File:** `loop/generator-evaluator.md`
@@ -405,10 +414,11 @@ keeps them honest without a human watching every turn.
 
 | Layer | Choice | Rationale |
 |---|---|---|
-| Orchestration spine | `ts-deliver-router` | Already production in Synaptics ecosystem |
+| Session entry & gate enforcement | `ts-orchestrate` | Dual-track orchestrator; `/ts-orchestrate:next` never auto-signs gates |
+| Per-epic delivery spine | `ts-deliver-router` | 7-phase spine, varies by epic type (bugfix=3 / refactor=6 / epic=7); already production |
 | Agent runtime | Claude Code CLI | Target runtime per project brief |
 | Muscle agents | GitHub Copilot CLI, Codex CLI (existing) | Existing multi-agent architecture |
-| State management | `.ai/hlef/*.json` (flat file) | Consistent with `ts-deliver-router` convention |
+| State management | Slim live state (`.ai/hlef/*.json`) + append-only history | Mirrors the `state.json` + `history.jsonl` split shipped in `ts-deliver-router` (2026-06-28) |
 | Audit trail | Append-only `.md` files | Human-readable, git-diffable |
 | Schema validation | JSON Schema (harness-schema.json) | Lightweight, Claude Code native |
 | Presentation output | `pptx` skill (existing) | Already in skill library |
@@ -416,6 +426,7 @@ keeps them honest without a human watching every turn.
 | Loop scheduling | cron / Claude Code automations | Five-moves Scheduling primitive |
 | Parallel task isolation | git worktrees | Five-moves Handoff primitive — runs cannot trample each other |
 | Independent evaluator | Fresh-context session; cross-model via Codex CLI | Amnesiac-reviewer verification (Feature 5.2) |
+| Loop state surface | UserPromptSubmit hook (`[LOOP STATE]` prefix) | Same pattern as `inject-workflow-state.sh`; enum values and IDs only |
 
 ---
 
@@ -477,11 +488,17 @@ keeps them honest without a human watching every turn.
 | G0 | Agent work package creation | Schema invalid | Block; return validation errors |
 | G1 | ts-deliver-router Think→Plan | Practice scope unclear | 100% checklist + human sign-off |
 | G1-HITL | Any HITL node trigger | High-risk action detected | Pause; human signs off within timeout |
-| G2 | ts-deliver-router Plan→Ship | Capstone P7 completion | 100% checklist + human sign-off |
+| G2 | ts-deliver-router Ship (sec-review) | Capstone P7 completion | 100% checklist + human sign-off |
 | GR-TIER-0 | Any guardrail Tier 0 violation | Hard block condition met | Abort; log to incident-log.md |
 | G-EVAL | Loop iteration exit | Evaluator has not verified by action | Iteration cannot be marked done; work re-queued |
 | G-DET | End of every loop iteration | Deterministic gate script (lint / test / schema) fails | Block commit; log to incident-log.md |
 | G-ARCH | Architecture-level decision detected in loop | Always | Permanent HITL node — never auto-signed |
+
+Gate enforcement is owned by `/ts-orchestrate:next`: it refuses to advance a phase while a
+required gate is unsigned, at every DIAL level. HLEF practices enter through the standard
+session entry point (`/ts-orchestrate:start WORK_TYPE=… AUTONOMY=…`) and inherit epic-type
+phase routing — a practice-sized task may run the lean bugfix spine (Think→Build→Ship),
+while the capstone P7 runs the full 7-phase epic spine with G1 + G2.
 
 ---
 
@@ -493,7 +510,7 @@ keeps them honest without a human watching every turn.
 | Auditability | All guardrail events, HITL decisions, and evolution changes are append-only log entries (never deleted). |
 | Portability | All files are plain Markdown or JSON. No binary dependencies beyond the `pptx` skill. |
 | Extensibility | New agents are added by creating one `.json` file in `harness/agent-work-packages/` — no spine changes needed. |
-| Backward compatibility | HLEF operates as a peer skill alongside `ts-deliver-router`, not a replacement. |
+| Backward compatibility | HLEF operates as a peer skill alongside the ts- family (`ts-orchestrate` / `ts-project-planner` / `ts-deliver-router` / `ts-acpl`), not a replacement. |
 | Independent verification | The agent that generates an artifact never certifies it done (E7). Evaluator verification is by action, in fresh context. |
 | Comprehension debt | A human reads a daily representative sample of loop output. Architecture decisions are never delegated to the loop. |
 | Measurement | Progress is tracked by demo velocity (runnable end-to-end results), not PR counts or lines of code. |
@@ -506,7 +523,7 @@ keeps them honest without a human watching every turn.
 |---|---|---|
 | Evolution loop over-generalises from single incidents | Medium | Anti-dogma check (2+ independent occurrences required) |
 | Guardrail registry grows too large to load efficiently | Low | Tier 0/1 rules loaded always; Tier 2/3 loaded on-demand |
-| Capstone P7 produces cascading agent failures | Medium | Dry-run mode supported; failures are learning material, not blockers |
+| Capstone P7 produces cascading agent failures | Medium | Dry-run follows the `ts-deliver-router` DRY-RUN primitive (session-scoped, never persisted, cannot sign gates); failures are learning material, not blockers |
 | HITL timeout causes task abandonment | Low | `fallback_action` defined per HITL node |
 | Evaluator degenerates into a rubber stamp (context contamination) | Medium | Fresh-context evaluator with skeptic brief; verification by action; cross-model review where available |
 | Comprehension debt accrues as loop throughput rises | Medium | Daily sample review protocol; permanent architecture HITL node (G-ARCH); demo-velocity metric keeps humans looking at outcomes |
@@ -514,6 +531,9 @@ keeps them honest without a human watching every turn.
 ---
 
 ## 12. Delivery Sequence (Recommended Sprint Order)
+
+Each sprint's work item enters via `/ts-orchestrate:start` as a normal epic — HLEF
+development itself runs on the spine it teaches.
 
 | Sprint | Deliverables | Exit Criterion |
 |---|---|---|
@@ -541,4 +561,4 @@ keeps them honest without a human watching every turn.
 
 ---
 
-*End of PRD v1.1*
+*End of PRD v1.2*
