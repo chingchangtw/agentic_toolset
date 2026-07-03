@@ -18,7 +18,7 @@ Builds a modern, production-ready AI coding workspace layout as defined in the p
 2. **Structure Generation**:
    Create the following directory hierarchy based on the standard project tree:
    - **.claude/**: Setup `commands/`, `skills/`, `agents/`, and `plugins/` subdirectories. [1]
-   - **.ai/**: Create `logs/`, `sessions/`, `plans/`, `tasks/` for AI interaction history. [1]
+   - **.agents/**: Create `logs/`, `sessions/`, `plans/`, `tasks/` for AI interaction history. [1]
    - **src/**: Initialize `components/`, `services/`, `frontend/`, `backend/`, `scripts/` and any source codes whatever frontend/backend/scripts etc. [1]
    - **Support Folders**: Build `utils/`, `types/`, `tests/` (unit/integration/e2e), `docs/`, and `scripts/`. [1]
 

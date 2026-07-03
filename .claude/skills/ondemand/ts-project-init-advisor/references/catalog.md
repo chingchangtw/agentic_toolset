@@ -94,6 +94,9 @@ These two hooks apply to every project regardless of stack:
 
 ### caveman (skill + system installer) ✅ VERIFIED
 - **Why always**: Compresses token output ~75% across all agents (Claude, Copilot, Gemini) — mandatory for token budget discipline
+
+_ Verify if it is installed as skill or plugin by running `caveman --version` in terminal. If not installed, follow the instructions below.
+
 - **Install (macOS/Linux/WSL)**:
   ```bash
   curl -fsSL https://raw.githubusercontent.com/JuliusBrussee/caveman/main/install.sh | bash

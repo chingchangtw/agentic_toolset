@@ -21,7 +21,7 @@ Two ideas proposed by operator:
 
 ### Idea A: Phase-branch/tag strategy
 
-**What it solves:** Reproducibility and rollback. `.ai/ts-deliver-router/state.json` is
+**What it solves:** Reproducibility and rollback. `.agents/ts-deliver-router/state.json` is
 truth but it's a single mutable file. A phase-tag gives a hard checkpoint
 you can `git checkout` to reconstruct the entire working tree as it was when
 that phase exited. Also gives Copilot/Gemini a clean isolation surface.

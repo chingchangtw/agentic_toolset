@@ -1,13 +1,13 @@
 # reference: workspace contract
 
-Shared workspace root: `.ai/`.
+Shared workspace root: `.agents/`.
 
 ## Router-owned paths
 
-- `.ai/ts-deliver-router/state.json`
-- `.ai/ts-deliver-router/autonomy`
-- `.ai/ts-deliver-router/registry.json`
-- `.ai/ts-deliver-router/registry.log`
+- `.agents/ts-deliver-router/state.json`
+- `.agents/ts-deliver-router/autonomy`
+- `.agents/ts-deliver-router/registry.json`
+- `.agents/ts-deliver-router/registry.log`
 
 ## Cross-skill expectations
 

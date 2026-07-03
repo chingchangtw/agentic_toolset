@@ -34,11 +34,11 @@ ts-deliver-router re-enters Discovery when Delivery surfaces a new unknown.
 
 ## Workspace
 
-All artifacts follow the `.ai/` workspace convention defined in
+All artifacts follow the `.agents/` workspace convention defined in
 `references/workspace-spec.md`. Read it before first use.
 
 ```
-.ai/                          ← workspace root
+.agents/                          ← workspace root
 ├── domain.json               ← shared: ES domain model (read here)
 ├── discovery.json            ← shared: Discovery backlog + Ready-for-Delivery buffer
 ├── iteration.json            ← shared: current release state (primary writer)
@@ -64,7 +64,7 @@ Load the relevant file(s) before executing a command. Do not load all files at o
 
 | File | Load when |
 |---|---|
-| `references/workspace-spec.md` | First use — `.ai/` layout contract, schemas, R/W matrix |
+| `references/workspace-spec.md` | First use — `.agents/` layout contract, schemas, R/W matrix |
 | `references/commands.md` | Any command invoked — step-by-step procedures for all commands |
 | `references/discovery-state.md` | Any `/ts-discover` command — state machine schema and transitions |
 | `references/discovery-kanban.md` | `/ts-discover explore/validate/decide/status` — stage criteria, WIP, stale rule, dedup |
@@ -74,4 +74,20 @@ Load the relevant file(s) before executing a command. Do not load all files at o
 | `references/agents.md` | Choosing sub-agents for a Discovery or Delivery task |
 | `references/on-first-use.md` | First-use initialization steps |
 
+---
 
+## Workflow Routing
+
+Use this table at session start to determine which skill sequence to activate.
+
+| Starting point | Size | Activate |
+|---|---|---|
+| New idea | Any | /ts-discover:idea |
+| Idea in Discovery | Small (bugfix/tweak) | /ts-discover:decide build → /ts-iteration:next → /ts-deliver:init --scope lean |
+| Idea in Discovery | Medium/Large | /ts-discover:explore → validate → decide → /ts-project:plan --sync → /ts-iteration:start → /ts-iteration:next |
+| Active epic | Any | /ts-deliver:status → /ts-deliver:refine (follow phase spine) |
+| Epic complete | Any | /ts-iteration:next (or /ts-iteration:close if last) → /ts-discover:status |
+
+HARD RULE: Never start /ts-deliver:init without an epic in iteration.json.active_epic.
+
+HARD RULE: Never mark epic done without G1 + G2 human sign-off.

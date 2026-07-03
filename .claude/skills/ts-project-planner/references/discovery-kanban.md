@@ -35,7 +35,7 @@ Operational reference for `/ts-discover` commands.
 
 ### `killed`
 **Entry:** `/ts-discover decide <id> kill`.
-**Contains:** Unchanged + `decision="kill"`. ADR written to `.ai/decisions/`.
+**Contains:** Unchanged + `decision="kill"`. ADR written to `.agents/decisions/`.
 **Exit:** None — terminal. Entry stays in `discovery.json`, never deleted.
 
 ### `reduce-scope`

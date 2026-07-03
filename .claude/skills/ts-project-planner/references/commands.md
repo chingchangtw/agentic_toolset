@@ -4,7 +4,7 @@ Layer-ordered. Discovery → Backlog → Delivery.
 ### `/ts-discover idea "<desc>"`
 Seeds Discovery backlog with new candidate.
 ```
-1. Read .ai/discovery.json (create if missing: { project, ideas: [] })
+1. Read .agents/discovery.json (create if missing: { project, ideas: [] })
 2. Append new entry: { id: "idea-<NNN>", title: "<desc>", status: "idea",
    source_epic: null, keep_learning_count: 0, riskiest_assumptions: [],
    exploration_output: {}, validation_output: {}, decision: null,
@@ -60,7 +60,7 @@ build:
 kill:
   - idea.status = "killed"
   - idea.decision = "kill"
-  - Write .ai/decisions/ADR-<NNN>.md documenting the kill rationale
+  - Write .agents/decisions/ADR-<NNN>.md documenting the kill rationale
     (from validation_output.decision_rationale)
   - Entry remains in discovery.json for audit — never deleted
   - Confirm: "idea-<NNN> killed. ADR-<NNN> written."
@@ -125,14 +125,14 @@ Step 1 — Vision
 Step 2 — Seed Discovery
   → From the vision, identify candidate modules/feature areas
   → For each candidate: /ts-discover idea "<candidate title>"
-  → If .ai/domain.json missing: "Run ts-event-storming-facilitator at the
+  → If .agents/domain.json missing: "Run ts-event-storming-facilitator at the
     project level first? (yes/no)" — if yes, run it before seeding, and use
     bounded_contexts to refine the candidate list
 
 Step 3 — Risk register (project-level)
   → Propose top 5 risks from vision + constraints
   → Human adds/removes
-  → Write .ai/risks.md
+  → Write .agents/risks.md
 
 Step 4 — Write skeleton plan.json
   → { project, vision, planned_at, releases: [], epics: [], constraints: [],
@@ -185,9 +185,9 @@ Pulls status=ready, synced_to_plan=false from discovery.json → plan.json group
 ```
 
 ### `/ts-iteration start <release>`
-Loads release epics, resolves sequencing, writes .ai/iteration.json.
+Loads release epics, resolves sequencing, writes .agents/iteration.json.
 ```
-1. Read .ai/ts-project-planner/plan.json → filter epics for <release>
+1. Read .agents/ts-project-planner/plan.json → filter epics for <release>
    → If empty: "No epics found for release <release> — run
      /ts-project plan --sync first." STOP. iteration.json not created.
 2. Topological sort by depends_on[] → resolve sequence
@@ -195,7 +195,7 @@ Loads release epics, resolves sequencing, writes .ai/iteration.json.
    shipped):
    → Surface blocked epics. Human decides: include anyway, or proceed
      without.
-4. Write .ai/iteration.json (status=queued for all, active_epic=null)
+4. Write .agents/iteration.json (status=queued for all, active_epic=null)
 5. GitHub MCP: create milestone "<release>" if not exists
 6. Atlassian Rovo: create Sprint or label epics with release tag
 7. Confirm: "Iteration <release> started. N epics queued: [list in order]."
@@ -204,7 +204,7 @@ Loads release epics, resolves sequencing, writes .ai/iteration.json.
 ### `/ts-iteration next`
 Next queued epic. Calls ts-deliver-router. Sequential — active_epic set → returns error.
 ```
-1. Read .ai/iteration.json
+1. Read .agents/iteration.json
    → If active_epic is already set: STOP (see above).
 2. Find first epic with status=queued (respecting sequence order)
 3. Set active_epic = epic.id, epic.status = active
@@ -220,8 +220,8 @@ Next queued epic. Calls ts-deliver-router. Sequential — active_epic set → re
      epic originated from a Discovery idea), risks.md for G1
 7. ts-deliver-router spine runs (Think→...→Reflect per type)
 8. On ts-deliver-router /ts-deliver refine complete:
-   → Read .ai/ts-deliver-router/state.json → extract mutation_score, shipped_at
-   → Update .ai/iteration.json: epic.status=done, epic.mutation_score,
+   → Read .agents/ts-deliver-router/state.json → extract mutation_score, shipped_at
+   → Update .agents/iteration.json: epic.status=done, epic.mutation_score,
      epic.shipped_at
    → active_epic = null
 9. Confirm: "Epic '<title>' complete. N epics remaining."
@@ -236,7 +236,7 @@ Output:
   Active:       <epic title> — Phase: <current phase> — Mutation: <score>%
   Queue:        [epic titles in order]
   Deferred:     [epic titles]
-  Risks open:   N (from .ai/risks.md)
+  Risks open:   N (from .agents/risks.md)
   Next gate:    <G1|G2> on epic <title>
 ```
 
@@ -249,9 +249,9 @@ Closes release. All epics must be done or deferred.
 3. Atlassian Rovo: transition all release Jira issues → Done
 4. Retrospective:
    → Summarise: epics completed, deferred, mutation scores, G1/G2 pass rates
-   → Write .ai/ts-project-planner/retrospectives/<release>-retro.md
+   → Write .agents/ts-project-planner/retrospectives/<release>-retro.md
    → Confluence: publish retro page
-5. Update .ai/ts-project-planner/plan.json:
+5. Update .agents/ts-project-planner/plan.json:
    → Deferred epics → carry forward to next release
    → refined_count++
 6. Confirm: "Iteration <release> closed. <N> shipped, <N> deferred. Discovery

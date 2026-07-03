@@ -5,7 +5,7 @@ description: "6-phase flow (Think→Plan→Build→Review→Test→Ship→Reflec
 <!--
 Thin coordinator over verified state with 6-phase flow (Think→Plan→
   Build→Review→Test→Ship→Reflect) with Spectra BDD skills (discuss/propose/apply/
-  ingest/archive) nested inside specific phases. `.ai/ts-deliver-router/state.json` as truth, 
+  ingest/archive) nested inside specific phases. `.agents/ts-deliver-router/state.json` as truth, 
   enforces named security-gate checklists, and
   routes via various primitives. Activate when user works with agents and asks "what next", "which skill",
   "where am I", "what phase", "run the checks", "simulate this", "dry-run on/off",
@@ -19,7 +19,7 @@ See 'reference/on-first-use.md' for first-use initialization steps.
 
 # ts-deliver-router (core)
 
-Thin coordinator. Reads `.ai/ts-deliver-router/state.json` as truth (NEVER infers phase from artifacts),
+Thin coordinator. Reads `.agents/ts-deliver-router/state.json` as truth (NEVER infers phase from artifacts),
 runs registry checks for current phase, blocks on named security gates before anything
 irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 
@@ -49,14 +49,14 @@ irreversible. Always-loaded core; everything else lazy-loads per LOAD INDEX.
 | GitHub MCP traceability operations by phase | `references/github-mcp.md` |
 | sub-agent build specs | `references/sub-agents.md` |
 | full phase-exit examples aligned to state schema v1 | `references/phase-exit-contracts.md` |
-| shared `.ai/` workspace contract and cross-skill boundaries | `references/workspace.md` |
+| shared `.agents/` workspace contract and cross-skill boundaries | `references/workspace.md` |
 | on first use initialization steps | `references/on-first-use.md` |
 
 On "what's next": load state.md first, then registry-index.md + registry-<phase>.md for active phase.
 Do not load all registry-phase files at once.
 
 ## PRIMITIVE INTERFACES
-- **DIAL** — HIGH(auto) / MID(recommend, DEFAULT) / LOW(suggest). Read `.ai/ts-deliver-router/autonomy`;
+- **DIAL** — HIGH(auto) / MID(recommend, DEFAULT) / LOW(suggest). Read `.agents/ts-deliver-router/autonomy`;
   ask+save on first use. Gates ALWAYS pause for human even in HIGH; HIGH never auto-signs.
   Switch: "go auto" / "recommend" / "suggestions only".
 - **CHECKS REGISTRY** — one row per check (always/gate/rec). Add activity = append 1 row
@@ -66,21 +66,21 @@ Do not load all registry-phase files at once.
 - **DRY-RUN** — session-scoped, defaults OFF, NOT persisted. ON: prefix all output `[DRY-RUN]`,
   state.json read-only, side effects announced, sign-offs refused.
   Switch: "dry-run on/off" / "dry-run" / "simulate this".
-- **REGISTRY EXTENSIONS** — `.ai/ts-deliver-router/registry.json` MAY include an `extensions`
+- **REGISTRY EXTENSIONS** — `.agents/ts-deliver-router/registry.json` MAY include an `extensions`
   object. Supported extension: `"extensions": { "agent_scaffold": false }` (default).
   If `extensions.agent_scaffold = true`, load `references/agent-scaffold.md` before executing
   any phase. Full schema → `references/registry-schema.md`.
 
 ## Router algorithm
 0 if dry-run: read-only, announce side effects, block sign-offs.
-1 autonomy = read `.ai/ts-deliver-router/autonomy` || ask.
-2 state = read `.ai/ts-deliver-router/state.json`. fail/stale → STOP.
+1 autonomy = read `.agents/ts-deliver-router/autonomy` || ask.
+2 state = read `.agents/ts-deliver-router/state.json` ONLY. Do NOT read `history.jsonl`. fail/stale → STOP.
 3 P = current_phase. verify artifacts.
   if P == Think: check unknowns for hook criteria (a) blocks G1/G2, (b) affects >1 epic, (c) new external dep. If met, call `/ts-discover idea --from-router` (non-blocking).
 4 consult registry for P: run always, suggest rec.
   if P == Build: check unknowns surfaced in always-checks against same hook criteria.
 5 before exit P: all gates signed; G1/G2 require 100% check + human.
-6 on exit: atomic state write.
+6 on exit: (a) atomic state write (write tmp → rename, slim format — no phase_history/ingest_log); (b) append phase_exit event to history.jsonl (non-fatal: warn on failure, do not abort).
 7 where am i: show bracketed flow + active checks.
 8 honor switches.
 **RULE: never infer phase from artifacts. state.json is truth. Unsure → manual review.**
