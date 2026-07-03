@@ -7,6 +7,11 @@
       "dest": "skills/ondemand/ts-project-init-advisor"
     },
     {
+      "name": "taco-project-scaffolder",
+      "src": "src/skills/taco-project-scaffolder",
+      "dest": "skills/taco-project-scaffolder"
+    },
+    {
       "name": "ts-acpl",
       "src": "src/skills/ts-acpl",
       "dest": "skills/ts-acpl"
@@ -61,18 +66,6 @@
       "name": "ts-statusline_bridge.py",
       "src": "src/hook/ts-statusline_bridge.py",
       "dest": "hook/ts-statusline_bridge.py",
-      "scope": "user"
-    },
-    {
-      "name": "ts-statusline_wrapper.ps1",
-      "src": "src/hook/ts-statusline_wrapper.ps1",
-      "dest": "hook/ts-statusline_wrapper.ps1",
-      "scope": "user"
-    },
-    {
-      "name": "ts-statusline_wrapper.sh",
-      "src": "src/hook/ts-statusline_wrapper.sh",
-      "dest": "hook/ts-statusline_wrapper.sh",
       "scope": "user"
     }
   ]
