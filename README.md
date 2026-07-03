@@ -2,7 +2,7 @@
 
 A distribution framework for Claude Code skills, hooks, and project scaffold templates — built around a dual-track agile workflow that takes ideas from first spark to shipped release.
 
-![version](https://img.shields.io/badge/version-0.1.5-blue)
+![version](https://img.shields.io/badge/version-0.1.6-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 → **End-user workflow guide:** [`USER_GUIDE.md`](USER_GUIDE.md)

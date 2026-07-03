@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.1.6 — Skill directory hygiene: fix broken references and orphaned files
+
+- fix(skills): rename ts-acpl/reference to references — matches every other skill's plural convention; SKILL.md already pointed at references/*.md, only the directory was out of sync
+- refactor(skills): move ts-deliver-router registry/*.md into references/ — registry/ was excluded from every release build, so SKILL.md's own LOAD INDEX table pointed agents at files that were never shipped; now they ship
+- refactor(skills): move ts-deliver-router and ts-project-planner README.md into references/ — resolves skill-authoring warnings; shipping status unchanged (README.md is excluded by filename regardless of directory)
+- refactor(skills): consolidate ts-deliver-router's PROJECT_SETUP.md into ts-project-init-advisor/SKILL.md as a reusable CLAUDE.md template, then remove the standalone file
+- chore(skills): delete dead weight shipped in every prior release — ts-deliver-router/rawfiles/ (20-file duplicate staging copy), SKILL.original.md, SKILL_caveman.md; ts-project-planner/raw/ (9-file stale draft snapshot); orphaned project-init-advisor-PRD.md
+
 ## v0.1.5 — Fix broken python3 resolution in install.sh
 
 - fix(install): probe for a working python3 interpreter instead of trusting bare `python3` on PATH — a broken/mismatched-arch interpreter earlier on PATH (e.g. stale x86_64 miniconda under Rosetta) got SIGKILL'd with no diagnostics, surfacing as a silent UserPromptSubmit hook failure in Claude Code
