@@ -98,6 +98,10 @@ See `docs/architecture.md` → Repository Layout.
 
 See 'docs/architecture.md' → Build and Distribution.
 
+## Key Tools
+
+See `.claude/key-tools.md` — authoring/validation/distribution toolchain (spectra, skill-validator, release + dogfood scripts, installers) with type, URL, and User/Project scope per tool.
+
 ## End-User Workflow
 
 See `USER_GUIDE.md` for full usage. Key points:
