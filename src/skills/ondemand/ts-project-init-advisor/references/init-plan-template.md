@@ -5,7 +5,7 @@
 
 ### File format — follow exactly
 
-```markdown
+````markdown
 # PROJECT INIT PLAN
 Generated: {date}
 Project: {name inferred from repo/directory}
@@ -183,4 +183,4 @@ ls -la .claude/agents/
 
 ## SKIPPED (already installed)
 {list any MCPs/skills found in existing mcp.json that overlap with recommendations}
-```
+````
