@@ -1,0 +1,7 @@
+{
+  "session_id": "fixture-session-0000",
+  "transcript_path": "/nonexistent/fixture-transcript.jsonl",
+  "cwd": "/tmp/fixture-project",
+  "hook_event_name": "UserPromptSubmit",
+  "prompt": "fixture prompt for ring0 hook smoke test"
+}
