@@ -57,8 +57,10 @@ The installer:
 1. Downloads and extracts `release.zip` from GitHub Releases
 2. Copies skills → `<project>/.claude/skills/` (project-scoped, not global)
 3. Copies hooks → `~/.claude/hooks/`
-4. Patches `~/.claude/settings.json` with hook registrations
-5. Skips scaffold templates by default (piped installs have no interactive stdin) — opt in with `SCAFFOLD=y`:
+4. Copies commands → `<project>/.claude/commands/` and writes the installed release
+   version to `<project>/.claude/.toolset-version`
+5. Patches `~/.claude/settings.json` with hook registrations
+6. Skips scaffold templates by default (piped installs have no interactive stdin) — opt in with `SCAFFOLD=y`:
    ```bash
    curl -fsSL https://github.com/chingchangtw/agentic_toolset/releases/latest/download/install.sh | SCAFFOLD=y bash
    ```
