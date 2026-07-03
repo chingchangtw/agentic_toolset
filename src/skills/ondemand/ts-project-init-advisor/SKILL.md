@@ -106,6 +106,42 @@ This data feeds directly into Phase 4 task generation.
 
 ---
 
+## Phase 3.5: Golden Agent-Context File Gap Scan
+
+This repo authors five canonical agent-context files (`CLAUDE.md`, `AGENTS.md`,
+`.claude/CLAUDE.md`, `.claude/goverance_CLAUDE.md`, `.github/copilot-instructions.md`),
+packaged with this skill under `assets/golden/<relpath>` (same relative subpath, dotted
+directories preserved). Before generating the plan, scan the target project for each of
+the five paths and classify it into exactly one of three states:
+
+1. **Absent** — target path does not exist. Add a **create** task: write
+   `assets/golden/<relpath>` content to `<target-project>/<relpath>` verbatim, byte-identical.
+   No approval gate — nothing exists to clobber. This is the only case where the advisor
+   itself writes a golden file to disk.
+2. **Present, differs** — target path exists and its content does not byte-match
+   `assets/golden/<relpath>`. Add a **MODIFY** task containing the target path and a
+   comparison between the target's current content and the golden content, produced by
+   reading both files directly and describing the difference in prose — no diff library,
+   no new dependency (this skill is agent-executed prose, not compiled code; see the
+   change's design.md D4). The task instructs the human to review and manually reconcile.
+   The advisor never writes to this file itself — the write is the human's call.
+3. **Present, byte-identical** — target path exists and matches `assets/golden/<relpath>`
+   exactly. No task is emitted for that file.
+
+Repeat for all five paths independently — a project can land in different states per file.
+
+**Coexistence with `install.sh SCAFFOLD=y`**: the installer's `SCAFFOLD=y` flag is
+unchanged by this skill and continues to copy-if-absent the entire
+`src/project_root_structure/` tree (all files, not just these five) into a target project
+at install time. This gap scan is additive and idempotent with it: a project that already
+ran `SCAFFOLD=y` will have all five golden files present, so the scan naturally lands each
+one in the present-and-matching (no task) branch above, unless the project has since
+diverged. Both paths exist because `SCAFFOLD=y` gives an immediate full scaffold at install
+time, while this scan gives per-file, approval-gated recommendations at any later point —
+neither path changes the other's behavior.
+
+---
+
 ## Phase 4: Generate PROJECT_INIT_PLAN.md
 
 Generate the full plan file using the template → `references/init-plan-template.md`.  Output path: `tasks/PROJECT_INIT_PLAN.md` (Claude Code).

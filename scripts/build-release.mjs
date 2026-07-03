@@ -10,6 +10,7 @@ import { execSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { includeInPackage } from './lib/exclusions.mjs';
+import { checkGoldenParity } from './lib/golden-templates.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -104,7 +105,17 @@ const scaffoldDest = join(BUILD, 'scaffold');
 cp(scaffoldSrc, scaffoldDest);
 console.log('  scaffold: project_root_structure → scaffold/');
 
-// ── 6. zip ────────────────────────────────────────────────────────────────────
+// ── 6. golden template parity gate ──────────────────────────────────────────────
+
+const goldenDrift = checkGoldenParity();
+if (goldenDrift.length > 0) {
+  for (const { file, reason } of goldenDrift) {
+    console.error(`golden template drift: ${file} (${reason})`);
+  }
+  process.exit(1);
+}
+
+// ── 7. zip ────────────────────────────────────────────────────────────────────
 
 console.log('── zip ──────────────────────────────────────────────────────────────────────');
 mkdirSync(join(ROOT, 'dist'), { recursive: true });
