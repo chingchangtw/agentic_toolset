@@ -159,7 +159,6 @@ If the zip does not contain a manifest (old release), install scripts SHALL fall
 
 ## Requirements
 
-
 <!-- @trace
 source: release-manifest
 updated: 2026-07-02
@@ -268,3 +267,44 @@ If the zip does not contain a manifest (old release), install scripts SHALL fall
 
 - **WHEN** zip contains no `manifest.json` at zip root
 - **THEN** install script SHALL complete without error using pre-manifest logic
+
+---
+### Requirement: Zip manifest carries stamped release version
+
+`scripts/build-release.mjs` SHALL write the `version` value from `package.json` into the `manifest.json` placed at the zip root as a `releaseVersion` field, alongside the existing schema `version` field (which remains `"1"`). The committed `scripts/release-manifest.json` SHALL NOT be required to contain `releaseVersion`; stamping occurs at build time.
+
+#### Scenario: Stamped version matches package.json
+
+- **WHEN** the release is built with `package.json` version `0.2.0`
+- **THEN** `manifest.json` inside `dist/release.zip` contains `"releaseVersion": "0.2.0"` and `"version": "1"`
+
+#### Scenario: Source manifest unstamped
+
+- **WHEN** the manifest generator regenerates `scripts/release-manifest.json`
+- **THEN** the committed manifest contains no `releaseVersion` field
+
+<!-- @trace
+source: dogfood-zoning-release-encapsulation
+updated: 2026-07-03
+code:
+  - test-fixtures/hook-payloads/statusline.json
+  - scripts/pilot.mjs
+  - scripts/verify-install.mjs
+  - scripts/build-release.mjs
+  - scripts/lib/exclusions.mjs
+  - test-fixtures/hook-payloads/user-prompt-submit.json
+  - src/hook/ts-statusline_wrapper.sh
+  - package.json
+  - USER_GUIDE.md
+  - scripts/dogfood.mjs
+  - src/skills/ts-orchestrate/SKILL.md
+  - scripts/ring0-check.mjs
+  - release/install.sh
+  - .agents/ts-deliver-router/state.json
+  - release/install.ps1
+  - scripts/release-manifest.json
+  - src/hook/ts-statusline_wrapper.ps1
+  - scripts/generate-gitignore-block.mjs
+  - docs/architecture.md
+  - .agents/discovery.json
+-->
