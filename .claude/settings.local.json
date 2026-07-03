@@ -32,7 +32,12 @@
       "Bash(xattr -l /Users/ctony/miniconda3/bin/python3)",
       "Bash(bash -n release/install.sh)",
       "Bash(python3 -c \"import sys; compile\\(sys.stdin.read\\(\\), 'snippet', 'exec'\\)\")",
-      "Bash(/usr/bin/python3 -c \"import sys; compile\\(sys.stdin.read\\(\\), 'snippet', 'exec'\\)\")"
+      "Bash(/usr/bin/python3 -c \"import sys; compile\\(sys.stdin.read\\(\\), 'snippet', 'exec'\\)\")",
+      "Bash(spectra list *)",
+      "Bash(node scripts/build-release.mjs)",
+      "Bash(/usr/bin/python3 -c ' *)",
+      "Bash(spectra validate *)",
+      "Bash(spectra park *)"
     ],
     "deny": [
       "Bash(sudo *)",
