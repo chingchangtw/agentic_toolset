@@ -1,0 +1,33 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "packageManager": "npm",
+  "testRunner": "vitest",
+  "reporters": ["html", "clear-text", "progress"],
+  "coverageAnalysis": "perTest",
+  "ignorePatterns": [
+    "**",
+    "!src/**/*.ts",
+    "!src/tests/**",
+    "!scripts/lib/golden-templates.mjs",
+    "!package.json",
+    "!tsconfig.json",
+    "!vitest.config.ts",
+    "!vitest.stryker.config.ts",
+    "!tests/orchestration/fixtures/**"
+  ],
+  "mutate": [
+    "src/**/*.ts",
+    "!src/**/*.d.ts",
+    "!src/types/**",
+    "!src/tests/**",
+    "scripts/lib/golden-templates.mjs"
+  ],
+  "vitest": {
+    "configFile": "vitest.stryker.config.ts"
+  },
+  "thresholds": {
+    "high": 85,
+    "low": 60,
+    "break": 60
+  }
+}

@@ -14,6 +14,7 @@
     "type-check": "tsc --noEmit",
     "release": "node scripts/generate-manifest.mjs && node scripts/build-release.mjs",
     "sync-golden": "node scripts/sync-golden-templates.mjs",
+    "mutation": "stryker run",
     "ring0": "node scripts/ring0-check.mjs",
     "dogfood": "node scripts/dogfood.mjs",
     "dogfood:rollback": "node scripts/dogfood.mjs --rollback",
@@ -31,9 +32,10 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@stryker-mutator/core": "~8.7.0",
+    "@stryker-mutator/vitest-runner": "^8.7.1",
     "@types/node": "^20.0.0",
     "typescript": "^5.0.0",
     "vitest": "^1.0.0"
-  },
-  "dependencies": {}
+  }
 }

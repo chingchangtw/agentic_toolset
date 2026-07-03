@@ -13,6 +13,10 @@ openspec/.vector-search.db*
 dist/
 .release-build/
 
+# stryker mutation testing artifacts
+.stryker-tmp/
+reports/mutation/
+
 node_modules/
 
 # BEGIN dogfood-mirror (generated)
