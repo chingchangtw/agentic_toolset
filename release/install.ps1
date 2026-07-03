@@ -16,12 +16,19 @@ $Settings   = "$ClaudeDir\settings.json"
 $TmpDir     = [System.IO.Path]::Combine([System.IO.Path]::GetTempPath(), [System.IO.Path]::GetRandomFileName())
 New-Item -ItemType Directory -Path $TmpDir -Force | Out-Null
 
-# ── download ──────────────────────────────────────────────────────────────────
+# ── download (or local zip override) ──────────────────────────────────────────
+# $env:ZIP_FILE = path to a locally built release.zip skips the GitHub download —
+# used by the pilot harness and dogfood release rehearsal.
 
-Write-Host "→ Downloading release..."
-$Headers = @{}
-if ($env:GITHUB_TOKEN) { $Headers["Authorization"] = "Bearer $env:GITHUB_TOKEN" }
-Invoke-WebRequest -Uri $ReleaseUrl -OutFile "$TmpDir\release.zip" -Headers $Headers
+if ($env:ZIP_FILE) {
+    Write-Host "→ Using local zip: $env:ZIP_FILE"
+    Copy-Item -Path $env:ZIP_FILE -Destination "$TmpDir\release.zip" -Force
+} else {
+    Write-Host "→ Downloading release..."
+    $Headers = @{}
+    if ($env:GITHUB_TOKEN) { $Headers["Authorization"] = "Bearer $env:GITHUB_TOKEN" }
+    Invoke-WebRequest -Uri $ReleaseUrl -OutFile "$TmpDir\release.zip" -Headers $Headers
+}
 Expand-Archive -Path "$TmpDir\release.zip" -DestinationPath $TmpDir -Force
 
 # ── skills & hooks (manifest-driven, or legacy fallback for old zips) ─────────
@@ -95,6 +102,30 @@ if (Test-Path $ManifestPath) {
         Write-Host "   ✓ ts-statusline_bridge.ps1"
     }
 
+}
+
+# ── commands ──────────────────────────────────────────────────────────────────
+
+$CommandsSrc = "$TmpDir\commands"
+if (Test-Path $CommandsSrc) {
+    Write-Host "→ Installing commands → $ProjectClaudeDir\commands\"
+    $CommandsDst = "$ProjectClaudeDir\commands"
+    New-Item -ItemType Directory -Path $CommandsDst -Force | Out-Null
+    Copy-Item -Path "$CommandsSrc\*" -Destination $CommandsDst -Recurse -Force
+    Write-Host "   ✓ commands installed"
+}
+
+# ── version marker ────────────────────────────────────────────────────────────
+# Legacy zips without releaseVersion install without a marker (no failure).
+
+if (Test-Path $ManifestPath) {
+    $manifestForVersion = Get-Content $ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+    $releaseVersion = $manifestForVersion.releaseVersion
+    if ($releaseVersion) {
+        New-Item -ItemType Directory -Path $ProjectClaudeDir -Force | Out-Null
+        Set-Content -Path "$ProjectClaudeDir\.toolset-version" -Value $releaseVersion -Encoding UTF8
+        Write-Host "   ✓ version marker: $releaseVersion"
+    }
 }
 
 # ── settings.json ─────────────────────────────────────────────────────────────

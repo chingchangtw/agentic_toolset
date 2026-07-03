@@ -85,6 +85,18 @@ m = json.load(open('manifest.json'))
 for e in m['hooks']:
     print(e['dest'] + '\\t' + e['scope'] + '\\t' + e['name'])
 ")
+  if [[ -d commands ]]; then
+    mkdir -p "\$INSTALL_DIR/.claude/commands"
+    cp -r commands/. "\$INSTALL_DIR/.claude/commands/"
+  fi
+  release_version="\$(python3 -c "
+import json
+m = json.load(open('manifest.json'))
+print(m.get('releaseVersion', ''))
+")"
+  if [[ -n "\$release_version" ]]; then
+    printf '%s\\n' "\$release_version" > "\$INSTALL_DIR/.claude/.toolset-version"
+  fi
 fi
 `;
 
@@ -115,6 +127,15 @@ if (Test-Path $ManifestPath) {
             $dst = Join-Path $HooksDir $entry.name
         }
         Copy-Item -Path $src -Destination $dst -Force
+    }
+    $CommandsSrc = Join-Path $ExtractedDir "commands"
+    if (Test-Path $CommandsSrc) {
+        $CommandsDst = "$InstallDir\\.claude\\commands"
+        New-Item -ItemType Directory -Path $CommandsDst -Force | Out-Null
+        Copy-Item -Path "$CommandsSrc\\*" -Destination $CommandsDst -Recurse -Force
+    }
+    if ($manifest.releaseVersion) {
+        Set-Content -Path "$InstallDir\\.claude\\.toolset-version" -Value $manifest.releaseVersion -Encoding UTF8
     }
 }
 `;
