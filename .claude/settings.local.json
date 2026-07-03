@@ -27,7 +27,12 @@
       "Bash(git *)",
       "Bash(spectra instructions *)",
       "Bash(spectra status *)",
-      "Bash(spectra analyze *)"
+      "Bash(spectra analyze *)",
+      "Read(//Users/ctony/miniconda3/bin/**)",
+      "Bash(xattr -l /Users/ctony/miniconda3/bin/python3)",
+      "Bash(bash -n release/install.sh)",
+      "Bash(python3 -c \"import sys; compile\\(sys.stdin.read\\(\\), 'snippet', 'exec'\\)\")",
+      "Bash(/usr/bin/python3 -c \"import sys; compile\\(sys.stdin.read\\(\\), 'snippet', 'exec'\\)\")"
     ],
     "deny": [
       "Bash(sudo *)",
