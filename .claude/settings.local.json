@@ -37,7 +37,10 @@
       "Bash(node scripts/build-release.mjs)",
       "Bash(/usr/bin/python3 -c ' *)",
       "Bash(spectra validate *)",
-      "Bash(spectra park *)"
+      "Bash(spectra park *)",
+      "Bash(~/go/bin/skill-validator validate *)",
+      "Bash(/usr/bin/python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('errors:', d['errors'], 'warnings:', d['warnings']\\)\")",
+      "Bash(/usr/bin/python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('errors:', d['errors'], 'warnings:', d['warnings']\\); [print\\(r['message']\\) for r in d['results'] if r['level']=='warning']\")"
     ],
     "deny": [
       "Bash(sudo *)",
