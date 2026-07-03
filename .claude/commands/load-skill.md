@@ -1,1 +1,0 @@
-Read and activate the skill at .claude/skills/ondemand/$ARGUMENTS/SKILL.md and follow its instructions.

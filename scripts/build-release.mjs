@@ -5,10 +5,11 @@
  * and scaffold into dist/release.zip for GitHub Releases distribution.
  * Run: node scripts/build-release.mjs  (or via `npm run release`)
  */
-import { cpSync, mkdirSync, rmSync, existsSync, readFileSync, statSync } from 'node:fs';
+import { cpSync, mkdirSync, rmSync, existsSync, readFileSync, writeFileSync, statSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { includeInPackage } from './lib/exclusions.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -16,10 +17,12 @@ const BUILD = join(ROOT, '.release-build');
 const OUT   = join(ROOT, 'dist', 'release.zip');
 const MANIFEST_PATH = join(__dirname, 'release-manifest.json');
 
-// ── read manifest ─────────────────────────────────────────────────────────────
+// ── regenerate manifest (stale committed manifest must never drive a build) ──
+
+execSync(`node "${join(__dirname, 'generate-manifest.mjs')}"`, { stdio: 'inherit' });
 
 if (!existsSync(MANIFEST_PATH)) {
-  console.error('scripts/release-manifest.json not found — run generate-manifest first');
+  console.error('scripts/release-manifest.json not found — generate-manifest failed');
   process.exit(1);
 }
 
@@ -27,12 +30,12 @@ const manifest = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'));
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 
-function cp(src, dest) {
+function cp(src, dest, { filtered = false } = {}) {
   if (!existsSync(src)) { console.warn(`  SKIP (missing): ${src}`); return; }
   mkdirSync(dirname(dest), { recursive: true });
   const stat = statSync(src);
   if (stat.isDirectory()) {
-    cpSync(src, dest, { recursive: true });
+    cpSync(src, dest, { recursive: true, ...(filtered ? { filter: includeInPackage } : {}) });
   } else {
     cpSync(src, dest);
   }
@@ -58,7 +61,7 @@ for (const entry of manifest.skills) {
   const destPath = join(BUILD, entry.dest);
   if (!existsSync(srcPath)) { console.warn(`  SKIP (missing): ${entry.src}`); continue; }
   validateSkill(srcPath, entry.name);
-  cp(srcPath, destPath);
+  cp(srcPath, destPath, { filtered: true });
   console.log(`  skill: ${entry.dest}`);
 }
 
@@ -72,9 +75,14 @@ for (const entry of manifest.hooks) {
   if (existsSync(srcPath)) console.log(`  hook: ${entry.name}`);
 }
 
-// ── 3. manifest.json at zip root ──────────────────────────────────────────────
+// ── 3. manifest.json at zip root (stamped with the release version) ──────────
 
-cpSync(MANIFEST_PATH, join(BUILD, 'manifest.json'));
+const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
+writeFileSync(
+  join(BUILD, 'manifest.json'),
+  JSON.stringify({ ...manifest, releaseVersion: pkg.version }, null, 2) + '\n'
+);
+console.log(`  manifest.json stamped: releaseVersion ${pkg.version}`);
 
 // ── 4. commands ───────────────────────────────────────────────────────────────
 
@@ -111,6 +119,8 @@ if (isWin) {
 } else {
   execSync(`cd "${BUILD}" && zip -r "${OUT}" .`, { stdio: 'inherit', shell: true });
 }
+
+rmSync(BUILD, { recursive: true });
 
 console.log(`\n✓ release.zip ready: ${OUT}`);
 console.log('  Upload to GitHub Releases, then copy install.sh + install.ps1 as release assets too.');

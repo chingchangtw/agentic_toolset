@@ -1,3 +1,8 @@
+---
+name: ts-orchestrate
+description: Dual-track orchestrator — session entry point, unified status, gate enforcement. Reads [WORKFLOW STATE] hook context and routes to the correct layer and phase spine.
+---
+
 # ts-orchestrate
 
 Passive orchestration skill. Reads `[WORKFLOW STATE]` context injected by the Epic 1 hook (`inject-workflow-state.sh`). Does not read raw state files directly.

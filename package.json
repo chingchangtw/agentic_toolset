@@ -12,7 +12,13 @@
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "type-check": "tsc --noEmit",
-     "release": "node scripts/generate-manifest.mjs && node scripts/build-release.mjs"
+    "release": "node scripts/generate-manifest.mjs && node scripts/build-release.mjs",
+    "ring0": "node scripts/ring0-check.mjs",
+    "dogfood": "node scripts/dogfood.mjs",
+    "dogfood:rollback": "node scripts/dogfood.mjs --rollback",
+    "dogfood:bless": "cp dist/release.zip dist/release-lkg.zip && echo '✓ blessed dist/release-lkg.zip'",
+    "dogfood:restore-lkg": "node scripts/dogfood.mjs --from-zip dist/release-lkg.zip",
+    "pilot": "node scripts/pilot.mjs"
   },
   "keywords": [
     "ai",

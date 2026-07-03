@@ -34,14 +34,21 @@ SETTINGS="${CLAUDE_DIR}/settings.json"
 PROJECT_SETTINGS="${PROJECT_CLAUDE_DIR}/settings.json"
 TMPDIR_INSTALL="$(mktemp -d)"
 
-# ── download ──────────────────────────────────────────────────────────────────
+# ── download (or local zip override) ──────────────────────────────────────────
+# ZIP_FILE=/path/to/release.zip skips the GitHub download and installs from a
+# locally built zip — used by the pilot harness and dogfood release rehearsal.
 
-echo "→ Downloading release..."
-CURL_ARGS=(-fsSL --output "${TMPDIR_INSTALL}/release.zip")
-if [[ -n "${GITHUB_TOKEN:-}" ]]; then
-  CURL_ARGS+=(-H "Authorization: Bearer ${GITHUB_TOKEN}")
+if [[ -n "${ZIP_FILE:-}" ]]; then
+  echo "→ Using local zip: ${ZIP_FILE}"
+  cp "${ZIP_FILE}" "${TMPDIR_INSTALL}/release.zip"
+else
+  echo "→ Downloading release..."
+  CURL_ARGS=(-fsSL --output "${TMPDIR_INSTALL}/release.zip")
+  if [[ -n "${GITHUB_TOKEN:-}" ]]; then
+    CURL_ARGS+=(-H "Authorization: Bearer ${GITHUB_TOKEN}")
+  fi
+  curl "${CURL_ARGS[@]}" "${RELEASE_URL}"
 fi
-curl "${CURL_ARGS[@]}" "${RELEASE_URL}"
 
 cd "${TMPDIR_INSTALL}"
 unzip -q release.zip
@@ -130,6 +137,31 @@ else
     echo "   ✓ inject-workflow-state.sh"
   fi
 
+fi
+
+# ── commands ──────────────────────────────────────────────────────────────────
+
+if [[ -d commands ]]; then
+  echo "→ Installing commands → ${PROJECT_CLAUDE_DIR}/commands/"
+  mkdir -p "${PROJECT_CLAUDE_DIR}/commands"
+  cp -r commands/. "${PROJECT_CLAUDE_DIR}/commands/"
+  echo "   ✓ commands installed"
+fi
+
+# ── version marker ────────────────────────────────────────────────────────────
+# Legacy zips without releaseVersion install without a marker (no failure).
+
+if [[ -f manifest.json ]]; then
+  release_version="$("${PYTHON_BIN}" -c "
+import json
+m = json.load(open('manifest.json'))
+print(m.get('releaseVersion', ''))
+")"
+  if [[ -n "${release_version}" ]]; then
+    mkdir -p "${PROJECT_CLAUDE_DIR}"
+    printf '%s\n' "${release_version}" > "${PROJECT_CLAUDE_DIR}/.toolset-version"
+    echo "   ✓ version marker: ${release_version}"
+  fi
 fi
 
 # ── project settings.json (UserPromptSubmit hook registration) ─────────────────

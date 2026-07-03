@@ -1,0 +1,6 @@
+{
+  "session_id": "fixture-session-0000",
+  "model": { "id": "claude-fixture", "display_name": "Fixture" },
+  "workspace": { "current_dir": "/tmp/fixture-project", "project_dir": "/tmp/fixture-project" },
+  "context_window": { "used_percentage": 42, "current_tokens": 84000, "max_tokens": 200000 }
+}
