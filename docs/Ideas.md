@@ -703,10 +703,15 @@ inject-workflow-state.sh (UserPromptSubmit hook):
 - Add a JSON-shape/type check for Discovery sub-agent output (§12) — only a
   non-empty-fields gate exists today; a structurally malformed-but-non-empty
   blob would pass and corrupt `discovery.json` silently.
-- No test asserts `inject-workflow-state.sh`'s `[NEXT]` bash strings stay in
-  lockstep with `SKILL.md`'s Workflow Guidance table (§12) — the runbook's
-  original claim that this was test-enforced was corrected during §12's
-  Review phase; the underlying gap is still open.
+- ~~No test asserts `inject-workflow-state.sh`'s `[NEXT]` bash strings stay in
+  lockstep with `SKILL.md`'s Workflow Guidance table~~ — **closed 2026-07-06**.
+  `REFACTOR-HOOK-GUIDANCE-TABLE` (§12 sibling epic, same Iter2) restructured
+  the hook into one case arm per table row, each tagged with a
+  `# SKILL.md: <Track>|<row>` comment; `hook-skill-lockstep.test.ts` parses
+  both the table and the comments and runs the hook per row to assert the
+  documented commands actually appear in its output (structural + behavioral,
+  17 tests). Verified the test can fail (introduced a command typo, confirmed
+  the catch, reverted) before landing it.
 - Installer/build-script `agents` manifest category (§12) is wired as a
   third copy-pasted per-category loop across `install.sh`/`install.ps1`/
   `build-release.mjs`/`dogfood.mjs` — rule-of-three reuse gap, refactor-scope.
