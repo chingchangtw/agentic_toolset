@@ -974,7 +974,6 @@ tests:
 
 ## Requirements
 
-
 <!-- @trace
 source: orchestration-test-harness
 updated: 2026-07-01

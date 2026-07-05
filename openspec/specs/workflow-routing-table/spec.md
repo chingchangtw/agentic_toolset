@@ -966,7 +966,6 @@ The `## Workflow Routing` section SHALL include both hard rules as literal text:
 
 ## Requirements
 
-
 <!-- @trace
 source: orchestration-test-harness
 updated: 2026-07-01
