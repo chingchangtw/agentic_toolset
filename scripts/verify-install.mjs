@@ -60,7 +60,8 @@ INSTALL_DIR="$2"
 SKILLS_DIR="\${INSTALL_DIR}/.claude/skills"
 HOOKS_DIR="\${INSTALL_DIR}/user-hooks"
 PROJECT_HOOKS_DIR="\${INSTALL_DIR}/.claude/hooks"
-mkdir -p "\$SKILLS_DIR" "\$HOOKS_DIR" "\$PROJECT_HOOKS_DIR"
+AGENTS_DIR="\${INSTALL_DIR}/.claude/agents"
+mkdir -p "\$SKILLS_DIR" "\$HOOKS_DIR" "\$PROJECT_HOOKS_DIR" "\$AGENTS_DIR"
 cd "\$EXTRACTED_DIR"
 if [[ -f manifest.json ]]; then
   while IFS=$'\\t' read -r dest_path install_subpath; do
@@ -85,6 +86,15 @@ m = json.load(open('manifest.json'))
 for e in m['hooks']:
     print(e['dest'] + '\\t' + e['scope'] + '\\t' + e['name'])
 ")
+  while IFS=$'\\t' read -r dest_path name; do
+    [[ -z "\$dest_path" ]] && continue
+    cp "\$dest_path" "\$AGENTS_DIR/\$name.md"
+  done < <(python3 -c "
+import json
+m = json.load(open('manifest.json'))
+for e in m.get('agents', []):
+    print(e['dest'] + '\\t' + e['name'])
+")
   if [[ -d commands ]]; then
     mkdir -p "\$INSTALL_DIR/.claude/commands"
     cp -r commands/. "\$INSTALL_DIR/.claude/commands/"
@@ -105,9 +115,11 @@ fi
 $SkillsDir       = "$InstallDir\\.claude\\skills"
 $HooksDir        = "$InstallDir\\user-hooks"
 $ProjectHooksDir = "$InstallDir\\.claude\\hooks"
+$AgentsDir       = "$InstallDir\\.claude\\agents"
 New-Item -ItemType Directory -Path $SkillsDir       -Force | Out-Null
 New-Item -ItemType Directory -Path $HooksDir        -Force | Out-Null
 New-Item -ItemType Directory -Path $ProjectHooksDir -Force | Out-Null
+New-Item -ItemType Directory -Path $AgentsDir       -Force | Out-Null
 Set-Location $ExtractedDir
 $ManifestPath = Join-Path $ExtractedDir "manifest.json"
 if (Test-Path $ManifestPath) {
@@ -126,6 +138,11 @@ if (Test-Path $ManifestPath) {
         } else {
             $dst = Join-Path $HooksDir $entry.name
         }
+        Copy-Item -Path $src -Destination $dst -Force
+    }
+    foreach ($entry in $manifest.agents) {
+        $src = Join-Path $ExtractedDir $entry.dest.Replace("/", "\\")
+        $dst = Join-Path $AgentsDir "$($entry.name).md"
         Copy-Item -Path $src -Destination $dst -Force
     }
     $CommandsSrc = Join-Path $ExtractedDir "commands"

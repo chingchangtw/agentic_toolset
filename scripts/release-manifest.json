@@ -17,6 +17,11 @@
       "dest": "skills/ts-deliver-router"
     },
     {
+      "name": "ts-md-improve",
+      "src": "src/skills/ts-md-improve",
+      "dest": "skills/ts-md-improve"
+    },
+    {
       "name": "ts-orchestrate",
       "src": "src/skills/ts-orchestrate",
       "dest": "skills/ts-orchestrate"
@@ -62,6 +67,18 @@
       "src": "src/hook/ts-statusline_bridge.py",
       "dest": "hook/ts-statusline_bridge.py",
       "scope": "user"
+    }
+  ],
+  "agents": [
+    {
+      "name": "ts-ddd-tactical-validator",
+      "src": "src/agents/ts-ddd-tactical-validator.md",
+      "dest": "agents/ts-ddd-tactical-validator.md"
+    },
+    {
+      "name": "ts-event-storming-facilitator",
+      "src": "src/agents/ts-event-storming-facilitator.md",
+      "dest": "agents/ts-event-storming-facilitator.md"
     }
   ]
 }

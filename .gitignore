@@ -21,13 +21,14 @@ node_modules/
 
 # BEGIN dogfood-mirror (generated)
 .claude/skills/ondemand/ts-project-init-advisor/
-.claude/skills/taco-project-scaffolder/
 .claude/skills/ts-acpl/
 .claude/skills/ts-deliver-router/
+.claude/skills/ts-md-improve/
 .claude/skills/ts-orchestrate/
 .claude/skills/ts-project-planner/
 .claude/skills/ts-project-scaffolder/
 .claude/hook/
+.claude/agents/
 .claude/commands/load-skill.md
 .claude/.dogfood-prev/
 .claude/.toolset-version

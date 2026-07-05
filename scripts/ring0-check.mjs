@@ -38,6 +38,15 @@ for (const entry of manifest.skills) {
   console.log(`  ✓ skill lint: ${entry.name}`);
 }
 
+// ── agent existence check ──────────────────────────────────────────────────────
+// Agents are prompt files, not executables — existence check only, no smoke-run.
+
+for (const entry of manifest.agents ?? []) {
+  const agentPath = join(ROOT, entry.src);
+  if (!existsSync(agentPath)) fail(`agent ${entry.name}: source file missing (${entry.src})`);
+  console.log(`  ✓ agent exists: ${entry.name}`);
+}
+
 // ── hook smoke ────────────────────────────────────────────────────────────────
 
 // fixture payload per hook basename; statusline bridge reads statusLine JSON,

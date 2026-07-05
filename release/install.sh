@@ -94,6 +94,21 @@ for e in m['hooks']:
     print(e['dest'] + '\t' + e['scope'] + '\t' + e['name'])
 ")
 
+  # ── agents (manifest-driven; key absent in older zips → loop is a no-op) ─────
+
+  echo "→ Installing agents → ${PROJECT_CLAUDE_DIR}/agents/"
+  mkdir -p "${PROJECT_CLAUDE_DIR}/agents"
+  while IFS=$'\t' read -r dest_path name; do
+    [[ -z "${dest_path}" ]] && continue
+    cp "${dest_path}" "${PROJECT_CLAUDE_DIR}/agents/${name}.md"
+    echo "   ✓ agent: ${name}"
+  done < <("${PYTHON_BIN}" -c "
+import json
+m = json.load(open('manifest.json'))
+for e in m.get('agents', []):
+    print(e['dest'] + '\t' + e['name'])
+")
+
 else
 
   # ── legacy fallback: old zip without manifest.json ────────────────────────────

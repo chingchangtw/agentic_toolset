@@ -53,6 +53,9 @@ function mirrorTargets() {
   for (const e of manifest.hooks) {
     targets.push({ src: join(ROOT, e.src), dest: join(CLAUDE_DIR, e.dest), dir: false, zipPath: e.dest });
   }
+  for (const e of manifest.agents ?? []) {
+    targets.push({ src: join(ROOT, e.src), dest: join(CLAUDE_DIR, e.dest), dir: false, zipPath: e.dest });
+  }
   targets.push({
     src: join(ROOT, 'src', 'commands', 'load-skill.md'),
     dest: join(CLAUDE_DIR, 'commands', 'load-skill.md'),
@@ -119,6 +122,9 @@ if (args[0] === '--from-zip') {
       targets.push({ src: join(extract, e.dest), dest: join(CLAUDE_DIR, e.dest), dir: true });
     }
     for (const e of zipManifest.hooks) {
+      targets.push({ src: join(extract, e.dest), dest: join(CLAUDE_DIR, e.dest), dir: false });
+    }
+    for (const e of zipManifest.agents ?? []) {
       targets.push({ src: join(extract, e.dest), dest: join(CLAUDE_DIR, e.dest), dir: false });
     }
     targets.push({

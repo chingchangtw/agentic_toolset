@@ -13,9 +13,10 @@ const ROOT = join(__dirname, '..');
 const MANIFEST_PATH = join(__dirname, 'release-manifest.json');
 const SKILLS_SRC = join(ROOT, 'src', 'skills');
 const HOOK_SRC = join(ROOT, 'src', 'hook');
+const AGENTS_SRC = join(ROOT, 'src', 'agents');
 
 // Exit non-zero if source dirs missing
-for (const dir of [SKILLS_SRC, HOOK_SRC]) {
+for (const dir of [SKILLS_SRC, HOOK_SRC, AGENTS_SRC]) {
   if (!existsSync(dir)) {
     console.error(`Error: missing source directory: ${relative(ROOT, dir)}`);
     process.exit(1);
@@ -68,6 +69,15 @@ for (const entry of readdirSync(HOOK_SRC).sort()) {
   hooks.push({ name: entry, src, dest, scope });
 }
 
-const manifest = { version: '1', skills, hooks };
+// Scan agents (sub-agent prompt files installed to <project>/.claude/agents/)
+const agents = [];
+for (const entry of readdirSync(AGENTS_SRC).sort()) {
+  const full = join(AGENTS_SRC, entry);
+  if (!statSync(full).isFile()) continue;
+  if (!entry.endsWith('.md') || entry === 'README.md') continue;
+  agents.push({ name: entry.replace(/\.md$/, ''), src: relative(ROOT, full), dest: `agents/${entry}` });
+}
+
+const manifest = { version: '1', skills, hooks, agents };
 writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + '\n', 'utf8');
-console.log(`✓ release-manifest.json written (${skills.length} skills, ${hooks.length} hooks)`);
+console.log(`✓ release-manifest.json written (${skills.length} skills, ${hooks.length} hooks, ${agents.length} agents)`);

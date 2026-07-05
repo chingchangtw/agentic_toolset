@@ -29,6 +29,7 @@ const entries = [
   // deliverable skill mirrors: manifest dest "skills/x" → .claude/skills/x/
   ...manifest.skills.map((e) => `.claude/${e.dest}/`),
   '.claude/hook/',
+  '.claude/agents/',
   '.claude/commands/load-skill.md',
   '.claude/.dogfood-prev/',
   '.claude/.toolset-version',

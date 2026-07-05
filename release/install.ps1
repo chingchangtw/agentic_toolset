@@ -67,6 +67,18 @@ if (Test-Path $ManifestPath) {
         Write-Host "   ✓ hook ($($entry.scope)): $($entry.name)"
     }
 
+    # ── agents (manifest-driven; key absent in older zips → loop is a no-op) ──────
+
+    Write-Host "→ Installing agents → $ProjectClaudeDir\agents\"
+    $AgentsDir = "$ProjectClaudeDir\agents"
+    New-Item -ItemType Directory -Path $AgentsDir -Force | Out-Null
+    foreach ($entry in $manifest.agents) {
+        $src = Join-Path $TmpDir $entry.dest.Replace("/", "\")
+        $dst = Join-Path $AgentsDir "$($entry.name).md"
+        Copy-Item -Path $src -Destination $dst -Force
+        Write-Host "   ✓ agent: $($entry.name)"
+    }
+
 } else {
 
     # ── legacy fallback: old zip without manifest.json ────────────────────────────

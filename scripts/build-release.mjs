@@ -76,6 +76,16 @@ for (const entry of manifest.hooks) {
   if (existsSync(srcPath)) console.log(`  hook: ${entry.name}`);
 }
 
+// ── 2b. agents (manifest-driven) ──────────────────────────────────────────────
+
+console.log('── agents ───────────────────────────────────────────────────────────────────');
+for (const entry of manifest.agents ?? []) {
+  const srcPath = join(ROOT, entry.src);
+  const destPath = join(BUILD, entry.dest);
+  cp(srcPath, destPath);
+  if (existsSync(srcPath)) console.log(`  agent: ${entry.name}`);
+}
+
 // ── 3. manifest.json at zip root (stamped with the release version) ──────────
 
 const pkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
