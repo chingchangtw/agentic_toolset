@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased — Dual-track orchestration: work-type routing, Discovery sub-agents
+
+- feat(agents): ship `ts-event-storming-facilitator` and `ts-ddd-tactical-validator` as sub-agents (`src/agents/`), packaged via a new `agents[]` release-manifest category, installed to `<project>/.claude/agents/` by both installers
+- feat(routing): add `feature`/`hotfix`/`chore`/`patch`/`spike`/`ops` work-type phase spines to `phase-routing.ts`, alongside existing `bugfix`/`refactor`/`epic`
+- feat(ts-orchestrate): SKILL.md gets a Workflow Routing table (9 end-user work types, both tracks named inline) and a Workflow Guidance table (per-state guidance, both tracks)
+- feat(hook): `inject-workflow-state.sh` now emits Discovery-track `[NEXT]` guidance (focus-idea priority: validating > exploring > idea > ready)
+- docs(planner): wire the two new sub-agents into `/ts-discover explore|validate|decide` gates; slim planner's Workflow Routing section to point at ts-orchestrate as canonical
+- test: add spine-consistency test asserting `phase-routing.ts` and `work-unit-profiles.md` stay in lockstep for the 6 new work types
+- fix(hook-tests): `.ai` → `.agents` fixture paths (pre-existing test breakage, unrelated to `.agents/` rename already shipped)
+- fix(pilot): assert `manifest.agents` entries land on disk post-install (was previously unchecked)
+
 ## v0.1.6 — Skill directory hygiene: fix broken references and orphaned files
 
 - fix(skills): rename ts-acpl/reference to references — matches every other skill's plural convention; SKILL.md already pointed at references/*.md, only the directory was out of sync
