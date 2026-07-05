@@ -10,6 +10,10 @@
 - test: add spine-consistency test asserting `phase-routing.ts` and `work-unit-profiles.md` stay in lockstep for the 6 new work types
 - fix(hook-tests): `.ai` → `.agents` fixture paths (pre-existing test breakage, unrelated to `.agents/` rename already shipped)
 - fix(pilot): assert `manifest.agents` entries land on disk post-install (was previously unchecked)
+- fix(hook): `inject-workflow-state.sh` Ship-gate check read `gates["sec-review"]` but `state.json` keys the gate `G2` — the `[BLOCKED]` check was dead code, never fired against real state
+- fix(hook): `reflect` `[NEXT]` guidance didn't branch on `spike` work type despite `SKILL.md` documenting the clause — hook never read `epic.type`
+- fix(hook): `ts-session-guard.py`/`.ps1` counted messages by checking `entry.type == "message"`, a value that never occurs in real transcripts (`user`/`assistant` only) — the TURNS warning never fired in either port
+- refactor(hook): restructure `inject-workflow-state.sh` as a direct transcription of `SKILL.md`'s Workflow Guidance table — named guard functions, flat per-track case tables, one case arm per table row; byte-identical output, 24 existing tests unedited
 
 ## v0.1.6 — Skill directory hygiene: fix broken references and orphaned files
 
