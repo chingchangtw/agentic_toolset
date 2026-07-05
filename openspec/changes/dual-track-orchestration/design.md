@@ -30,7 +30,7 @@ and 3 rounds of correction on the guidance/routing table shape. They are
 | D6 | Gates: G1 = feature, refactor, epic (blocks Think→Plan). G2 = epic, ops, and patch-when-security-related (blocks Ship). bugfix/hotfix/chore/spike: none. Never auto-signed. |
 | D7 | `ts-orchestrate/SKILL.md` gets TWO tables: **Workflow Guidance** (Track \| Phase/State \| Guidance — per-state, both tracks) and **Workflow Routing** (Work type \| Route — track named inline, states walked one by one). Distinct purposes; not merged. |
 | D8 | `ts-project-planner/SKILL.md`'s Workflow Routing section slims to Discovery-internal routing + a pointer to `ts-orchestrate`. Its two hard rules (never `/ts-deliver:init` without `active_epic`; never mark epic done without gate sign-off) move to `ts-orchestrate` as canonical. |
-| D9 | Hook keeps executable string copies of guidance (bash cannot import markdown). Lockstep enforced by hook-output tests. Accepted duplication. |
+| D9 | Hook keeps executable string copies of guidance (bash cannot import markdown). Lockstep is NOT test-enforced — hook-output.test.ts only asserts the hook's own literal output, never diffs against SKILL.md's Workflow Guidance table. Accepted duplication with manual-only lockstep (corrected during Review phase, see idea-002 follow-up list). |
 | D10 | `ubiquitous_language_terms[]` added to `exploration_output` schema (facilitator emits, validator consumes). |
 | D11 | Hook's Discovery-branch focus-idea heuristic: priority `validating > exploring > idea > ready`, first match wins, one `[NEXT]` line only. |
 | D12 | Fix pre-existing `.ai`→`.agents` test breakage in passing (both files touched anyway by other changes in this same PR). |
@@ -73,4 +73,12 @@ own task list (which never touches `ts-deliver-router` itself).
   Routing table, `work-unit-profiles.md`, hook's bash case statement) has no
   single test asserting all 4 agree — T9.5 covers 2 of the 4 (code vs
   profiles) for the 6 new types only. `SKILL.md`'s prose table and the hook's
-  bash strings remain manually kept in lockstep (D9).
+  bash strings remain manually kept in lockstep (D9) — flagged during Review
+  phase as untested, not test-enforced as originally claimed; treat as an
+  idea-002 follow-up, not a blocker.
+- **Installer/build-script duplication**: the new `agents` manifest category
+  is wired via a third copy-pasted per-category loop in
+  `release/install.sh`, `release/install.ps1`, `scripts/build-release.mjs`,
+  and `scripts/dogfood.mjs` (mirroring the existing skills/hooks loops
+  verbatim, no shared helper). Flagged during Review phase as a rule-of-three
+  reuse gap; deferred as a refactor-scope follow-up, not a release blocker.

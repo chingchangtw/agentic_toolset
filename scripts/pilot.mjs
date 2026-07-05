@@ -73,6 +73,9 @@ try {
     const dir = e.scope === 'project' ? join(projClaude, 'hooks') : join(fixtureHome, '.claude', 'hooks');
     check(existsSync(join(dir, e.name)), `hook installed (${e.scope}): ${e.name}`);
   }
+  for (const e of manifest.agents ?? []) {
+    check(existsSync(join(projClaude, 'agents', `${e.name}.md`)), `agent installed: ${e.name}`);
+  }
   check(existsSync(join(projClaude, 'commands', 'load-skill.md')), 'commands installed: load-skill.md');
 
   const marker = join(projClaude, '.toolset-version');
