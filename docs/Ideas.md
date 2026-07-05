@@ -346,32 +346,30 @@ keeps the skill's token cost flat — no file reads, no jq calls on every turn.
 `[BLOCKED] No active epic in iteration.json.active_epic. Run /ts-project:plan --new to create one.`
 and refuse `/ts-deliver:init`.
 
-### Epic-type routing
+### Work-type routing (expanded to 9 types — see §12)
 
-ts-orchestrate reads `epic.type` from `iteration.json` and routes to the
-correct phase spine:
+ts-orchestrate reads the end-user's WORK_TYPE and routes to the correct phase
+spine. Originally 3 types (`bugfix`/`refactor`/`epic`); expanded to 9 by
+EPIC-DUAL-TRACK-ORCHESTRATION (§12) — full table there. `epic` is retained
+as an internal `iteration.json` concept (a plan slice reached via
+`/ts-iteration:next`), not an end-user WORK_TYPE.
 
-| `epic.type` | Phase spine | Gates |
-|---|---|---|
-| `bugfix` | Think → Build → Ship | None (lean path) |
-| `refactor` | Think → Plan → Build → Review → Ship → Reflect | G1 (Think→Plan) |
-| `epic` | Think → Plan → Build → Review → Test → Ship → Reflect | G1 (Think→Plan) + G2 (Ship) |
-
-**Why three spines, not one?** A bugfix that runs through Review, Test, and
-Reflect at the same DIAL level as a greenfield epic wastes time and burns
-token budget. But making DIAL alone control which phases run conflates
-*confidence* (how much oversight) with *scope* (which activities matter).
-Three named spines with explicit gate lists is legible, auditable, and
-requires no heuristic.
+**Why named spines, not DIAL alone?** A bugfix that runs through Review,
+Test, and Reflect at the same DIAL level as a greenfield feature wastes time
+and burns token budget. But making DIAL alone control which phases run
+conflates *confidence* (how much oversight) with *scope* (which activities
+matter). Named spines with explicit gate lists are legible, auditable, and
+require no heuristic.
 
 **Implementation:** `src/utils/phase-routing.ts` exports
-`getPhaseList(epicType: "bugfix" | "refactor" | "epic"): string[]` — a pure
-function over the three fixed arrays. The skill reads this via TypeScript;
-the `SKILL.md` documents the same table.
+`getPhaseList(epicType: "epic" | "feature" | "bugfix" | "hotfix" | "refactor" | "chore" | "patch" | "spike" | "ops"): string[]`
+— a pure function over 9 fixed arrays (`poc` is intentionally absent —
+Discovery-only, never initializes a Delivery spine). The skill reads this via
+TypeScript; `SKILL.md`'s Workflow Routing table documents the same mapping.
 
 ### Commands
 
-- `/ts-orchestrate:start WORK_TYPE=EPIC|REFACTOR|BUGFIX AUTONOMY=HIGH|MID|LOW` — session entry point; writes `active_epic` + `dial` to `iteration.json`, initializes `state.json` with `current_phase: "think"`, routes to correct phase spine, outputs first `[WORKFLOW STATE]`
+- `/ts-orchestrate:start WORK_TYPE=FEATURE|BUGFIX|HOTFIX|REFACTOR|CHORE|PATCH|SPIKE|POC|OPS AUTONOMY=HIGH|MID|LOW` — session entry point; writes `active_epic` + `dial` to `iteration.json`, initializes `state.json` with `current_phase: "think"`, routes to correct phase spine, outputs first `[WORKFLOW STATE]`
 - `/ts-orchestrate:status` — **unified dual-track view**: reads `[WORKFLOW STATE]` (Delivery) + `discovery.json` (Discovery); shows WIP idea count, next unvalidated idea, active epic, current phase, DIAL, and pending gates
 - `/ts-orchestrate:next` — enforced phase advancement with gate checks (refuses if G1/G2 unsigned; never auto-signs)
 
@@ -412,7 +410,13 @@ into the prompt context.
 Discovery mode (no `state.json`):
 ```
 [WORKFLOW STATE] Discovery | dial: <dial> | active_epic: <id or none>
+[NEXT] Run /ts-discover explore <id> (WIP limit 3)
 ```
+The Discovery `[NEXT]` line (added by EPIC-DUAL-TRACK-ORCHESTRATION, §12) picks
+a focus idea from `discovery.json` by status priority `validating > exploring
+> idea > ready` (first match wins, one line only — D11) and emits the matching
+next command. Malformed or missing `discovery.json` degrades to a generic seed
+suggestion rather than crashing.
 
 No state files: hook emits nothing (silent).
 
@@ -493,7 +497,115 @@ fire after Review (to show which ingest deltas review findings triggered).
 
 ---
 
-## 12. Final Architecture
+## 12. EPIC-DUAL-TRACK-ORCHESTRATION — ts-orchestrate Becomes Real (shipped 2026-07-05)
+
+§9 described ts-orchestrate's *design*; this epic is where the dual-track
+orchestrator, the two Discovery sub-agents, and the WORK_TYPE expansion it
+depended on actually shipped. Source idea: `discovery.json` idea-002.
+Full task-by-task execution log: `tasks/dual-track-orchestration-plan.md`
+(T1–T12 + T9.5, weak-model-executable runbook, 12 locked decisions in its §0).
+
+### WORK_TYPE set: 3 → 9
+
+§9's `bugfix`/`refactor`/`epic` set couldn't express most real work — a
+one-line dependency bump and a greenfield feature both had to squeeze into
+`epic` or `bugfix`. Expanded to: `FEATURE | BUGFIX | HOTFIX | REFACTOR |
+CHORE | PATCH | SPIKE | POC | OPS`. No `EPIC` (an epic is a *plan slice*
+reached via `/ts-iteration:next`, not a work type a user declares) and no
+`DISCOVERY` (Discovery entry is via `FEATURE` with no validated idea, or
+`POC`).
+
+| WORK_TYPE | Spine | Gates |
+|---|---|---|
+| `FEATURE` | Think → Plan → Build → Review → Test → Ship | G1 |
+| `BUGFIX` / `HOTFIX` | Think → Build → Ship | none (HOTFIX = expedited audit tag) |
+| `REFACTOR` | Think → Plan → Build → Review → Ship → Reflect | G1 |
+| `CHORE` | Build → Ship | none |
+| `PATCH` | Build → Test → Ship | G2 (only if security-related) |
+| `SPIKE` | Think → Build → Reflect (learning feeds Discovery, no Ship) | none |
+| `POC` | Discovery-only, never initializes a Delivery spine | none |
+| `OPS` | Think → Build → Review → Ship | G2 |
+
+**Spike vs PoC** — the one distinction easy to blur: a Spike answers a
+technical question *inside* Delivery and feeds the learning back; a PoC
+validates idea feasibility entirely *inside* Discovery and never ships.
+
+### Two Discovery sub-agents ship as real `.claude/agents/*.md` files
+
+§14's open item — 4 sub-agents specified in `references/sub-agents.md` but
+never built — is now half-closed. `ts-event-storming-facilitator` and
+`ts-ddd-tactical-validator` are built as `.md` prompt files in `src/agents/`
+(not skills — D1, user-confirmed), packaged via a new `agents[]` manifest
+category (parallel to `skills[]`/`hooks[]`), installed to
+`<project>/.claude/agents/`. `ts-spec-validator` and `ts-mutation-analyst`
+remain unbuilt (explicit non-goal for this epic).
+
+Both are now **required gates**, not optional aids:
+- `ts-event-storming-facilitator` is **required to exit** `/ts-discover
+  explore` — status stays `idea` until `exploration_output` is non-empty (D2).
+- `ts-ddd-tactical-validator` is **required before** `/ts-discover decide
+  build` — runs during `validate` when validate runs; `decide` invokes it
+  directly if validate was skipped (no H-risk). A `FAIL` recommendation
+  blocks the build decision (D3).
+
+**Why gates, not recommendations?** The original spec (`sub-agents.md`)
+described these as available tools; nothing forced their use, so an idea
+could reach `ready` with an unvalidated domain model. Making them
+required-to-exit closes that gap without adding a new phase or primitive —
+it's a Guard Clause on an existing transition.
+
+### `ts-orchestrate/SKILL.md` — two distinct tables, not one merged table
+
+D7 (user-corrected 3×) settled on two tables that look similar but serve
+different questions:
+- **Workflow Routing** (`Work type | Route`) — *which path*, track named
+  inline, states walked one by one. Answers "what do I run next, end to end?"
+- **Workflow Guidance** (`Track | Phase/State | Guidance`) — *what to do
+  inside* a given state, strictly per-state, both tracks. Answers "I'm in
+  state X, what happens here?"
+
+The hook's `[NEXT]` bash strings are a third, executable copy of the same
+guidance (D9 — see below). Three surfaces, one source of truth in intent,
+kept in sync manually.
+
+### Known accepted duplication, and where it's NOT yet enforced
+
+D9 accepts that bash can't `import` markdown, so
+`inject-workflow-state.sh`'s `[NEXT]` case-statement strings duplicate
+`SKILL.md`'s Workflow Guidance table. The runbook's original framing
+("lockstep enforced by hook-output tests") turned out to be **inaccurate** —
+caught during this epic's own Review phase: `hook-output.test.ts` only
+asserts the hook's literal output against fixtures, never diffs against
+`SKILL.md`. Corrected in `openspec/changes/archive/2026-07-05-dual-track-orchestration/design.md`.
+Net state: the duplication is accepted, but nothing currently catches drift
+between the hook and the skill doc — open item, carried to §14.
+
+A narrower, adjacent risk *is* covered: `src/tests/unit/spine-consistency.test.ts`
+(T9.5, added post-Plan-review) asserts `phase-routing.ts` and
+`work-unit-profiles.md` agree on phase lists — but only for the 6 new types,
+deliberately excluding `epic`/`refactor`/`bugfix` (those three have a
+pre-existing, out-of-scope spine contradiction between
+`work-unit-profiles.md` and `SKILL.md`/`phase-routing.ts` — asserting
+equality there would fail on a known issue this epic didn't fix).
+
+### Review-phase findings (self-correcting the record)
+
+Running this epic's own Review phase (8-angle `/code-review high`) surfaced
+two gaps in the epic's own artifacts, both fixed in the same session:
+- `scripts/pilot.mjs` asserted skills/hooks land on disk post-install but
+  never `manifest.agents` — fixed.
+- `design.md`'s D9 note overstated test coverage that didn't exist (above) —
+  corrected.
+
+Deferred as non-blocking: the `agents` manifest category is wired into
+`install.sh`/`install.ps1`/`build-release.mjs`/`dogfood.mjs` as a third
+copy-pasted per-category loop (same shape as the pre-existing
+skills/hooks loops) — a rule-of-three reuse gap, refactor-scope, not shipped
+this epic.
+
+---
+
+## 13. Final Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -542,7 +654,7 @@ inject-workflow-state.sh (UserPromptSubmit hook):
 
 ---
 
-## 13. Open Items Carried Forward
+## 14. Open Items Carried Forward
 
 - Fill registry placeholders (`<SAST tool>`, `<dep/secrets scanner>`,
   `<mutation tool>`) per real project stack — currently Semgrep/Trivy/
@@ -555,13 +667,27 @@ inject-workflow-state.sh (UserPromptSubmit hook):
   superpowers, code-review-graph, conditionally mattpocock/addyosmani).
 - Verify code-review-graph MCP configuration per project before invoking
   `ts-deliver-router` for real.
-- 4 sub-agents (`ts-event-storming-facilitator`, `ts-spec-validator`,
-  `ts-ddd-tactical-validator`, `ts-mutation-analyst`) are specified
-  (`references/sub-agents.md`) but not yet built as `.claude/agents/*.md`
-  files.
+- 2 of 4 specified sub-agents shipped (§12): `ts-event-storming-facilitator`
+  and `ts-ddd-tactical-validator` are built and required-gated.
+  `ts-spec-validator` and `ts-mutation-analyst` remain specified
+  (`references/sub-agents.md`) but unbuilt — explicit non-goal of §12's epic.
 - GitHub MCP not yet configured in any real project (`tier=pending-setup`).
 - `ts-orchestrate:status` cross-layer view format not yet finalized — open
   question on whether to render as Mermaid diagram or tabular status block.
 - `inject-workflow-state.sh` — iteration.json orchestration fields
-  (`active_phase`, `active_idea`, `dial`, `epic_dial_overrides`, `resume_log`)
+  (`active_phase`, `active_idea`, `epic_dial_overrides`, `resume_log`)
   documented in `iteration-schema.md` but not yet wired into hook output.
+  (`dial` and `active_epic` are wired.)
+- Add a JSON-shape/type check for Discovery sub-agent output (§12) — only a
+  non-empty-fields gate exists today; a structurally malformed-but-non-empty
+  blob would pass and corrupt `discovery.json` silently.
+- No test asserts `inject-workflow-state.sh`'s `[NEXT]` bash strings stay in
+  lockstep with `SKILL.md`'s Workflow Guidance table (§12) — the runbook's
+  original claim that this was test-enforced was corrected during §12's
+  Review phase; the underlying gap is still open.
+- Installer/build-script `agents` manifest category (§12) is wired as a
+  third copy-pasted per-category loop across `install.sh`/`install.ps1`/
+  `build-release.mjs`/`dogfood.mjs` — rule-of-three reuse gap, refactor-scope.
+- Release/Iteration DDD model gap (§12 validate): under-modeled as its own
+  aggregate; `WorkflowStateInjected` mis-classified as a domain event rather
+  than a read-side projection.
