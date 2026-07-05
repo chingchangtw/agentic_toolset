@@ -17,9 +17,9 @@ afterEach(() => {
 function setupStateFixture(stateJson: object, iterationJson: object = { active_epic: 'test-epic', dial: 'MID' }): string {
   const dir = mkdtempSync(join(tmpdir(), 'gate-test-'));
   tmpDirs.push(dir);
-  mkdirSync(join(dir, '.ai', 'ts-deliver-router'), { recursive: true });
-  writeFileSync(join(dir, '.ai', 'ts-deliver-router', 'state.json'), JSON.stringify(stateJson));
-  writeFileSync(join(dir, '.ai', 'iteration.json'), JSON.stringify(iterationJson));
+  mkdirSync(join(dir, '.agents', 'ts-deliver-router'), { recursive: true });
+  writeFileSync(join(dir, '.agents', 'ts-deliver-router', 'state.json'), JSON.stringify(stateJson));
+  writeFileSync(join(dir, '.agents', 'iteration.json'), JSON.stringify(iterationJson));
   return dir;
 }
 

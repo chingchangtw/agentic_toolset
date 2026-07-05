@@ -19,9 +19,9 @@ function runHook(projectDir: string): string {
 
 function setupDeliveryFixture(phase: string, epicId: string | null = 'test-epic-001'): string {
   const dir = mkdtempSync(join(tmpdir(), 'hook-test-'));
-  mkdirSync(join(dir, '.ai', 'ts-deliver-router'), { recursive: true });
-  writeFileSync(join(dir, '.ai', 'ts-deliver-router', 'state.json'), JSON.stringify({ current_phase: phase }));
-  writeFileSync(join(dir, '.ai', 'iteration.json'), JSON.stringify({ active_epic: epicId, dial: 'MID' }));
+  mkdirSync(join(dir, '.agents', 'ts-deliver-router'), { recursive: true });
+  writeFileSync(join(dir, '.agents', 'ts-deliver-router', 'state.json'), JSON.stringify({ current_phase: phase }));
+  writeFileSync(join(dir, '.agents', 'iteration.json'), JSON.stringify({ active_epic: epicId, dial: 'MID' }));
   return dir;
 }
 
@@ -107,8 +107,61 @@ describe('inject-workflow-state.sh — D4 silent-on-error', () => {
   it('malformed state.json → empty output (silent-on-error by design)', () => {
     const dir = mkdtempSync(join(tmpdir(), 'hook-malformed-'));
     tmpDirs.push(dir);
-    mkdirSync(join(dir, '.ai', 'ts-deliver-router'), { recursive: true });
-    writeFileSync(join(dir, '.ai', 'ts-deliver-router', 'state.json'), '{bad json');
+    mkdirSync(join(dir, '.agents', 'ts-deliver-router'), { recursive: true });
+    writeFileSync(join(dir, '.agents', 'ts-deliver-router', 'state.json'), '{bad json');
     expect(runHook(dir)).toBe('');
+  });
+});
+
+function setupDiscoveryFixture(ideas: unknown[] | null): string {
+  const dir = mkdtempSync(join(tmpdir(), 'hook-disc-'));
+  mkdirSync(join(dir, '.agents'), { recursive: true });
+  writeFileSync(join(dir, '.agents', 'iteration.json'), JSON.stringify({ active_epic: null, dial: 'MID' }));
+  if (ideas !== null) {
+    writeFileSync(join(dir, '.agents', 'discovery.json'), JSON.stringify({ project: 'x', ideas }));
+  }
+  return dir;
+}
+
+describe('inject-workflow-state.sh — discovery branch [NEXT]', () => {
+  it('no discovery.json → seed suggestion', () => {
+    const out = runHook(track(setupDiscoveryFixture(null)));
+    expect(out).toContain('[WORKFLOW STATE] Discovery');
+    expect(out).toContain('/ts-discover idea');
+  });
+
+  it('empty ideas → seed suggestion', () => {
+    expect(runHook(track(setupDiscoveryFixture([])))).toContain('/ts-discover idea');
+  });
+
+  it('status=idea → explore with id', () => {
+    const out = runHook(track(setupDiscoveryFixture([{ id: 'idea-001', status: 'idea' }])));
+    expect(out).toContain('/ts-discover explore idea-001');
+  });
+
+  it('status=exploring → validate-or-decide with id', () => {
+    const out = runHook(track(setupDiscoveryFixture([{ id: 'idea-002', status: 'exploring' }])));
+    expect(out).toContain('/ts-discover validate idea-002');
+  });
+
+  it('validating outranks exploring (focus priority)', () => {
+    const out = runHook(track(setupDiscoveryFixture([
+      { id: 'idea-003', status: 'exploring' },
+      { id: 'idea-004', status: 'validating' },
+    ])));
+    expect(out).toContain('/ts-discover decide idea-004');
+  });
+
+  it('status=ready → plan --sync', () => {
+    const out = runHook(track(setupDiscoveryFixture([{ id: 'idea-005', status: 'ready' }])));
+    expect(out).toContain('/ts-project plan --sync');
+  });
+
+  it('malformed discovery.json → state line still printed, no crash', () => {
+    const dir = track(setupDiscoveryFixture(null));
+    writeFileSync(join(dir, '.agents', 'discovery.json'), '{bad');
+    const out = runHook(dir);
+    expect(out).toContain('[WORKFLOW STATE] Discovery');
+    expect(out).toContain('[NEXT]');
   });
 });
