@@ -23,7 +23,19 @@ except Exception:
 
 transcript_path = payload.get("transcript_path", "")
 
-# ── Count messages from transcript JSONL ─────────────────────────────────
+# ── Count real user turns from transcript JSONL ──────────────────────────
+# Transcript entries use type="user"/"assistant" (never "message"). A "user"
+# entry can also be a tool_result echo (content is a list of blocks) or a
+# synthetic isMeta entry (system reminders) — neither is a turn the human typed.
+def _is_real_user_turn(entry: dict) -> bool:
+    if entry.get("type") != "user" or entry.get("isMeta"):
+        return False
+    content = entry.get("message", {}).get("content")
+    if isinstance(content, list):
+        if any(isinstance(c, dict) and c.get("type") == "tool_result" for c in content):
+            return False
+    return True
+
 msg_count = 0
 try:
     p = Path(transcript_path)
@@ -31,7 +43,7 @@ try:
         for line in p.read_text(encoding="utf-8").splitlines():
             try:
                 entry = json.loads(line)
-                if entry.get("type") == "message":
+                if _is_real_user_turn(entry):
                     msg_count += 1
             except Exception:
                 continue

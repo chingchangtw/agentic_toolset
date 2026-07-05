@@ -13,14 +13,27 @@ try {
 
 $transcriptPath = $payload.transcript_path
 
-# Count messages from transcript JSONL
+# Count real user turns from transcript JSONL.
+# Transcript entries use type="user"/"assistant" (never "message"). A "user"
+# entry can also be a tool_result echo (content is an array of blocks) or a
+# synthetic isMeta entry (system reminders) — neither is a turn the human typed.
+function Test-IsRealUserTurn($entry) {
+    if ($entry.type -ne "user" -or $entry.isMeta) { return $false }
+    # @() forces array coercion — ConvertFrom-Json can unwrap a single-element
+    # JSON array (e.g. one tool_result block) into a bare scalar object.
+    foreach ($c in @($entry.message.content)) {
+        if ($c.type -eq "tool_result") { return $false }
+    }
+    return $true
+}
+
 $msgCount = 0
 try {
     if ($transcriptPath -and (Test-Path $transcriptPath)) {
         foreach ($line in [System.IO.File]::ReadAllLines($transcriptPath)) {
             try {
                 $entry = $line | ConvertFrom-Json -ErrorAction Stop
-                if ($entry.type -eq "message") { $msgCount++ }
+                if (Test-IsRealUserTurn $entry) { $msgCount++ }
             } catch { continue }
         }
     }
