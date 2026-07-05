@@ -20,9 +20,9 @@ if [ -f "$DELIVER_STATE" ]; then
     exit 0
   fi
 
-  GATE_STATUS=$(jq -r '.gates["sec-review"].status // empty' "$DELIVER_STATE" 2>/dev/null) || true
+  GATE_STATUS=$(jq -r '.gates["G2"].status // empty' "$DELIVER_STATE" 2>/dev/null) || true
   if [ "$GATE_STATUS" = "pending" ] && [ "$PHASE" = "ship" ]; then
-    echo "[BLOCKED] Ship blocked: sec-review gate not signed"
+    echo "[BLOCKED] Ship blocked: G2 (sec-review) gate not signed"
     exit 0
   fi
 

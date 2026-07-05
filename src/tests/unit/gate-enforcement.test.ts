@@ -35,10 +35,10 @@ describe('gate-enforcement — hook-testable edge cases', () => {
   it('hook outputs [BLOCKED] for unsigned G2 gate at Ship phase', () => {
     const dir = setupStateFixture({
       current_phase: 'ship',
-      gates: { 'sec-review': { status: 'pending' } },
+      gates: { G2: { status: 'pending' } },
     });
     const out = runHook(dir);
-    expect(out).toContain('[BLOCKED] Ship blocked: sec-review gate not signed');
+    expect(out).toContain('[BLOCKED] Ship blocked: G2 (sec-review) gate not signed');
   });
 
   it('hook outputs [BLOCKED] for schema version mismatch', () => {

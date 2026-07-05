@@ -17,8 +17,8 @@ Loaded when: verifying artifact min-schema (algo step 3) or debugging a mis-rout
    → `"phase unclear, manual review: scenarios.md missing Then in <ids>"`. MUST NOT advance to Build.
 2. **Stale state** — current_phase=`build`, spec.md mtime > state.json mtime.
    → `"phase unclear, manual review: spec.md changed after last state write"`.
-3. **Unsigned security gate** — current_phase=`ship`, gates.sec-review.status=`pending`.
-   → `"Ship blocked: sec-review gate not signed"`.
+3. **Unsigned security gate** — current_phase=`ship`, gates.G2.status=`pending`.
+   → `"Ship blocked: G2 (sec-review) gate not signed"`.
 4. **HIGH auto-sign attempt** — HIGH at G2, checklist 100%. → still pauses for human. HIGH never auto-signs.
 5. **Ingest mid-Build** — spec change triggers ingest. → append `state.ingest_log[]`, active ingest flag,
    Build resumes after delta + scope-recheck.
