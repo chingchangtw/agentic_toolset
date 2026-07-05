@@ -1,0 +1,20 @@
+{
+  "project": "agenticToolset",
+  "release": "v1.0.0",
+  "release_goal": "Ship orchestration test harness",
+  "iteration_start": "2026-06-30",
+  "writer_lock": null,
+  "active_phase": "Delivery",
+  "active_epic": "add-user-export",
+  "dial": "HIGH",
+  "epic_dial_overrides": {},
+  "resume_log": [],
+  "epics": [
+    {
+      "id": "add-user-export",
+      "title": "Add user data export feature",
+      "type": "feature",
+      "status": "active"
+    }
+  ]
+}

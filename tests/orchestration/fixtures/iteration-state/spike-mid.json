@@ -1,0 +1,20 @@
+{
+  "project": "agenticToolset",
+  "release": "v1.0.0",
+  "release_goal": "Ship orchestration test harness",
+  "iteration_start": "2026-06-30",
+  "writer_lock": null,
+  "active_phase": "Delivery",
+  "active_epic": "spike-vitest-v2-upgrade",
+  "dial": "MID",
+  "epic_dial_overrides": {},
+  "resume_log": [],
+  "epics": [
+    {
+      "id": "spike-vitest-v2-upgrade",
+      "title": "Spike: evaluate vitest v2 upgrade path",
+      "type": "spike",
+      "status": "active"
+    }
+  ]
+}
