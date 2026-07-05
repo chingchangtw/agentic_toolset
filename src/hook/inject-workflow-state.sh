@@ -27,6 +27,7 @@ if [ -f "$DELIVER_STATE" ]; then
   fi
 
   EPIC=$(jq -r 'if .active_epic then .active_epic else "none" end' "$ITERATION" 2>/dev/null) || EPIC="none"
+  EPIC_TYPE=$(jq -r --arg id "$EPIC" '(.epics // []) | first(.[] | select(.id == $id)) | .type // empty' "$ITERATION" 2>/dev/null) || EPIC_TYPE=""
   echo "[WORKFLOW STATE] ts-deliver phase: $PHASE | active epic: $EPIC"
   case "$PHASE" in
     think)   echo "[NEXT] Run /ts-deliver:refine after Spectra:discuss + G1 threat-model sign-off" ;;
@@ -35,7 +36,13 @@ if [ -f "$DELIVER_STATE" ]; then
     review)  echo "[NEXT] Run /ts-deliver:refine after staff-review report" ;;
     test)    echo "[NEXT] Run /ts-deliver:refine after acceptance + integration gates" ;;
     ship)    echo "[NEXT] Run /ts-deliver:refine after Spectra:archive + G2 sec-review sign-off" ;;
-    reflect) echo "[NEXT] Run /ts-iteration:next (or /ts-iteration:close if last epic)" ;;
+    reflect)
+      if [ "$EPIC_TYPE" = "spike" ]; then
+        echo "[NEXT] Write learning entry to discovery.json first, then run /ts-iteration:next (or /ts-iteration:close if last epic)"
+      else
+        echo "[NEXT] Run /ts-iteration:next (or /ts-iteration:close if last epic)"
+      fi
+      ;;
     *)       echo "[NEXT] Unknown phase: $PHASE — check state.json" ;;
   esac
 elif [ -f "$ITERATION" ]; then

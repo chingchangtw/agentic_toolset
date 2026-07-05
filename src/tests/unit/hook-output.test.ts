@@ -25,6 +25,17 @@ function setupDeliveryFixture(phase: string, epicId: string | null = 'test-epic-
   return dir;
 }
 
+function setupDeliveryFixtureWithEpicType(phase: string, epicType: string, epicId = 'test-epic-001'): string {
+  const dir = mkdtempSync(join(tmpdir(), 'hook-test-'));
+  mkdirSync(join(dir, '.agents', 'ts-deliver-router'), { recursive: true });
+  writeFileSync(join(dir, '.agents', 'ts-deliver-router', 'state.json'), JSON.stringify({ current_phase: phase }));
+  writeFileSync(
+    join(dir, '.agents', 'iteration.json'),
+    JSON.stringify({ active_epic: epicId, dial: 'MID', epics: [{ id: epicId, type: epicType }] })
+  );
+  return dir;
+}
+
 const tmpDirs: string[] = [];
 afterEach(() => {
   for (const d of tmpDirs.splice(0)) rmSync(d, { recursive: true, force: true });
@@ -71,6 +82,16 @@ describe('inject-workflow-state.sh — delivery phase output', () => {
   it('reflect phase → ts-iteration:next', () => {
     const dir = track(setupDeliveryFixture('reflect'));
     expect(runHook(dir)).toContain('ts-iteration:next');
+  });
+
+  it('reflect phase, spike epic → write learning entry before ts-iteration:next', () => {
+    const dir = track(setupDeliveryFixtureWithEpicType('reflect', 'spike'));
+    expect(runHook(dir)).toContain('Write learning entry to discovery.json first');
+  });
+
+  it('reflect phase, non-spike epic → no learning-entry clause', () => {
+    const dir = track(setupDeliveryFixtureWithEpicType('reflect', 'refactor'));
+    expect(runHook(dir)).not.toContain('learning entry');
   });
 
   it('unknown phase → Unknown phase warning', () => {
