@@ -33,7 +33,7 @@ Required prompts:
 - lifecycle stage update
 
 Agent scaffold detection:
-If `collection[]` contains any `type="agent"` entry without a corresponding `.agent/<id>/` directory AND `extensions.agent_scaffold` is currently `false`, prompt: "Enable agent scaffold? Y/N".
+If `collection[]` contains any `type="muscle-agent"` entry without a corresponding `.agent/<id>/` directory AND `extensions.agent_scaffold` is currently `false`, prompt: "Enable agent scaffold? Y/N".
 - Y → set `extensions.agent_scaffold: true`; load `references/agent-scaffold.md`; generate missing `.agent/<id>/` directories.
 - N → leave `agent_scaffold: false`; skip scaffold generation.
 

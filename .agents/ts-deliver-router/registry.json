@@ -1,0 +1,130 @@
+{
+  "project": "agenticToolset",
+  "initialized": "2026-07-04",
+  "lifecycle_stage": "active",
+  "core": {
+    "spine": "gstack",
+    "bdd": "spectra",
+    "review": "code-review-graph",
+    "token_discipline": "caveman"
+  },
+  "collection": [
+    {
+      "id": "ts-acpl",
+      "type": "skill",
+      "phase": ["think", "build", "review", "test"],
+      "tier": "active",
+      "gate": null,
+      "threshold": null,
+      "source": "local",
+      "notes": "Build primary discipline per epic work-unit profile"
+    },
+    {
+      "id": "ts-event-storming-facilitator",
+      "type": "subagent",
+      "phase": ["think"],
+      "tier": "pending-setup",
+      "gate": null,
+      "threshold": null,
+      "source": "src/skills/ts-deliver-router/references/sub-agents.md (build spec, .claude/agents/ts-event-storming-facilitator.md not yet created)",
+      "notes": null
+    },
+    {
+      "id": "ts-spec-validator",
+      "type": "subagent",
+      "phase": ["plan"],
+      "tier": "pending-setup",
+      "gate": null,
+      "threshold": null,
+      "source": "src/skills/ts-deliver-router/references/sub-agents.md (build spec, .claude/agents/ts-spec-validator.md not yet created)",
+      "notes": "Plan exit gate"
+    },
+    {
+      "id": "ts-ddd-tactical-validator",
+      "type": "subagent",
+      "phase": ["review"],
+      "tier": "optional",
+      "gate": null,
+      "threshold": null,
+      "source": "src/skills/ts-deliver-router/references/sub-agents.md (build spec, .claude/agents/ts-ddd-tactical-validator.md not yet created)",
+      "notes": "Optional per epic work-unit profile"
+    },
+    {
+      "id": "ts-mutation-analyst",
+      "type": "subagent",
+      "phase": ["test"],
+      "tier": "pending-setup",
+      "gate": "G2",
+      "threshold": null,
+      "source": "src/skills/ts-deliver-router/references/sub-agents.md (build spec, .claude/agents/ts-mutation-analyst.md not yet created)",
+      "notes": null
+    },
+    {
+      "id": "atlassian-rovo",
+      "type": "mcp",
+      "phase": ["plan", "ship", "reflect"],
+      "tier": "active",
+      "gate": null,
+      "threshold": null,
+      "source": "mcp (claude.ai connector, confirmed available this session)",
+      "notes": null
+    },
+    {
+      "id": "github-mcp",
+      "type": "mcp",
+      "phase": ["plan", "build", "review", "test", "ship"],
+      "tier": "pending-setup",
+      "gate": null,
+      "threshold": null,
+      "source": "setup-gaps.md — not configured as MCP; gh CLI (v2.95.0) is available as interim substitute for branch/PR/release ops, used throughout this session",
+      "notes": "Full trace-annotation and PR-comment integration require the actual MCP server; gh CLI covers manual invocation only"
+    },
+    {
+      "id": "semgrep",
+      "type": "plugin",
+      "phase": ["build", "review"],
+      "tier": "pending-setup",
+      "gate": "G1",
+      "threshold": null,
+      "source": "setup-gaps.md — pip install semgrep; not found on PATH this session",
+      "notes": null
+    },
+    {
+      "id": "trivy",
+      "type": "plugin",
+      "phase": ["build", "test"],
+      "tier": "active",
+      "gate": "G2",
+      "threshold": null,
+      "source": "brew install trivy — installed 2026-07-04, v0.72.0 on PATH",
+      "notes": null
+    },
+    {
+      "id": "stryker",
+      "type": "plugin",
+      "phase": ["test"],
+      "tier": "active",
+      "gate": "G2",
+      "threshold": 60,
+      "source": "npm devDependency — @stryker-mutator/core@~8.7.0 + @stryker-mutator/vitest-runner@8.7.1, installed 2026-07-04 (pinned below vitest-runner's latest 9.x, which requires vitest >=2.0.0; project pins vitest ^1.0.0). No stryker.conf.json written yet — mutation runs still need config before G2 can execute. Threshold stage-dependent per work-unit-profiles.md (60/75/85/90%), starting at 60 for this epic's first stage",
+      "notes": "TS/JS project — stryker is the correct mutation tool per work-unit-profiles.md stack selection"
+    }
+  ],
+  "gates": {
+    "G1": {
+      "phase": "review",
+      "required": ["semgrep", "trivy"],
+      "sign_off": "human"
+    },
+    "G2": {
+      "phase": "test",
+      "required": ["stryker>=60", "trivy"],
+      "sign_off": "human"
+    }
+  },
+  "refinement_count": 0,
+  "next_refinement_trigger": "reflect",
+  "extensions": {
+    "agent_scaffold": false
+  }
+}

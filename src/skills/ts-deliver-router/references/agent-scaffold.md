@@ -15,7 +15,7 @@ Triggered by:
 
 ## Write Rules
 
-1. Read `registry.json → collection[]` where `type = "agent"`
+1. Read `registry.json → collection[]` where `type = "muscle-agent"`
 2. Filter `tier = "active" | "optional"`
 3. For each agent: write `.agent/<id>/AGENTS.md` + `capabilities.md`
 4. Write `.agent/_registry.json`

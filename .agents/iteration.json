@@ -1,0 +1,36 @@
+{
+  "project": "agenticToolset",
+  "release": "MVP",
+  "release_goal": "End users who run ts-project-init-advisor get the golden agent-context template set (CLAUDE.md, AGENTS.md, .claude/CLAUDE.md, .claude/goverance_CLAUDE.md, .github/copilot-instructions.md) — created directly where absent, recommended as MODIFY tasks where files already exist.",
+  "release_exit_criteria": [
+    "Advisor run in a project with none of the five golden files present creates all five directly from golden templates, byte-identical to src/project_root_structure/ sources",
+    "Advisor run in a project with an existing CLAUDE.md emits a MODIFY recommendation task in PROJECT_INIT_PLAN.md and does not touch the existing file",
+    "Golden templates ship inside the advisor skill at assets/golden/, populated by a build-time sync from src/project_root_structure/, and the release build fails on parity mismatch between the two",
+    "Coexistence posture with install.sh SCAFFOLD=y documented (delegate, deprecate, or bootstrap-only)"
+  ],
+  "epics": [
+    {
+      "id": "EPIC-GOLDEN-TEMPLATES",
+      "title": "Golden agent-context templates, recommended-to-add by ts-project-init-advisor",
+      "type": "epic",
+      "priority": 1,
+      "depends_on": [],
+      "status": "active",
+      "router_state": ".agents/ts-deliver-router/state.json",
+      "branch": "feat/golden-templates",
+      "mutation_score": null,
+      "shipped_at": null,
+      "jira_key": null,
+      "notes": "Scope v3 + technical requirement recorded in .agents/ts-project-planner/plan.json epic notes; pivot history in .agents/discovery.json idea-001."
+    }
+  ],
+  "active_epic": "EPIC-GOLDEN-TEMPLATES",
+  "iteration_start": "2026-07-04T00:00:00+08:00",
+  "iteration_close": null,
+  "writer_lock": null,
+  "active_phase": "Delivery",
+  "active_idea": null,
+  "dial": "MID",
+  "epic_dial_overrides": {},
+  "resume_log": []
+}

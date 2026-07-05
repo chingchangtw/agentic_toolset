@@ -1,0 +1,39 @@
+{
+  "project": "agenticToolset",
+  "vision": "Distribution framework for Claude Code skills, hooks, and project scaffold templates. Authors maintain deliverables in src/; the build pipeline packages them into release.zip for GitHub Releases install. Success at MVP: an end user can install the toolset into their own project and get a complete, working agentic workflow (orchestrator + planner + router + coding patterns) plus a high-quality agent context (CLAUDE.md family) without manual assembly. Vision derived from repo CLAUDE.md/README by /ts-project:plan --new — correct here if wrong.",
+  "planned_at": "2026-07-03T00:00:00+08:00",
+  "releases": [
+    {
+      "name": "MVP",
+      "goal": "End users who run ts-project-init-advisor get the golden agent-context template set (CLAUDE.md, AGENTS.md, .claude/CLAUDE.md, .claude/goverance_CLAUDE.md, .github/copilot-instructions.md) — created directly where absent, recommended as MODIFY tasks where files already exist. Goal derived by --sync; human amends as needed.",
+      "exit_criteria": [
+        "Advisor run in a project with none of the five golden files present creates all five directly from golden templates, byte-identical to src/project_root_structure/ sources",
+        "Advisor run in a project with an existing CLAUDE.md emits a MODIFY recommendation task in PROJECT_INIT_PLAN.md and does not touch the existing file",
+        "Golden templates ship inside the advisor skill at assets/golden/, populated by a build-time sync from src/project_root_structure/, and the release build fails on parity mismatch between the two",
+        "Coexistence posture with install.sh SCAFFOLD=y documented (delegate, deprecate, or bootstrap-only)"
+      ],
+      "epics": ["EPIC-GOLDEN-TEMPLATES"]
+    }
+  ],
+  "epics": [
+    {
+      "id": "EPIC-GOLDEN-TEMPLATES",
+      "title": "Golden agent-context templates, recommended-to-add by ts-project-init-advisor",
+      "type": "epic",
+      "size": "M",
+      "priority": "high",
+      "depends_on": [],
+      "release": "MVP",
+      "source_idea": "idea-001",
+      "notes": "Scope v3 (see discovery.json idea-001 notes for pivot history): absent target file → direct create from golden template (absent-only guard, no approval needed); existing target file → gap analysis vs golden emits approval-gated MODIFY task in PROJECT_INIT_PLAN.md, never auto-overwrite. Top M-risk: distinguishing intentional user customization from missing golden content. Golden set = 5 files under src/project_root_structure/: CLAUDE.md, AGENTS.md, .claude/CLAUDE.md, .claude/goverance_CLAUDE.md, .github/copilot-instructions.md (fifth added 2026-07-04 by user decision — copilot-instructions.md counts as agent context). Still excluded from golden set: .claude/settings.json + settings.local.json (machine/permission config, installer-patched), docs/, tasks/, .github/backend.instructions.md + frontend.instructions.md (stack-specific stubs, not universal context). TECHNICAL REQUIREMENT (2026-07-04): authoring stays in src/project_root_structure/; delivery mechanism = golden templates ship INSIDE the advisor skill package at assets/golden/, populated by a build-time sync step in the release pipeline, guarded by a parity check that fails the build when assets/golden/ differs from src/project_root_structure/. Rationale: advisor installs to .claude/skills/ on every user machine (no SCAFFOLD=y dependency, no installer re-run needed, no network fetch); assets/ is the agent-skills-spec directory for templates so skill-validator accepts it natively; dogfood mirror inherits it via the existing sync since assets/ is not exclusion-filtered. Rejected: installer copies to a well-known path (breaks for skill-only updates); runtime GitHub fetch (network dependency + version skew)."
+    }
+  ],
+  "constraints": [
+    "Solo maintainer (tlchang/ctony)",
+    "TypeScript 5.x strict ESM, Node runtime, Vitest",
+    "Skills must be self-contained — no cross-skill imports",
+    "Security gates G1/G2 always require human sign-off",
+    "Packaging goes through scripts/generate-manifest.mjs + build-release.mjs with shared exclusion filter"
+  ],
+  "refined_count": 0
+}

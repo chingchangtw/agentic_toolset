@@ -21,7 +21,7 @@
 | Field | Type | Description |
 |---|---|---|
 | `id` | string | Tool identifier (matches CHECKS REGISTRY check ID) |
-| `type` | enum | `skill` / `plugin` / `mcp` / `agent` |
+| `type` | enum | `skill` / `plugin` / `mcp` / `muscle-agent` / `subagent` |
 | `phase` | string[] | Phases this tool is active in |
 | `tier` | enum | `active` / `optional` / `pending-setup` / `retired` |
 | `gate` | string\|null | Gate ID this tool contributes to (e.g. `"G1"`) |
@@ -67,6 +67,14 @@
       "tier": "active",
       "source": "local",
       "notes": "Inline API endpoint lookup during code generation"
+    },
+    {
+      "id": "ts-event-storming-facilitator",
+      "type": "subagent",
+      "phase": ["think"],
+      "tier": "pending-setup",
+      "source": "local",
+      "notes": "Claude Code sub-agent (.claude/agents/ts-event-storming-facilitator.md, built via sub-agents.md) — never triggers agent-scaffold.md"
     }
   ],
   "gates": {
