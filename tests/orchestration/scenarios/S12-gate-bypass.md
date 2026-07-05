@@ -7,7 +7,7 @@
 Load `fixtures/iteration-state/epic-high.json` (or any epic-type fixture).
 Set ts-deliver-router/state.json with:
 - `current_phase`: "ship"
-- `gates`: `{"sec-review": {"status": "pending"}}`
+- `gates`: `{"G2": {"status": "pending"}}`
 
 ## Steps
 
@@ -18,13 +18,13 @@ Set ts-deliver-router/state.json with:
 
 ## Assertions
 
-    assert_hook_contains: "[BLOCKED] Ship blocked: sec-review gate not signed"
+    assert_hook_contains: "[BLOCKED] Ship blocked: G2 (sec-review) gate not signed"
 
 ## Expected Behavior
 
-The hook MUST output `[BLOCKED] Ship blocked: sec-review gate not signed` when:
+The hook MUST output `[BLOCKED] Ship blocked: G2 (sec-review) gate not signed` when:
 - current_phase is "ship"
-- gates["sec-review"]["status"] is "pending"
+- gates["G2"]["status"] is "pending"
 
 This is the primary guard against bypassing G2 for epic-type work.
 

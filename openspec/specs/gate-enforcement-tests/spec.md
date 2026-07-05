@@ -1,11 +1,11 @@
 ## ADDED Requirements
 
 ### Requirement: hook outputs [BLOCKED] for unsigned G2 gate at Ship phase
-When `ts-deliver-router/state.json` has `current_phase = "ship"` and `gates.sec-review.status = "pending"`, the hook SHALL output a line containing `[BLOCKED] Ship blocked: sec-review gate not signed`.
+When `ts-deliver-router/state.json` has `current_phase = "ship"` and `gates.G2.status = "pending"`, the hook SHALL output a line containing `[BLOCKED] Ship blocked: G2 (sec-review) gate not signed`.
 
 #### Scenario: unsigned G2 blocks Ship phase
-- **WHEN** state.json has `current_phase = "ship"` and `gates["sec-review"]["status"] = "pending"`
-- **THEN** hook stdout contains `[BLOCKED] Ship blocked: sec-review gate not signed`
+- **WHEN** state.json has `current_phase = "ship"` and `gates["G2"]["status"] = "pending"`
+- **THEN** hook stdout contains `[BLOCKED] Ship blocked: G2 (sec-review) gate not signed`
 
 
 <!-- @trace
@@ -4744,11 +4744,11 @@ tests:
 -->
 
 ### Requirement: hook outputs [BLOCKED] for unsigned G2 gate at Ship phase
-When `ts-deliver-router/state.json` has `current_phase = "ship"` and `gates.sec-review.status = "pending"`, the hook SHALL output a line containing `[BLOCKED] Ship blocked: sec-review gate not signed`.
+When `ts-deliver-router/state.json` has `current_phase = "ship"` and `gates.G2.status = "pending"`, the hook SHALL output a line containing `[BLOCKED] Ship blocked: G2 (sec-review) gate not signed`.
 
 #### Scenario: unsigned G2 blocks Ship phase
-- **WHEN** state.json has `current_phase = "ship"` and `gates["sec-review"]["status"] = "pending"`
-- **THEN** hook stdout contains `[BLOCKED] Ship blocked: sec-review gate not signed`
+- **WHEN** state.json has `current_phase = "ship"` and `gates["G2"]["status"] = "pending"`
+- **THEN** hook stdout contains `[BLOCKED] Ship blocked: G2 (sec-review) gate not signed`
 
 ---
 ### Requirement: hook outputs [BLOCKED] for schema version mismatch
