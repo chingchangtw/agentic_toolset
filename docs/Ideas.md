@@ -436,19 +436,41 @@ No state files: hook emits nothing (silent).
 - **Idempotent install.** `install.sh` checks for existing `UserPromptSubmit`
   entry before adding — re-running install never duplicates.
 
-### `[NEXT]` guidance per phase
+### `[NEXT]` guidance — mirrors `ts-orchestrate/SKILL.md`'s Workflow Guidance table
 
-| `current_phase` | `[NEXT]` content |
-|---|---|
-| think | `Run /ts-deliver:refine after Spectra:discuss + G1 threat-model sign-off` |
-| plan | `Run /ts-deliver:refine after Spectra:propose + design review` |
-| build | `Run /ts-deliver:refine after Spectra:apply + test coverage gate` |
-| review | `Run /ts-deliver:refine after staff-review report` |
-| test | `Run /ts-deliver:refine after acceptance + integration gates` |
-| ship | `Run /ts-deliver:refine after Spectra:archive + G2 sec-review sign-off` |
-| reflect | `Run /ts-iteration:next (or /ts-iteration:close if last epic)` |
+The hook's `[NEXT]` case-statement strings are an executable copy of
+`ts-orchestrate/SKILL.md`'s canonical **Workflow Guidance** table (`Track |
+Phase/State | Guidance`) — same source of truth, two surfaces, kept in sync
+manually (D9, see §12). Reproduced here so this record doesn't drift from
+either:
 
-Unknown phase value → `[NEXT] Unknown phase: <value> — check state.json`.
+| Track | Phase/State | Guidance | Hook emits `[NEXT]` for this state? |
+|---|---|---|---|
+| Discovery | idea | Run `/ts-discover explore <id>` (WIP limit 3 in exploring+validating) | yes |
+| Discovery | exploring | `ts-event-storming-facilitator` output required to exit; then `/ts-discover validate <id>` (mandatory if any H-risk assumption) or `/ts-discover decide <id> build` | yes |
+| Discovery | validating | council-advisor + tows-strategy-analyst + `ts-ddd-tactical-validator`; then `/ts-discover decide <id>` | yes |
+| Discovery | ready | Run `/ts-project plan --sync` to move epic(s) into the backlog | yes |
+| Discovery | keep-learning | Back to exploring, `keep_learning_count++`; at 3 → forced `/ts-discover decide` | no — not a status value; the entry's `status` returns to `exploring`, so it re-surfaces under that row |
+| Discovery | killed | ADR written; entry retained for audit — no further action | no — terminal, correctly excluded from the focus-priority chain (`validating > exploring > idea > ready`) |
+| Discovery | reduce-scope | Idea split into new `idea` entries; explore each separately | no — terminal for the original entry; the new split entries surface under `idea` |
+| Delivery | think | Spectra:discuss + G1 threat-model sign-off (if required) → `/ts-deliver:refine` | yes |
+| Delivery | plan | Spectra:propose + design review → `/ts-deliver:refine` | yes |
+| Delivery | build | Spectra:apply + test coverage gate → `/ts-deliver:refine` | yes |
+| Delivery | review | staff-review report → `/ts-deliver:refine` | yes |
+| Delivery | test | acceptance + integration gates → `/ts-deliver:refine` | yes |
+| Delivery | ship | Spectra:archive + G2 sec-review sign-off (if required) → `/ts-deliver:refine` | yes |
+| Delivery | reflect | `/ts-iteration:next` (or `/ts-iteration:close` if last epic); spike: write learning entry to discovery.json first | yes |
+
+Every Delivery phase and the 4 non-terminal Discovery statuses get a literal
+`[NEXT]` line (verbatim strings in `inject-workflow-state.sh`). The 3 excluded
+Discovery rows aren't a gap — `keep-learning` isn't a real `status` value (it's
+a decision outcome that resets `status` to `exploring`), and `killed` /
+`reduce-scope` are terminal, so the hook's focus-priority chain never selects
+them by design.
+
+Unknown Delivery phase value → `[NEXT] Unknown phase: <value> — check
+state.json`. No Discovery entry matches the priority chain → generic seed
+suggestion (`/ts-discover idea "<desc>"` or `/ts-project:plan --new`).
 
 ---
 
