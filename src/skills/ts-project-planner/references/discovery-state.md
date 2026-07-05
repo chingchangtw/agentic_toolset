@@ -16,12 +16,19 @@
       ],
       "exploration_output": {
         "domain_events": [], "commands": [], "aggregates": [],
-        "bounded_contexts": [], "acpl_pattern_group": "G2+G3"
+        "bounded_contexts": [], "acpl_pattern_group": "G2+G3",
+        "ubiquitous_language_terms": []
       },
       "validation_output": {
         "feasibility": "feasible|risky|infeasible",
         "council_verdict": "<summary>",
-        "decision_rationale": "<why>"
+        "decision_rationale": "<why>",
+        "ddd_validation": {
+          "mode": "A",
+          "recommendation": "PASS|NEEDS_ATTENTION|FAIL",
+          "violations": [],
+          "ubiquitous_language_coverage": null
+        }
       },
       "decision": "build|kill|keep-learning|reduce-scope|null",
       "ready_epics": [],
@@ -49,3 +56,4 @@ idea ──explore──┴──> exploring ──validate──> validating �
 **WIP Limit:** Max 3 in `{exploring, validating}`. `/ts-discover explore` blocked at limit.
 **Stale:** `keep_learning_count >= 3` → flagged in `/ts-discover status`, forced decision required.
 **Dedup (`--from-router`):** Jaccard similarity > 0.5 vs existing titles → no new entry; append duplicate note to matched entry instead.
+**DDD gate:** `decide build` requires `validation_output.ddd_validation.recommendation != "FAIL"` (run ts-ddd-tactical-validator at decide time if validate was skipped).

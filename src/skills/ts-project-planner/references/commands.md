@@ -19,14 +19,18 @@ Problem Understanding + Solution Exploration. WIP-limited.
 1. Check WIP: count ideas with status in {exploring, validating}.
    → If already 3: "WIP limit reached (3/3) — finish or defer an in-flight
      idea first." STOP.
-2. Run ts-event-storming-facilitator:
+2. Run ts-event-storming-facilitator (REQUIRED — explore cannot exit without
+   its output; installed at .claude/agents/ts-event-storming-facilitator.md):
    → domain_events, commands, aggregates, bounded_contexts
    → consult ts-acpl problem-frame-map.md → acpl_pattern_group
 3. Run first-principles-agent:
    → challenge the framing → riskiest_assumptions[] (each tagged H/M/L)
 4. Write idea.exploration_output, idea.riskiest_assumptions
-5. idea.status = "exploring"
-6. Confirm: "idea-<NNN> explored. Riskiest: <top H-risk assumption, if any>.
+5. GATE: if exploration_output.domain_events, .aggregates, or .bounded_contexts
+   is empty → status stays "idea". Report the missing fields and re-run
+   ts-event-storming-facilitator. Do NOT proceed to step 6.
+6. idea.status = "exploring"
+7. Confirm: "idea-<NNN> explored. Riskiest: <top H-risk assumption, if any>.
    <Validation required|Validation optional — no H-risk assumptions>."
 ```
 
@@ -35,17 +39,26 @@ Mandatory if `riskiest_assumptions` has `H`-risk. Optional otherwise — skip to
 ```
 1. Run council-advisor: pressure-test each H-risk assumption
 2. Run tows-strategy-analyst: assess strategic fit
-3. Optionally run critical-thinker for sequencing/dependency challenges
-4. Write idea.validation_output = { feasibility, council_verdict,
-   decision_rationale }
-5. idea.status = "validating"
-6. Confirm: "idea-<NNN> validated — feasibility: <feasible|risky|infeasible>"
+3. Run ts-ddd-tactical-validator (Mode A) on idea.exploration_output
+   (installed at .claude/agents/ts-ddd-tactical-validator.md — always runs
+   whenever validate runs)
+4. Optionally run critical-thinker for sequencing/dependency challenges
+5. Write idea.validation_output = { feasibility, council_verdict,
+   decision_rationale, ddd_validation }
+6. idea.status = "validating"
+7. Confirm: "idea-<NNN> validated — feasibility: <feasible|risky|infeasible>"
 ```
 
 ### `/ts-discover decide <id> [build|kill|keep-learning|reduce-scope]`
 Decision point. Behavior per outcome:
 ```
 build:
+  - PRECONDITION: validation_output.ddd_validation exists with
+    recommendation != "FAIL". If absent (validate was skipped — no H-risk),
+    run ts-ddd-tactical-validator (Mode A) NOW and write
+    validation_output.ddd_validation before deciding.
+    If recommendation == "FAIL": STOP — surface violations; suggest
+    keep-learning or reduce-scope instead.
   - idea.status = "ready"
   - idea.ready_epics = ["EPIC-<SLUG>"]  (one or more, derived from
     exploration_output.bounded_contexts — usually one epic per idea unless
@@ -208,7 +221,8 @@ Next queued epic. Calls ts-deliver-router. Sequential — active_epic set → re
    → If active_epic is already set: STOP (see above).
 2. Find first epic with status=queued (respecting sequence order)
 3. Set active_epic = epic.id, epic.status = active
-4. Determine registry profile from epic.type (epic/refactor/bugfix)
+4. Determine registry profile from epic.type
+   (epic/feature/refactor/bugfix/hotfix/chore/patch/spike/ops)
 5. If epic.type == bugfix: pre-check scope escalation signals (changes
    expected to span >3 files / migration required / new dependency / missing
    domain concept) BEFORE calling /ts-deliver init.

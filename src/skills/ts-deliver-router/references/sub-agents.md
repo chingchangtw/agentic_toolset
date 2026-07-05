@@ -7,6 +7,8 @@ hand to Claude Code as a build task.
 
 ## 1. `ts-event-storming-facilitator`
 
+> **Status: shipped.** Packaged in release as `agents/ts-event-storming-facilitator.md`, installed to `.claude/agents/`. No manual build needed. Source: `src/agents/`.
+
 **Phase:** Think
 **Trigger:** `tier=active` in registry + Think phase reached
 
@@ -95,6 +97,8 @@ System prompt:
 ---
 
 ## 3. `ts-ddd-tactical-validator`
+
+> **Status: shipped.** Packaged in release as `agents/ts-ddd-tactical-validator.md`, installed to `.claude/agents/`. No manual build needed. Source: `src/agents/`.
 
 **Phase:** Review
 **Trigger:** `tier=active` in registry + Review phase reached

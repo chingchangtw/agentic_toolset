@@ -99,6 +99,165 @@ Scope escalation signals (STOP and escalate if any):
 
 ---
 
+## Feature (mid-weight, no Reflect)
+
+```
+Active phases:   think → plan → build → review → test → ship
+Skipped:         reflect (mid-weight — no formal retro; folds into next Feature's Think)
+Gates:           G1 (review) — human sign-off
+Mutation target: 75%
+Branch:          feat/<feature-slug>
+
+Registry tier adjustments vs epic:
+  ts-event-storming-facilitator → active   (Think phase)
+  ts-spec-validator             → active   (Plan exit gate)
+  ts-acpl                       → active   (Build primary discipline)
+  ts-mutation-analyst           → active   (Test phase)
+  ts-ddd-tactical-validator     → optional (Review phase)
+  atlassian-rovo             → active   (Plan + Ship)
+  github-mcp                 → active   (Plan → Ship full chain)
+  semgrep                    → active   (Build always + G1)
+  trivy                      → active   (Build always)
+  stryker/pitest/mutmut      → active   (75% target)
+```
+
+---
+
+## Hotfix (like bugfix, distinct audit tag — expedited)
+
+```
+Active phases:   think → build → ship
+Skipped:         plan (no new Spectra scenarios — problem already known)
+                 review (expedited — no architectural change)
+                 reflect (single-purpose fix — no retro needed)
+Gates:           none
+Mutation target: 80% (focused — must kill mutants on the fixed logic path)
+Branch:          hotfix/<issue-id>-<slug>
+
+Key constraint: same scope discipline as bugfix — if the fix reveals a larger
+  structural problem, STOP and escalate to an epic or refactor work unit type.
+
+Registry tier adjustments vs bugfix:
+  (identical to bugfix profile — hotfix exists only as a distinct audit tag
+  for expedited/urgent fixes, not a different technical process)
+```
+
+---
+
+## Chore & Tech Debt (leanest — no Think)
+
+```
+Active phases:   build → ship
+Skipped:         think (no framing needed — mechanical maintenance)
+                 plan  (no new Spectra scenarios)
+                 review (no architectural change)
+                 test  (existing test suite covers regression)
+                 reflect (routine maintenance — no retro needed)
+Gates:           none
+Mutation target: n/a (no new logic — dependency/tooling/docs maintenance)
+Branch:          chore/<scope-slug>
+
+Key constraint: if the "chore" reveals significant new logic or a structural
+  change, STOP and escalate to Refactor instead.
+
+Registry tier adjustments vs epic:
+  ts-event-storming-facilitator → skip
+  ts-spec-validator             → skip
+  ts-acpl                       → skip
+  ts-mutation-analyst           → skip
+  ts-ddd-tactical-validator     → skip
+  atlassian-rovo             → active  (Ship only — Jira transition)
+  github-mcp                 → active  (branch + PR + merge)
+  semgrep                    → skip
+  trivy                      → active  (dependency chores especially)
+```
+
+---
+
+## Patch (dependency/security bump)
+
+```
+Active phases:   build → test → ship
+Skipped:         think (scope is the version bump itself)
+                 plan  (no new Spectra scenarios)
+                 review (no architectural change)
+                 reflect (routine — no retro needed)
+Gates:           G2 (test) — required only when security-related
+Mutation target: n/a (existing test suite is the regression guard)
+Branch:          patch/<dep-name>-<version>
+
+Key constraint: security-related patches (CVE fixes) require G2 sec-review
+  sign-off before Ship; routine version bumps do not.
+
+Registry tier adjustments vs epic:
+  ts-event-storming-facilitator → skip
+  ts-ddd-tactical-validator     → skip
+  ts-mutation-analyst           → skip
+  atlassian-rovo             → active  (Ship only)
+  github-mcp                 → active  (branch + PR + merge)
+  trivy                      → active  (dependency re-scan — the whole point)
+```
+
+---
+
+## Spike (timeboxed research — no Ship)
+
+```
+Active phases:   think → build → reflect
+Skipped:         plan  (research, not a scenario-bearing change)
+                 review (no code to review — throwaway/exploratory)
+                 ship  (spike never ships — it produces a learning, not a release)
+                 test  (n/a — no acceptance criteria for research)
+Gates:           none
+Mutation target: n/a
+Branch:          spike/<question-slug>
+
+Key constraint: Reflect writes a learning entry to discovery.json
+  (feedback loop back to Discovery) instead of the usual retro-only output.
+  If the spike concludes "build it", re-type as Feature/Epic and re-enter
+  Delivery from Think.
+
+Registry tier adjustments vs epic:
+  ts-event-storming-facilitator → optional (Think — only if domain exploration helps)
+  ts-spec-validator             → skip
+  ts-acpl                       → optional
+  ts-mutation-analyst           → skip
+  ts-ddd-tactical-validator     → skip
+  atlassian-rovo             → skip
+  github-mcp                 → active  (branch only — no PR/merge, throwaway)
+```
+
+---
+
+## Ops/Infra (CI/CD, deploy, config)
+
+```
+Active phases:   think → build → review → ship
+Skipped:         plan  (no new Spectra scenarios — infra change, not a feature)
+                 test  (covered by Review's security check, not acceptance tests)
+                 reflect (routine infra work — no retro needed)
+Gates:           G2 (ship) — infra touches the security surface
+Mutation target: n/a
+Branch:          ops/<scope-slug>
+
+Key constraint: infra changes with irreversible blast radius (prod deploy
+  config, secrets rotation, DNS/infra-as-code) require the same G2 rigor as
+  an epic — never treat "just config" as gate-exempt.
+
+Registry tier adjustments vs epic:
+  ts-event-storming-facilitator → skip
+  ts-spec-validator             → skip
+  ts-acpl                       → skip
+  ts-mutation-analyst           → skip
+  ts-ddd-tactical-validator     → skip
+  atlassian-rovo             → active  (Ship only)
+  github-mcp                 → active  (branch + PR + merge)
+  semgrep                    → active  (config/IaC scanning)
+  trivy                      → active  (container/dependency scanning)
+```
+
+---
+
 ## Size Estimate → Iteration Sequencing
 Used by `/ts-iteration start` to warn when overloaded.
 | Size | Estimated phases | Rough effort |

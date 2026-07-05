@@ -8,6 +8,13 @@ Shared workspace root: `.agents/`.
 - `.agents/ts-deliver-router/autonomy`
 - `.agents/ts-deliver-router/registry.json`
 - `.agents/ts-deliver-router/registry.log`
+- `.agents/ts-deliver-router/artifacts/<EPIC_ID>/<phase>/` — phase artifacts,
+  namespaced per epic. Only one epic is active at a time (single global
+  `state.json`), but prior epics' artifacts remain valuable audit history —
+  never write phase artifacts to a flat `artifacts/<phase>/` path shared
+  across epics; that silently overwrites the previous epic's Think/Plan/etc.
+  output. `state.json.artifacts.<phase>.*` paths must always include the
+  active `epic_id` segment.
 
 ## Cross-skill expectations
 
