@@ -25,6 +25,7 @@ agenticToolset/
 │   ├── hook/            — Claude Code hook scripts (UserPromptSubmit + StatusLine)
 │   ├── commands/        — Slash-command reference docs
 │   ├── scripts/         — Helper scripts (PowerShell utilities)
+│   ├── agents/           — Sub-agent prompt files (installed to .claude/agents/)
 │   ├── project_root_structure/  — Scaffold template tree
 │   ├── core/            — TypeScript framework base (stub)
 │   ├── types/           — Shared TypeScript types (stub)
@@ -59,10 +60,21 @@ Skills are isolated: no cross-skill imports, no shared state files between skill
 |-------|-------------|
 | `ts-orchestrate` | **Dual-track orchestrator — session entry point.** Orchestrates all 4 layers: Layer D (Discovery) → Layer 0 (Backlog) → Layer 1 (Sequencing) → Layer 2 (Delivery spine). `/ts-orchestrate:start WORK_TYPE AUTONOMY` sets active_epic + DIAL, routes to correct phase spine. `/ts-orchestrate:status` shows unified view of Discovery WIP + Delivery phase + pending gates. `/ts-orchestrate:next` enforces G1/G2 before phase advance (never auto-signs). |
 | `ts-project-planner` | **Discovery track planner.** Layer D (idea→explore→validate→decide) + Layer 0 (Backlog sync: `--new` / `--sync`) + Layer 1 (Delivery sequencing: `/ts-iteration:start\|next\|close`). Drives `ts-deliver-router` per epic. NOT the top-level orchestrator — that's `ts-orchestrate`. |
-| `ts-deliver-router` | **Delivery track engine.** 7-phase spine (Think→Plan→Build→Review→Test→Ship→Reflect); spine varies by epic type (bugfix=3, refactor=6, epic=7). Reads `.agents/ts-deliver-router/state.json` (slim: current phase); history in `.agents/ts-deliver-router/history.jsonl`. |
+| `ts-deliver-router` | **Delivery track engine.** 7-phase spine (Think→Plan→Build→Review→Test→Ship→Reflect) is the ceiling; actual spine varies by WORK_TYPE per `src/utils/phase-routing.ts` (9 types: chore=2 phases up to epic=7). Reads `.agents/ts-deliver-router/state.json` (slim: current phase); history in `.agents/ts-deliver-router/history.jsonl`. |
 | `ts-project-scaffolder` | Scaffolds a new project workspace from the standard template. Requires Spectra CLI. |
 | `ts-acpl` | AI Coding Pattern Language — pattern library bridging Problem Frame specs → AI-generated code → mutation-resistant output. |
 | `ts-project-init-advisor` | Analyzes an existing project and generates `PROJECT_INIT_PLAN.md` — an executable Claude Code setup plan (MCPs, skills, hooks, CLAUDE.md). |
+
+### Sub-agents
+
+Sub-agents are `.md` prompt files (not skills) that live in `src/agents/`, install to
+`<project>/.claude/agents/`, and are packaged via the release manifest's `agents`
+category (parallel to `skills`/`hooks`).
+
+| Agent | Role |
+|-------|------|
+| `ts-event-storming-facilitator` | Discovery track. Domain decomposition during `/ts-discover explore` — required to exit that command (produces `exploration_output`). |
+| `ts-ddd-tactical-validator` | Discovery + Delivery Review. Two modes: Mode A validates `exploration_output` (required before `/ts-discover decide build`; `FAIL` blocks the decision); Mode B validates shipped code against the Event Storming output during Delivery Review. |
 
 ### Skill Loading
 
@@ -98,7 +110,15 @@ Output format:
 [NEXT] Run /ts-deliver:refine after <phase-specific guidance>
 ```
 
-Discovery mode (no `state.json`): `[WORKFLOW STATE] Discovery | dial: <dial> | active_epic: <id or none>`
+Discovery mode (no `state.json`):
+```
+[WORKFLOW STATE] Discovery | dial: <dial> | active_epic: <id or none>
+[NEXT] Run /ts-discover explore <id> (WIP limit 3)
+```
+The `[NEXT]` line picks a focus idea from `.agents/discovery.json` by status
+priority `validating > exploring > idea > ready` (first match wins) and emits
+the matching next command. Malformed or missing `discovery.json` degrades to a
+generic seed suggestion — never crashes.
 
 No state files → silent (empty stdout). Free-text fields (`notes`, etc.) are never
 echoed — prompt injection safety. Installs to `${PROJECT_CLAUDE_DIR}/hooks/`
@@ -196,11 +216,12 @@ AGENTS.md     — agent roles
 
 ### Build
 
-`scripts/build-release.mjs` bundles four source directories into `dist/release.zip`:
+`scripts/build-release.mjs` bundles five source directories into `dist/release.zip`:
 
 | Source | Bundle path |
 |--------|-------------|
 | `src/skills/` | `skills/` |
+| `src/agents/` | `agents/` |
 | `src/hook/` | `hook/` (specific files only) |
 | `src/commands/` | `commands/` |
 | `src/project_root_structure/` | `scaffold/` |
@@ -248,10 +269,11 @@ Both installers:
 1. Download `release.zip` from GitHub Releases
 2. Extract to a temp directory
 3. Copy skills → `.claude/skills/`
-4. Copy hooks → `~/.claude/hooks/`
-5. Copy commands → `.claude/commands/`
-6. Copy scaffold → project root (on demand)
-7. Patch `~/.claude/settings.json` with hook registrations
+4. Copy agents → `.claude/agents/` (manifest-driven; no-op on older zips without an `agents` key)
+5. Copy hooks → `~/.claude/hooks/`
+6. Copy commands → `.claude/commands/`
+7. Copy scaffold → project root (on demand)
+8. Patch `~/.claude/settings.json` with hook registrations
 
 `install.ps1` uses `pwsh`/PowerShell; `install.sh` uses bash + curl/unzip.
 
@@ -276,7 +298,7 @@ real implementations:
 
 | File | Exports |
 |------|---------|
-| `src/utils/phase-routing.ts` | `getPhaseList(epicType: "bugfix" \| "refactor" \| "epic"): string[]` — maps epic type to ordered phase array (bugfix→3, refactor→6, epic→7 phases) |
+| `src/utils/phase-routing.ts` | `getPhaseList(epicType: "epic" \| "feature" \| "bugfix" \| "hotfix" \| "refactor" \| "chore" \| "patch" \| "spike" \| "ops"): string[]` — maps WORK_TYPE to ordered phase array. `poc` is intentionally absent (Discovery-only, never initializes a Delivery spine); `epic` is retained for existing `iteration.json` state (plan slices) though no longer an end-user WORK_TYPE. |
 
 `src/index.ts` re-exports `core` and `types` only.
 
