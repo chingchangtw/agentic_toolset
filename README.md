@@ -31,8 +31,10 @@ This toolset installs a family of Claude Code skills and hooks into your project
 Start every session with:
 
 ```
-/ts-orchestrate:start WORK_TYPE=EPIC|REFACTOR|BUGFIX AUTONOMY=HIGH|MID|LOW
+/ts-orchestrate:start WORK_TYPE=FEATURE|BUGFIX|HOTFIX|REFACTOR|CHORE|PATCH|SPIKE|POC|OPS AUTONOMY=HIGH|MID|LOW
 ```
+
+Each work type routes to its own phase spine and gate requirements — canonical table in `ts-orchestrate/SKILL.md` → Workflow Routing.
 
 ---
 
@@ -42,10 +44,19 @@ Start every session with:
 |-------|------|
 | `ts-orchestrate` | **Dual-track orchestrator — session entry point.** Routes all 4 layers, enforces G1/G2 gates, unified status view. |
 | `ts-project-planner` | Discovery track (Layer D/0/1). Idea kanban, backlog sync, iteration sequencing. |
-| `ts-deliver-router` | Delivery track (Layer 2). Phase spine varies by WORK_TYPE: BUGFIX=3 phases, REFACTOR=6, EPIC=7. |
+| `ts-deliver-router` | Delivery track (Layer 2). Phase spine varies by WORK_TYPE — from 2 phases (CHORE: Build→Ship) up to 7 (EPIC: Think→Plan→Build→Review→Test→Ship→Reflect). |
 | `ts-acpl` | Build-phase coding patterns. 20 patterns across 5 groups, mutation-resistant output. |
 | `ts-project-scaffolder` | Scaffolds a new project workspace from the standard template. |
 | `ts-project-init-advisor` | Analyzes an existing project and generates an executable Claude Code setup plan. |
+
+## Sub-agents
+
+| Agent | Role |
+|-------|------|
+| `ts-event-storming-facilitator` | Discovery track. Runs domain decomposition during `/ts-discover explore` — required to exit that command (produces `exploration_output`: domain_events, commands, aggregates, bounded_contexts, ubiquitous_language_terms). |
+| `ts-ddd-tactical-validator` | Discovery + Delivery Review. Validates tactical DDD patterns and ubiquitous-language coverage; required before `/ts-discover decide build` (FAIL blocks the build decision). |
+
+Installed to `<project>/.claude/agents/` by both installers, packaged via the release manifest's `agents` category.
 
 ## Hooks
 
@@ -84,7 +95,7 @@ curl -fsSL https://github.com/chingchangtw/agentic_toolset/releases/latest/downl
 irm https://github.com/chingchangtw/agentic_toolset/releases/latest/download/install.ps1 | iex
 ```
 
-The installer downloads `release.zip`, copies skills → `<project>/.claude/skills/` (project-scoped), hooks → `~/.claude/hooks/`, and patches `~/.claude/settings.json` with hook registrations. Scaffold templates are skipped by default under piped install (no interactive stdin) — opt in with `SCAFFOLD=y curl ... | bash` (or `$env:SCAFFOLD='y'` before `irm ... | iex` on Windows); add `SCAFFOLD_OVERWRITE=y` to replace existing files.
+The installer downloads `release.zip`, copies skills → `<project>/.claude/skills/` (project-scoped), agents → `<project>/.claude/agents/`, hooks → `~/.claude/hooks/`, and patches `~/.claude/settings.json` with hook registrations. Scaffold templates are skipped by default under piped install (no interactive stdin) — opt in with `SCAFFOLD=y curl ... | bash` (or `$env:SCAFFOLD='y'` before `irm ... | iex` on Windows); add `SCAFFOLD_OVERWRITE=y` to replace existing files.
 
 ### Developer setup (from source)
 
@@ -140,6 +151,7 @@ agenticToolset/
 │   │   ├── ts-acpl/
 │   │   └── ondemand/            — Lazy-loaded skills
 │   │       └── ts-project-init-advisor/
+│   ├── agents/                  — Sub-agent prompt files (deliverable, → .claude/agents/)
 │   ├── hook/                    — Hook scripts (deliverable)
 │   ├── commands/                — Slash-command reference docs
 │   ├── scripts/                 — PowerShell helper scripts

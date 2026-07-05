@@ -28,8 +28,10 @@ Four skills coordinate these tracks across four layers:
 |-------|------|
 | `ts-orchestrate` | **Dual-track orchestrator — session entry point.** Orchestrates Layer D → 0 → 1 → 2. Sets WORK_TYPE + DIAL, routes phase spine, enforces G1/G2 gates, provides unified status. |
 | `ts-project-planner` | Discovery track planner. Manages Layer D (idea→explore→validate→decide), Layer 0 (backlog sync), Layer 1 (iteration sequencing). |
-| `ts-deliver-router` | Delivery track engine (Layer 2). 7-phase spine (Think→Plan→Build→Review→Test→Ship→Reflect); spine varies by WORK_TYPE. |
+| `ts-deliver-router` | Delivery track engine (Layer 2). 7-phase spine (Think→Plan→Build→Review→Test→Ship→Reflect) is the ceiling; actual spine varies by WORK_TYPE, from CHORE's 2 phases up to EPIC's full 7. |
 | `ts-acpl` | Build-phase coding discipline. 20 patterns across 5 groups, mutation-resistant output. |
+
+Two sub-agents support the Discovery track: `ts-event-storming-facilitator` (required to exit `/ts-discover:explore`) and `ts-ddd-tactical-validator` (required before `/ts-discover:decide build`). Both install to `<project>/.claude/agents/`.
 
 ---
 
@@ -78,7 +80,7 @@ After install, restart Claude Code and initialize your project (see [First Use](
 In your project directory, inside a Claude Code session:
 
 ```
-/ts-orchestrate:start WORK_TYPE=EPIC AUTONOMY=MID
+/ts-orchestrate:start WORK_TYPE=FEATURE AUTONOMY=MID
 ```
 
 `ts-orchestrate` is the session entry point for all work types. It reads the
@@ -110,7 +112,7 @@ Always begin with ts-orchestrate. It reads the `[WORKFLOW STATE]` hook injected 
 prompt turn and determines which layer is active.
 
 ```
-/ts-orchestrate:start WORK_TYPE=EPIC|REFACTOR|BUGFIX AUTONOMY=HIGH|MID|LOW
+/ts-orchestrate:start WORK_TYPE=FEATURE|BUGFIX|HOTFIX|REFACTOR|CHORE|PATCH|SPIKE|POC|OPS AUTONOMY=HIGH|MID|LOW
 /ts-orchestrate:status             # unified Discovery + Delivery view
 /ts-orchestrate:next               # advance with gate enforcement
 ```
@@ -126,6 +128,11 @@ Validate ideas before committing to build. Run in parallel with Delivery.
 /ts-discover:decide <id> [build|kill|keep-learning|reduce-scope]
 /ts-discover:status                # kanban view · WIP limit = 3
 ```
+
+`explore` runs `ts-event-storming-facilitator` and cannot exit until it produces
+non-empty `exploration_output`. `decide build` requires `ts-ddd-tactical-validator`
+to have run (during `validate`, or on-demand at decide-time if validation was
+skipped) — a `FAIL` recommendation blocks the build decision.
 
 ### Layer 0 — Backlog
 
@@ -148,16 +155,24 @@ Sequence epics per release. Each `/ts-iteration:next` drives ts-deliver-router f
 
 ### Layer 2 — Epic Delivery (ts-deliver-router)
 
-Per-epic 7-phase spine. Spine varies by WORK_TYPE:
+7-phase spine is the ceiling; actual spine varies by WORK_TYPE:
 
 | WORK_TYPE | Spine | Gates |
 |-----------|-------|-------|
-| `BUGFIX` | Think → Build → Ship | none (lean) |
+| `FEATURE` | Think → Plan → Build → Review → Test → Ship | G1 |
+| `BUGFIX` / `HOTFIX` | Think → Build → Ship | none (lean; HOTFIX = expedited audit tag) |
 | `REFACTOR` | Think → Plan → Build → Review → Ship → Reflect | G1 |
-| `EPIC` | Think → Plan → Build → Review → Test → Ship → Reflect | G1 + G2 |
+| `CHORE` | Build → Ship | none |
+| `PATCH` | Build → Test → Ship | G2 (only if security-related) |
+| `SPIKE` | Think → Build → Reflect (no Ship — learning feeds back to Discovery) | none |
+| `POC` | Discovery-only — never initializes a Delivery spine | none |
+| `OPS` | Think → Build → Review → Ship | G2 |
+| *(Epic — plan slice, not a WORK_TYPE)* | Think → Plan → Build → Review → Test → Ship → Reflect | G1 + G2 |
 
-**G1** (threat-model) blocks Think→Plan for REFACTOR + EPIC. **G2** (sec-review) blocks
-Ship for EPIC. Both require human sign-off — never auto-signed at any DIAL level.
+**G1** (threat-model) blocks Think→Plan for FEATURE, REFACTOR, and Epic. **G2**
+(sec-review) blocks Ship for Epic, OPS, and security-related PATCH. Both require
+human sign-off — never auto-signed at any DIAL level. Canonical table:
+`ts-orchestrate/SKILL.md` → Workflow Routing / Gate Rules.
 
 ```
 /ts-deliver:status                 # current phase + gate status
@@ -261,7 +276,7 @@ Starting from a raw idea with no existing backlog.
 
 ```
 # Session entry — ts-orchestrate routes everything from here
-/ts-orchestrate:start WORK_TYPE=EPIC AUTONOMY=MID
+/ts-orchestrate:start WORK_TYPE=FEATURE AUTONOMY=MID
 
 # Seed Discovery with the product vision (Layer 0)
 /ts-project:plan --new "Build a multi-tenant invoicing SaaS"
