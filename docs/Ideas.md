@@ -700,9 +700,18 @@ inject-workflow-state.sh (UserPromptSubmit hook):
   (`active_phase`, `active_idea`, `epic_dial_overrides`, `resume_log`)
   documented in `iteration-schema.md` but not yet wired into hook output.
   (`dial` and `active_epic` are wired.)
-- Add a JSON-shape/type check for Discovery sub-agent output (§12) — only a
-  non-empty-fields gate exists today; a structurally malformed-but-non-empty
-  blob would pass and corrupt `discovery.json` silently.
+- ~~Add a JSON-shape/type check for Discovery sub-agent output~~ — **closed
+  2026-07-06**. `commands.md`'s explore/validate GATE steps now check actual
+  types against each sub-agent's own output contract (array fields must be
+  arrays of non-empty strings, `recommendation`/`mode`/`problem_frame` must
+  be exact enum matches, `ubiquitous_language_coverage` a number in [0, 1]) —
+  a malformed-but-non-empty value is treated as absent, never written.
+  `decide build`'s precondition folds the same shape check in. Documented in
+  `discovery-state.md`'s new "Shape gate" line. Prompt-instruction change
+  (Discovery is LLM-executed, not compiled) — no unit test possible the way
+  `hook-skill-lockstep.test.ts` tests the hook; enforcement is on whichever
+  model executes `/ts-discover explore\|validate\|decide` to actually apply
+  the gate.
 - ~~No test asserts `inject-workflow-state.sh`'s `[NEXT]` bash strings stay in
   lockstep with `SKILL.md`'s Workflow Guidance table~~ — **closed 2026-07-06**.
   `REFACTOR-HOOK-GUIDANCE-TABLE` (§12 sibling epic, same Iter2) restructured

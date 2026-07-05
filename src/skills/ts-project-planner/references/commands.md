@@ -26,9 +26,19 @@ Problem Understanding + Solution Exploration. WIP-limited.
 3. Run first-principles-agent:
    → challenge the framing → riskiest_assumptions[] (each tagged H/M/L)
 4. Write idea.exploration_output, idea.riskiest_assumptions
-5. GATE: if exploration_output.domain_events, .aggregates, or .bounded_contexts
-   is empty → status stays "idea". Report the missing fields and re-run
-   ts-event-storming-facilitator. Do NOT proceed to step 6.
+5. GATE (shape, not just presence): validate exploration_output against the
+   facilitator's own output contract (src/agents/ts-event-storming-facilitator.md):
+   - domain_events, commands, aggregates, bounded_contexts: each MUST be a
+     JSON array with length >= 1, every element a non-empty string
+   - acpl_pattern_group: MUST be a non-empty string
+   - problem_frame (if present): MUST be one of
+     Commanded|Information|Workpiece|Transformation|Control
+   - ubiquitous_language_terms (if present): MUST be an array of strings
+   A structurally malformed-but-non-empty value (wrong type, empty-string
+   elements, an object where an array is expected) fails this gate exactly
+   like an empty array does. → status stays "idea". Report which field(s)
+   failed shape validation (name the field and the expected vs actual shape)
+   and re-run ts-event-storming-facilitator. Do NOT proceed to step 6.
 6. idea.status = "exploring"
 7. Confirm: "idea-<NNN> explored. Riskiest: <top H-risk assumption, if any>.
    <Validation required|Validation optional — no H-risk assumptions>."
@@ -43,22 +53,37 @@ Mandatory if `riskiest_assumptions` has `H`-risk. Optional otherwise — skip to
    (installed at .claude/agents/ts-ddd-tactical-validator.md — always runs
    whenever validate runs)
 4. Optionally run critical-thinker for sequencing/dependency challenges
-5. Write idea.validation_output = { feasibility, council_verdict,
+5. GATE (shape, not just presence) on ddd_validation before writing it —
+   validate against the validator's own output contract
+   (src/agents/ts-ddd-tactical-validator.md):
+   - mode: MUST be exactly "A" or "B"
+   - recommendation: MUST be exactly one of PASS|NEEDS_ATTENTION|FAIL
+     (reject typos/case variants — do not coerce)
+   - violations: MUST be an array (empty allowed); each element, if any,
+     MUST have check/detail/location as non-empty strings
+   - ubiquitous_language_coverage (if present, non-null): MUST be a number
+     in [0, 1]
+   If ddd_validation fails shape validation, treat it as ABSENT — do not
+   write the malformed value. Report the shape failure and re-run
+   ts-ddd-tactical-validator before proceeding.
+6. Write idea.validation_output = { feasibility, council_verdict,
    decision_rationale, ddd_validation }
-6. idea.status = "validating"
-7. Confirm: "idea-<NNN> validated — feasibility: <feasible|risky|infeasible>"
+7. idea.status = "validating"
+8. Confirm: "idea-<NNN> validated — feasibility: <feasible|risky|infeasible>"
 ```
 
 ### `/ts-discover decide <id> [build|kill|keep-learning|reduce-scope]`
 Decision point. Behavior per outcome:
 ```
 build:
-  - PRECONDITION: validation_output.ddd_validation exists with
-    recommendation != "FAIL". If absent (validate was skipped — no H-risk),
-    run ts-ddd-tactical-validator (Mode A) NOW and write
-    validation_output.ddd_validation before deciding.
-    If recommendation == "FAIL": STOP — surface violations; suggest
-    keep-learning or reduce-scope instead.
+  - PRECONDITION: validation_output.ddd_validation exists, passes the same
+    shape gate as `/ts-discover validate` step 5 (mode/recommendation/
+    violations/ubiquitous_language_coverage), and has recommendation != "FAIL".
+    Absent OR shape-invalid (validate was skipped, or a malformed value was
+    never written per the shape gate) are the SAME case: run
+    ts-ddd-tactical-validator (Mode A) NOW and write validation_output.ddd_validation
+    before deciding. If recommendation == "FAIL": STOP — surface violations;
+    suggest keep-learning or reduce-scope instead.
   - idea.status = "ready"
   - idea.ready_epics = ["EPIC-<SLUG>"]  (one or more, derived from
     exploration_output.bounded_contexts — usually one epic per idea unless
