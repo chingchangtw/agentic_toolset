@@ -381,6 +381,18 @@ running in parallel — check `/ts-discover:status`" is built into the close flo
 
 ---
 
+## Changelog
+
+### v0.1.7
+
+- Add `ts-md-improve` skill
+- Archive stale docs/tasks into `tasks/archive/`
+- Add planner retrospectives and `ts-deliver-router` artifacts
+
+Full release notes: [github.com/chingchangtw/agentic_toolset/releases](https://github.com/chingchangtw/agentic_toolset/releases)
+
+---
+
 ## License
 
 MIT — see [LICENSE](LICENSE) for details.
