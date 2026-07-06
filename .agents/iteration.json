@@ -1,36 +1,121 @@
 {
   "project": "agenticToolset",
-  "release": "MVP",
-  "release_goal": "End users who run ts-project-init-advisor get the golden agent-context template set (CLAUDE.md, AGENTS.md, .claude/CLAUDE.md, .claude/goverance_CLAUDE.md, .github/copilot-instructions.md) — created directly where absent, recommended as MODIFY tasks where files already exist.",
+  "release": "Iter3",
+  "release_goal": "Manifest-category installer/build duplication (skills/hooks/agents wired 3x each across build-release.mjs, dogfood.mjs, install.sh, install.ps1) collapses to one reusable pattern per file, with zero change to installed output.",
   "release_exit_criteria": [
-    "Advisor run in a project with none of the five golden files present creates all five directly from golden templates, byte-identical to src/project_root_structure/ sources",
-    "Advisor run in a project with an existing CLAUDE.md emits a MODIFY recommendation task in PROJECT_INIT_PLAN.md and does not touch the existing file",
-    "Golden templates ship inside the advisor skill at assets/golden/, populated by a build-time sync from src/project_root_structure/, and the release build fails on parity mismatch between the two",
-    "Coexistence posture with install.sh SCAFFOLD=y documented (delegate, deprecate, or bootstrap-only)"
+    "npm run pilot PASS: local-zip install produces byte-identical installed tree (skills/, hooks incl. scope routing + chmod +x, agents/ with .md suffix) to pre-refactor",
+    "node scripts/verify-install.mjs passes (sh/ps1 parity)",
+    "npm run release + npm run dogfood produce identical dist/release.zip contents and .claude/ mirror to pre-refactor (diff -r against a captured baseline)",
+    "Adding a hypothetical 4th manifest category requires editing exactly one call site per file, not a new copy-pasted loop"
   ],
   "epics": [
     {
-      "id": "EPIC-GOLDEN-TEMPLATES",
-      "title": "Golden agent-context templates, recommended-to-add by ts-project-init-advisor",
-      "type": "epic",
+      "id": "REFACTOR-INSTALLER-DEDUP",
+      "title": "Deduplicate manifest-category loops across build-release.mjs, dogfood.mjs, install.sh, install.ps1",
+      "type": "refactor",
       "priority": 1,
       "depends_on": [],
-      "status": "active",
+      "status": "done",
       "router_state": ".agents/ts-deliver-router/state.json",
-      "branch": "feat/golden-templates",
+      "branch": "refactor/installer-manifest-dedup",
       "mutation_score": null,
-      "shipped_at": null,
+      "shipped_at": "2026-07-06T11:36:00+08:00",
       "jira_key": null,
-      "notes": "Scope v3 + technical requirement recorded in .agents/ts-project-planner/plan.json epic notes; pivot history in .agents/discovery.json idea-001."
+      "notes": "Installer-critical-path refactor. Regression harness: npm run pilot, node scripts/verify-install.mjs, npm run release, npm run dogfood -- all byte/behavior verified against a pre-refactor baseline."
     }
   ],
-  "active_epic": "EPIC-GOLDEN-TEMPLATES",
-  "iteration_start": "2026-07-04T00:00:00+08:00",
-  "iteration_close": null,
+  "active_epic": "REFACTOR-INSTALLER-DEDUP",
+  "iteration_start": "2026-07-06T00:30:00+08:00",
+  "iteration_close": "2026-07-06T11:45:00+08:00",
   "writer_lock": null,
   "active_phase": "Delivery",
   "active_idea": null,
   "dial": "MID",
   "epic_dial_overrides": {},
-  "resume_log": []
+  "resume_log": [
+    {
+      "event": "epic_reflect_closed",
+      "epic_id": "EPIC-GOLDEN-TEMPLATES",
+      "at": "2026-07-05T00:00:00+08:00",
+      "note": "Reflect phase completed; epic marked done. Only epic in current release (MVP) — release_exit_criteria still need a pass check before /ts-iteration:close."
+    },
+    {
+      "event": "iteration_closed",
+      "release": "MVP",
+      "at": "2026-07-05T00:00:00+08:00",
+      "note": "All epics done (1/1). Release exit criteria 4/4 verified pass. Retro written to .agents/ts-project-planner/retrospectives/MVP-retro.md. plan.json refined_count incremented. GitHub milestone/Jira transition steps skipped — no MCP integration wired for this project."
+    },
+    {
+      "event": "iteration_started",
+      "release": "Iter1",
+      "at": "2026-07-05T00:00:00+08:00",
+      "note": "1 epic queued: EPIC-DUAL-TRACK-ORCHESTRATION. No unresolved cross-release dependencies (depends_on=[]; MVP's only epic already done). GitHub milestone/Jira sprint steps skipped — no MCP integration wired for this project (same as MVP close)."
+    },
+    {
+      "event": "epic_activated",
+      "epic_id": "EPIC-DUAL-TRACK-ORCHESTRATION",
+      "at": "2026-07-05T00:00:00+08:00",
+      "note": "type=epic (no bugfix scope-escalation pre-check needed). /ts-deliver init called: pre-filled type=epic, acpl_pattern_group from idea-002.exploration_output (no domain.json — used originating Discovery idea per router-integration.md fallback), risks_file=.agents/risks.md, branch=feat/dual-track-orchestration. ts-deliver-router/state.json reset to phase=think for this epic (prior epic's phase_history/gate record preserved in history.jsonl, not carried into the live state.json per the router's slim-format convention). registry.json (project-level, already initialized 2026-07-04) left unchanged — its own tool tiers apply across epics; ts-event-storming-facilitator/ts-ddd-tactical-validator remain tier=pending-setup/optional there until this epic's T1 ships and /ts-deliver:refine updates it."
+    },
+    {
+      "event": "epic_reflect_closed",
+      "epic_id": "EPIC-DUAL-TRACK-ORCHESTRATION",
+      "at": "2026-07-05T21:00:00+08:00",
+      "note": "Review→Test→Ship→Reflect run this session. Review: 8-angle code-review, 3 findings (2 fixed commit 7e7024d, 1 deferred). Test: all BDD scenarios verified, npm run pilot PASS. Ship: G2 signed off by ctony, pushed origin/master 40d2b85..5f6537b. Retro: .agents/ts-project-planner/retrospectives/Iter1-retro.md. Epic marked done."
+    },
+    {
+      "event": "iteration_closed",
+      "release": "Iter1",
+      "at": "2026-07-05T21:00:00+08:00",
+      "note": "All epics done (1/1). Release exit criteria 4/4 verified pass (see Iter1-retro.md). Feedback written to discovery.json idea-002 (source_epic, status)."
+    },
+    {
+      "event": "iteration_started",
+      "release": "Iter2",
+      "at": "2026-07-05T23:45:00+08:00",
+      "note": "1 epic queued: REFACTOR-HOOK-GUIDANCE-TABLE (type=refactor, direct Delivery entry via /ts-orchestrate:start WORK_TYPE=REFACTOR — no Discovery needed, refactor of shipped code). GitHub milestone/Jira skipped, no MCP wired."
+    },
+    {
+      "event": "epic_activated",
+      "epic_id": "REFACTOR-HOOK-GUIDANCE-TABLE",
+      "at": "2026-07-05T23:45:00+08:00",
+      "note": "type=refactor spine: Think→Plan[G1]→Build→Review→Ship→Reflect (phase-routing.ts). G1 required (blocks Think→Plan), G2 NOT required for refactor per D6. state.json re-initialized to phase=think; prior epic record in history.jsonl."
+    },
+    {
+      "event": "epic_reflect_closed",
+      "epic_id": "REFACTOR-HOOK-GUIDANCE-TABLE",
+      "at": "2026-07-06T00:15:00+08:00",
+      "note": "Think->Plan[G1]->Build->Review->Ship->Reflect run this session. G1 signed by ctony. Build: 22 scenarios byte-diffed identical, 24 tests unedited. Review: manual audit (disproportionate to spawn agents for verified mechanical refactor), no findings. Ship: no G2 (refactor), pushed 25c82ae..a6ae353. Retro: Iter2-retro.md. Epic marked done."
+    },
+    {
+      "event": "iteration_closed",
+      "release": "Iter2",
+      "at": "2026-07-06T00:15:00+08:00",
+      "note": "All epics done (1/1). Release exit criteria 4/4 verified pass (see Iter2-retro.md)."
+    },
+    {
+      "event": "iteration_started",
+      "release": "Iter3",
+      "at": "2026-07-06T00:30:00+08:00",
+      "note": "1 epic queued: REFACTOR-INSTALLER-DEDUP (type=refactor, direct Delivery entry). GitHub milestone/Jira skipped, no MCP wired."
+    },
+    {
+      "event": "epic_activated",
+      "epic_id": "REFACTOR-INSTALLER-DEDUP",
+      "at": "2026-07-06T00:30:00+08:00",
+      "note": "type=refactor spine: Think->Plan[G1]->Build->Review->Ship->Reflect. G1 required, G2 NOT required for refactor (D6). state.json re-initialized to phase=think; prior epic record appended to history.jsonl."
+    },
+    {
+      "event": "epic_reflect_closed",
+      "epic_id": "REFACTOR-INSTALLER-DEDUP",
+      "at": "2026-07-06T11:45:00+08:00",
+      "note": "Think->Plan[G1]->Build->Review->Ship->Reflect run this session. G1 signed by ctony. Plan: /spectra-propose + /plan-eng-review, 6 findings fixed. Build: 12/12 tasks, every task individually verified against a live pre-refactor baseline (not just code review) — caught a real bug (pushCategoryTargets --from-zip srcField). Review: 8-angle /code-review, 0 correctness bugs, 4 cleanup findings (1 fixed commit a9e0e21, 3 accepted). Ship: no G2 (refactor), pushed origin/master 37927cf..a9e0e21 (3 commits). Retro: Iter3-retro.md. Epic marked done."
+    },
+    {
+      "event": "iteration_closed",
+      "release": "Iter3",
+      "at": "2026-07-06T11:45:00+08:00",
+      "note": "All epics done (1/1). Release exit criteria 4/4 verified pass: npm run pilot PASS, verify-install.mjs 67 paths identical, release/dogfood output byte-identical to pre-refactor baseline, 4th-category-needs-one-call-site confirmed by design (pushCategoryTargets/copyManifestCategory/case-arm/hashtable-entry). See Iter3-retro.md."
+    }
+  ]
 }

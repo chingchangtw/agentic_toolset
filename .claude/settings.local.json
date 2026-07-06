@@ -40,7 +40,11 @@
       "Bash(spectra park *)",
       "Bash(~/go/bin/skill-validator validate *)",
       "Bash(/usr/bin/python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('errors:', d['errors'], 'warnings:', d['warnings']\\)\")",
-      "Bash(/usr/bin/python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('errors:', d['errors'], 'warnings:', d['warnings']\\); [print\\(r['message']\\) for r in d['results'] if r['level']=='warning']\")"
+      "Bash(/usr/bin/python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('errors:', d['errors'], 'warnings:', d['warnings']\\); [print\\(r['message']\\) for r in d['results'] if r['level']=='warning']\")",
+      "Bash(node *)",
+      "Bash(npm test *)",
+      "Bash(npx vitest *)",
+      "Bash(npm run *)"
     ],
     "deny": [
       "Bash(sudo *)",
@@ -52,6 +56,7 @@
     "code-review-graph"
   ],
   "enabledPlugins": {
-    "ponytail@ponytail": true
+    "ponytail@ponytail": true,
+    "superpowers@claude-plugins-official": true
   }
 }

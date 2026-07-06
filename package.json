@@ -1,6 +1,6 @@
 {
   "name": "agentic-toolset",
-  "version": "0.1.2",
+  "version": "0.1.7",
   "description": "A development toolset for hosting AI agent skills, plugins, and MCP artifacts",
   "type": "module",
   "main": "src/index.ts",

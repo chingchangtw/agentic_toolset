@@ -1,50 +1,4 @@
 {
-  "hooks": {
-    "PostToolUse": [
-      {
-        "hooks": [
-          {
-            "command": "cat >/dev/null || true; git rev-parse --git-dir >/dev/null 2>&1 && PYTHONUTF8=1 code-review-graphupdate --skip-flows --repo \"C:/Users/tlchang/OneDrive - Synaptics/work/workspace/atlassian-toolset\" || true",
-            "timeout": 30,
-            "type": "command"
-          }
-        ],
-        "matcher": "Edit|Write|Bash"
-      },
-      {
-        "matcher": "Edit|Write|Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "cat >/dev/null || true; git rev-parse --git-dir >/dev/null 2>&1 && PYTHONUTF8=1 code-review-graphupdate --skip-flows --repo \"C:/Users/tlchang/OneDrive - Synaptics/work/workspace/agenticToolset\" || true",
-            "timeout": 30
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "command": "cat >/dev/null || true; git rev-parse --git-dir >/dev/null 2>&1 && PYTHONUTF8=1 code-review-graphstatus --repo \"C:/Users/tlchang/OneDrive - Synaptics/work/workspace/atlassian-toolset\" || echo 'Not a git repo, skipping'",
-            "timeout": 10,
-            "type": "command"
-          }
-        ],
-        "matcher": ""
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "cat >/dev/null || true; git rev-parse --git-dir >/dev/null 2>&1 && PYTHONUTF8=1 code-review-graphstatus --repo \"C:/Users/tlchang/OneDrive - Synaptics/work/workspace/agenticToolset\" || echo 'Not a git repo, skipping'",
-            "timeout": 10
-          }
-        ]
-      }
-    ]
-  },
   "includeGitInstructions": false,
   "permissions": {
     "allow": [
@@ -64,5 +18,57 @@
       "Bash(sudo *)",
       "Bash(rm -rf /)"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat >/dev/null || true; git rev-parse --git-dir >/dev/null 2>&1 && PYTHONUTF8=1 code-review-graphupdate --skip-flows --repo \"C:/Users/tlchang/OneDrive - Synaptics/work/workspace/atlassian-toolset\" || true",
+            "timeout": 30
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat >/dev/null || true; git rev-parse --git-dir >/dev/null 2>&1 && PYTHONUTF8=1 code-review-graphupdate --skip-flows --repo \"C:/Users/tlchang/OneDrive - Synaptics/work/workspace/agenticToolset\" || true",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat >/dev/null || true; git rev-parse --git-dir >/dev/null 2>&1 && PYTHONUTF8=1 code-review-graphstatus --repo \"C:/Users/tlchang/OneDrive - Synaptics/work/workspace/atlassian-toolset\" || echo 'Not a git repo, skipping'",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat >/dev/null || true; git rev-parse --git-dir >/dev/null 2>&1 && PYTHONUTF8=1 code-review-graphstatus --repo \"C:/Users/tlchang/OneDrive - Synaptics/work/workspace/agenticToolset\" || echo 'Not a git repo, skipping'",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "ponytail@ponytail": true,
+    "superpowers@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "visual-explainer@visual-explainer-marketplace": true
   }
 }

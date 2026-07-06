@@ -12,7 +12,48 @@
         "Golden templates ship inside the advisor skill at assets/golden/, populated by a build-time sync from src/project_root_structure/, and the release build fails on parity mismatch between the two",
         "Coexistence posture with install.sh SCAFFOLD=y documented (delegate, deprecate, or bootstrap-only)"
       ],
-      "epics": ["EPIC-GOLDEN-TEMPLATES"]
+      "epics": [
+        "EPIC-GOLDEN-TEMPLATES"
+      ]
+    },
+    {
+      "name": "Iter1",
+      "goal": "ts-orchestrate becomes a real dual-track orchestrator: Workflow Guidance + Workflow Routing tables cover both Discovery and Delivery; ts-event-storming-facilitator and ts-ddd-tactical-validator ship as sub-agents (closing a gap referenced but unbuilt since the planner PRD); WORK_TYPE expands to the 9-type set (feature/bugfix/hotfix/refactor/chore/patch/spike/poc/ops). Goal derived by --sync from idea-002; human amends as needed.",
+      "exit_criteria": [
+        "npm test fully green, including previously-failing hook tests (.ai→.agents fixture fix)",
+        "dist/release.zip contains agents/ts-event-storming-facilitator.md and agents/ts-ddd-tactical-validator.md; npm run dogfood mirrors both into .claude/agents/",
+        "ts-orchestrate SKILL.md contains both the Workflow Guidance (Track|Phase/State|Guidance) and Workflow Routing (Work type|Route) tables per tasks/dual-track-orchestration-plan.md §0 D7",
+        "/ts-discover explore and /ts-discover decide build enforce the facilitator-required and ddd-validator-required gates (D2/D3)"
+      ],
+      "epics": [
+        "EPIC-DUAL-TRACK-ORCHESTRATION"
+      ]
+    },
+    {
+      "name": "Iter2",
+      "goal": "inject-workflow-state.sh reads as a direct transcription of ts-orchestrate SKILL.md’s Workflow Guidance table — flat guard-clause structure, one lookup function per track, no nested if/else.",
+      "exit_criteria": [
+        "Hook output byte-identical for every existing test case: all 24 hook tests (hook-output 21 + gate-enforcement 3) pass UNCHANGED — no test edits",
+        "Each [NEXT] case row carries a comment or structure that maps 1:1 to a Workflow Guidance table row in ts-orchestrate/SKILL.md",
+        "No if/elif nesting deeper than 1 level; guard clauses exit early",
+        "npm run pilot PASS (installed-hook smoke)"
+      ],
+      "epics": [
+        "REFACTOR-HOOK-GUIDANCE-TABLE"
+      ]
+    },
+    {
+      "name": "Iter3",
+      "goal": "Manifest-category installer/build duplication (skills/hooks/agents wired 3x each across build-release.mjs, dogfood.mjs, install.sh, install.ps1) collapses to one reusable pattern per file, with zero change to installed output.",
+      "exit_criteria": [
+        "npm run pilot PASS: local-zip install produces byte-identical installed tree (skills/, hooks incl. scope routing + chmod +x, agents/ with .md suffix) to pre-refactor",
+        "node scripts/verify-install.mjs passes (sh/ps1 parity)",
+        "npm run release + npm run dogfood produce identical dist/release.zip contents and .claude/ mirror to pre-refactor (diff -r against a captured baseline)",
+        "Adding a hypothetical 4th manifest category requires editing exactly one call site per file, not a new copy-pasted loop"
+      ],
+      "epics": [
+        "REFACTOR-INSTALLER-DEDUP"
+      ]
     }
   ],
   "epics": [
@@ -26,6 +67,39 @@
       "release": "MVP",
       "source_idea": "idea-001",
       "notes": "Scope v3 (see discovery.json idea-001 notes for pivot history): absent target file → direct create from golden template (absent-only guard, no approval needed); existing target file → gap analysis vs golden emits approval-gated MODIFY task in PROJECT_INIT_PLAN.md, never auto-overwrite. Top M-risk: distinguishing intentional user customization from missing golden content. Golden set = 5 files under src/project_root_structure/: CLAUDE.md, AGENTS.md, .claude/CLAUDE.md, .claude/goverance_CLAUDE.md, .github/copilot-instructions.md (fifth added 2026-07-04 by user decision — copilot-instructions.md counts as agent context). Still excluded from golden set: .claude/settings.json + settings.local.json (machine/permission config, installer-patched), docs/, tasks/, .github/backend.instructions.md + frontend.instructions.md (stack-specific stubs, not universal context). TECHNICAL REQUIREMENT (2026-07-04): authoring stays in src/project_root_structure/; delivery mechanism = golden templates ship INSIDE the advisor skill package at assets/golden/, populated by a build-time sync step in the release pipeline, guarded by a parity check that fails the build when assets/golden/ differs from src/project_root_structure/. Rationale: advisor installs to .claude/skills/ on every user machine (no SCAFFOLD=y dependency, no installer re-run needed, no network fetch); assets/ is the agent-skills-spec directory for templates so skill-validator accepts it natively; dogfood mirror inherits it via the existing sync since assets/ is not exclusion-filtered. Rejected: installer copies to a well-known path (breaks for skill-only updates); runtime GitHub fetch (network dependency + version skew)."
+    },
+    {
+      "id": "EPIC-DUAL-TRACK-ORCHESTRATION",
+      "title": "Dual-track orchestration: guidance/routing tables, Discovery sub-agents (ts-event-storming-facilitator, ts-ddd-tactical-validator), WORK_TYPE expansion",
+      "type": "epic",
+      "size": "L",
+      "priority": "high",
+      "depends_on": [],
+      "release": "Iter1",
+      "source_idea": "idea-002",
+      "notes": "Execution runbook: tasks/dual-track-orchestration-plan.md (T1-T12, weak-model-executable, 12 locked decisions in §0 — do not re-open in Think/Plan). Single epic despite 4 bounded_contexts (discovery/delivery/packaging/orchestration): the runbook's T1-T12 sequence and single Spectra proposal (T11) assume they ship together; splitting would break the dependency order. Carried forward from idea-002 validate (non-blocking, address during Plan/Build): (1) add a JSON-shape/type check for sub-agent output on top of the existing non-empty gate; (2) add a test asserting phase-routing.ts spines match SKILL.md's Workflow Routing table and work-unit-profiles.md; (3) DDD model gap — Release/Iteration under-modeled as its own aggregate, WorkflowStateInjected mis-classified as a domain event rather than a projection (informational, not a code fix). Known pre-existing test breakage fixed in passing (T8): hook-output.test.ts / gate-enforcement.test.ts fixtures use .ai/ but hook reads .agents/ — declare in Think, not silent scope creep."
+    },
+    {
+      "id": "REFACTOR-HOOK-GUIDANCE-TABLE",
+      "title": "Restructure inject-workflow-state.sh to mirror the Workflow Guidance table",
+      "type": "refactor",
+      "size": "S",
+      "priority": "medium",
+      "depends_on": [],
+      "release": "Iter2",
+      "source_idea": null,
+      "notes": "User-reported readability problem 2026-07-05: algorithm hard to read, if-else complicated. Target: script structure follows SKILL.md Workflow Guidance table — guard-clause preamble (schema/dry-run/G2 checks as named functions), then one flat case block per track whose rows visibly correspond to table rows. Behavior change: NONE — existing 24 hook tests are the regression harness and must pass unedited. No Discovery needed (refactor of shipped code, no new capability)."
+    },
+    {
+      "id": "REFACTOR-INSTALLER-DEDUP",
+      "title": "Deduplicate manifest-category loops across build-release.mjs, dogfood.mjs, install.sh, install.ps1",
+      "type": "refactor",
+      "size": "M",
+      "priority": "medium",
+      "depends_on": [],
+      "release": "Iter3",
+      "source_idea": null,
+      "notes": "Tracked open item since EPIC-DUAL-TRACK-ORCHESTRATION Review phase (docs/Ideas.md §12/§14): skills/hooks/agents manifest categories each wired as a copy-pasted per-category loop in 4 files. Higher risk than the hook refactor (Iter2) -- this is installer code that runs on end-user machines via curl|bash / irm|iex, not a local dev hook. Full spine with exhaustive pilot/verify-install/release/dogfood verification before Ship."
     }
   ],
   "constraints": [
@@ -35,5 +109,5 @@
     "Security gates G1/G2 always require human sign-off",
     "Packaging goes through scripts/generate-manifest.mjs + build-release.mjs with shared exclusion filter"
   ],
-  "refined_count": 0
+  "refined_count": 3
 }
