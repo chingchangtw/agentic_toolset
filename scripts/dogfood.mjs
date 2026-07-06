@@ -19,6 +19,7 @@ import { join, dirname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
 import { includeInPackage } from './lib/exclusions.mjs';
+import { pushCategoryTargets } from './lib/dedup-helpers.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -47,15 +48,9 @@ const manifest = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'));
 // skills: dest "skills/x" → .claude/skills/x ; hooks → .claude/hook/<name> ; commands file
 function mirrorTargets() {
   const targets = [];
-  for (const e of manifest.skills) {
-    targets.push({ src: join(ROOT, e.src), dest: join(CLAUDE_DIR, e.dest), dir: true, zipPath: e.dest });
-  }
-  for (const e of manifest.hooks) {
-    targets.push({ src: join(ROOT, e.src), dest: join(CLAUDE_DIR, e.dest), dir: false, zipPath: e.dest });
-  }
-  for (const e of manifest.agents ?? []) {
-    targets.push({ src: join(ROOT, e.src), dest: join(CLAUDE_DIR, e.dest), dir: false, zipPath: e.dest });
-  }
+  pushCategoryTargets(targets, manifest.skills, { srcRoot: ROOT, destRoot: CLAUDE_DIR, dir: true, zipPath: true });
+  pushCategoryTargets(targets, manifest.hooks, { srcRoot: ROOT, destRoot: CLAUDE_DIR, dir: false, zipPath: true });
+  pushCategoryTargets(targets, manifest.agents ?? [], { srcRoot: ROOT, destRoot: CLAUDE_DIR, dir: false, zipPath: true });
   targets.push({
     src: join(ROOT, 'src', 'commands', 'load-skill.md'),
     dest: join(CLAUDE_DIR, 'commands', 'load-skill.md'),
@@ -118,15 +113,9 @@ if (args[0] === '--from-zip') {
     execSync(`cd "${extract}" && unzip -q "${resolve(zipPath)}"`, { shell: true });
     const zipManifest = JSON.parse(readFileSync(join(extract, 'manifest.json'), 'utf8'));
     const targets = [];
-    for (const e of zipManifest.skills) {
-      targets.push({ src: join(extract, e.dest), dest: join(CLAUDE_DIR, e.dest), dir: true });
-    }
-    for (const e of zipManifest.hooks) {
-      targets.push({ src: join(extract, e.dest), dest: join(CLAUDE_DIR, e.dest), dir: false });
-    }
-    for (const e of zipManifest.agents ?? []) {
-      targets.push({ src: join(extract, e.dest), dest: join(CLAUDE_DIR, e.dest), dir: false });
-    }
+    pushCategoryTargets(targets, zipManifest.skills, { srcRoot: extract, destRoot: CLAUDE_DIR, dir: true, srcField: 'dest' });
+    pushCategoryTargets(targets, zipManifest.hooks, { srcRoot: extract, destRoot: CLAUDE_DIR, dir: false, srcField: 'dest' });
+    pushCategoryTargets(targets, zipManifest.agents ?? [], { srcRoot: extract, destRoot: CLAUDE_DIR, dir: false, srcField: 'dest' });
     targets.push({
       src: join(extract, 'commands', 'load-skill.md'),
       dest: join(CLAUDE_DIR, 'commands', 'load-skill.md'),

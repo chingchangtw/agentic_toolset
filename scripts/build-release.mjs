@@ -11,6 +11,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { includeInPackage } from './lib/exclusions.mjs';
 import { checkGoldenParity } from './lib/golden-templates.mjs';
+import { copyManifestCategory } from './lib/dedup-helpers.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -57,34 +58,25 @@ mkdirSync(BUILD, { recursive: true });
 // ── 1. skills (manifest-driven) ───────────────────────────────────────────────
 
 console.log('── skills ───────────────────────────────────────────────────────────────────');
-for (const entry of manifest.skills) {
-  const srcPath = join(ROOT, entry.src);
-  const destPath = join(BUILD, entry.dest);
-  if (!existsSync(srcPath)) { console.warn(`  SKIP (missing): ${entry.src}`); continue; }
-  validateSkill(srcPath, entry.name);
-  cp(srcPath, destPath, { filtered: true });
-  console.log(`  skill: ${entry.dest}`);
-}
+copyManifestCategory(manifest.skills, {
+  rootDir: ROOT,
+  buildDir: BUILD,
+  cp,
+  filtered: true,
+  validate: validateSkill,
+  label: 'skill',
+  printField: 'dest',
+});
 
 // ── 2. hooks (manifest-driven) ────────────────────────────────────────────────
 
 console.log('── hooks ────────────────────────────────────────────────────────────────────');
-for (const entry of manifest.hooks) {
-  const srcPath = join(ROOT, entry.src);
-  const destPath = join(BUILD, entry.dest);
-  cp(srcPath, destPath);
-  if (existsSync(srcPath)) console.log(`  hook: ${entry.name}`);
-}
+copyManifestCategory(manifest.hooks, { rootDir: ROOT, buildDir: BUILD, cp, label: 'hook' });
 
 // ── 2b. agents (manifest-driven) ──────────────────────────────────────────────
 
 console.log('── agents ───────────────────────────────────────────────────────────────────');
-for (const entry of manifest.agents ?? []) {
-  const srcPath = join(ROOT, entry.src);
-  const destPath = join(BUILD, entry.dest);
-  cp(srcPath, destPath);
-  if (existsSync(srcPath)) console.log(`  agent: ${entry.name}`);
-}
+copyManifestCategory(manifest.agents ?? [], { rootDir: ROOT, buildDir: BUILD, cp, label: 'agent' });
 
 // ── 3. manifest.json at zip root (stamped with the release version) ──────────
 

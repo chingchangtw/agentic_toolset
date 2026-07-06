@@ -36,47 +36,64 @@ Expand-Archive -Path "$TmpDir\release.zip" -DestinationPath $TmpDir -Force
 $ManifestPath = "$TmpDir\manifest.json"
 if (Test-Path $ManifestPath) {
 
-    # ── skills (manifest-driven) ─────────────────────────────────────────────────
+    # ── skills, hooks, agents (manifest-driven; one tagged pass) ──────────────────
+    # Directories created up front, once, before any row is processed. Header
+    # lines print together, up front, in skill/hook/agent order (same
+    # deliberate reordering as install.sh — see design.md's install.sh
+    # "Header ordering" note; same text, grouped instead of interleaved).
 
     Write-Host "→ Installing skills → $SkillsDir\"
-    New-Item -ItemType Directory -Path $SkillsDir -Force | Out-Null
-    $manifest = Get-Content $ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
-    foreach ($entry in $manifest.skills) {
-        $installSubpath = $entry.dest.Substring("skills/".Length).Replace("/", "\")
-        $src = Join-Path $TmpDir $entry.dest.Replace("/", "\")
-        $dst = Join-Path $SkillsDir $installSubpath
-        New-Item -ItemType Directory -Path (Split-Path $dst -Parent) -Force | Out-Null
-        Copy-Item -Path $src -Destination $dst -Recurse -Force
-        Write-Host "   ✓ skill: $($entry.dest.Substring('skills/'.Length))"
-    }
-
-    # ── hooks (manifest-driven, routed by scope) ──────────────────────────────────
-
     Write-Host "→ Installing hooks..."
+    Write-Host "→ Installing agents → $ProjectClaudeDir\agents\"
+    New-Item -ItemType Directory -Path $SkillsDir -Force | Out-Null
     New-Item -ItemType Directory -Path $HooksDir -Force | Out-Null
     $ProjectHooksDir = "$ProjectClaudeDir\hooks"
     New-Item -ItemType Directory -Path $ProjectHooksDir -Force | Out-Null
-    foreach ($entry in $manifest.hooks) {
-        $src = Join-Path $TmpDir $entry.dest.Replace("/", "\")
-        if ($entry.scope -eq "project") {
-            $dst = Join-Path $ProjectHooksDir $entry.name
-        } else {
-            $dst = Join-Path $HooksDir $entry.name
-        }
-        Copy-Item -Path $src -Destination $dst -Force
-        Write-Host "   ✓ hook ($($entry.scope)): $($entry.name)"
-    }
-
-    # ── agents (manifest-driven; key absent in older zips → loop is a no-op) ──────
-
-    Write-Host "→ Installing agents → $ProjectClaudeDir\agents\"
     $AgentsDir = "$ProjectClaudeDir\agents"
     New-Item -ItemType Directory -Path $AgentsDir -Force | Out-Null
-    foreach ($entry in $manifest.agents) {
-        $src = Join-Path $TmpDir $entry.dest.Replace("/", "\")
-        $dst = Join-Path $AgentsDir "$($entry.name).md"
-        Copy-Item -Path $src -Destination $dst -Force
-        Write-Host "   ✓ agent: $($entry.name)"
+
+    $manifest = Get-Content $ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+
+    $InstallActions = @{
+        skill = {
+            param($entry)
+            $installSubpath = $entry.dest.Substring("skills/".Length).Replace("/", "\")
+            $src = Join-Path $TmpDir $entry.dest.Replace("/", "\")
+            $dst = Join-Path $SkillsDir $installSubpath
+            New-Item -ItemType Directory -Path (Split-Path $dst -Parent) -Force | Out-Null
+            Copy-Item -Path $src -Destination $dst -Recurse -Force
+            Write-Host "   ✓ skill: $($entry.dest.Substring('skills/'.Length))"
+        }
+        hook = {
+            param($entry)
+            $src = Join-Path $TmpDir $entry.dest.Replace("/", "\")
+            if ($entry.scope -eq "project") {
+                $dst = Join-Path $ProjectHooksDir $entry.name
+            } else {
+                $dst = Join-Path $HooksDir $entry.name
+            }
+            Copy-Item -Path $src -Destination $dst -Force
+            Write-Host "   ✓ hook ($($entry.scope)): $($entry.name)"
+        }
+        agent = {
+            param($entry)
+            $src = Join-Path $TmpDir $entry.dest.Replace("/", "\")
+            $dst = Join-Path $AgentsDir "$($entry.name).md"
+            Copy-Item -Path $src -Destination $dst -Force
+            Write-Host "   ✓ agent: $($entry.name)"
+        }
+    }
+
+    $taggedEntries = @()
+    foreach ($entry in $manifest.skills) { $taggedEntries += [PSCustomObject]@{ Tag = 'skill'; Entry = $entry } }
+    foreach ($entry in $manifest.hooks) { $taggedEntries += [PSCustomObject]@{ Tag = 'hook'; Entry = $entry } }
+    foreach ($entry in $manifest.agents) { $taggedEntries += [PSCustomObject]@{ Tag = 'agent'; Entry = $entry } }
+
+    foreach ($item in $taggedEntries) {
+        if (-not $InstallActions.ContainsKey($item.Tag)) {
+            throw "unknown manifest category tag: $($item.Tag)"
+        }
+        $InstallActions[$item.Tag].Invoke($item.Entry)
     }
 
 } else {

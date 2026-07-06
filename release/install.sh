@@ -57,56 +57,61 @@ unzip -q release.zip
 
 if [[ -f manifest.json ]]; then
 
-  # ── skills (manifest-driven) ─────────────────────────────────────────────────
+  # ── skills, hooks, agents (manifest-driven; one tagged pass) ──────────────────
+  # Directories are created up front, once, before any row is processed —
+  # a fresh install with no pre-existing dirs must not break on the first cp.
+  # Header lines print together, up front, in skill/hook/agent order (today's
+  # 3 separate loops print each header immediately before that category's
+  # entries; a single merged loop cannot preserve that exact interleaving
+  # without a header-shown flag per tag that would silently vanish for an
+  # empty category — accepted, reviewed tradeoff: same header text, grouped
+  # earlier instead of interleaved).
 
   echo "→ Installing skills → ${SKILLS_DIR}/"
-  mkdir -p "${SKILLS_DIR}"
-  while IFS=$'\t' read -r dest_path install_subpath; do
-    mkdir -p "${SKILLS_DIR}/$(dirname "${install_subpath}")"
-    cp -r "${dest_path}" "${SKILLS_DIR}/${install_subpath}"
-    echo "   ✓ skill: ${install_subpath}"
-  done < <("${PYTHON_BIN}" -c "
-import json, sys
-m = json.load(open('manifest.json'))
-for e in m['skills']:
-    install_subpath = e['dest'][len('skills/'):]
-    print(e['dest'] + '\t' + install_subpath)
-")
-
-  # ── hooks (manifest-driven, routed by scope) ──────────────────────────────────
-
   echo "→ Installing hooks..."
+  echo "→ Installing agents → ${PROJECT_CLAUDE_DIR}/agents/"
+  mkdir -p "${SKILLS_DIR}"
   mkdir -p "${HOOKS_DIR}"
   mkdir -p "${PROJECT_HOOKS_DIR}"
-  while IFS=$'\t' read -r dest_path scope name; do
-    if [[ "${scope}" == "project" ]]; then
-      target_dir="${PROJECT_HOOKS_DIR}"
-    else
-      target_dir="${HOOKS_DIR}"
-    fi
-    cp "${dest_path}" "${target_dir}/${name}"
-    chmod +x "${target_dir}/${name}"
-    echo "   ✓ hook (${scope}): ${name}"
-  done < <("${PYTHON_BIN}" -c "
-import json, sys
-m = json.load(open('manifest.json'))
-for e in m['hooks']:
-    print(e['dest'] + '\t' + e['scope'] + '\t' + e['name'])
-")
-
-  # ── agents (manifest-driven; key absent in older zips → loop is a no-op) ─────
-
-  echo "→ Installing agents → ${PROJECT_CLAUDE_DIR}/agents/"
   mkdir -p "${PROJECT_CLAUDE_DIR}/agents"
-  while IFS=$'\t' read -r dest_path name; do
-    [[ -z "${dest_path}" ]] && continue
-    cp "${dest_path}" "${PROJECT_CLAUDE_DIR}/agents/${name}.md"
-    echo "   ✓ agent: ${name}"
+
+  while IFS=$'\t' read -r tag f1 f2 f3; do
+    case "${tag}" in
+      skill)
+        mkdir -p "${SKILLS_DIR}/$(dirname "${f2}")"
+        cp -r "${f1}" "${SKILLS_DIR}/${f2}"
+        echo "   ✓ skill: ${f2}"
+        ;;
+      hook)
+        if [[ "${f2}" == "project" ]]; then
+          target_dir="${PROJECT_HOOKS_DIR}"
+        else
+          target_dir="${HOOKS_DIR}"
+        fi
+        cp "${f1}" "${target_dir}/${f3}"
+        chmod +x "${target_dir}/${f3}"
+        echo "   ✓ hook (${f2}): ${f3}"
+        ;;
+      agent)
+        [[ -z "${f1}" ]] && continue
+        cp "${f1}" "${PROJECT_CLAUDE_DIR}/agents/${f2}.md"
+        echo "   ✓ agent: ${f2}"
+        ;;
+      *)
+        echo "unknown manifest category tag: ${tag}" >&2
+        exit 1
+        ;;
+    esac
   done < <("${PYTHON_BIN}" -c "
 import json
 m = json.load(open('manifest.json'))
+for e in m['skills']:
+    install_subpath = e['dest'][len('skills/'):]
+    print('skill\t' + e['dest'] + '\t' + install_subpath)
+for e in m['hooks']:
+    print('hook\t' + e['dest'] + '\t' + e['scope'] + '\t' + e['name'])
 for e in m.get('agents', []):
-    print(e['dest'] + '\t' + e['name'])
+    print('agent\t' + e['dest'] + '\t' + e['name'])
 ")
 
 else
