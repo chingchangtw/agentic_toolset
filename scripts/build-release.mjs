@@ -71,12 +71,12 @@ copyManifestCategory(manifest.skills, {
 // ── 2. hooks (manifest-driven) ────────────────────────────────────────────────
 
 console.log('── hooks ────────────────────────────────────────────────────────────────────');
-copyManifestCategory(manifest.hooks, { rootDir: ROOT, buildDir: BUILD, cp, label: 'hook' });
+copyManifestCategory(manifest.hooks, { rootDir: ROOT, buildDir: BUILD, cp, label: 'hook', printField: 'name' });
 
 // ── 2b. agents (manifest-driven) ──────────────────────────────────────────────
 
 console.log('── agents ───────────────────────────────────────────────────────────────────');
-copyManifestCategory(manifest.agents ?? [], { rootDir: ROOT, buildDir: BUILD, cp, label: 'agent' });
+copyManifestCategory(manifest.agents ?? [], { rootDir: ROOT, buildDir: BUILD, cp, label: 'agent', printField: 'name' });
 
 // ── 3. manifest.json at zip root (stamped with the release version) ──────────
 

@@ -134,6 +134,7 @@ describe('copyManifestCategory', () => {
       buildDir: '/build',
       cp,
       label: 'hook',
+      printField: 'name',
     });
     expect(cp).toHaveBeenCalledWith(join(dir, 'present.txt'), '/build/out/present.txt', { filtered: false });
     expect(logs.some((l) => l.includes('hook: present-hook'))).toBe(true);
@@ -151,10 +152,26 @@ describe('copyManifestCategory', () => {
       buildDir: '/build',
       cp,
       label: 'hook',
+      printField: 'name',
     });
     expect(cp).toHaveBeenCalledWith(join(dir, 'missing.txt'), '/build/out/missing.txt', { filtered: false });
     expect(logs.some((l) => l.includes('missing-hook'))).toBe(false);
     spy.mockRestore();
     rmSync(dir, { recursive: true, force: true });
+  });
+
+  it('throws if printField is missing or not "name"/"dest" — forces every call site to be explicit', () => {
+    expect(() =>
+      copyManifestCategory([{ src: 'x', dest: 'y', name: 'z' }], { rootDir: '/r', buildDir: '/b', cp: vi.fn(), label: 'x' })
+    ).toThrow(/printField must be 'name' or 'dest'/);
+    expect(() =>
+      copyManifestCategory([{ src: 'x', dest: 'y', name: 'z' }], {
+        rootDir: '/r',
+        buildDir: '/b',
+        cp: vi.fn(),
+        label: 'x',
+        printField: 'bogus',
+      })
+    ).toThrow(/printField must be 'name' or 'dest'/);
   });
 });

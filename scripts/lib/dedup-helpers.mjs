@@ -31,7 +31,10 @@ export function pushCategoryTargets(targets, entries, { srcRoot, destRoot, dir, 
  * agents' pre-refactor behavior exactly — this asymmetry is real pre-existing
  * behavior, not something this refactor introduces or should "fix".
  */
-export function copyManifestCategory(entries, { rootDir, buildDir, cp, filtered = false, validate, label, printField = 'name' }) {
+export function copyManifestCategory(entries, { rootDir, buildDir, cp, filtered = false, validate, label, printField }) {
+  if (printField !== 'name' && printField !== 'dest') {
+    throw new Error(`copyManifestCategory: printField must be 'name' or 'dest', got ${JSON.stringify(printField)}`);
+  }
   for (const entry of entries) {
     const srcPath = join(rootDir, entry.src);
     const destPath = join(buildDir, entry.dest);
