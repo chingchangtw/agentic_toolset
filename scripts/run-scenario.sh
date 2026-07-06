@@ -44,8 +44,8 @@ fi
 TEST_WORKSPACE=$(mktemp -d /tmp/scenario-test-XXXXXX)
 trap 'rm -rf "$TEST_WORKSPACE"' EXIT
 
-mkdir -p "$TEST_WORKSPACE/.ai/ts-deliver-router"
-cp "$FIXTURE_FILE" "$TEST_WORKSPACE/.ai/iteration.json"
+mkdir -p "$TEST_WORKSPACE/.agents/ts-deliver-router"
+cp "$FIXTURE_FILE" "$TEST_WORKSPACE/.agents/iteration.json"
 
 EPIC_TYPE=$(jq -r '.epics[0].type // "epic"' "$FIXTURE_FILE")
 DIAL=$(jq -r '.dial // "MID"' "$FIXTURE_FILE")
@@ -61,7 +61,7 @@ case "$EPIC_TYPE" in
   *)        INITIAL_PHASE="think" ;;
 esac
 
-cat > "$TEST_WORKSPACE/.ai/ts-deliver-router/state.json" <<EOF
+cat > "$TEST_WORKSPACE/.agents/ts-deliver-router/state.json" <<EOF
 {"current_phase": "$INITIAL_PHASE", "schema_version": "1"}
 EOF
 
@@ -84,7 +84,7 @@ while IFS= read -r assertion; do
   case "$TYPE" in
     assert)
       JQ_EXPR="$RAW_VALUE"
-      RESULT=$(jq -r "$JQ_EXPR" "$TEST_WORKSPACE/.ai/iteration.json" 2>/dev/null || echo "false")
+      RESULT=$(jq -r "$JQ_EXPR" "$TEST_WORKSPACE/.agents/iteration.json" 2>/dev/null || echo "false")
       if [ "$RESULT" = "true" ]; then
         echo "ok $TEST_NUM - assert: $JQ_EXPR"
       else
@@ -108,7 +108,7 @@ while IFS= read -r assertion; do
     assert_phase_not_in_history)
       PHASE="${RAW_VALUE#\"}"
       PHASE="${PHASE%\"}"
-      HISTORY=$(jq -r '.phase_history // [] | .[]' "$TEST_WORKSPACE/.ai/iteration.json" 2>/dev/null || true)
+      HISTORY=$(jq -r '.phase_history // [] | .[]' "$TEST_WORKSPACE/.agents/iteration.json" 2>/dev/null || true)
       if echo "$HISTORY" | grep -qF "$PHASE"; then
         echo "not ok $TEST_NUM - assert_phase_not_in_history: $PHASE (found in history)"
         FAIL_COUNT=$((FAIL_COUNT + 1))
