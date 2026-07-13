@@ -20,20 +20,7 @@ reports/mutation/
 node_modules/
 
 # BEGIN dogfood-mirror (generated)
-.claude/skills/ondemand/ts-project-init-advisor/
-.claude/skills/ts-acpl/
-.claude/skills/ts-deliver-router/
-.claude/skills/ts-md-improve/
-.claude/skills/ts-orchestrate/
-.claude/skills/ts-project-planner/
-.claude/skills/ts-project-scaffolder/
-.claude/hook/
-.claude/agents/
-.claude/commands/load-skill.md
 .claude/.dogfood-prev/
 .claude/.toolset-version
 dist/release-lkg.zip
-.agents/discovery.json
-.agents/ts-deliver-router/state.json
-.agents/ts-deliver-router/history.jsonl
 # END dogfood-mirror
