@@ -44,7 +44,9 @@
       "Bash(node *)",
       "Bash(npm test *)",
       "Bash(npx vitest *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(gh auth *)",
+      "Bash(gh release *)"
     ],
     "deny": [
       "Bash(sudo *)",

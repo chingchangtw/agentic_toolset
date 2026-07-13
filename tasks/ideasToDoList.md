@@ -6,3 +6,9 @@
 # have G1 threat-model in ts-deliver plan as well if no ts-deliver ever
 
 # learn ts- registry design in ts-project-planner as well 
+
+# harnessPRD
+
+# DESIGN-src-edit-guard.md
+
+#PRD — Multi-CLI Portability: Codex CLI + Copilot CLI Targets
