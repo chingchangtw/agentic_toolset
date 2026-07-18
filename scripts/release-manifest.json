@@ -27,6 +27,11 @@
       "dest": "skills/ts-orchestrate"
     },
     {
+      "name": "ts-pl",
+      "src": "src/skills/ts-pl",
+      "dest": "skills/ts-pl"
+    },
+    {
       "name": "ts-project-planner",
       "src": "src/skills/ts-project-planner",
       "dest": "skills/ts-project-planner"

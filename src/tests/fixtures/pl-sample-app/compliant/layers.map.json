@@ -1,0 +1,8 @@
+{
+  "version": "1",
+  "layers": [
+    { "name": "domain", "globs": ["src/domain/**"], "may_import": ["domain"] }
+  ],
+  "aliases": {},
+  "external": { "allow": true }
+}

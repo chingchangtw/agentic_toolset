@@ -1,32 +1,49 @@
 {
   "project": "agenticToolset",
-  "release": "Iter3",
-  "release_goal": "Manifest-category installer/build duplication (skills/hooks/agents wired 3x each across build-release.mjs, dogfood.mjs, install.sh, install.ps1) collapses to one reusable pattern per file, with zero change to installed output.",
+  "release": "Iter4",
+  "release_goal": "Ship PLDD portable enforcement kernel and inactive consumer adapters without changing current dual-track workflow or activating PLDD in agenticToolset.",
   "release_exit_criteria": [
-    "npm run pilot PASS: local-zip install produces byte-identical installed tree (skills/, hooks incl. scope routing + chmod +x, agents/ with .md suffix) to pre-refactor",
-    "node scripts/verify-install.mjs passes (sh/ps1 parity)",
-    "npm run release + npm run dogfood produce identical dist/release.zip contents and .claude/ mirror to pre-refactor (diff -r against a captured baseline)",
-    "Adding a hypothetical 4th manifest category requires editing exactly one call site per file, not a new copy-pasted loop"
+    "Every implementation file changed by Phase A and Phase B is below src/*; root package configuration, lockfile, live .agents state, hooks, router, and registries remain unchanged",
+    "Planted architecture and contract violations produce identical stable rule ids and exit codes through Codex and Claude Code entry paths",
+    "Versioned ownership relations preserve legacy exploration arrays and compile deterministic scenario skeletons with complete event coverage",
+    "Consumer adapters install only into isolated fixtures, produce a generated-file manifest, and prove rollback; no dogfood activation occurs",
+    "EPIC-PLDD-CONSUMER-ADAPTERS starts only after EPIC-PLDD-ENFORCEMENT-KERNEL completes"
   ],
   "epics": [
     {
-      "id": "REFACTOR-INSTALLER-DEDUP",
-      "title": "Deduplicate manifest-category loops across build-release.mjs, dogfood.mjs, install.sh, install.ps1",
-      "type": "refactor",
+      "id": "EPIC-PLDD-ENFORCEMENT-KERNEL",
+      "title": "PLDD portable enforcement kernel",
+      "type": "epic",
       "priority": 1,
       "depends_on": [],
-      "status": "done",
+      "status": "active",
       "router_state": ".agents/ts-deliver-router/state.json",
-      "branch": "refactor/installer-manifest-dedup",
+      "branch": "codex/pldd-enforcement-kernel",
       "mutation_score": null,
-      "shipped_at": "2026-07-06T11:36:00+08:00",
+      "shipped_at": null,
       "jira_key": null,
-      "notes": "Installer-critical-path refactor. Regression harness: npm run pilot, node scripts/verify-install.mjs, npm run release, npm run dogfood -- all byte/behavior verified against a pre-refactor baseline."
+      "notes": "Phase A only. All implementation changes below src/*. Zero new npm dependencies. Deliver fail-closed architecture/placement checking, stable diagnostics, contract-id parity, versioned ownership relations, scenario compilation, and fixture tests. Current dual-track configuration remains unchanged."
+    },
+    {
+      "id": "EPIC-PLDD-CONSUMER-ADAPTERS",
+      "title": "PLDD inactive consumer-project adapters",
+      "type": "epic",
+      "priority": 2,
+      "depends_on": [
+        "EPIC-PLDD-ENFORCEMENT-KERNEL"
+      ],
+      "status": "queued",
+      "router_state": null,
+      "branch": null,
+      "mutation_score": null,
+      "shipped_at": null,
+      "jira_key": null,
+      "notes": "Phase B only; depends on Phase A. Add inactive scaffold/install adapters, optional dependency-cruiser/ESLint generation, cards, agent contracts, templates, Build checklist, fixture-only dry-run, generated-file manifest, and rollback plan. All implementation changes below src/*. No live agenticToolset activation. Dogfood requires separate approval."
     }
   ],
-  "active_epic": "REFACTOR-INSTALLER-DEDUP",
-  "iteration_start": "2026-07-06T00:30:00+08:00",
-  "iteration_close": "2026-07-06T11:45:00+08:00",
+  "active_epic": "EPIC-PLDD-ENFORCEMENT-KERNEL",
+  "iteration_start": "2026-07-13T13:32:14.0050311+08:00",
+  "iteration_close": null,
   "writer_lock": null,
   "active_phase": "Delivery",
   "active_idea": null,
@@ -116,6 +133,18 @@
       "release": "Iter3",
       "at": "2026-07-06T11:45:00+08:00",
       "note": "All epics done (1/1). Release exit criteria 4/4 verified pass: npm run pilot PASS, verify-install.mjs 67 paths identical, release/dogfood output byte-identical to pre-refactor baseline, 4th-category-needs-one-call-site confirmed by design (pushCategoryTargets/copyManifestCategory/case-arm/hashtable-entry). See Iter3-retro.md."
+    },
+    {
+      "event": "iteration_started",
+      "release": "Iter4",
+      "at": "2026-07-13T13:32:13.9926756+08:00",
+      "note": "2 epics queued in topological order: EPIC-PLDD-ENFORCEMENT-KERNEL then EPIC-PLDD-CONSUMER-ADAPTERS. Phase B depends on Phase A. Both are src-only; dogfood activation excluded. GitHub milestone/Jira skipped because no MCP integration is wired."
+    },
+    {
+      "event": "epic_activated",
+      "epic_id": "EPIC-PLDD-ENFORCEMENT-KERNEL",
+      "at": "2026-07-13T13:40:04.0999357+08:00",
+      "note": "type=epic. Router initialized at Think. Phase A src-only boundary active. Existing Spectra change pl-enforcement-kernel-phase-a detected with proposal done; continuation blocked until G1 human sign-off."
     }
   ]
 }

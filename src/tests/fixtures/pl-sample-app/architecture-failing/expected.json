@@ -1,0 +1,10 @@
+[
+  {
+    "version": "1",
+    "rule_id": "PL-ARCH-FORBIDDEN-IMPORT",
+    "severity": "error",
+    "file": "src/domain/Order.ts",
+    "dependency": "src/infra/SqlOrder.ts",
+    "message": "Layer domain may not import infrastructure"
+  }
+]

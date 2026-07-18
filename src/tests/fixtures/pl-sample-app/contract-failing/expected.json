@@ -1,0 +1,10 @@
+[
+  {
+    "version": "1",
+    "rule_id": "PL-CONTRACT-MISSING-TEST",
+    "severity": "error",
+    "file": "src/order.ts",
+    "dependency": "",
+    "message": "Contract TIMESHEET-HOURS-CAPACITY has no violation test"
+  }
+]

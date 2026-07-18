@@ -1,0 +1,9 @@
+{
+  "domain_events": ["Loan Started"],
+  "commands": ["Start Loan"],
+  "aggregates": ["Loan"],
+  "ownership_relations_v1": [
+    { "command": "Start Loan", "aggregate": "Loan", "event": "Loan Started" },
+    { "command": "Start Loan", "aggregate": "Loan", "event": "Loan Started" }
+  ]
+}
