@@ -84,7 +84,7 @@
       "notes": "Technical checklist re-audited after PRD/Spectra refresh: parser subset fail-closed, path containment, no source evaluation, project-relative diagnostics, host-neutral Phase-A golden outputs, src-only blast radius, rollback by file removal/revert. 6/6 technical checks pass. Human approved G1; approval covers planning Phase A only, not implementation, Phase B, or dogfood activation."
     },
     "G2": {
-      "status": "pending",
+      "status": "signed_off",
       "checklist_results": {
         "all_spectra_scenarios_pass": true,
         "scenarios_archived": true,
@@ -93,11 +93,11 @@
         "mutation_score_gte_threshold": true,
         "surviving_mutants_reviewed": true,
         "dependency_rescan_clean": true,
-        "human_sign_off": false
+        "human_sign_off": true
       },
-      "signed_by": null,
-      "signed_at": null,
-      "notes": "Only human_sign_off remains. Mutation score 86.07% overall (all 5 files individually clear 85%), survivors reviewed and categorized (deep lexer boundary cases, equivalent sort-comparator mutants), dependency rescan clean (0 vulns). Full integration baseline still has 30 non-Phase-A Windows/Bash failures (unrelated, pre-existing). One real (non-blocking) defect found in compileGlob's mid-path '**' handling -- documented in test file, not fixed, flagged to human for a decision."
+      "signed_by": "ctony",
+      "signed_at": "2026-07-19T00:30:00+08:00",
+      "notes": "8/8 checklist items pass. Mutation score 86.22% overall (all 5 files individually clear 85%: pl-scope-guard.mjs 100%, contracts.ts 100%, pl-contract-check.mjs 86.81%, pl-arch-check.mjs 85.44%, gen-scenarios.mjs 85.12%), survivors reviewed and categorized (deep lexer boundary cases, equivalent sort-comparator mutants), dependency rescan clean (0 vulns). compileGlob mid-path '**' defect found during mutation-test hardening was fixed and reverified (commit 744a254). Full integration baseline still has 30 non-Phase-A Windows/Bash failures (unrelated, pre-existing, not in scope). Human approved."
     }
   }
 }
