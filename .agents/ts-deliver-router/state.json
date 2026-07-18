@@ -64,7 +64,7 @@
       "acceptance": "pass",
       "integration": "fail",
       "complete": false,
-      "notes": "G2 pending. Dependency tree restored; focused tests 35/35 and type-check pass. Scoped Stryker completed 1,433 mutants: 57.50% score, 770 killed, 54 timed out, 348 survived, 261 no coverage. Required threshold is 85%. Manual e2e verification 2026-07-18: installed package into a real external end-user project, ran pl-enforcement-kernel, output matched expected. Does not satisfy G2 (mutation score, surviving-mutant review, dependency rescan still outstanding) but confirms real-world behavior is correct."
+      "notes": "G2 pending (human sign-off only). Dependency tree restored; focused tests 35/35 and type-check pass. Scoped Stryker rerun 2026-07-19 (correct epic-scoped config; the 57.50% figure was from the wrong top-level stryker.conf.json): 1,432 mutants, 86.07% score, 1207 killed, 29 timed out, 196 survived, 4 no-coverage, 0 errors. Per-file: pl-scope-guard.mjs 100%, contracts.ts 100%, pl-contract-check.mjs 86.81%, pl-arch-check.mjs 85.15%, gen-scenarios.mjs 85.12% -- all clear the 85% break threshold. Surviving mutants reviewed: mostly deep tokenizer/lexer internal boundary arithmetic and genuinely-equivalent sort-comparator removals (final output is independently re-sorted downstream), documented per-file in test file commit messages. One real defect found and documented (not fixed, out of scope): compileGlob's mid-path '**' segment can never match any file at any depth due to a redundant '/' from the segment join -- flagged to human separately. npm audit --omit=dev: 0 vulnerabilities. Manual e2e verification 2026-07-18: installed package into a real external end-user project, ran pl-enforcement-kernel, output matched expected."
     }
   },
   "gates": {
@@ -90,14 +90,14 @@
         "scenarios_archived": true,
         "scenario_count_matches_plan": true,
         "mutation_tool_run": true,
-        "mutation_score_gte_threshold": false,
-        "surviving_mutants_reviewed": false,
+        "mutation_score_gte_threshold": true,
+        "surviving_mutants_reviewed": true,
         "dependency_rescan_clean": true,
         "human_sign_off": false
       },
       "signed_by": null,
       "signed_at": null,
-      "notes": "Blocked: scoped Stryker completed at 57.50%, below required 85% (770 killed, 54 timed out, 348 survived, 261 no coverage). Survivor review and focused test hardening remain. Full integration baseline has 30 non-Phase-A Windows/Bash failures. Human sign-off remains pending."
+      "notes": "Only human_sign_off remains. Mutation score 86.07% overall (all 5 files individually clear 85%), survivors reviewed and categorized (deep lexer boundary cases, equivalent sort-comparator mutants), dependency rescan clean (0 vulns). Full integration baseline still has 30 non-Phase-A Windows/Bash failures (unrelated, pre-existing). One real (non-blocking) defect found in compileGlob's mid-path '**' handling -- documented in test file, not fixed, flagged to human for a decision."
     }
   }
 }
