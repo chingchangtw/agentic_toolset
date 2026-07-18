@@ -11,5 +11,6 @@ Load with: registry/index.md
 | a11y-audit     | rec  | user-facing/public product | addyosmani/agent-skills:accessibility-audit | -     |
 | query_graph    | rec  | dependency/flow analysis   | mcp:codebase-tools                          | -     |
 | ts-mutation-analyst | rec | mutation survivors require mapping | references/sub-agents.md | - |
+| mutation-test-scaffold | rec | mutation-survivor test pattern established, needs replicating across >=2 more files | Codex/Copilot muscle agent (references/agent-scaffold.md) | - |
 | ts-acpl        | rec  | scenario-to-pattern mismatch | references/acpl-integration.md              | -     |
 | github-test-status | rec | when github-mcp active | references/github-mcp.md (update_pull_request_review) | - |
