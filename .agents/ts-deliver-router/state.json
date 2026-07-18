@@ -92,7 +92,7 @@
         "mutation_tool_run": true,
         "mutation_score_gte_threshold": false,
         "surviving_mutants_reviewed": false,
-        "dependency_rescan_clean": false,
+        "dependency_rescan_clean": true,
         "human_sign_off": false
       },
       "signed_by": null,
