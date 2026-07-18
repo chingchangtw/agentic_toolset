@@ -174,29 +174,23 @@ describe('glob compilation', () => {
     expect(checkArchitecture({ root })).toMatchObject({ exitCode: 0 });
   });
 
-  // NOTE: compileGlob joins segments with '/', and a non-trailing '**' segment
-  // already expands to a pattern ending in '/' (`(?:[^/]+/)*`) — the join then
-  // inserts a second, redundant '/' before the next literal segment. That
-  // makes a mid-path '**' (e.g. 'src/**/leaf.ts') structurally unable to
-  // match any real path, at any directory depth. Documenting actual behavior
-  // here rather than the presumably-intended "zero or more directories"
-  // semantics, since fixing it is outside the scope of this mutation-testing pass.
-  it('a mid-path ** never matches, at any directory depth (compileGlob join inserts a redundant slash)', () => {
-    const zeroDepth = project({ ...manifest, layers: [{ name: 'app', globs: ['src/**/leaf.ts'], may_import: [] }] }, {
+  it('matches a mid-path ** against zero directory segments', () => {
+    const root = project({ ...manifest, layers: [{ name: 'app', globs: ['src/**/leaf.ts'], may_import: [] }] }, {
       'src/leaf.ts': 'export const leaf = true;',
     });
-    expect(checkArchitecture({ root: zeroDepth })).toMatchObject({
-      exitCode: 2,
-      diagnostics: [{ rule_id: 'PL-ARCH-UNMATCHED-LAYER' }],
-    });
+    expect(checkArchitecture({ root })).toMatchObject({ exitCode: 0 });
+  });
 
+  it('matches a mid-path ** against one or more nested directory segments', () => {
     const oneDepth = project({ ...manifest, layers: [{ name: 'app', globs: ['src/**/leaf.ts'], may_import: [] }] }, {
       'src/deep/leaf.ts': 'export const leaf = true;',
     });
-    expect(checkArchitecture({ root: oneDepth })).toMatchObject({
-      exitCode: 2,
-      diagnostics: [{ rule_id: 'PL-ARCH-UNMATCHED-LAYER' }],
+    expect(checkArchitecture({ root: oneDepth })).toMatchObject({ exitCode: 0 });
+
+    const twoDepth = project({ ...manifest, layers: [{ name: 'app', globs: ['src/**/leaf.ts'], may_import: [] }] }, {
+      'src/deep/nested/leaf.ts': 'export const leaf = true;',
     });
+    expect(checkArchitecture({ root: twoDepth })).toMatchObject({ exitCode: 0 });
   });
 
   it('escapes regex-special characters in a literal glob segment', () => {

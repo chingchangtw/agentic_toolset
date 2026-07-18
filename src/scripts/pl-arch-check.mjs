@@ -36,10 +36,19 @@ function compileGlob(glob) {
     || segments.some((part) => part.includes('**') && part !== '**')) {
     throw new Error(`Unsupported glob: ${glob}`);
   }
-  const pattern = segments.map((part, index) => {
-    if (part === '**') return index === segments.length - 1 ? '.*' : '(?:[^/]+/)*';
-    return part.replace(/[.+^$()|\\]/g, '\\$&').replaceAll('*', '[^/]*');
-  }).join('/');
+  let pattern = '';
+  segments.forEach((part, index) => {
+    const isLast = index === segments.length - 1;
+    if (part === '**') {
+      // Mid-path '**' already expands to a group ending in '/', which itself
+      // supplies the separator before the next segment — appending another
+      // '/' here would require an extra directory level that never exists.
+      pattern += isLast ? '.*' : '(?:[^/]+/)*';
+    } else {
+      pattern += part.replace(/[.+^$()|\\]/g, '\\$&').replaceAll('*', '[^/]*');
+      if (!isLast) pattern += '/';
+    }
+  });
   return new RegExp(`^${pattern}$`);
 }
 
