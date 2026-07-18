@@ -12,7 +12,11 @@ export function checkPhaseAScope(paths) {
     .sort();
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {
+export function isMainModule(moduleUrl, argv1) {
+  return moduleUrl === pathToFileURL(argv1 ?? '').href;
+}
+
+if (isMainModule(import.meta.url, process.argv[1])) {
   const violations = checkPhaseAScope(process.argv.slice(2));
   if (violations.length) {
     process.stderr.write(`${violations.join('\n')}\n`);

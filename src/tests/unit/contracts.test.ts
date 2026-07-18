@@ -14,6 +14,7 @@ describe('stable contracts', () => {
       contract(false, 'ORDER-TOTAL-POSITIVE', 'total must be positive');
     } catch (error) {
       expect(error).toBeInstanceOf(ContractViolation);
+      expect((error as Error).name).toBe('ContractViolation');
       expect(error).toMatchObject({ kind, id: 'ORDER-TOTAL-POSITIVE' });
     }
     expect(() => contract(true, 'ORDER-TOTAL-POSITIVE', 'total must be positive')).not.toThrow();
