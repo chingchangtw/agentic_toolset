@@ -83,6 +83,11 @@ See `docs/architecture.md` for full architecture, skill catalogue, hook data flo
 > development tooling (ts-deliver-router + Spectra + caveman). Not packaged into
 > `release.zip` — do not confuse with `src/skills/` (the deliverable).
 
+## Tool preferences
+Never use Bash `find`, `grep`, `ls -R`, or `cat` for file discovery/search.
+Always use the Glob tool for filename/pattern search and the Grep tool for
+content search. This applies on every OS — not just Windows — for consistency.
+
 ## Hard Rules
 
 1. Run `npm run type-check` after every code change.
