@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "current_phase": "test",
-  "phase_entered_at": "2026-07-15T02:30:11.0155732+08:00",
+  "current_phase": "ship",
+  "phase_entered_at": "2026-07-19T00:45:00+08:00",
   "phase_history": [
     {
       "phase": "plan",
@@ -28,6 +28,16 @@
       "exited_at": "2026-07-15T02:30:11.0155732+08:00",
       "artifacts_at_exit": {
         "report": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-ENFORCEMENT-KERNEL/review/report.md"
+      }
+    },
+    {
+      "phase": "test",
+      "entered_at": "2026-07-15T02:30:11.0155732+08:00",
+      "exited_at": "2026-07-19T00:45:00+08:00",
+      "artifacts_at_exit": {
+        "mutation_score": "86.22%",
+        "G2_signed_by": "ctony",
+        "commits": ["10f805d", "2d90fbe", "278d080", "be5d88c", "cc465b4", "744a254", "c6e2036"]
       }
     }
   ],
