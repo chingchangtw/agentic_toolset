@@ -18,6 +18,7 @@
 - fix(docs): README cheat-sheet link pointed at stale `docs/solution_cheat_sheet.html`, now `docs/dual-track-workflow.html`
 - refactor(hook): restructure `inject-workflow-state.sh` as a direct transcription of `SKILL.md`'s Workflow Guidance table — named guard functions, flat per-track case tables, one case arm per table row; byte-identical output, 24 existing tests unedited
 - chore(ts-deliver): close reflect phase for EPIC-PLDD-CONSUMER-ADAPTERS — router transitions reflect → idle; retro adds a `cli-mutation-coverage` rec row to `registry-build.md`
+- docs(user-guide): bump `USER_GUIDE.md` version badge and changelog to v0.1.8
 
 ## v0.1.6 — Skill directory hygiene: fix broken references and orphaned files
 
