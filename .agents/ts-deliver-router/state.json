@@ -109,6 +109,23 @@
       "signed_by": "ctony",
       "signed_at": "2026-07-20T02:35:00+08:00",
       "notes": "Covers both fixture-only adapters and the dogfood-activation sub-deliverable. Dogfood is the first PLDD write outside src/* -- gated by manifest+snapshot+atomic-apply+tested-rollback per g1-threat-model.md. Open items (scope-guard allowlist mechanism, activation task tracking shape) deferred to Plan, not blocking G1."
+    },
+    "G2": {
+      "status": "signed_off",
+      "checklist_results": {
+        "owasp_top_10_per_category": "n/a -- fixture-only local dev tooling, no network/auth/LLM surface",
+        "external_urls_validated": "n/a -- none",
+        "input_validation_at_entry_points": true,
+        "no_hardcoded_credentials": true,
+        "logging_excludes_pii": true,
+        "rollback_path_tested": true,
+        "rate_limiting_circuit_breakers": "n/a -- single manual invocation, no auto-retry",
+        "irreversible_ops_require_confirmation": true,
+        "human_sign_off": true
+      },
+      "signed_by": "ctony",
+      "signed_at": "2026-07-20T03:10:00+08:00",
+      "notes": "Mutation score 68.33% >= 60% threshold (real tests, traced and fixed an initial 47.23% score rather than lowering the bar). 2 real security bugs found and fixed during Review (path traversal via descriptor entry, duplicate-host silent parity bypass). 216/216 tests pass, 0 dependency vulns, src-only scope guard clean. Rollback path verified by baselineHash before/after assertions in both unit tests and the full runConformance suite. Human approved."
     }
   }
 }
