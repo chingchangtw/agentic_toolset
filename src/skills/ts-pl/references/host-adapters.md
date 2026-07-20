@@ -34,8 +34,16 @@ active, or dogfood-ready in any real project.
   the shared invocation module, but does not exercise either vendor's actual
   CLI or agent runtime.
 - No claim of dogfood readiness or real-project usability follows from this
-  fixture parity. Activating either adapter inside `agenticToolset` itself is
-  a separate, explicitly-approved step tracked outside this suite.
+  fixture parity alone. The activate/rollback mechanism itself (manifest-
+  driven snapshot, atomic apply, tested rollback — `pl-dogfood-activate.mjs`
+  / `pl-dogfood-rollback.mjs`) has since been proven live against
+  `agenticToolset`'s own tree, using the Claude Code adapter's single
+  `.claude/commands/pl-check.md` file as the first real payload, with an
+  empty-diff rollback round-trip confirmed. That proves the mechanism is
+  safe, not that PLDD is wired into every session: no live hook invokes
+  PLDD checks automatically, and Codex's adapter has not been activated
+  live. Wiring live enforcement (a hook run on every session) remains a
+  separate, explicitly-approved decision not covered by this activation.
 - Dependency-cruiser/ESLint config generation, install scaffolding, cards, and
   broader agent contracts are separate Phase B work, not covered here.
 

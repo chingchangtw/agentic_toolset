@@ -27,10 +27,10 @@
       "notes": "Change proposed via /spectra-propose, both Think-deferred open items resolved in design.md Decisions (scope-guard allowlist: extend with allowedPaths param, not bypass; activation tracked as this full Spectra change with BDD scenarios, not a manual checklist). spectra analyze: Coverage/Consistency/Gaps clean after 1 fix iteration (5 false-positive capability-coverage findings from backticked path mentions inside Capabilities prose, 4 missing-task findings from requirement names wrapped across markdown line breaks); 3 Suggestion-severity findings remain (missing concrete examples on 3 scenarios) per workflow rule to not block on Suggestions. spectra validate: pass. Change parked -- /spectra-apply not run this session per spectra-propose workflow contract (workflow ends at park, never auto-invokes apply)."
     },
     "build": {
-      "tasks_done": 6,
+      "tasks_done": 9,
       "tasks_total": 9,
-      "complete": false,
-      "notes": "Tasks 1.1-3.2 done: pl-scope-guard.mjs extended with allowedPaths param (regression + new tests pass, type-check clean); pl-dogfood-activate.mjs implemented (snapshot phase, atomic apply, manifest) with 4 fixture tests; pl-dogfood-rollback.mjs implemented (restore + post-restore verification) with 2 fixture tests. Remaining: 4.1/4.2 (real-tree manual verification against agenticToolset's own live tree -- paused for human input on real target-list content and branch confirmation before executing, since this is the epic's first-ever live write outside src/*), 5.1 (docs update)."
+      "complete": true,
+      "notes": "All 9 tasks done. 1.1-3.2: pl-scope-guard.mjs extended with allowedPaths param (regression + new tests pass); pl-dogfood-activate.mjs (snapshot, atomic apply, manifest) with 4 fixture tests; pl-dogfood-rollback.mjs (restore + verification) with 2 fixture tests. 4.1/4.2 (real-tree verification, paused for human decision on real target-list scope -- chose 'adapter descriptors only'): defined src/scripts/pl-dogfood-target-list.json (single target .claude/commands/pl-check.md, Claude Code adapter only -- no .codex/ dir exists in this repo), ran activation for real against agenticToolset's own tree on branch codex/pldd-dogfood-activation, verified git status showed exactly that one path added (harness live-picked-up the new pl-check command), ran rollback, verified git status/diff empty. 5.1: host-adapters.md updated. Full suite: 364/364 pass, type-check clean. Committed 3ea0b5e (mechanism) + follow-up commit (real-tree proof artifacts + docs), README.md stray edit excluded both times."
     },
     "review": {},
     "test": {}

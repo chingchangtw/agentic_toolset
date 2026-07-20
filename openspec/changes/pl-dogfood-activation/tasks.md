@@ -48,13 +48,13 @@
 
 ## 4. Real-tree manual verification (Build, per design.md Migration Plan — Decision: track activation as this Spectra change with its own BDD scenarios, not a manual Build checklist)
 
-- [ ] 4.1 Define the fixed target-list for this repo's actual activation
+- [x] 4.1 Define the fixed target-list for this repo's actual activation
   (specific `.agents/ts-deliver-router/registry.json` keys, specific
   `.claude/hooks/*` files, specific router-config paths) as reviewed,
   checked-in content (not dynamically discovered). Verify by a content
   review confirming every listed path is one of the categories G1's Flow 2
   blast-radius bounds names, and none fall outside that set.
-- [ ] 4.2 Run `pl-dogfood-activate.mjs` on a branch against the real
+- [x] 4.2 Run `pl-dogfood-activate.mjs` on a branch against the real
   `agenticToolset` tree using the target-list from 4.1, then run
   `pl-dogfood-rollback.mjs` against the resulting manifest. Verify via
   `git status` showing exactly the expected paths changed immediately after
@@ -64,7 +64,7 @@
 
 ## 5. Documentation
 
-- [ ] 5.1 Update `src/skills/ts-pl/references/host-adapters.md`'s "What's
+- [x] 5.1 Update `src/skills/ts-pl/references/host-adapters.md`'s "What's
   not proven" section to reflect that dogfood activation is now proven for
   the activate/rollback mechanism itself (not a claim that live hooks are
   wired to invoke PLDD checks on every session — design.md's Implementation
