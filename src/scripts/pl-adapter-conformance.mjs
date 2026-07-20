@@ -22,7 +22,7 @@ const KERNEL_COMMANDS = {
   scenario: join(SCRIPT_DIR, 'gen-scenarios.mjs'),
 };
 const HOSTS = new Set(['codex', 'claude-code']);
-const RULE_ID_PATTERN = /\bPL-[A-Z]+(?:-[A-Z0-9]+)+\b/g;
+const RULE_ID_PATTERN = /\bPL-[A-Z]+(?:-[A-Z0-9]+)+\b/gi;
 
 const slash = (value) => String(value).replaceAll('\\', '/');
 const inside = (root, value) => {
@@ -90,8 +90,9 @@ export function loadDescriptor(path) {
   if (!HOSTS.has(raw.host)) throw structuralError('PL-ADAPTER-DESCRIPTOR-HOST', `Unknown descriptor host in ${path}: ${raw.host}`);
   if (raw.invocation !== 'pl-kernel') throw structuralError('PL-ADAPTER-DESCRIPTOR-INVOCATION', `Unsupported descriptor invocation in ${path}: ${raw.invocation}`);
   if (raw.display !== 'passthrough') throw structuralError('PL-ADAPTER-DESCRIPTOR-DISPLAY', `Unsupported descriptor display mode in ${path}: ${raw.display}`);
-  if (typeof raw.entry !== 'string' || raw.entry.trim() === '' || isAbsolute(raw.entry)) {
-    throw structuralError('PL-ADAPTER-DESCRIPTOR-ENTRY', `Descriptor entry must be a non-empty project-relative path in ${path}`);
+  if (typeof raw.entry !== 'string' || raw.entry.trim() === '' || isAbsolute(raw.entry)
+    || slash(raw.entry).split('/').includes('..')) {
+    throw structuralError('PL-ADAPTER-DESCRIPTOR-ENTRY', `Descriptor entry must be a non-empty project-relative path with no '..' segments in ${path}`);
   }
   return { version: '1', host: raw.host, invocation: raw.invocation, entry: raw.entry, display: raw.display };
 }
@@ -149,9 +150,13 @@ export function normalizeObservation({ host, case_id, command, exit_code, stdout
 
 /** Installs a host adapter's template into an isolated consumer root; records generated paths. */
 export function installAdapter(descriptor, templatesRoot, consumerRoot) {
-  const source = resolve(templatesRoot, descriptor.host, descriptor.entry);
+  const hostTemplatesRoot = resolve(templatesRoot, descriptor.host);
+  const source = resolve(hostTemplatesRoot, descriptor.entry);
   const destination = resolve(consumerRoot, descriptor.entry);
   const root = resolve(consumerRoot);
+  if (!inside(hostTemplatesRoot, source)) {
+    throw structuralError('PL-ADAPTER-INSTALL-PATH-ESCAPE', `Descriptor entry escapes the host templates root: ${descriptor.entry}`);
+  }
   if (!inside(root, destination)) {
     throw structuralError('PL-ADAPTER-INSTALL-PATH-ESCAPE', `Descriptor entry escapes the consumer root: ${descriptor.entry}`);
   }
@@ -207,6 +212,15 @@ export function runConformance({ manifest, descriptors, templatesRoot, consumerR
   const diagnostics = [];
   const observations = [];
   let structuralFailure = false;
+
+  const hostSet = new Set(descriptors.map((d) => d.host));
+  if (descriptors.length !== 2 || hostSet.size !== 2) {
+    return {
+      exitCode: 2,
+      observations,
+      diagnostics: [{ version: '1', rule_id: 'PL-ADAPTER-DESCRIPTOR-HOST', severity: 'error', file: '', dependency: '', message: `Conformance requires exactly two descriptors with distinct hosts, got: ${descriptors.map((d) => d.host).join(', ') || 'none'}` }],
+    };
+  }
 
   for (const kase of manifest.cases) {
     const perHostObservations = {};

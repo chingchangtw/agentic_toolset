@@ -116,6 +116,13 @@ describe('loadDescriptor', () => {
     writeFileSync(join(dir, 'descriptor.json'), JSON.stringify({ ...base, entry: '/etc/passwd' }));
     expect(() => loadDescriptor(join(dir, 'descriptor.json'))).toThrow(/descriptor entry/i);
   });
+
+  it('rejects an entry path that traverses above the templates root', () => {
+    const dir = tempDir('pl-adapter-descriptor-');
+    const base = JSON.parse(readFileSync(CODEX_DESCRIPTOR, 'utf8'));
+    writeFileSync(join(dir, 'descriptor.json'), JSON.stringify({ ...base, entry: '../../../../../../etc/hosts' }));
+    expect(() => loadDescriptor(join(dir, 'descriptor.json'))).toThrow(/descriptor entry/i);
+  });
 });
 
 describe('checkAdapterBoundary', () => {
@@ -136,6 +143,15 @@ describe('checkAdapterBoundary', () => {
     expect(violations).toHaveLength(1);
     expect(violations[0].rule_id).toBe('PL-ADAPTER-BOUNDARY');
     expect(violations[0].message).toContain('PL-ARCH-FORBIDDEN-IMPORT');
+  });
+
+  it('fails a template planted with a lower-case kernel rule id (case-insensitive match)', () => {
+    const dir = tempDir('pl-adapter-boundary-');
+    const planted = join(dir, 'pl-check.md');
+    writeFileSync(planted, 'kernel emits pl-arch-forbidden-import when disallowed.');
+    const violations = checkAdapterBoundary([planted]);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].message).toContain('pl-arch-forbidden-import');
   });
 });
 
@@ -166,6 +182,12 @@ describe('installAdapter / rollbackAdapter', () => {
     expect(readFileSync(installedPath, 'utf8')).toBe(readFileSync(join(TEMPLATES_ROOT, 'codex', '.codex', 'commands', 'pl-check.md'), 'utf8'));
     rollbackAdapter(manifest);
     expect(() => readFileSync(installedPath, 'utf8')).toThrow();
+  });
+
+  it('rejects a hand-built descriptor whose entry escapes the host templates root (defense in depth, bypassing loadDescriptor)', () => {
+    const malicious = { version: '1', host: 'codex', invocation: 'pl-kernel', entry: '../../claude-code/.claude/commands/pl-check.md', display: 'passthrough' };
+    const consumerRoot = tempDir('pl-adapter-consumer-');
+    expect(() => installAdapter(malicious, TEMPLATES_ROOT, consumerRoot)).toThrow(/escapes the host templates root/);
   });
 });
 
@@ -239,6 +261,33 @@ describe('runConformance (full parity suite, in-process)', () => {
     // invalid-manifest / unsupported-syntax / ownership-failing all exit 2 -> suite is structural-failure-free
     // but their case-level exit codes are captured per observation, not asserted on the suite exitCode here
     // because parity (not raw kernel exit) is what the suite's exitCode reports.
+    expect(result.exitCode).toBe(0);
+  });
+
+  it('exits 2 and never runs parity comparison when both descriptors share the same host', () => {
+    const manifest = loadManifest(MANIFEST_PATH, { fixtureRoot: FIXTURE_ROOT });
+    const codex = loadDescriptor(CODEX_DESCRIPTOR);
+    const workDir = tempDir('pl-adapter-conformance-');
+    const result = runConformance({
+      manifest,
+      descriptors: [codex, codex],
+      templatesRoot: TEMPLATES_ROOT,
+      consumerRootFactory: (caseId: string, host: string) => join(workDir, `${caseId}-${host}`),
+    });
+    expect(result.exitCode).toBe(2);
+    expect(result.observations).toEqual([]);
+    expect(result.diagnostics.some((d: any) => d.rule_id === 'PL-ADAPTER-DESCRIPTOR-HOST')).toBe(true);
+  });
+
+  it('exits 2 for an empty case list rather than silently reporting success', () => {
+    const workDir = tempDir('pl-adapter-conformance-');
+    const result = runConformance({
+      manifest: { version: '1', cases: [] },
+      descriptors: [loadDescriptor(CODEX_DESCRIPTOR), loadDescriptor(CLAUDE_DESCRIPTOR)],
+      templatesRoot: TEMPLATES_ROOT,
+      consumerRootFactory: (caseId: string, host: string) => join(workDir, `${caseId}-${host}`),
+    });
+    expect(result.observations).toEqual([]);
     expect(result.exitCode).toBe(0);
   });
 });
