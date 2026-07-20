@@ -1,0 +1,47 @@
+{
+  "version": "1",
+  "cases": [
+    {
+      "id": "compliant-architecture",
+      "command": "arch",
+      "fixture": "../pl-sample-app/compliant",
+      "args": [],
+      "expected": "../pl-sample-app/compliant/expected.json"
+    },
+    {
+      "id": "forbidden-import",
+      "command": "arch",
+      "fixture": "../pl-sample-app/architecture-failing",
+      "args": [],
+      "expected": "../pl-sample-app/architecture-failing/expected.json"
+    },
+    {
+      "id": "invalid-manifest",
+      "command": "arch",
+      "fixture": "invalid-manifest",
+      "args": [],
+      "expected": "invalid-manifest/expected.json"
+    },
+    {
+      "id": "unsupported-syntax",
+      "command": "arch",
+      "fixture": "../pl-sample-app/unsupported-syntax",
+      "args": [],
+      "expected": "../pl-sample-app/unsupported-syntax/expected.json"
+    },
+    {
+      "id": "contract-violation",
+      "command": "contract",
+      "fixture": "../pl-sample-app/contract-failing",
+      "args": ["--source", "src/order.ts", "--test", "tests/order.violation.ts"],
+      "expected": "../pl-sample-app/contract-failing/expected.json"
+    },
+    {
+      "id": "ownership-failing",
+      "command": "scenario",
+      "fixture": "../pl-sample-app/ownership-failing",
+      "args": ["--input", "exploration.json"],
+      "expected": "../pl-sample-app/ownership-failing/expected.json"
+    }
+  ]
+}
