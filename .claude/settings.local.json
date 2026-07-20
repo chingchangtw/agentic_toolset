@@ -46,7 +46,8 @@
       "Bash(npx vitest *)",
       "Bash(npm run *)",
       "Bash(gh auth *)",
-      "Bash(gh release *)"
+      "Bash(gh release *)",
+      "Skill(retro)"
     ],
     "deny": [
       "Bash(sudo *)",

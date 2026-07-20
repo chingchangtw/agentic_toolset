@@ -19,3 +19,4 @@ Load with: registry/index.md
 | simplify              | rec    | after logical change unit   | gstack:/simplify                        | -     |
 | ts-acpl               | rec    | domain-heavy implementation | references/acpl-integration.md          | -     |
 | github-push           | rec    | when github-mcp active      | references/github-mcp.md (push_files)   | -     |
+| cli-mutation-coverage | rec    | new CLI entrypoint script   | in-process runCli/isMainModule test (see pl-scope-guard.test.ts pattern) | -     |
