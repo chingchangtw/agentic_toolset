@@ -27,7 +27,7 @@ describe('rollback', () => {
 
       const manifest = activate(
         {
-          allowedPaths: [dir],
+          allowedPaths: [existing, notYetExisting],
           targets: [
             { path: existing, content: 'new-content' },
             { path: notYetExisting, content: 'brand-new-content' },
@@ -47,21 +47,38 @@ describe('rollback', () => {
     });
   });
 
-  it('detects a mismatch and names the path when a restored target diverges from its snapshot', () => {
+  it('refuses to restore (aborts before any write) when a target diverged from the recorded post-activation state', () => {
     withTmpDir((dir) => {
       const target = join(dir, 'a.txt');
       writeFileSync(target, 'original-content');
       const snapshotDir = join(dir, 'snapshot');
 
       const manifest = activate(
-        { allowedPaths: [dir], targets: [{ path: target, content: 'new-content' }] },
+        { allowedPaths: [target], targets: [{ path: target, content: 'new-content' }] },
         snapshotDir,
       );
 
-      // Simulate a concurrent external write landing on the target between
-      // rollback's own restore step and its post-restore verification: the
-      // injected reader reports different bytes for the target path than
-      // what rollback itself just restored.
+      // Simulate a concurrent external write landing on the target after
+      // activation completed but before rollback runs.
+      writeFileSync(target, 'concurrently-modified-content');
+
+      expect(() => rollback(manifest)).toThrow(/diverged from activation state/);
+      // Rollback aborted before touching anything -- the concurrent edit survives.
+      expect(readFileSync(target, 'utf8')).toBe('concurrently-modified-content');
+    });
+  });
+
+  it('detects a mismatch via injected divergence and names the path', () => {
+    withTmpDir((dir) => {
+      const target = join(dir, 'a.txt');
+      writeFileSync(target, 'original-content');
+      const snapshotDir = join(dir, 'snapshot');
+
+      const manifest = activate(
+        { allowedPaths: [target], targets: [{ path: target, content: 'new-content' }] },
+        snapshotDir,
+      );
+
       const readFile = (path: string) =>
         path === target ? 'concurrently-modified-content' : readFileSync(path, 'utf8');
 

@@ -39,19 +39,30 @@ export function activate(targetList, snapshotDir, readFile = (p) => readFileSync
   });
 
   // Apply phase: write tmp -> rename, per target, only after every snapshot succeeded.
-  const manifestTargets = targets.map((target, index) => {
-    const snapshotEntry = snapshotEntries[index];
-    mkdirSync(dirname(target.path), { recursive: true });
-    const tmpPath = `${target.path}.tmp`;
-    writeFileSync(tmpPath, target.content);
-    renameSync(tmpPath, target.path);
-    return {
-      path: target.path,
-      existed_before: snapshotEntry.existed_before,
-      snapshot_path: snapshotEntry.snapshot_path,
-      new_hash: sha256(target.content),
-    };
-  });
+  // Builds the manifest incrementally (not via .map's single return) so that if a
+  // later target's write/rename throws, every already-applied target still has a
+  // manifest entry attached to the thrown error -- otherwise a partial failure
+  // would leave live-modified files with no manifest to feed pl-dogfood-rollback.mjs.
+  const manifestTargets = [];
+  try {
+    for (let index = 0; index < targets.length; index += 1) {
+      const target = targets[index];
+      const snapshotEntry = snapshotEntries[index];
+      mkdirSync(dirname(target.path), { recursive: true });
+      const tmpPath = `${target.path}.tmp`;
+      writeFileSync(tmpPath, target.content);
+      renameSync(tmpPath, target.path);
+      manifestTargets.push({
+        path: target.path,
+        existed_before: snapshotEntry.existed_before,
+        snapshot_path: snapshotEntry.snapshot_path,
+        new_hash: sha256(target.content),
+      });
+    }
+  } catch (error) {
+    error.partialManifest = { version: '1', snapshot_dir: snapshotDir, targets: manifestTargets };
+    throw error;
+  }
 
   return {
     version: '1',
@@ -72,13 +83,25 @@ export function runCli(argv) {
     return 2;
   }
   const targetList = JSON.parse(readFileSync(args.manifest, 'utf8'));
-  const manifest = activate(targetList, args.snapshotDir);
-  const json = JSON.stringify(manifest, null, 2);
-  process.stdout.write(`${json}\n`);
-  if (args.manifestOut) {
-    writeFileSync(args.manifestOut, json);
+  try {
+    const manifest = activate(targetList, args.snapshotDir);
+    const json = JSON.stringify(manifest, null, 2);
+    process.stdout.write(`${json}\n`);
+    if (args.manifestOut) {
+      writeFileSync(args.manifestOut, json);
+    }
+    return 0;
+  } catch (error) {
+    if (error.partialManifest && args.manifestOut) {
+      writeFileSync(args.manifestOut, JSON.stringify(error.partialManifest, null, 2));
+      process.stderr.write(
+        `activation failed partway through: ${error.message}\npartial manifest written to ${args.manifestOut} -- run pl-dogfood-rollback.mjs against it to restore already-applied targets\n`,
+      );
+    } else {
+      process.stderr.write(`${error.message}\n`);
+    }
+    return 1;
   }
-  return 0;
 }
 
 export function isMainModule(moduleUrl, argv1) {

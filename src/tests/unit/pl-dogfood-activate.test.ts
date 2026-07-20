@@ -29,7 +29,7 @@ describe('activate', () => {
 
       const manifest = activate(
         {
-          allowedPaths: [dir],
+          allowedPaths: [existingA, existingB, existingC, notYetExisting],
           targets: [
             { path: existingA, content: 'new-a' },
             { path: existingB, content: 'new-b' },
@@ -65,7 +65,7 @@ describe('activate', () => {
 
       expect(() =>
         activate(
-          { allowedPaths: [dir], targets: [{ path: target, content: 'new-content' }] },
+          { allowedPaths: [target], targets: [{ path: target, content: 'new-content' }] },
           snapshotDir,
           readFile,
         ),
@@ -84,7 +84,7 @@ describe('activate', () => {
 
       const manifest = activate(
         {
-          allowedPaths: [dir],
+          allowedPaths: [a, b],
           targets: [
             { path: a, content: 'new-a-content' },
             { path: b, content: 'new-b-content' },
@@ -118,13 +118,59 @@ describe('activate', () => {
       const snapshotDir = join(dir, 'snapshot');
 
       expect(() =>
-        activate(
-          { allowedPaths: [], targets: [{ path: target, content: 'new-content' }] },
-          snapshotDir,
-        ),
+        activate({ allowedPaths: [], targets: [{ path: target, content: 'new-content' }] }, snapshotDir),
       ).toThrow(/outside declared allowlist/);
 
       expect(existsSync(target)).toBe(false);
+    });
+  });
+
+  it('rejects an unsafe allowedPaths entry (dot/dotdot/traversal) instead of silently permitting everything', () => {
+    withTmpDir((dir) => {
+      const target = join(dir, 'a.txt');
+      const snapshotDir = join(dir, 'snapshot');
+
+      expect(() =>
+        activate({ allowedPaths: ['.'], targets: [{ path: target, content: 'new-content' }] }, snapshotDir),
+      ).toThrow(/unsafe allowedPaths entry/);
+
+      expect(existsSync(target)).toBe(false);
+    });
+  });
+
+  it('attaches a partial manifest to the thrown error when a later target fails mid-apply', () => {
+    withTmpDir((dir) => {
+      const a = join(dir, 'a.txt');
+      const blockerFile = join(dir, 'blocker');
+      const b = join(dir, 'blocker', 'b.txt');
+      const snapshotDir = join(dir, 'snapshot');
+
+      // Force the second target's write to fail: 'blocker' exists as a
+      // plain file, so mkdirSync(dirname(b)) throws (can't mkdir through
+      // a file) after 'a.txt' has already been fully applied.
+      writeFileSync(blockerFile, '');
+
+      let thrown: any;
+      try {
+        activate(
+          {
+            allowedPaths: [a, b],
+            targets: [
+              { path: a, content: 'new-a' },
+              { path: b, content: 'new-b' },
+            ],
+          },
+          snapshotDir,
+        );
+      } catch (error) {
+        thrown = error;
+      }
+
+      expect(thrown).toBeDefined();
+      expect(thrown.partialManifest).toBeDefined();
+      expect(thrown.partialManifest.targets).toHaveLength(1);
+      expect(thrown.partialManifest.targets[0].path).toBe(a);
+      expect(readFileSync(a, 'utf8')).toBe('new-a');
     });
   });
 });

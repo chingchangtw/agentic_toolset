@@ -15,6 +15,18 @@ function sha256(content) {
  * @param {(path: string) => boolean} [fileExists]
  */
 export function rollback(manifest, readFile = (p) => readFileSync(p, 'utf8'), fileExists = existsSync) {
+  // Pre-restore integrity check: if anything touched a target after activation
+  // (its current bytes no longer match what activation wrote), refuse to
+  // silently clobber that change -- abort before restoring any target.
+  for (const target of manifest.targets) {
+    if (fileExists(target.path)) {
+      const actual = readFile(target.path);
+      if (sha256(actual) !== target.new_hash) {
+        throw new Error(`rollback aborted, target diverged from activation state: ${target.path}`);
+      }
+    }
+  }
+
   for (const target of manifest.targets) {
     if (target.existed_before) {
       const content = readFile(target.snapshot_path);

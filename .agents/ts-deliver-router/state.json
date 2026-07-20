@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "current_phase": "build",
-  "phase_entered_at": "2026-07-20T04:20:00+08:00",
+  "current_phase": "test",
+  "phase_entered_at": "2026-07-20T05:10:00+08:00",
   "phase_history": [],
   "epic_id": "EPIC-PLDD-CONSUMER-ADAPTERS",
   "epic_type": "epic",
@@ -32,7 +32,11 @@
       "complete": true,
       "notes": "All 9 tasks done. 1.1-3.2: pl-scope-guard.mjs extended with allowedPaths param (regression + new tests pass); pl-dogfood-activate.mjs (snapshot, atomic apply, manifest) with 4 fixture tests; pl-dogfood-rollback.mjs (restore + verification) with 2 fixture tests. 4.1/4.2 (real-tree verification, paused for human decision on real target-list scope -- chose 'adapter descriptors only'): defined src/scripts/pl-dogfood-target-list.json (single target .claude/commands/pl-check.md, Claude Code adapter only -- no .codex/ dir exists in this repo), ran activation for real against agenticToolset's own tree on branch codex/pldd-dogfood-activation, verified git status showed exactly that one path added (harness live-picked-up the new pl-check command), ran rollback, verified git status/diff empty. 5.1: host-adapters.md updated. Full suite: 364/364 pass, type-check clean. Committed 3ea0b5e (mechanism) + follow-up commit (real-tree proof artifacts + docs), README.md stray edit excluded both times."
     },
-    "review": {},
+    "review": {
+      "report": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/review-slice2/report.md",
+      "complete": true,
+      "notes": "Adversarial subagent found 6 findings (1 HIGH, 2 MEDIUM, 3 LOW) in pl-dogfood-activate.mjs/pl-dogfood-rollback.mjs/pl-scope-guard.mjs. HIGH fixed: partial apply-phase failure produced no manifest, breaking the rollback recovery contract -- manifest now built incrementally with a partial-manifest attached to thrown errors. MEDIUM fixed: new_hash was computed but never verified (rollback now aborts on pre-restore divergence instead of silently overwriting an intervening edit); allowedPaths entries were unvalidated (now rejects '.', '..', '../'-prefixed entries). 3 LOW findings (no symlink/realpath check, non-unique tmp filenames, TOCTOU) accepted with rationale matching design.md's single-operator/manual-invocation threat model, same class as slice 1's accepted findings. 367/367 tests pass after fixes (3 new), type-check clean, real-tree round-trip re-verified against agenticToolset's own tree with the fixed scripts (still exactly one path changed, still empty diff after rollback)."
+    },
     "test": {}
   },
   "gates": {
