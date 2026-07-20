@@ -1,19 +1,23 @@
 # Changelog
 
-## Unreleased — Dual-track orchestration: work-type routing, Discovery sub-agents
+## v0.1.8 — Dual-track orchestration, PLDD reflect-close, command frontmatter
 
 - feat(agents): ship `ts-event-storming-facilitator` and `ts-ddd-tactical-validator` as sub-agents (`src/agents/`), packaged via a new `agents[]` release-manifest category, installed to `<project>/.claude/agents/` by both installers
 - feat(routing): add `feature`/`hotfix`/`chore`/`patch`/`spike`/`ops` work-type phase spines to `phase-routing.ts`, alongside existing `bugfix`/`refactor`/`epic`
 - feat(ts-orchestrate): SKILL.md gets a Workflow Routing table (9 end-user work types, both tracks named inline) and a Workflow Guidance table (per-state guidance, both tracks)
 - feat(hook): `inject-workflow-state.sh` now emits Discovery-track `[NEXT]` guidance (focus-idea priority: validating > exploring > idea > ready)
+- feat(commands): add YAML frontmatter `description` to all `ts-deliver`/`ts-discover`/`ts-iteration`/`ts-project` command stubs so sub-commands show meaningful text in `/help` and command pickers
 - docs(planner): wire the two new sub-agents into `/ts-discover explore|validate|decide` gates; slim planner's Workflow Routing section to point at ts-orchestrate as canonical
+- docs: require `jq` for `.json`/`.jsonl` content instead of grep/cat/sed — text match breaks on nested/multi-line JSON and false-positives on substrings; scoped to `.agents/*.json*` state files
 - test: add spine-consistency test asserting `phase-routing.ts` and `work-unit-profiles.md` stay in lockstep for the 6 new work types
 - fix(hook-tests): `.ai` → `.agents` fixture paths (pre-existing test breakage, unrelated to `.agents/` rename already shipped)
 - fix(pilot): assert `manifest.agents` entries land on disk post-install (was previously unchecked)
 - fix(hook): `inject-workflow-state.sh` Ship-gate check read `gates["sec-review"]` but `state.json` keys the gate `G2` — the `[BLOCKED]` check was dead code, never fired against real state
 - fix(hook): `reflect` `[NEXT]` guidance didn't branch on `spike` work type despite `SKILL.md` documenting the clause — hook never read `epic.type`
 - fix(hook): `ts-session-guard.py`/`.ps1` counted messages by checking `entry.type == "message"`, a value that never occurs in real transcripts (`user`/`assistant` only) — the TURNS warning never fired in either port
+- fix(docs): README cheat-sheet link pointed at stale `docs/solution_cheat_sheet.html`, now `docs/dual-track-workflow.html`
 - refactor(hook): restructure `inject-workflow-state.sh` as a direct transcription of `SKILL.md`'s Workflow Guidance table — named guard functions, flat per-track case tables, one case arm per table row; byte-identical output, 24 existing tests unedited
+- chore(ts-deliver): close reflect phase for EPIC-PLDD-CONSUMER-ADAPTERS — router transitions reflect → idle; retro adds a `cli-mutation-coverage` rec row to `registry-build.md`
 
 ## v0.1.6 — Skill directory hygiene: fix broken references and orphaned files
 
