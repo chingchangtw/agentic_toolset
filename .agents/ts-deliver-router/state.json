@@ -45,12 +45,13 @@
     },
     "ship": {
       "branch": "codex/pldd-dogfood-activation",
-      "commits": ["3ea0b5e", "9c01e52", "9723e97", "2d33bad", "df23d1b"],
+      "commits": ["3ea0b5e", "9c01e52", "9723e97", "2d33bad", "df23d1b", "6414d1e"],
       "pushed": true,
-      "pr_opened": false,
+      "pr_opened": true,
+      "pr_url": "https://github.com/chingchangtw/agentic_toolset/pull/9",
       "merged": false,
       "complete": false,
-      "notes": "G2 signed off by ctony. Branch pushed to origin/codex/pldd-dogfood-activation per explicit human choice (push only, no PR yet, not staying purely local) -- ctony will open the PR themselves. Not merged; epic remains active/not-done until merge. Reflect not started."
+      "notes": "G2 signed off by ctony. Branch pushed to origin/codex/pldd-dogfood-activation. PR #9 opened against master (ctony asked explicitly this turn to open it, after choosing push-only the prior turn). Not merged; epic remains active/not-done until merge. Reflect not started."
     }
   },
   "gates": {

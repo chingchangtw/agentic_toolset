@@ -20,3 +20,4 @@
 {"event":"phase_exit","ts":"2026-07-20T05:10:00+08:00","from":"review","to":"test","epic_id":"EPIC-PLDD-CONSUMER-ADAPTERS","slice":"pl-dogfood-activation","artifacts_at_exit":{"report":".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/review-slice2/report.md","findings_fixed":3,"findings_accepted":3}}
 {"event":"phase_exit","ts":"2026-07-20T05:35:00+08:00","from":"test","to":"ship","epic_id":"EPIC-PLDD-CONSUMER-ADAPTERS","slice":"pl-dogfood-activation","artifacts_at_exit":{"mutation_score":"88.03%","threshold":60,"tests":"394/394 pass"}}
 {"event":"gate_signed","ts":"2026-07-20T05:40:00+08:00","gate":"G2","epic_id":"EPIC-PLDD-CONSUMER-ADAPTERS","slice":"pl-dogfood-activation","signed_by":"ctony"}
+{"event":"pr_opened","ts":"2026-07-20T05:50:00+08:00","epic_id":"EPIC-PLDD-CONSUMER-ADAPTERS","slice":"pl-dogfood-activation","pr_url":"https://github.com/chingchangtw/agentic_toolset/pull/9"}
