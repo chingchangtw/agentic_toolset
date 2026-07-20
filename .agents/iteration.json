@@ -16,13 +16,13 @@
       "type": "epic",
       "priority": 1,
       "depends_on": [],
-      "status": "active",
+      "status": "done",
       "router_state": ".agents/ts-deliver-router/state.json",
       "branch": "codex/pldd-enforcement-kernel",
-      "mutation_score": null,
-      "shipped_at": null,
+      "mutation_score": "86.22%",
+      "shipped_at": "2026-07-20T02:11:19Z",
       "jira_key": null,
-      "notes": "Phase A only. All implementation changes below src/*. Zero new npm dependencies. Deliver fail-closed architecture/placement checking, stable diagnostics, contract-id parity, versioned ownership relations, scenario compilation, and fixture tests. Current dual-track configuration remains unchanged."
+      "notes": "Phase A only. All implementation changes below src/*. Zero new npm dependencies. Delivered fail-closed architecture/placement checking, stable diagnostics, contract-id parity, versioned ownership relations, scenario compilation, and fixture tests. Current dual-track configuration remains unchanged. G1+G2 signed off by ctony. Merged to master via PR #7 (42572ec). Real defect found and fixed during mutation-test hardening: compileGlob mid-path '**' never matched any file (commit 744a254)."
     },
     {
       "id": "EPIC-PLDD-CONSUMER-ADAPTERS",
@@ -41,7 +41,7 @@
       "notes": "Phase B only; depends on Phase A. Add inactive scaffold/install adapters, optional dependency-cruiser/ESLint generation, cards, agent contracts, templates, Build checklist, fixture-only dry-run, generated-file manifest, and rollback plan. All implementation changes below src/*. No live agenticToolset activation. Dogfood requires separate approval."
     }
   ],
-  "active_epic": "EPIC-PLDD-ENFORCEMENT-KERNEL",
+  "active_epic": null,
   "iteration_start": "2026-07-13T13:32:14.0050311+08:00",
   "iteration_close": null,
   "writer_lock": null,
@@ -145,6 +145,12 @@
       "epic_id": "EPIC-PLDD-ENFORCEMENT-KERNEL",
       "at": "2026-07-13T13:40:04.0999357+08:00",
       "note": "type=epic. Router initialized at Think. Phase A src-only boundary active. Existing Spectra change pl-enforcement-kernel-phase-a detected with proposal done; continuation blocked until G1 human sign-off."
+    },
+    {
+      "event": "epic_reflect_closed",
+      "epic_id": "EPIC-PLDD-ENFORCEMENT-KERNEL",
+      "at": "2026-07-20T02:20:00+08:00",
+      "note": "Test->Ship->Reflect run this session. G2 signed off by ctony (86.22% mutation score, 0 dependency vulns, 8/8 checklist). One real defect found and fixed during mutation-test hardening (compileGlob mid-path '**' never matched, commit 744a254). Merged to master via PR #7 (42572ec), conflicts against a stale .agents/ snapshot on master (edff5e7) resolved by taking the branch's live state (verified superset, no data loss). Retro: .agents/ts-project-planner/retrospectives/Iter4-EPIC-PLDD-ENFORCEMENT-KERNEL-retro.md. Feedback written to discovery.json idea-004 (source_epic set; status stays 'ready' since Phase B/consumer-adapters remain). Epic marked done. Iteration NOT closed -- EPIC-PLDD-CONSUMER-ADAPTERS still queued (1/2 epics done)."
     }
   ]
 }

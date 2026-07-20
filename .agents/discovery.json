@@ -224,7 +224,7 @@
       "id": "idea-004",
       "title": "PLDD portable enforcement kernel and consumer adapters",
       "status": "ready",
-      "source_epic": null,
+      "source_epic": "EPIC-PLDD-ENFORCEMENT-KERNEL",
       "keep_learning_count": 0,
       "riskiest_assumptions": [
         {
@@ -404,7 +404,7 @@
         "EPIC-PLDD-CONSUMER-ADAPTERS"
       ],
       "synced_to_plan": true,
-      "notes": "Explored from tasks/harnessPRD/PRD-PLDD-multi-scale-pattern-language.md. Phase A/B isolation and Dogfood Activation boundary are mandatory. VALIDATE 2026-07-13: feasibility=risky; DDD Mode A=FAIL. Build blocked pending explicit command/event ownership, host ACL boundaries, and vocabulary coverage >=0.5; re-run explore then validate. RE-EXPLORE 2026-07-13: added ownership_relations_v1 and external_adapters_v1 without changing legacy array types; aligned ubiquitous language with modeled names. REVALIDATE 2026-07-13: DDD Mode A PASS; ownership 10/10 commands and 10/10 events; 3 external adapters declared; ubiquitous-language coverage 1.00. Feasibility remains risky due fail-closed parser-scope requirement. DECIDE 2026-07-13: build. Ready epics split by rollout boundary: EPIC-PLDD-ENFORCEMENT-KERNEL (Phase A, src-only, zero new dependencies) then EPIC-PLDD-CONSUMER-ADAPTERS (Phase B, src-only, inactive fixture-tested adapters). Phase B depends on Phase A. Dogfood activation is excluded and still requires separate human approval. SYNC 2026-07-13: added Phase A and Phase B epics to Iter4; dependency Phase B -> Phase A; dogfood activation excluded."
+      "notes": "Explored from tasks/harnessPRD/PRD-PLDD-multi-scale-pattern-language.md. Phase A/B isolation and Dogfood Activation boundary are mandatory. VALIDATE 2026-07-13: feasibility=risky; DDD Mode A=FAIL. Build blocked pending explicit command/event ownership, host ACL boundaries, and vocabulary coverage >=0.5; re-run explore then validate. RE-EXPLORE 2026-07-13: added ownership_relations_v1 and external_adapters_v1 without changing legacy array types; aligned ubiquitous language with modeled names. REVALIDATE 2026-07-13: DDD Mode A PASS; ownership 10/10 commands and 10/10 events; 3 external adapters declared; ubiquitous-language coverage 1.00. Feasibility remains risky due fail-closed parser-scope requirement. DECIDE 2026-07-13: build. Ready epics split by rollout boundary: EPIC-PLDD-ENFORCEMENT-KERNEL (Phase A, src-only, zero new dependencies) then EPIC-PLDD-CONSUMER-ADAPTERS (Phase B, src-only, inactive fixture-tested adapters). Phase B depends on Phase A. Dogfood activation is excluded and still requires separate human approval. SYNC 2026-07-13: added Phase A and Phase B epics to Iter4; dependency Phase B -> Phase A; dogfood activation excluded. REFLECT 2026-07-20: EPIC-PLDD-ENFORCEMENT-KERNEL (Phase A) shipped -- merged to master via PR #7 (42572ec). 86.22% mutation score, 8/8 G2 checklist, 0 dependency vulnerabilities. status stays 'ready' (not 'shipped') because Phase B (EPIC-PLDD-CONSUMER-ADAPTERS) is still queued and this idea spans both phases."
     }
   ]
 }
