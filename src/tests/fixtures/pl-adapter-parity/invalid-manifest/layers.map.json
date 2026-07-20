@@ -1,0 +1,8 @@
+{
+  "version": "2",
+  "layers": [
+    { "name": "application", "globs": ["src/**"], "may_import": ["application"] }
+  ],
+  "aliases": {},
+  "external": { "allow": true }
+}

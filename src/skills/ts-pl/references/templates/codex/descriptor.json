@@ -1,0 +1,7 @@
+{
+  "version": "1",
+  "host": "codex",
+  "invocation": "pl-kernel",
+  "entry": ".codex/commands/pl-check.md",
+  "display": "passthrough"
+}

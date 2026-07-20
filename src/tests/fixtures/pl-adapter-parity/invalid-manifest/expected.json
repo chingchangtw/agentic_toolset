@@ -1,0 +1,10 @@
+[
+  {
+    "version": "1",
+    "rule_id": "PL-ARCH-MANIFEST-VERSION",
+    "severity": "error",
+    "file": "layers.map.json",
+    "dependency": "",
+    "message": "Unsupported manifest version"
+  }
+]

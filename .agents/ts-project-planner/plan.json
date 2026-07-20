@@ -57,12 +57,12 @@
     },
     {
       "name": "Iter4",
-      "goal": "Ship PLDD portable enforcement kernel and inactive consumer adapters without changing current dual-track workflow or activating PLDD in agenticToolset.",
+      "goal": "Ship PLDD portable enforcement kernel and consumer adapters, then dogfood-activate PLDD in agenticToolset itself with a proven rollback path. SCOPE EXPANDED 2026-07-20 (ctony): dogfood activation moved in-scope, supersedes prior fixture-only goal.",
       "exit_criteria": [
-        "Every implementation file changed by Phase A and Phase B is below src/*; root package configuration, lockfile, live .agents state, hooks, router, and registries remain unchanged",
+        "Every implementation file changed by Phase A and Phase B kernel/adapter logic is below src/*; only the dogfood-activation step itself may write live .agents state, hooks, router, and registries, and every such write is enumerated in a generated-file manifest with a proven rollback",
         "Planted architecture and contract violations produce identical stable rule ids and exit codes through Codex and Claude Code entry paths",
         "Versioned ownership relations preserve legacy exploration arrays and compile deterministic scenario skeletons with complete event coverage",
-        "Consumer adapters install only into isolated fixtures, produce a generated-file manifest, and prove rollback; no dogfood activation occurs",
+        "Consumer adapters are proven against isolated fixtures first (manifest + rollback), THEN dogfood-activated live in agenticToolset; live activation gets its own G1 threat-model addendum covering blast radius on hooks/router/registries and a tested rollback/uninstall path",
         "EPIC-PLDD-CONSUMER-ADAPTERS starts only after EPIC-PLDD-ENFORCEMENT-KERNEL completes"
       ],
       "epics": [
@@ -129,7 +129,7 @@
     },
     {
       "id": "EPIC-PLDD-CONSUMER-ADAPTERS",
-      "title": "PLDD inactive consumer-project adapters",
+      "title": "PLDD consumer-project adapters + dogfood activation",
       "type": "epic",
       "size": "L",
       "priority": "high",
@@ -138,7 +138,7 @@
       ],
       "release": "Iter4",
       "source_idea": "idea-004",
-      "notes": "Phase B only; depends on Phase A. Add inactive scaffold/install adapters, optional dependency-cruiser/ESLint generation, cards, agent contracts, templates, Build checklist, fixture-only dry-run, generated-file manifest, and rollback plan. All implementation changes below src/*. No live agenticToolset activation. Dogfood requires separate approval."
+      "notes": "Phase B; depends on Phase A. Add scaffold/install adapters, optional dependency-cruiser/ESLint generation, cards, agent contracts, templates, Build checklist, generated-file manifest, and rollback plan. Kernel/adapter implementation stays below src/*. SCOPE EXPANDED 2026-07-20 (ctony, via /ts-iteration:next 'b'): dogfood activation is now in scope — sequence is fixture-only proof first (manifest + rollback), then live install into agenticToolset itself. Live activation is the one step allowed to touch .agents state, hooks, router, registries, and it must ship its own G1 threat-model addendum (blast radius + tested rollback/uninstall) before Ship."
     }
   ],
   "constraints": [

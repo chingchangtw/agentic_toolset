@@ -1,12 +1,12 @@
 {
   "project": "agenticToolset",
   "release": "Iter4",
-  "release_goal": "Ship PLDD portable enforcement kernel and inactive consumer adapters without changing current dual-track workflow or activating PLDD in agenticToolset.",
+  "release_goal": "Ship PLDD portable enforcement kernel and consumer adapters, then dogfood-activate PLDD in agenticToolset itself with a proven rollback path. SCOPE EXPANDED 2026-07-20: dogfood activation moved in-scope for this release by explicit human decision (ctony) — supersedes prior fixture-only exit criteria.",
   "release_exit_criteria": [
-    "Every implementation file changed by Phase A and Phase B is below src/*; root package configuration, lockfile, live .agents state, hooks, router, and registries remain unchanged",
+    "Every implementation file changed by Phase A and Phase B kernel/adapter logic is below src/*; only the dogfood-activation step itself may write live .agents state, hooks, router, and registries, and every such write is enumerated in a generated-file manifest with a proven rollback",
     "Planted architecture and contract violations produce identical stable rule ids and exit codes through Codex and Claude Code entry paths",
     "Versioned ownership relations preserve legacy exploration arrays and compile deterministic scenario skeletons with complete event coverage",
-    "Consumer adapters install only into isolated fixtures, produce a generated-file manifest, and prove rollback; no dogfood activation occurs",
+    "Consumer adapters are proven against isolated fixtures first (manifest + rollback), THEN dogfood-activated live in agenticToolset; live activation gets its own G1 threat-model addendum covering blast radius on hooks/router/registries and a tested rollback/uninstall path",
     "EPIC-PLDD-CONSUMER-ADAPTERS starts only after EPIC-PLDD-ENFORCEMENT-KERNEL completes"
   ],
   "epics": [
@@ -32,7 +32,7 @@
       "depends_on": [
         "EPIC-PLDD-ENFORCEMENT-KERNEL"
       ],
-      "status": "queued",
+      "status": "active",
       "router_state": null,
       "branch": null,
       "mutation_score": null,
@@ -41,7 +41,7 @@
       "notes": "Phase B only; depends on Phase A. Add inactive scaffold/install adapters, optional dependency-cruiser/ESLint generation, cards, agent contracts, templates, Build checklist, fixture-only dry-run, generated-file manifest, and rollback plan. All implementation changes below src/*. No live agenticToolset activation. Dogfood requires separate approval."
     }
   ],
-  "active_epic": null,
+  "active_epic": "EPIC-PLDD-CONSUMER-ADAPTERS",
   "iteration_start": "2026-07-13T13:32:14.0050311+08:00",
   "iteration_close": null,
   "writer_lock": null,
@@ -151,6 +151,12 @@
       "epic_id": "EPIC-PLDD-ENFORCEMENT-KERNEL",
       "at": "2026-07-20T02:20:00+08:00",
       "note": "Test->Ship->Reflect run this session. G2 signed off by ctony (86.22% mutation score, 0 dependency vulns, 8/8 checklist). One real defect found and fixed during mutation-test hardening (compileGlob mid-path '**' never matched, commit 744a254). Merged to master via PR #7 (42572ec), conflicts against a stale .agents/ snapshot on master (edff5e7) resolved by taking the branch's live state (verified superset, no data loss). Retro: .agents/ts-project-planner/retrospectives/Iter4-EPIC-PLDD-ENFORCEMENT-KERNEL-retro.md. Feedback written to discovery.json idea-004 (source_epic set; status stays 'ready' since Phase B/consumer-adapters remain). Epic marked done. Iteration NOT closed -- EPIC-PLDD-CONSUMER-ADAPTERS still queued (1/2 epics done)."
+    },
+    {
+      "event": "epic_activated",
+      "epic_id": "EPIC-PLDD-CONSUMER-ADAPTERS",
+      "at": "2026-07-20T02:25:00+08:00",
+      "note": "type=epic (no bugfix scope-escalation pre-check needed). depends_on EPIC-PLDD-ENFORCEMENT-KERNEL satisfied (done). /ts-deliver init called: project registry already initialized (2026-07-04, unchanged), so this ran as an epic-scoped reset rather than a full re-interview -- prior epic's final state.json archived to history.jsonl (epic_state_archived), state.json reset to phase=think for this epic, acpl_pattern_group='G2+G5' reused from idea-004.exploration_output (shared bounded contexts across Phase A/Phase B, same idea). branch_name not yet set -- pending Think framing."
     }
   ]
 }

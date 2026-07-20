@@ -18,9 +18,9 @@ COMMAND pl-contract-check: node src/scripts/pl-contract-check.mjs --root <projec
 COMMAND gen-scenarios: node src/scripts/gen-scenarios.mjs --input <exploration.json> [--scenarios <spec.md>] [--format json]
 DIAGNOSTIC: {version, rule_id, severity, file, dependency, message}; project-relative paths
 EXIT: 0 compliant; 1 rule violation; 2 invalid input or unsupported syntax
-RULE_IDS: PL-ARCH-MANIFEST-VERSION, PL-ARCH-INVALID-MANIFEST, PL-ARCH-UNSUPPORTED-GLOB, PL-ARCH-UNMATCHED-LAYER, PL-ARCH-AMBIGUOUS-LAYER, PL-ARCH-UNSUPPORTED-SYNTAX, PL-ARCH-PATH-ESCAPE, PL-ARCH-UNRESOLVED-ALIAS, PL-ARCH-UNRESOLVED-IMPORT, PL-ARCH-EXTERNAL-IMPORT, PL-ARCH-FORBIDDEN-IMPORT, PL-CONTRACT-UNSUPPORTED-SYNTAX, PL-CONTRACT-DUPLICATE-ID, PL-CONTRACT-MISSING-TEST, PL-CONTRACT-ORPHAN-TEST, PL-SCENARIO-OWNERSHIP, PL-SCENARIO-MISSING-EVENT
+RULE_IDS: PL-ARCH-MANIFEST-VERSION, PL-ARCH-INVALID-MANIFEST, PL-ARCH-UNSUPPORTED-GLOB, PL-ARCH-UNMATCHED-LAYER, PL-ARCH-AMBIGUOUS-LAYER, PL-ARCH-UNSUPPORTED-SYNTAX, PL-ARCH-PATH-ESCAPE, PL-ARCH-UNRESOLVED-ALIAS, PL-ARCH-UNRESOLVED-IMPORT, PL-ARCH-EXTERNAL-IMPORT, PL-ARCH-FORBIDDEN-IMPORT, PL-CONTRACT-UNSUPPORTED-SYNTAX, PL-CONTRACT-DUPLICATE-ID, PL-CONTRACT-MISSING-TEST, PL-CONTRACT-ORPHAN-TEST, PL-SCENARIO-OWNERSHIP, PL-SCENARIO-MISSING-EVENT, PL-ADAPTER-PARITY, PL-ADAPTER-BOUNDARY
 ACTIVATION: none; direct commands and fixtures only; no hooks, router entries, live registry, or dogfood
-HOST: neutral Phase A outputs; Codex/Claude parity is not claimed
+HOST: Codex and Claude Code fixture-only adapter parity proven, see references/host-adapters.md; no real-host or dogfood claim
 ```
 <!-- PL-KERNEL-CONTRACT:END -->
 
@@ -29,6 +29,8 @@ HOST: neutral Phase A outputs; Codex/Claude parity is not claimed
 1. Read `references/layers-map.md`; run architecture check.
 2. Read `references/contracts.md`; run contract identity check.
 3. Read `references/scenario-compile.md`; generate skeletons or check completed coverage.
-4. Treat exit 2 as invalid input requiring correction before rule violations.
+4. Read `references/host-adapters.md` for the Codex/Claude Code fixture-parity proof.
+5. Treat exit 2 as invalid input requiring correction before rule violations.
 
-Phase A installs no workflow integration and changes no consumer configuration.
+Phase A/B install no workflow integration and change no consumer configuration.
+Install tooling and dogfood activation are separate, explicitly-approved steps.

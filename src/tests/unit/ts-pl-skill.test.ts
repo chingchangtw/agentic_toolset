@@ -26,12 +26,19 @@ describe('ts-pl host-neutral skill', () => {
     expect(contract(normal)).toContain('ACTIVATION: none');
   });
 
-  it('ships all kernel references without Phase-B integration instructions', () => {
-    for (const reference of ['layers-map.md', 'contracts.md', 'scenario-compile.md']) {
+  it('ships all kernel references, including host-adapter parity, without unrelated Phase-B integration instructions', () => {
+    for (const reference of ['layers-map.md', 'contracts.md', 'scenario-compile.md', 'host-adapters.md']) {
       expect(existsSync(join(root, 'references', reference))).toBe(true);
     }
     const content = `${normal}\n${caveman}`;
-    expect(content).not.toMatch(/dependency-cruiser|eslint|consumer scaffold|adapter setup|hook installation/i);
-    expect(content).toContain('Codex/Claude parity is not claimed');
+    expect(content).not.toMatch(/dependency-cruiser|eslint|consumer scaffold|hook installation/i);
+    expect(content).toContain('no real-host or dogfood claim');
+  });
+
+  it('host-adapters reference states fixture-only scope and no real-host/dogfood claim', () => {
+    const hostAdapters = readFileSync(join(root, 'references', 'host-adapters.md'), 'utf8');
+    expect(hostAdapters).toMatch(/fixture/i);
+    expect(hostAdapters).toMatch(/not.*dogfood|separate.*approved/i);
+    expect(hostAdapters).not.toMatch(/real Codex or Claude Code binaries were (run|executed)\b/i);
   });
 });
