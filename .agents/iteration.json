@@ -32,16 +32,16 @@
       "depends_on": [
         "EPIC-PLDD-ENFORCEMENT-KERNEL"
       ],
-      "status": "active",
-      "router_state": null,
-      "branch": null,
-      "mutation_score": null,
-      "shipped_at": null,
+      "status": "done",
+      "router_state": ".agents/ts-deliver-router/state.json",
+      "branch": "codex/pldd-dogfood-activation (merged, deleted)",
+      "mutation_score": "slice1: 68.33%, slice2: 88.03%",
+      "shipped_at": "2026-07-20T04:45:08Z",
       "jira_key": null,
-      "notes": "Phase B only; depends on Phase A. Add inactive scaffold/install adapters, optional dependency-cruiser/ESLint generation, cards, agent contracts, templates, Build checklist, fixture-only dry-run, generated-file manifest, and rollback plan. All implementation changes below src/*. No live agenticToolset activation. Dogfood requires separate approval."
+      "notes": "Phase B, both slices complete. Slice 1 (pl-consumer-adapter-parity): fixture-only Codex/Claude Code adapter conformance, merged PR #8 (ec87b4f). Slice 2 (pl-dogfood-activation): manifest-driven snapshot/atomic-apply/rollback mechanism, proven live against agenticToolset's own tree (activate .claude/commands/pl-check.md -> verify exact diff -> rollback -> verify empty diff), G1 (carried forward, covers both slices) + G2 both signed off by ctony, merged PR #9 (ccc08bc). Independent adversarial review found and fixed 2 real bugs in slice 1 and 3 real bugs (1 HIGH, 2 MEDIUM) in slice 2. First-ever PLDD write outside src/* in this repo; scope-guard extended with an explicit allowedPaths param (not bypassed) so every other caller's src/-only behavior is unchanged. Live activation was rolled back, not left permanently active -- host-adapters.md documents exactly what was proven vs. not (mechanism proven; no live-enforcement hook wired)."
     }
   ],
-  "active_epic": "EPIC-PLDD-CONSUMER-ADAPTERS",
+  "active_epic": null,
   "iteration_start": "2026-07-13T13:32:14.0050311+08:00",
   "iteration_close": null,
   "writer_lock": null,
@@ -187,6 +187,12 @@
       "epic_id": "EPIC-PLDD-CONSUMER-ADAPTERS",
       "at": "2026-07-20T05:45:00+08:00",
       "note": "Review->Test->Ship (partial) run this session for slice 2. Review: independent adversarial subagent found 6 findings -- 1 HIGH (partial apply-phase failure produced no manifest at all, since the manifest was only built via .map()'s single return value; a target 3-of-N throw would leave targets 1-2 live-modified with nothing to feed pl-dogfood-rollback.mjs -- fixed by building the manifest incrementally and attaching a partialManifest to any thrown error, with runCli writing it to --manifest-out before exiting non-zero), 2 MEDIUM (new_hash computed but never verified anywhere -- rollback now does a pre-restore integrity pass and aborts if a target diverged since activation, rather than silently overwriting an intervening edit; allowedPaths entries were unvalidated -- checkPhaseAScope now rejects '', '.', '..', '../'-prefixed entries), 3 LOW accepted with rationale (no symlink/realpath check, non-unique tmp filenames, TOCTOU -- all out of scope for design.md's single-operator/manual-invocation threat model). Re-verified the real-tree round-trip against agenticToolset's own tree with the fixed scripts: still exactly one path changed, still empty diff after rollback. Test: Stryker mutation run on pl-dogfood-activate.mjs/pl-dogfood-rollback.mjs/pl-scope-guard.mjs first scored 53.42% -- same class of gap as slice 1 (CLI/isMainModule/runCli only reachable via subprocess). Added in-process CLI tests (mirroring pl-scope-guard.test.ts's dynamic-import pattern) plus tests targeting each Review fix; re-ran at 88.03% >= 60% threshold (clears the 85% high bar). 394/394 tests pass, type-check clean, src-only scope guard clean, npm audit 0 vulns. Ship: ctony signed off G2 explicitly ('G2 signed off, proceed to Ship') -- recorded in state.gates.G2 following the same checklist shape as slice 1's G2 record. Asked via AskUserQuestion how far to take Ship (push+PR / push-only / stay-local); ctony chose push-only. Pushed branch codex/pldd-dogfood-activation to origin (5 commits: 3ea0b5e, 9c01e52, 9723e97, 2d33bad, df23d1b) -- no PR opened, ctony will open it themselves. Epic/slice NOT done -- not merged, Reflect not started. Next session or ctony: open the PR, merge, then run Reflect to close out this slice and (if this is the epic's last remaining slice) the epic itself."
+    },
+    {
+      "event": "epic_reflect_closed",
+      "epic_id": "EPIC-PLDD-CONSUMER-ADAPTERS",
+      "at": "2026-07-20T06:15:00+08:00",
+      "note": "PR #9 opened this session at ctony's explicit request; CI (test job) watched via gh pr checks --watch, passed; merged via gh pr merge --merge --delete-branch at ctony's explicit request ('merge the PR after CI passes'). Merge commit ccc08bc31ee24c0cda20d00b24aaa7903c8d66d3. Local master fast-forwarded, branch deleted locally + on origin. Reflect: ran /spectra-archive pl-dogfood-activation -- all artifacts/tasks complete, no warnings, 4 requirements synced into openspec/specs/pl-dogfood-activation/spec.md (new capability, no delta-merge conflicts since no prior main spec existed), archived to openspec/changes/archive/2026-07-20-pl-dogfood-activation/. Epic EPIC-PLDD-CONSUMER-ADAPTERS marked done (both slices shipped: slice 1 PR #8 ec87b4f, slice 2 PR #9 ccc08bc). active_epic reset to null. Both Iter4 epics (EPIC-PLDD-ENFORCEMENT-KERNEL, EPIC-PLDD-CONSUMER-ADAPTERS) are now done -- release_exit_criteria verification and /ts-iteration:close are the natural next step but were NOT run this session (bigger/more final action than what was asked; surface readiness to ctony rather than assume)."
     }
   ]
 }

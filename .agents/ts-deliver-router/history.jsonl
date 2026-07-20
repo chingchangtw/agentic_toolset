@@ -21,3 +21,4 @@
 {"event":"phase_exit","ts":"2026-07-20T05:35:00+08:00","from":"test","to":"ship","epic_id":"EPIC-PLDD-CONSUMER-ADAPTERS","slice":"pl-dogfood-activation","artifacts_at_exit":{"mutation_score":"88.03%","threshold":60,"tests":"394/394 pass"}}
 {"event":"gate_signed","ts":"2026-07-20T05:40:00+08:00","gate":"G2","epic_id":"EPIC-PLDD-CONSUMER-ADAPTERS","slice":"pl-dogfood-activation","signed_by":"ctony"}
 {"event":"pr_opened","ts":"2026-07-20T05:50:00+08:00","epic_id":"EPIC-PLDD-CONSUMER-ADAPTERS","slice":"pl-dogfood-activation","pr_url":"https://github.com/chingchangtw/agentic_toolset/pull/9"}
+{"event":"phase_exit","ts":"2026-07-20T06:00:00+08:00","from":"ship","to":"reflect","epic_id":"EPIC-PLDD-CONSUMER-ADAPTERS","slice":"pl-dogfood-activation","artifacts_at_exit":{"pr":"https://github.com/chingchangtw/agentic_toolset/pull/9","merge_commit":"ccc08bc31ee24c0cda20d00b24aaa7903c8d66d3"}}
