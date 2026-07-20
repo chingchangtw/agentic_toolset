@@ -42,6 +42,15 @@
       "mutation_score": "88.03%",
       "complete": true,
       "notes": "394/394 tests pass, type-check clean, src-only scope guard clean on every implementation file changed by this slice, npm audit --omit=dev: 0 vulnerabilities. Mutation testing (Stryker, .agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/test-slice2/): first run scored 53.42% -- same class of gap as slice 1 (CLI/isMainModule/runCli paths only reachable via subprocess, uninstrumented by Stryker's in-process runner). Fixed by adding in-process runCli/isMainModule/top-level-CLI-block tests (mirroring pl-scope-guard.test.ts's dynamic-import cache-busting pattern) plus targeted tests for the Review-phase security fixes (unsafe-allowedPaths-entry rejection per entry type, backslash-normalization in allowedPaths, post-restore-verify's independent mismatch detection, partial-manifest-on-failure). Re-ran: 88.03% >= 60% threshold (also clears the 85% high bar) -- not pursued further given threshold met, same stopping point as slice 1. All 7 spec scenarios in specs/pl-dogfood-activation/spec.md map to a passing test. spectra validate: still pass."
+    },
+    "ship": {
+      "branch": "codex/pldd-dogfood-activation",
+      "commits": ["3ea0b5e", "9c01e52", "9723e97", "2d33bad", "df23d1b"],
+      "pushed": true,
+      "pr_opened": false,
+      "merged": false,
+      "complete": false,
+      "notes": "G2 signed off by ctony. Branch pushed to origin/codex/pldd-dogfood-activation per explicit human choice (push only, no PR yet, not staying purely local) -- ctony will open the PR themselves. Not merged; epic remains active/not-done until merge. Reflect not started."
     }
   },
   "gates": {
