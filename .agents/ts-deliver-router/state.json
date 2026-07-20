@@ -59,6 +59,23 @@
       "signed_by": "ctony",
       "signed_at": "2026-07-20T02:35:00+08:00",
       "notes": "Carried forward from epic-level G1 (covers both slices per g1-threat-model.md title and Flow 2 STRIDE analysis). Re-validated this session against slice 1's actual Review/Test findings -- nothing surfaced that the existing threat model failed to anticipate."
+    },
+    "G2": {
+      "status": "signed_off",
+      "checklist_results": {
+        "owasp_top_10_per_category": "n/a -- fixture+real-tree local dev tooling, no network/auth/LLM surface",
+        "external_urls_validated": "n/a -- none",
+        "input_validation_at_entry_points": true,
+        "no_hardcoded_credentials": true,
+        "logging_excludes_pii": true,
+        "rollback_path_tested": true,
+        "rate_limiting_circuit_breakers": "n/a -- single manual invocation, no auto-retry (accepted LOW risk, see review-slice2/report.md #5/#6)",
+        "irreversible_ops_require_confirmation": true,
+        "human_sign_off": true
+      },
+      "signed_by": "ctony",
+      "signed_at": "2026-07-20T05:40:00+08:00",
+      "notes": "Mutation score 88.03% >= 60% threshold (clears 85% high bar too). 1 HIGH + 2 MEDIUM real bugs found and fixed during Review (partial-apply-produces-no-manifest, unverified new_hash allowing silent overwrite of tampered targets, unvalidated allowedPaths entries). Rollback path verified twice: fixture round-trip tests, and a real activate->verify->rollback->verify-empty-diff round-trip against agenticToolset's own live tree (both before and after the Review fixes). 394/394 tests pass, 0 dependency vulns, src-only scope guard clean on every implementation file this slice touched. This is the epic's first-ever live write outside src/* -- human approved per never_automate.md item 3 (non-negotiable, no autonomy-level auto-sign)."
     }
   }
 }
