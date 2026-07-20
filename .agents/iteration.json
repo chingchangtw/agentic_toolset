@@ -43,7 +43,7 @@
   ],
   "active_epic": null,
   "iteration_start": "2026-07-13T13:32:14.0050311+08:00",
-  "iteration_close": null,
+  "iteration_close": "2026-07-20T06:30:00+08:00",
   "writer_lock": null,
   "active_phase": "Delivery",
   "active_idea": null,
@@ -193,6 +193,12 @@
       "epic_id": "EPIC-PLDD-CONSUMER-ADAPTERS",
       "at": "2026-07-20T06:15:00+08:00",
       "note": "PR #9 opened this session at ctony's explicit request; CI (test job) watched via gh pr checks --watch, passed; merged via gh pr merge --merge --delete-branch at ctony's explicit request ('merge the PR after CI passes'). Merge commit ccc08bc31ee24c0cda20d00b24aaa7903c8d66d3. Local master fast-forwarded, branch deleted locally + on origin. Reflect: ran /spectra-archive pl-dogfood-activation -- all artifacts/tasks complete, no warnings, 4 requirements synced into openspec/specs/pl-dogfood-activation/spec.md (new capability, no delta-merge conflicts since no prior main spec existed), archived to openspec/changes/archive/2026-07-20-pl-dogfood-activation/. Epic EPIC-PLDD-CONSUMER-ADAPTERS marked done (both slices shipped: slice 1 PR #8 ec87b4f, slice 2 PR #9 ccc08bc). active_epic reset to null. Both Iter4 epics (EPIC-PLDD-ENFORCEMENT-KERNEL, EPIC-PLDD-CONSUMER-ADAPTERS) are now done -- release_exit_criteria verification and /ts-iteration:close are the natural next step but were NOT run this session (bigger/more final action than what was asked; surface readiness to ctony rather than assume)."
+    },
+    {
+      "event": "iteration_closed",
+      "release": "Iter4",
+      "at": "2026-07-20T06:30:00+08:00",
+      "note": "All epics done (2/2): EPIC-PLDD-ENFORCEMENT-KERNEL, EPIC-PLDD-CONSUMER-ADAPTERS. All 5 release_exit_criteria verified pass: (1) every implementation file below src/* except the reviewed dogfood-activation step itself, enumerated in a generated manifest with a proven rollback (verified twice, real-tree empty-diff round-trip) -- PASS; (2) planted architecture/contract violations produce identical stable rule ids and exit codes across Codex/Claude Code entry paths -- PASS (slice 1's 6-case fixture parity suite, 216/216 tests); (3) versioned ownership relations preserve legacy arrays and compile deterministic scenario skeletons with complete event coverage -- PASS (EPIC-PLDD-ENFORCEMENT-KERNEL, 86.22% mutation score); (4) consumer adapters proven on fixtures first then dogfood-activated live with a G1 addendum and tested rollback -- PASS (slice 1 fixtures, slice 2 live); (5) EPIC-PLDD-CONSUMER-ADAPTERS started only after EPIC-PLDD-ENFORCEMENT-KERNEL completed -- PASS (sequencing followed, verified via history.jsonl timestamps). No deferred epics. Retrospective written to .agents/ts-project-planner/retrospectives/Iter4-retro.md (release-level, references the existing EPIC-PLDD-ENFORCEMENT-KERNEL epic-level retro for Phase A detail). plan.json refined_count incremented 3->4. GitHub milestone/Jira transition steps skipped -- no MCP integration wired for this project (consistent with every prior iteration close). Discovery has been running in parallel per idea-004's notes -- run /ts-discover status to check for new ready items before starting Iter5."
     }
   ]
 }

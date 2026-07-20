@@ -148,5 +148,5 @@
     "Security gates G1/G2 always require human sign-off",
     "Packaging goes through scripts/generate-manifest.mjs + build-release.mjs with shared exclusion filter"
   ],
-  "refined_count": 3
+  "refined_count": 4
 }
