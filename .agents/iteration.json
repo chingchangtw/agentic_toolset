@@ -157,6 +157,12 @@
       "epic_id": "EPIC-PLDD-CONSUMER-ADAPTERS",
       "at": "2026-07-20T02:25:00+08:00",
       "note": "type=epic (no bugfix scope-escalation pre-check needed). depends_on EPIC-PLDD-ENFORCEMENT-KERNEL satisfied (done). /ts-deliver init called: project registry already initialized (2026-07-04, unchanged), so this ran as an epic-scoped reset rather than a full re-interview -- prior epic's final state.json archived to history.jsonl (epic_state_archived), state.json reset to phase=think for this epic, acpl_pattern_group='G2+G5' reused from idea-004.exploration_output (shared bounded contexts across Phase A/Phase B, same idea). branch_name not yet set -- pending Think framing."
+    },
+    {
+      "event": "epic_slice_shipped",
+      "epic_id": "EPIC-PLDD-CONSUMER-ADAPTERS",
+      "at": "2026-07-20T03:40:00+08:00",
+      "note": "Scope expanded 2026-07-20 (ctony): dogfood activation moved in-scope for this epic, split into two sequenced Spectra changes -- slice 1 (pl-consumer-adapter-parity, fixture-only Codex/Claude Code adapter conformance) and slice 2 (pl-dogfood-activation, not yet proposed). Slice 1: Think->Plan->Build->Review->Test->Ship run this session. G1 signed off by ctony (covers both slices). Review: independent adversarial subagent found and fixed 2 real security bugs (path traversal via descriptor entry, duplicate-host silent parity bypass). Test: initial Stryker run scored 47.23%, traced to genuine missing tests + a subprocess-only-reachable CLI block (not a tooling artifact as first suspected); fixed with real tests and a runCli() refactor for in-process testability; re-ran at 68.33% >= 60% threshold. G2 signed off by ctony. Merged to master via PR #8 (ec87b4f), branch codex/pldd-consumer-adapter-parity deleted. Epic NOT done -- slice 2 (dogfood activation, the higher-risk live-install half) still needs Think->Ship. Router state.json currently reflects slice 1's Ship as complete; next /ts-iteration:next (or direct router resume) should re-enter Think for slice 2 rather than Reflect, since the epic itself isn't finished."
     }
   ]
 }
