@@ -54,6 +54,21 @@
       "epics": [
         "REFACTOR-INSTALLER-DEDUP"
       ]
+    },
+    {
+      "name": "Iter4",
+      "goal": "Ship PLDD portable enforcement kernel and inactive consumer adapters without changing current dual-track workflow or activating PLDD in agenticToolset.",
+      "exit_criteria": [
+        "Every implementation file changed by Phase A and Phase B is below src/*; root package configuration, lockfile, live .agents state, hooks, router, and registries remain unchanged",
+        "Planted architecture and contract violations produce identical stable rule ids and exit codes through Codex and Claude Code entry paths",
+        "Versioned ownership relations preserve legacy exploration arrays and compile deterministic scenario skeletons with complete event coverage",
+        "Consumer adapters install only into isolated fixtures, produce a generated-file manifest, and prove rollback; no dogfood activation occurs",
+        "EPIC-PLDD-CONSUMER-ADAPTERS starts only after EPIC-PLDD-ENFORCEMENT-KERNEL completes"
+      ],
+      "epics": [
+        "EPIC-PLDD-ENFORCEMENT-KERNEL",
+        "EPIC-PLDD-CONSUMER-ADAPTERS"
+      ]
     }
   ],
   "epics": [
@@ -100,6 +115,30 @@
       "release": "Iter3",
       "source_idea": null,
       "notes": "Tracked open item since EPIC-DUAL-TRACK-ORCHESTRATION Review phase (docs/Ideas.md §12/§14): skills/hooks/agents manifest categories each wired as a copy-pasted per-category loop in 4 files. Higher risk than the hook refactor (Iter2) -- this is installer code that runs on end-user machines via curl|bash / irm|iex, not a local dev hook. Full spine with exhaustive pilot/verify-install/release/dogfood verification before Ship."
+    },
+    {
+      "id": "EPIC-PLDD-ENFORCEMENT-KERNEL",
+      "title": "PLDD portable enforcement kernel",
+      "type": "epic",
+      "size": "L",
+      "priority": "high",
+      "depends_on": [],
+      "release": "Iter4",
+      "source_idea": "idea-004",
+      "notes": "Phase A only. All implementation changes below src/*. Zero new npm dependencies. Deliver fail-closed architecture/placement checking, stable diagnostics, contract-id parity, versioned ownership relations, scenario compilation, and fixture tests. Current dual-track configuration remains unchanged."
+    },
+    {
+      "id": "EPIC-PLDD-CONSUMER-ADAPTERS",
+      "title": "PLDD inactive consumer-project adapters",
+      "type": "epic",
+      "size": "L",
+      "priority": "high",
+      "depends_on": [
+        "EPIC-PLDD-ENFORCEMENT-KERNEL"
+      ],
+      "release": "Iter4",
+      "source_idea": "idea-004",
+      "notes": "Phase B only; depends on Phase A. Add inactive scaffold/install adapters, optional dependency-cruiser/ESLint generation, cards, agent contracts, templates, Build checklist, fixture-only dry-run, generated-file manifest, and rollback plan. All implementation changes below src/*. No live agenticToolset activation. Dogfood requires separate approval."
     }
   ],
   "constraints": [

@@ -1,0 +1,10 @@
+[
+  {
+    "version": "1",
+    "rule_id": "PL-ARCH-UNSUPPORTED-SYNTAX",
+    "severity": "error",
+    "file": "src/app/main.ts",
+    "dependency": "",
+    "message": "Dynamic import/require must use a string literal"
+  }
+]

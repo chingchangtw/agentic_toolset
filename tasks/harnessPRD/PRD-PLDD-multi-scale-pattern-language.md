@@ -2,10 +2,10 @@
 
 | | |
 |---|---|
-| Status | PROPOSED — review, cut sections, then split into openspec changes |
+| Status | THINK — PRD reversed/reviewed, Spectra artifacts valid, G1 technical re-audit complete; human sign-off pending |
 | Target repo | `agenticToolset` (src/ deliverable, dogfooded via existing pipeline) |
 | Audience | Tony (approve/cut/answer OQs) + future Sonnet-class sessions (execute) |
-| Governing constraint | **Add rigour, never add scope.** 7-phase spine, router algorithm, G1/G2, state sovereignty: untouched. All additions = new skills, agents, artifacts, registry rows, schema fields. |
+| Governing constraint | **Add rigour, never add scope.** Dual-track topology, 7-phase spine, router algorithm, G1/G2, and state sovereignty remain untouched. Phase A and Phase B modify only `src/*`; live-project activation requires separate Dogfood Activation approval. |
 | Format rule | Every shipped PLDD artifact obeys the dual-file invariant (SKILL.md + SKILL_caveman.md) and the Sonnet-runnability rule (§3.1). |
 
 ---
@@ -31,6 +31,8 @@ S5 Contract      DbC pre/post/invariant, test-enforced    kills: wrong local beh
 
 The solution space that survives all five filters is small enough that a Sonnet-class model lands inside it by default.
 
+**Selected architecture:** an enforcement kernel is the source of executable truth. Cards, agents, templates, and production-line guidance are replaceable clients of that kernel. Host-specific Codex and Claude Code adapters may display state and invoke portable commands, but may not contain unique PLDD rules.
+
 ---
 
 ## 2. North star and non-goals
@@ -41,8 +43,11 @@ The solution space that survives all five filters is small enough that a Sonnet-
 - NG1: No new phases, no router changes, no new top-level gates. PLDD nests inside existing phases exactly like Spectra does.
 - NG2: No event sourcing in v1 (deferred — §11).
 - NG3: No replacement of ts-acpl. It keeps small-scale ownership; it gains one column (F4).
-- NG4: agenticToolset's own `src/` is NOT retrofitted to Clean Architecture — it is a distribution framework, not a layered domain app. PLDD enforcement targets *end-user projects* (scaffold + installed toolset) and the dogfood fixture (OQ-1).
+- NG4: agenticToolset's own `src/` is NOT retrofitted to Clean Architecture — it is a distribution framework, not a layered domain app. Phase A/B checks target isolated end-user-project fixtures; live agenticToolset enforcement belongs only to approved Phase C.
 - NG5: No ezSpec port. Spectra/OpenSpec scenario format is the single BDD carrier (per decision 2026-07-07).
+- NG6: No changes to live `.agents/*`, root `package.json`, lockfile, hooks, router, or project configuration in Phase A or Phase B.
+- NG7: No PLDD activation against `agenticToolset` before explicit human approval at the Dogfood Activation Gate.
+- NG8: No persistent F7 station state in v1. PLACE→CONTRACT→RED→BUILD→GUARD begins as a Build checklist.
 
 ---
 
@@ -73,29 +78,62 @@ A rule with no enforcement class is a **defect** ("abstract requirement = unwrit
 | — | Registry rows with `<SAST tool>`, `<mutation tool>`, `coverage >= <X>%` placeholders | Fill with real stack (F9) |
 | — | SKILL-PATCH-RETRO protocol for skills | Same trigger discipline for patterns (F8) |
 
-### 3.3 Toolset inventory (what ships)
+### 3.3 Toolset inventory by rollout boundary
 
 ```
-src/skills/ts-pl/                    NEW skill — pattern-language owner
+PHASE A — portable kernel, src/* only
+src/skills/ts-pl/                    NEW minimal kernel-facing skill
   SKILL.md + SKILL_caveman.md        entry, scale index, lazy-load pointers
-  references/arch-cards.md           S2 pattern cards (9 cards, v1)
   references/layers-map.md           layers.map.json spec + depcruise generation rule
   references/scenario-compile.md     S1 compile rules
   references/contracts.md            S5 DbC convention + violation-test rule
-  references/agent-cards.md          S3 role-card format
-  references/templates/              F6 prompt templates (one file per template)
-  references/evolution.md            F8 feedback protocol
-src/agents/ts-bdd-scenario-writer.md     NEW (F1)
-src/agents/ts-arch-guard.md              NEW (F2, Review station)
-src/agents/ts-contract-writer.md         NEW (F5, Build station)
-src/utils/contracts.ts                   NEW (F5) — require/ensure/invariant
-src/scripts/gen-depcruise.mjs            NEW (F2) — layers.map.json → .dependency-cruiser.cjs
+src/utils/contracts.ts                   NEW (F5) — requires/ensures/invariant with stable contract ids
+src/scripts/pl-arch-check.mjs            NEW (F2) — zero-dependency portable guard (Phase A)
+src/scripts/pl-contract-check.mjs        NEW (F5) — contract-id ↔ violation-test parity
+src/scripts/gen-scenarios.mjs            NEW (F1) — ownership relations → scenario skeletons
+src/tests/fixtures/pl-sample-app/        NEW isolated fixture
+
+PHASE B — inactive consumer clients, src/* only
+src/skills/ts-pl/references/arch-cards.md
+src/skills/ts-pl/references/agent-cards.md
+src/skills/ts-pl/references/templates/
+src/skills/ts-pl/references/evolution.md
+src/agents/ts-bdd-scenario-writer.md
+src/agents/ts-arch-guard.md
+src/agents/ts-contract-writer.md
+src/scripts/gen-depcruise.mjs            optional consumer adapter
 src/project_root_structure/.agents/pl/   NEW scaffold seeds: layers.map.json.example,
                                          pattern-feedback.jsonl (empty)
-ts-deliver-router registry rows          F9 (append-only; see each feature)
+
+PHASE C — approval required
+generated live registry rows, hooks/config activation, and agenticToolset dogfood wiring
 ```
 
-Naming: skill = `ts-pl` (short, matches `ts-*` family; "PLDD" reserved for the method name). OQ-6 if you prefer `ts-pldd`.
+Naming: skill = `ts-pl` (short, matches `ts-*` family; "PLDD" reserved for the method name).
+
+### 3.4 Enforcement-kernel architecture
+
+```text
+Discovery model ──scenario compiler──> OpenSpec scenarios
+Layer manifest  ──architecture check─> stable diagnostics + exit code
+Contract ids    ──parity check───────> missing violation-test ids
+All results     ──registry adapter───> existing phase check result
+```
+
+Canonical sources:
+
+| Concern | Canonical source | Generated/consumer views |
+|---|---|---|
+| Layer placement and imports | `layers.map.json` | dependency-cruiser config, card rule references, diagnostics |
+| Requirement coverage | `exploration_output` command→aggregate and event relations | OpenSpec scenario skeletons |
+| Local behavioral obligations | stable contract ids in code | violation-test parity report |
+| Workflow activation | existing phase registries | Codex/Claude host guidance |
+
+Rules SHALL NOT be restated independently across cards, templates, agents, and host adapters. Those artifacts reference canonical rule ids.
+
+### 3.5 Codex and Claude Code compatibility
+
+Portable core consists of cross-platform Node commands, JSON/JSONL schemas, OpenSpec artifacts, stable diagnostics, and decisive exit codes. Phase A produces normalized golden fixture outputs. Phase B Claude Code and Codex adapters MUST invoke that core and reproduce the same rule ids and exit codes.
 
 ---
 
@@ -107,14 +145,33 @@ Naming: skill = `ts-pl` (short, matches `ts-*` family; "PLDD" reserved for the m
 
 **WHY:** the domain model is already structured JSON; leaving scenario writing free-form throws away that structure and makes coverage unmeasurable. Compiling events→scenarios means a weak model *fills templates* instead of *inventing tests*, and "did we cover the spec?" becomes a count, not an opinion.
 
-**Design:** deterministic skeletons by script, domain detail by agent. A script (`gen-scenarios.mjs`) emits one scenario skeleton per (command, aggregate) pair; the `ts-bdd-scenario-writer` agent fills GIVEN/THEN from ubiquitous language. Split rationale: skeleton generation must be deterministic (weak-model-proof); only the domain prose needs a model.
+**Design:** deterministic skeletons by script, domain detail by agent. Discovery output SHALL represent each command with exactly one target aggregate and its emitted events. A script (`gen-scenarios.mjs`) emits one scenario skeleton per command; the `ts-bdd-scenario-writer` agent fills GIVEN/THEN from ubiquitous language. Split rationale: skeleton generation must be deterministic (weak-model-proof); only domain prose needs a model.
+
+Compatibility shape: existing `domain_events[]`, `commands[]`, and `aggregates[]` string arrays remain unchanged in type and purpose. New ownership is additive and versioned:
+
+```json
+{
+  "ownership_relations_v1": [
+    { "command": "RunArchitectureCheck", "aggregate": "EnforcementKernel", "event": "ArchitectureCheckCompleted" }
+  ],
+  "external_adapters_v1": [
+    { "bounded_context": "Consumer Integration", "external_system": "Codex", "boundary": "HostAdapter" }
+  ]
+}
+```
+
+Each relation references names present in the legacy arrays. Every command and event appears in exactly one relation. Unknown relationship versions fail closed; legacy consumers may ignore versioned fields.
 
 #### Requirement: exploration_output compiles to scenario skeletons
-`src/scripts/gen-scenarios.mjs` SHALL read an `exploration_output` JSON and emit one OpenSpec scenario skeleton per (command, aggregate) pair into the active change's spec delta.
+`src/scripts/gen-scenarios.mjs` SHALL read an `exploration_output` JSON and emit one OpenSpec scenario skeleton per command into the active change's spec delta. Each command SHALL declare exactly one target aggregate; zero or multiple targets fail compilation with rule id `PL-SCENARIO-COMMAND-TARGET`.
 
 #### Scenario: every command produces a skeleton
 - **WHEN** `gen-scenarios.mjs` runs on an exploration_output with N commands
 - **THEN** output contains exactly N `#### Scenario:` blocks, each named `<Command> on <Aggregate>`, each with `WHEN <Command>` pre-filled and `GIVEN`/`THEN` as `<FILL: ...>` placeholders
+
+#### Scenario: ambiguous command ownership fails compilation
+- **WHEN** a command declares zero or more than one target aggregate
+- **THEN** compilation exits non-zero, names the command, and reports `PL-SCENARIO-COMMAND-TARGET`
 
 #### Scenario: every domain event is asserted somewhere
 - **WHEN** scenario filling is complete and the coverage check runs
@@ -126,7 +183,7 @@ Naming: skill = `ts-pl` (short, matches `ts-*` family; "PLDD" reserved for the m
 
 **Where it nests:** Plan phase, inside Spectra `propose` (scenarios are delivery artifacts; `.agents/discovery.json` stays planner-owned — preserves single decision authority). Registry row (registry-plan): `| pl-scenario-compile | always | epic with exploration_output | ts-pl references/scenario-compile.md | - |`
 
-**Verification (weak-model executable):** run compiler on the fixture exploration_output in `test-fixtures/`; count blocks; run coverage check; vitest unit tests for the script.
+**Verification (weak-model executable):** run compiler on fixture exploration output under `src/tests/fixtures/`; count blocks; run coverage check; use existing test tooling for the script.
 
 **Cut-line:** cutting F1 removes the script + agent + registry row. Nothing else depends on it (F2–F9 operate on hand-written scenarios too).
 
@@ -136,9 +193,9 @@ Naming: skill = `ts-pl` (short, matches `ts-*` family; "PLDD" reserved for the m
 
 **WHY:** architecture violations are the highest-cost hallucinations (they metastasize through every later diff) and today are caught only by human eyes. A dependency rule that a linter enforces converts your Clean Architecture knowledge from judgement (re-spent every review) into a red/green check (spent once, here).
 
-**Design — two halves:**
+**Design — kernel plus adapter:**
 
-(a) **Machine guard.** `layers.map.json` declares layers, the src-glob for each, and allowed dependency directions. `gen-depcruise.mjs` compiles it to a dependency-cruiser config. One npm script: `arch:check`.
+(a) **Portable dependency and placement guard.** `layers.map.json` declares layers, source globs, and allowed dependency directions. Phase A ships a zero-new-dependency Node checker with stable JSON diagnostics. Phase B adds an optional dependency-cruiser adapter for end-user projects. One consumer command: `arch:check`.
 
 ```json
 // .agents/pl/layers.map.json (per end-user project; example values)
@@ -155,7 +212,7 @@ Naming: skill = `ts-pl` (short, matches `ts-*` family; "PLDD" reserved for the m
 }
 ```
 
-Enforcement: `cmd` — `npm run arch:check` exits non-zero on any forbidden import. A weak model cannot argue with an exit code.
+Enforcement: `cmd` — `npm run arch:check` exits non-zero on a forbidden import or a file placed outside its declared layer. This is a dependency-and-placement guard, not proof of full architectural correctness.
 
 (b) **Pattern cards** (`references/arch-cards.md`) — v1 set of 9, CA + DDD + light CQRS (decision 2026-07-07; deeper options recorded in §11):
 
@@ -171,10 +228,10 @@ Enforcement: `cmd` — `npm run arch:check` exits non-zero on any forbidden impo
 | A8 | Composition Root | infra | `new` scattered everywhere, hidden deps |
 | A9 | Presenter/Output Port | adapters | use case knowing about HTTP/UI |
 
-Card format (fixed — enforcement: `template`): `Intent (1 line) · Placement (layer + path glob) · Structure (TS skeleton ≤20 lines) · Naming rule · Forbidden imports (must echo layers.map) · Contract hooks (which @pre/@post it carries) · Test template · Mutation-sensitivity note · Anti-example (1 wrong version + why arch:check catches it)`. The anti-example field is mandatory: weak models learn faster from one negative example than three positive ones.
+Card format (fixed — enforcement: `template`): `Intent (1 line) · Placement (layer + path glob) · Structure (TS skeleton ≤20 lines) · Naming rule · Forbidden-import rule ids (references layers.map; never restates rules) · Contract hooks (which @pre/@post it carries) · Test template · Mutation-sensitivity note · Anti-example (1 wrong version + why arch:check catches it)`. The anti-example field is mandatory: weak models learn faster from one negative example than three positive ones.
 
 #### Requirement: dependency rules are generated, not hand-written
-`gen-depcruise.mjs` SHALL generate the dependency-cruiser config solely from `layers.map.json`; hand-editing the generated file is forbidden (header comment states this; file is gitignored in end-user projects and regenerated).
+The Phase A checker and Phase B `gen-depcruise.mjs` adapter SHALL consume the same `layers.map.json`. Generated dependency-cruiser config is never a second source of truth; hand-editing it is forbidden.
 
 #### Scenario: forbidden import fails the build
 - **WHEN** a file matching `domain` glob imports from a file matching `infra` glob and `npm run arch:check` runs
@@ -186,15 +243,17 @@ Card format (fixed — enforcement: `template`): `Intent (1 line) · Placement (
 
 #### Scenario: guard runs at Build and Review
 - **WHEN** the Build or Review phase checklist executes for work_type epic/refactor
-- **THEN** registry rows `pl-arch-check (always, cmd)` appear and a failing arch:check blocks the checklist item (registry-build + registry-review append-only rows)
+- **THEN** after Phase C activation, generated registry rows `pl-arch-check (always, cmd)` appear and a failing arch:check blocks the checklist item; Phase A/B fixtures invoke the same command directly without live registry edits
 
-**Verification:** fixture project in `test-fixtures/pl-sample-app/` with one deliberate violation per rule class; vitest asserts gen-depcruise output; dogfood run must show red then green after fix.
+**Verification:** fixture project under `src/tests/fixtures/pl-sample-app/` with one deliberate violation per rule class; existing test tooling asserts portable diagnostics and optional generated adapter output. Phase A/B do not alter root project configuration. Dogfood red/green run occurs only after activation approval.
 
-**Cut-line:** cards (b) can ship without guard (a) or vice versa, but (a) without (b) is the better half — keep (a) if forced to choose.
+**Cut-line:** kernel guard ships first. Cards and dependency-cruiser adapter remain independently removable clients.
 
 ---
 
 ### F3 — Agent Role Cards (S3: mid-scale constraint)
+
+**Rollout:** Phase B only. No Phase A agent is required for kernel correctness.
 
 **WHY:** hallucination scales with irrelevant context. An agent that can read everything will eventually justify anything. Your two existing agents already demonstrate the correct form (JSON output contract, read-only tools, "caller writes state") — F3 turns that house style into a standard and staffs the build line with it.
 
@@ -231,6 +290,8 @@ tools: <minimum set — read-only unless the role's ONE job is writing>
 
 ### F4 — ACPL Layer Binding (S4: small-scale constraint — extension only)
 
+**Rollout:** Phase B only. It consumes Phase A layer rule ids.
+
 **WHY:** ts-acpl answers "how to shape this code"; F2 answers "where code lives". Binding them closes the gap where a perfectly-shaped Policy Object lands in the wrong layer.
 
 #### Requirement: every ACPL pattern declares placement
@@ -248,40 +309,39 @@ tools: <minimum set — read-only unless the role's ONE job is writing>
 
 **WHY:** contracts convert *silent* wrong behavior into *loud* failure at the exact line where the assumption broke — the cheapest possible debugging for a weak model, and the direct implementation of your existing "Fail loud" principle. They also raise mutation kill rates mechanically: a mutant that violates a postcondition dies without anyone writing a targeted test.
 
-**Design:** one tiny util, one convention, one test rule.
+**Design:** one tiny util, stable contract ids, one test rule.
 
 ```ts
 // src/utils/contracts.ts (complete v1 API — nothing more)
 export class ContractViolation extends Error {
-  constructor(kind: "pre" | "post" | "invariant", msg: string) {
-    super(`[contract:${kind}] ${msg}`); this.name = "ContractViolation";
+  constructor(kind: "pre" | "post" | "invariant", id: string, msg: string) {
+    super(`[contract:${kind}:${id}] ${msg}`); this.name = "ContractViolation";
   }
 }
-const on = () => process.env.CONTRACTS_OFF !== "1";          // default ON, incl. prod (Fail loud)
-export function requires(cond: boolean, msg: string): asserts cond {
-  if (on() && !cond) throw new ContractViolation("pre", msg);
+export function requires(cond: boolean, id: string, msg: string): asserts cond {
+  if (!cond) throw new ContractViolation("pre", id, msg);
 }
-export function ensures(cond: boolean, msg: string): void {
-  if (on() && !cond) throw new ContractViolation("post", msg);
+export function ensures(cond: boolean, id: string, msg: string): void {
+  if (!cond) throw new ContractViolation("post", id, msg);
 }
-export function invariant(cond: boolean, msg: string): void {
-  if (on() && !cond) throw new ContractViolation("invariant", msg);
+export function invariant(cond: boolean, id: string, msg: string): void {
+  if (!cond) throw new ContractViolation("invariant", id, msg);
 }
 ```
 
-**Convention (enforcement: `checklist`, countable):** every exported function/method in `domain/**` and `application/**` carries ≥1 `requires` for each argument with a domain constraint, and aggregates call `invariant` in every state-changing method. **Test rule:** every `requires` in a diff has a matching violation test (`expect(...).toThrow(ContractViolation)`); the count of `requires` in the diff ≤ count of new violation tests.
+**Convention (enforcement: `cmd`):** every exported function/method in `domain/**` and `application/**` carries ≥1 `requires` for each argument with a domain constraint, and aggregates call `invariant` in every state-changing method. Each contract id is stable and unique within the project. Every changed contract id has a matching violation test containing that id. The checker compares identities, not raw counts.
 
 #### Scenario: precondition violation is loud in every environment
-- **WHEN** code calls a function violating a `requires` and `CONTRACTS_OFF` is unset
+- **WHEN** code calls a function violating a `requires`
 - **THEN** `ContractViolation` is thrown (not logged, not swallowed) — including production builds
 
 #### Scenario: contracts kill mutants
 - **WHEN** `npm run mutation` (Stryker — already configured) runs on a module with contract blocks
 - **THEN** mutants that break pre/post conditions are killed by violation tests; the module's mutation score counts toward the F9 threshold
 
-#### Scenario: violation-test parity is checked in Build exit
+#### Scenario: violation-test identity is checked in Build exit
 - **WHEN** Build exit checklist runs
-- **THEN** item "`requires` count in diff ≤ new violation-test count" is answered with the two numbers (grep-countable), mismatch = unchecked item
+- **THEN** `pl-contract-check` reports every changed contract id missing from violation tests and exits non-zero when any id is unmatched
 
 **Relationship to ACPL Assertion Gate:** the card stays; `references/contracts.md` becomes its canonical implementation and the card gains a pointer. Cut-line: independent of all others; cheapest feature in the PRD.
 
@@ -305,7 +365,7 @@ STEPS:
   5. Implement until green
 SELF-CHECK (all must pass before reporting done):
   [ ] npm run arch:check → exit 0
-  [ ] new violation tests ≥ requires count in diff
+  [ ] every changed contract id appears in a violation test → exit 0
   [ ] scenario test green; was red at step 4
   [ ] npm run type-check → exit 0
 OUTPUT: file list + check results table (4 rows, pass/fail)
@@ -323,7 +383,7 @@ OUTPUT: file list + check results table (4 rows, pass/fail)
 
 ### F7 — Production Line (Build-phase station loop · 生產線)
 
-**WHY:** end-to-end feature development decomposes into stations so a weak model always knows the *one next action* — the same reason the spine works. This is a sub-loop **inside Build**, exactly as Spectra nests in phases: no spine change, no state.json schema change beyond one field inside the existing `artifacts` map.
+**WHY:** end-to-end feature development decomposes into stations so a weak model always knows the *one next action* — the same reason the spine works. In v1 this is a Phase B checklist **inside Build**, exactly as Spectra nests in phases: no spine change and no router-state field.
 
 **The line (per scenario, smallest work unit):**
 
@@ -335,21 +395,23 @@ station 4  BUILD     execute matching F6 template → green
 station 5  GUARD     arch:check + type-check + violation-test parity (all cmd)
 ```
 
-Placement plan = table in the change proposal (Plan phase output, one row per scenario — enforcement: `checklist`, "every scenario has a row" is countable). Line position is tracked as `artifacts.pl_station` inside existing state.json artifacts map (additive field; state stays slim and sovereign).
+Placement plan = table in the change proposal (Plan phase output, one row per scenario — enforcement: `checklist`, "every scenario has a row" is countable). In v1 the stations are a Build checklist artifact; no station field is added to live router state. Persistent resumable station state is deferred until dogfood evidence and separate approval justify it.
 
 #### Scenario: one scenario in flight at a time
 - **WHEN** the Build phase runs with a placement plan of N scenarios
-- **THEN** stations 1–5 complete for scenario k before station 1 opens for scenario k+1 (WIP limit 1; the `[WORKFLOW STATE]` hook line shows `pl_station` so every prompt turn knows where it is)
+- **THEN** stations 1–5 complete for scenario k before station 1 opens for scenario k+1 (WIP limit 1 recorded in the Build checklist)
 
 #### Scenario: station 5 failure loops back, never proceeds
 - **WHEN** any station-5 check fails
 - **THEN** the line returns to the earliest station that owns the failure (arch → 1, contract parity → 2, test red/green → 4) and appends an F8 feedback row; it never advances with a red check
 
-**Cut-line:** F7 depends on F2(a) and F5; cut those and F7 degrades to today's free-form Build.
+**Cut-line:** F7 depends on F2(a) and F5. Persistent orchestration remains outside Phase A/B and requires a later approved change.
 
 ---
 
 ### F8 — Living Pattern Language (evolution loop · 從錯誤到智慧)
+
+**Rollout:** feedback schema/template ships inactive in Phase B; live Reflect registry activation waits for Phase C approval.
 
 **WHY:** your existing SKILL-PATCH-RETRO already encodes the right reflex for *skills*; F8 applies the identical trigger discipline to *patterns*, so the pattern language absorbs every mistake as a rule delta instead of re-paying for it next epic. This is the feature that makes the other seven compound over time — and it directly services your stated weak spots (WHY / reflection / verification) by forcing a root-cause row instead of a silent fix.
 
@@ -388,6 +450,8 @@ Placement plan = table in the change proposal (Plan phase output, one row per sc
 
 **WHY:** PLDD must ride the existing enforcement machinery, not invent parallel machinery. Also: the registry has carried `<mutation tool>`, `<SAST tool>`, `coverage >= <X>%` placeholders for weeks — placeholders are judgement-only rules (Sonnet-runnability defect) and F9 retires the ones this PRD can.
 
+**Rollout boundary:** Phase B generates inactive registry-row templates under `src/*` and verifies them in fixtures. Phase C, after Dogfood Activation approval, may install those rows into live registries. Phase A does not create or activate registry rows.
+
 **Registry rows (append-only; full list for the implementing change):**
 
 | file | id | type | trigger | skill/cmd | block |
@@ -395,14 +459,14 @@ Placement plan = table in the change proposal (Plan phase output, one row per sc
 | registry-plan | pl-scenario-compile | always | epic w/ exploration_output | ts-pl scenario-compile | - |
 | registry-plan | pl-placement-plan | always | epic/refactor | ts-pl (F7 station 1) | - |
 | registry-build | pl-arch-check | always | code change | `npm run arch:check` | - |
-| registry-build | pl-contract-parity | always | code change | F5 count rule | - |
+| registry-build | pl-contract-parity | always | code change | F5 contract-id identity rule | - |
 | registry-build | mutation | **gate** (was rec/placeholder) | before leave Build (epic) | `npm run mutation` ≥ threshold | yes |
 | registry-review | pl-arch-guard | always | epic/refactor | ts-arch-guard agent | - |
 | registry-review | pl-ddd-validate | rec | epic w/ exploration_output | ts-ddd-tactical-validator Mode B (exists) | - |
 | registry-test | pl-scenario-coverage | gate | epic | F1 coverage check exit 0 | yes |
 | registry-reflect | pl-feedback | always | any finding | F8 append rule | - |
 
-Mutation threshold: v1 = **60% on changed files** (not whole repo), raised via F8 evolution when data supports it. Coverage placeholder: **80% lines on changed files**. Both are OQ-5 if you want different numbers. Gate accounting, precisely: G1/G2 and human sign-off machinery untouched (NG1); zero new human gates. Registry-level *blocking* rows: `mutation` promoted rec→gate (fills an existing placeholder already on your roadmap — note this edits a row rather than appending, sanctioned by that roadmap item), and `pl-scenario-coverage` appended as a new gate-type row (machine check, same class as the existing `coverage` row).
+Provisional Phase-C thresholds are **60% mutation** and **80% line coverage** on changed files. They remain inactive until dogfood approval and may change from fixture evidence before activation. G1/G2 and human sign-off machinery stay untouched; zero new human security gates. Machine-blocking registry rows are generated consumer configuration, not Phase-A source-of-truth.
 
 **Verification:** existing gate-enforcement-tests + lean-phase-registry specs extend with the new rows (same test harness).
 
@@ -418,33 +482,58 @@ Domain: timesheet slice of the Atlassian pilot. Command `SubmitTimesheet`, aggre
 | S2 | placement row: A1 Timesheet(domain) + A5 SubmitTimesheetHandler(application/commands) | handler written into `src/adapters/` → arch:check names file + rule |
 | S3 | ts-contract-writer invoked with context diet = that scenario + A1/A5 cards only | agent returns JSON without required keys → schema reject, re-prompt once |
 | S4 | ACPL Guard Clause + Value Object (`Hours`), layer column = domain | Value Object placed in application → arch:check |
-| S5 | `requires(hours.total <= period.capacity, ...)` + `invariant(status transitions per table)` + 2 violation tests | mutant flips `<=` to `<` → violation test kills it; parity count enforced at Build exit |
+| S5 | `requires(hours.total <= period.capacity, "TIMESHEET-HOURS-CAPACITY", ...)` + `invariant(validTransition, "TIMESHEET-STATUS-TRANSITION", ...)` + tests naming both ids | mutant flips `<=` to `<` → violation test kills it; contract-id parity enforced at Build exit |
 
 Total human judgement spent: approving the placement plan row and G1/G2. Everything else was template + exit code.
 
 ---
 
-## 6. Rollout — thin slices, each one openspec change
+## 6. Rollout — isolation before activation
 
-Order optimizes for "enforcement before generation": guards exist before generators rely on them.
+Order optimizes for executable truth before guidance and requires explicit consent before changing this project.
 
-| slice | change name | contains | depends on |
-|---|---|---|---|
-| R0 | `pl-enforcement-base` | eslint actually installed + config; dependency-cruiser + gen-depcruise.mjs; layers.map spec; `arch:check`; fixture app in test-fixtures | — |
-| R1 | `pl-contracts` | F5 util + convention + registry rows; fill mutation/coverage placeholders (F9 part) | — |
-| R2 | `pl-scenario-compiler` | F1 script + agent + coverage gate | — |
-| R3 | `pl-pattern-cards` | ts-pl skill v1 (9 cards) + F4 ACPL column | R0 |
-| R4 | `pl-agent-cards` | F3 standard + retrofit 2 + new 3 agents | R2, R3 |
-| R5 | `pl-production-line` | F7 stations + F6 templates + state field + hook line | R0, R1, R3 |
-| R6 | `pl-evolution` | F8 jsonl + Reflect rows + escalation rule | — (start day 1 informally) |
+### Phase A — portable enforcement kernel (`src/*` only)
 
-R0+R1 alone already change daily reality (red/green architecture + loud contracts) even if everything else is cut. Dogfood vehicle per slice: fixture app for R0–R3; Atlassian pilot epic for R4–R6 (OQ-1).
+| slice | contains | forbidden |
+|---|---|---|
+| A1 | zero-dependency architecture/placement checker, `layers.map` schema, stable diagnostics, planted fixture violations | root dependency/config edits |
+| A2 | contract util with stable ids, identity-based violation-test checker | live registry activation |
+| A3 | relational discovery shape, scenario compiler, event coverage checker | live Discovery schema migration |
+
+Phase A acceptance: all implementation files changed are below `src/*`; no new npm dependency; repeated fixture runs produce identical normalized rule ids, diagnostics, and exit codes. Host-adapter parity is Phase B acceptance.
+
+### Phase B — consumer-project adapters (`src/*` only)
+
+| slice | contains | activation state |
+|---|---|---|
+| B1 | scaffold templates for consumer `layers.map`, npm scripts, and registry rows | inactive |
+| B2 | optional dependency-cruiser/ESLint adapter generated from canonical manifests | inactive |
+| B3 | cards, agent contracts, prompt templates, and Build station checklist referencing kernel rule ids | inactive |
+| B4 | installer dry-run and generated-file manifest with rollback plan | fixture only |
+
+Phase B acceptance: installation is exercised only against an isolated fixture. No live project file outside `src/*` changes.
+
+### Dogfood Activation Gate — explicit human approval
+
+After Phase A and Phase B evidence is reviewed, work MUST stop. Separate approval is required before any of these actions:
+
+- edit root `package.json` or lockfile;
+- install dependencies into `agenticToolset`;
+- modify live `.agents/*`, hooks, registries, router state, or project configuration;
+- apply layer rules to current repository;
+- run live state/config migrations.
+
+This gate is adoption consent, separate from security gates G1/G2. Approval for implementation does not imply dogfood approval.
+
+### Phase C — approved dogfood activation
+
+Generate configuration into `agenticToolset`, run deliberate red→green violations, measure false positives and workflow impact, and retain rollback through the generated-file manifest. Persistent F7 station state remains a separate proposal even after Phase C.
 
 ---
 
 ## 7. Metrics — "conductor, not reviewer" made measurable
 
-Baseline captured on the first dogfood epic before R4; all computable by a weak model from files:
+Baseline captured only after Dogfood Activation approval and before the first Phase-C dogfood run; all metrics remain fixture-only before then:
 
 | metric | source | direction |
 |---|---|---|
@@ -462,7 +551,7 @@ Baseline captured on the first dogfood epic before R4; all computable by a weak 
 |---|---|
 | Token bloat from cards/templates | caveman dual-files; lazy-load per scale (registry pattern already proven); templates LOAD only named cards |
 | False-positive arch rules block legitimate code | escape hatch = F8 feedback row + rule delta, never inline-disable; rule changes go through monthly refresh |
-| Fixture ≠ reality (dogfooding a toy) | R4+ dogfoods on the Atlassian pilot epic; fixture is for deterministic tests only |
+| Fixture ≠ reality | Phase A/B claims stop at deterministic portability; real-project conclusions wait for separately approved Equipment Lending Board validation and Phase-C dogfood evidence |
 | layers.map wrong on day 1 | it's per-project data, not code — versioned, evolved via F8 like any rule |
 | Weak model skips SELF-CHECK footer | station 5 re-runs the same checks as cmds; template check is belt, registry row is suspenders |
 | Scope creep into router/spine | NG1 + this PRD's registry-rows-only wiring; any change touching phase-routing.ts is out of PLDD scope by definition |
@@ -477,22 +566,25 @@ Baseline captured on the first dogfood epic before R4; all computable by a weak 
 
 ---
 
-## 10. Open questions (each with my recommended default — answer or override)
+## 10. Decisions and remaining questions
 
-| # | question | recommendation & why |
+| # | status | decision |
 |---|---|---|
-| OQ-1 | Dogfood vehicle: fixture app only, or wire PLDD into the **Atlassian pilot** from R4? | Pilot from R4. Fixtures prove determinism; only real domain pressure produces F8 feedback worth folding in. |
-| OQ-2 | Scenario compiler: pure procedure doc vs `.mjs` script? | Script. Skeleton generation is exactly the kind of step that must not depend on model quality. |
-| OQ-3 | Contracts in production: default ON with `CONTRACTS_OFF` escape, or default OFF? | Default ON (your Fail-loud principle). Perf-critical hot paths opt out per-module, recorded as F8 row. |
-| OQ-4 | `layers.map.json` location: `.agents/pl/` (state-ish) vs project root (config-ish)? | `.agents/pl/` — it evolves via F8 like state, and scaffolder already owns `.agents/` seeding. |
-| OQ-5 | Thresholds: mutation 60% / coverage 80% on changed files — agree? | Yes as v1; ratchet by F8 data, never by feel. Changed-files scope keeps weak-model runs fast. |
-| OQ-6 | Skill name `ts-pl` vs `ts-pldd`? | `ts-pl`. Shorter in every prompt; "pldd" is the method, the skill is the pattern language itself. |
-| OQ-7 | New deps (dependency-cruiser, eslint plugins) — run `g0-oss-intake` first? | Yes, standard P1–P7 pass; both are mainstream, expect ADOPT. Budget: one session. |
-| OQ-8 | Should `ts-project-init-advisor` learn to detect layers.map + recommend PLDD tier for existing projects? | Yes but as a *later* advisor change (post-R3), one new rubric dimension — keep this PRD's blast radius fixed. |
+| D1 | decided | Use enforcement kernel; cards, agents, templates, and host adapters are clients. |
+| D2 | decided | Phase A → Phase B → explicit Dogfood Activation approval → Phase C. |
+| D3 | decided | Phase A/B modify only `src/*`; current dual-track configuration remains unchanged. |
+| D4 | decided | Scenario compiler is deterministic `.mjs`; each command targets exactly one aggregate through additive `ownership_relations_v1`, preserving legacy arrays. |
+| D5 | decided | Contracts are always on in v1 and carry stable ids; parity compares ids, not counts. |
+| D6 | decided | F7 begins as Build checklist; no persistent router state. |
+| D7 | decided | Skill name is `ts-pl`; PLDD names the method. |
+| D8 | decided | Equipment Lending Board is parked separately in `tasks/VALIDATION_PROJECT.md`; it does not authorize dogfood activation. |
+| D9 | decided | Add versioned relationship fields beside legacy arrays inside `exploration_output`; current array shapes remain stable and older consumers may ignore additions. |
+| OQ-2 | build constraint | Phase A checker SHALL enumerate supported syntax and fail closed on unsupported import forms; exact supported set belongs in Phase A spec before implementation. |
+| OQ-3 | later | Mutation 60% and coverage 80% on changed files remain provisional until fixture and dogfood evidence. |
 
 ---
 
 ## 11. What this PRD deliberately did NOT do
 
-No implementation was started; no repo files were modified. Every feature above converts to one openspec change with its scenarios already drafted in §4. The intended next step after your review: `/spectra-propose` R0 in the repo, pasting the relevant F-section as the seed.
+No implementation has started. PRD reverse review removed stale Phase-B/Phase-C instructions from Phase A, count-based contract parity, the persistent-state contradiction, old rollout labels, and premature host-parity claims. `pl-enforcement-kernel-phase-a` now has proposal, design, specification, and 13 verifiable tasks; Spectra analysis is clean and validation passes. G1 technical re-audit remains 6/6, with human sign-off pending before Plan. `$spectra-apply` remains user-invoked, and dogfood activation requires its own later approval.
 

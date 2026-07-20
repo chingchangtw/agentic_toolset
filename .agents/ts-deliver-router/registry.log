@@ -1,0 +1,11 @@
+[
+  {
+    "date": "2026-07-19",
+    "refinement_count": 1,
+    "changes": [
+      { "tool": "ts-mutation-analyst", "field": "tier", "from": "pending-setup", "to": "active" }
+    ],
+    "lifecycle_stage_change": { "from": "active", "to": "stabilizing" },
+    "rationale": "EPIC-PLDD-ENFORCEMENT-KERNEL G2 signed off 2026-07-19: 86.22% mutation score across the Phase-A kernel scripts (all 5 files individually >=85%), 0 dependency vulnerabilities, survivors reviewed and categorized. A real compileGlob defect (mid-path '**' could never match any file) was found during mutation-test hardening and fixed. ts-mutation-analyst subagent still not built, but direct Stryker CLI invocation + manual survivor triage proved a reliable substitute this epic, so promoted active rather than left pending-setup. Lifecycle stage advanced to stabilizing to reflect the stricter bar this epic actually enforced and cleared; stryker.threshold intentionally left at 60 (project-wide default) per operator decision -- the 85% bar was epic-specific (Phase-A stryker.phase-a.conf.json), not yet adopted as the project-wide floor."
+  }
+]

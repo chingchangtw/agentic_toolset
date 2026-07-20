@@ -22,10 +22,26 @@
       "source_epic": "EPIC-GOLDEN-TEMPLATES",
       "keep_learning_count": 0,
       "riskiest_assumptions": [
-        { "assumption": "MODIFY recommendations can meaningfully distinguish missing golden content from intentional user customization when diffing an existing CLAUDE.md/AGENTS.md against the golden template — otherwise recommendations become noise users learn to skip", "risk": "M", "validated": false },
-        { "assumption": "The five scaffold files (incl. .github/copilot-instructions.md, added 2026-07-04) deserve 'golden template' status — they must be maintained as canonical, kept in parity with this repo's own evolving .claude context conventions, and versioned with releases (upgrades R-03 from tracking-only to a maintenance commitment)", "risk": "M", "validated": false },
-        { "assumption": "Direct creation when the file is absent is universally safe — no project layout where writing CLAUDE.md/AGENTS.md/.claude/* unprompted is unwelcome (e.g. monorepo subfolder with root-level context)", "risk": "L", "validated": false },
-        { "assumption": "Advisor path and the installer's existing SCAFFOLD=y blind-copy path can coexist without conflicting or drifting", "risk": "M", "validated": false }
+        {
+          "assumption": "MODIFY recommendations can meaningfully distinguish missing golden content from intentional user customization when diffing an existing CLAUDE.md/AGENTS.md against the golden template — otherwise recommendations become noise users learn to skip",
+          "risk": "M",
+          "validated": false
+        },
+        {
+          "assumption": "The five scaffold files (incl. .github/copilot-instructions.md, added 2026-07-04) deserve 'golden template' status — they must be maintained as canonical, kept in parity with this repo's own evolving .claude context conventions, and versioned with releases (upgrades R-03 from tracking-only to a maintenance commitment)",
+          "risk": "M",
+          "validated": false
+        },
+        {
+          "assumption": "Direct creation when the file is absent is universally safe — no project layout where writing CLAUDE.md/AGENTS.md/.claude/* unprompted is unwelcome (e.g. monorepo subfolder with root-level context)",
+          "risk": "L",
+          "validated": false
+        },
+        {
+          "assumption": "Advisor path and the installer's existing SCAFFOLD=y blind-copy path can coexist without conflicting or drifting",
+          "risk": "M",
+          "validated": false
+        }
       ],
       "exploration_output": {
         "domain_events": [
@@ -60,7 +76,9 @@
         "decision_rationale": null
       },
       "decision": "build",
-      "ready_epics": ["EPIC-GOLDEN-TEMPLATES"],
+      "ready_epics": [
+        "EPIC-GOLDEN-TEMPLATES"
+      ],
       "synced_to_plan": true,
       "notes": "Original request 2026-07-03: copy-or-merge the four src/project_root_structure/ agent-context files (CLAUDE.md, AGENTS.md, .claude/CLAUDE.md, .claude/goverance_CLAUDE.md) into the user's project when ts-project-init-advisor runs. PIVOT v2 2026-07-04: golden templates + recommend-to-add only (advisor never writes). PIVOT v3 2026-07-04 (during decide, current scope): golden templates + recommend ADD-or-MODIFY, with a direct-create carve-out — when a target file does NOT exist the agent creates it directly from the golden template (nothing to clobber, no approval friction); when it EXISTS the advisor emits a MODIFY recommendation from gap analysis vs golden as an approval-gated PROJECT_INIT_PLAN.md task, never auto-overwriting. The v2 H-risk dissolution holds (still no automated merge); new top M-risk is distinguishing intentional user customization from missing golden content in MODIFY gap analysis. Current state unchanged: advisor SKILL.md never mentions the scaffold; install.sh SCAFFOLD=y blind-copy path still exists and needs a coexistence posture. Precedent: ts-project-scaffolder's Protected Files Policy. Decision build recorded on v3 scope; validation skipped — no H-risk assumptions. SCOPE ADDENDUM 2026-07-04: golden set expanded to 5 files — .github/copilot-instructions.md added as fifth (user decision, post-sync; plan.json epic notes carry the authoritative file list)."
     },
@@ -71,29 +89,67 @@
       "source_epic": "EPIC-DUAL-TRACK-ORCHESTRATION",
       "keep_learning_count": 0,
       "riskiest_assumptions": [
-        { "assumption": "ts-event-storming-facilitator and ts-ddd-tactical-validator can be shipped as static sub-agent prompt files (no code, no schema enforcement) and still reliably return parseable structured JSON that /ts-discover explore|validate can write into discovery.json without a validation layer catching malformed output", "risk": "H", "validated": true },
-        { "assumption": "5 new work-type spines (feature/hotfix/chore/patch/spike/ops) plus back-compat 'epic' can stay in lockstep across 4 independent copies (ts-orchestrate SKILL.md, phase-routing.ts, work-unit-profiles.md, hook's duplicated [NEXT] bash strings) without drifting — the runbook accepts this as permanent duplication rather than consolidating", "risk": "H", "validated": true },
-        { "assumption": "Fixing the pre-existing .ai→.agents test-path breakage in the same change as the dual-track feature won't mask why CI never caught 2 whole test files failing before now", "risk": "M", "validated": false },
-        { "assumption": "The new manifest.json agents[] category is safe to consume by install.sh, install.ps1, and dogfood.mjs without a schema version bump — every consumer degrades gracefully when the key is absent (old zips), not just the one (install.sh) that was hand-verified", "risk": "M", "validated": false },
-        { "assumption": "End users can reliably tell SPIKE (Delivery, learning feeds back) apart from POC (Discovery-only, never ships) from the work-type name alone, without hitting the wrong track", "risk": "L", "validated": false }
+        {
+          "assumption": "ts-event-storming-facilitator and ts-ddd-tactical-validator can be shipped as static sub-agent prompt files (no code, no schema enforcement) and still reliably return parseable structured JSON that /ts-discover explore|validate can write into discovery.json without a validation layer catching malformed output",
+          "risk": "H",
+          "validated": true
+        },
+        {
+          "assumption": "5 new work-type spines (feature/hotfix/chore/patch/spike/ops) plus back-compat 'epic' can stay in lockstep across 4 independent copies (ts-orchestrate SKILL.md, phase-routing.ts, work-unit-profiles.md, hook's duplicated [NEXT] bash strings) without drifting — the runbook accepts this as permanent duplication rather than consolidating",
+          "risk": "H",
+          "validated": true
+        },
+        {
+          "assumption": "Fixing the pre-existing .ai→.agents test-path breakage in the same change as the dual-track feature won't mask why CI never caught 2 whole test files failing before now",
+          "risk": "M",
+          "validated": false
+        },
+        {
+          "assumption": "The new manifest.json agents[] category is safe to consume by install.sh, install.ps1, and dogfood.mjs without a schema version bump — every consumer degrades gracefully when the key is absent (old zips), not just the one (install.sh) that was hand-verified",
+          "risk": "M",
+          "validated": false
+        },
+        {
+          "assumption": "End users can reliably tell SPIKE (Delivery, learning feeds back) apart from POC (Discovery-only, never ships) from the work-type name alone, without hitting the wrong track",
+          "risk": "L",
+          "validated": false
+        }
       ],
       "exploration_output": {
         "domain_events": [
-          "IdeaSeeded", "IdeaExplored", "DDDValidationRun", "IdeaValidated",
-          "IdeaDecided (build|kill|keep-learning|reduce-scope)", "IdeaReadyForSync",
-          "IdeaSyncedToPlan", "IterationStarted", "EpicActivated",
-          "DeliverPhaseAdvanced", "GateSignedOff (G1|G2)", "EpicShipped",
-          "EpicReflected", "DiscoveryFeedbackWritten", "ReleaseManifestRegenerated",
-          "AgentPackagedIntoRelease", "WorkflowStateInjected"
+          "IdeaSeeded",
+          "IdeaExplored",
+          "DDDValidationRun",
+          "IdeaValidated",
+          "IdeaDecided (build|kill|keep-learning|reduce-scope)",
+          "IdeaReadyForSync",
+          "IdeaSyncedToPlan",
+          "IterationStarted",
+          "EpicActivated",
+          "DeliverPhaseAdvanced",
+          "GateSignedOff (G1|G2)",
+          "EpicShipped",
+          "EpicReflected",
+          "DiscoveryFeedbackWritten",
+          "ReleaseManifestRegenerated",
+          "AgentPackagedIntoRelease",
+          "WorkflowStateInjected"
         ],
         "commands": [
-          "SeedIdea (/ts-discover idea)", "ExploreIdea (/ts-discover explore)",
-          "ValidateIdea (/ts-discover validate)", "DecideIdea (/ts-discover decide)",
-          "SyncPlan (/ts-project plan --sync)", "StartIteration (/ts-iteration start)",
-          "AdvanceIteration (/ts-iteration next)", "InitDeliver (/ts-deliver init)",
-          "RefineDeliver (/ts-deliver refine)", "SignGate (G1/G2)",
+          "SeedIdea (/ts-discover idea)",
+          "ExploreIdea (/ts-discover explore)",
+          "ValidateIdea (/ts-discover validate)",
+          "DecideIdea (/ts-discover decide)",
+          "SyncPlan (/ts-project plan --sync)",
+          "StartIteration (/ts-iteration start)",
+          "AdvanceIteration (/ts-iteration next)",
+          "InitDeliver (/ts-deliver init)",
+          "RefineDeliver (/ts-deliver refine)",
+          "SignGate (G1/G2)",
           "StartOrchestrate (/ts-orchestrate:start WORK_TYPE=...)",
-          "GenerateManifest", "BuildRelease", "DogfoodSync"
+          "GenerateManifest",
+          "BuildRelease",
+          "DogfoodSync"
         ],
         "aggregates": [
           "Idea (discovery.json entry — owns exploration_output/validation_output/decision/riskiest_assumptions; invariants: WIP limit 3, DDD-gate before build)",
@@ -108,11 +164,31 @@
         ],
         "acpl_pattern_group": "Workpiece (Aggregate Root for Idea/Epic invariants + State Machine for idea lifecycle and phase spines + Command Object for routing commands, audited via history.jsonl + Guard Clause on WIP/gate preconditions)",
         "ubiquitous_language_terms": [
-          "WIP", "Discovery", "Delivery", "Track", "Phase Spine", "Gate (G1/G2)",
-          "Work Type", "Idea", "Epic", "Exploration Output", "Validation Output",
-          "Decision", "Ready Epics", "Bounded Context", "Aggregate", "Domain Event",
-          "Ubiquitous Language Coverage", "Sub-agent", "Manifest", "Dogfood",
-          "Focus Idea", "Keep-Learning", "Stale", "Reduce-Scope", "ACPL Pattern Group"
+          "WIP",
+          "Discovery",
+          "Delivery",
+          "Track",
+          "Phase Spine",
+          "Gate (G1/G2)",
+          "Work Type",
+          "Idea",
+          "Epic",
+          "Exploration Output",
+          "Validation Output",
+          "Decision",
+          "Ready Epics",
+          "Bounded Context",
+          "Aggregate",
+          "Domain Event",
+          "Ubiquitous Language Coverage",
+          "Sub-agent",
+          "Manifest",
+          "Dogfood",
+          "Focus Idea",
+          "Keep-Learning",
+          "Stale",
+          "Reduce-Scope",
+          "ACPL Pattern Group"
         ]
       },
       "validation_output": {
@@ -123,16 +199,212 @@
           "mode": "A",
           "recommendation": "NEEDS_ATTENTION",
           "violations": [
-            { "check": "A1", "detail": "SyncPlan, StartIteration, AdvanceIteration mutate a Release/Iteration concept that isn't modeled as its own aggregate — they currently fold implicitly into the Idea/Epic aggregates. Not a hard violation (legitimate as cross-aggregate process/saga commands) but the model is under-specified.", "location": "exploration_output.commands" },
-            { "check": "A2", "detail": "WorkflowStateInjected is listed as a domain_event but nothing 'happened' to an aggregate — it's a read-side projection (hook output), not a state change. Terminology looseness.", "location": "exploration_output.domain_events" }
+            {
+              "check": "A1",
+              "detail": "SyncPlan, StartIteration, AdvanceIteration mutate a Release/Iteration concept that isn't modeled as its own aggregate — they currently fold implicitly into the Idea/Epic aggregates. Not a hard violation (legitimate as cross-aggregate process/saga commands) but the model is under-specified.",
+              "location": "exploration_output.commands"
+            },
+            {
+              "check": "A2",
+              "detail": "WorkflowStateInjected is listed as a domain_event but nothing 'happened' to an aggregate — it's a read-side projection (hook output), not a state change. Terminology looseness.",
+              "location": "exploration_output.domain_events"
+            }
           ],
           "ubiquitous_language_coverage": 0.83
         }
       },
       "decision": "build",
-      "ready_epics": ["EPIC-DUAL-TRACK-ORCHESTRATION"],
+      "ready_epics": [
+        "EPIC-DUAL-TRACK-ORCHESTRATION"
+      ],
       "synced_to_plan": true,
       "notes": "Seeded from tasks/dual-track-orchestration-plan.md — a Fable 5-authored weak-model-executable runbook (T1-T12) already carrying 12 locked design decisions (see runbook §0). Ran explore via facilitator-role simulation (no ts-event-storming-facilitator sub-agent exists yet — building it IS this idea's T1). 2 H-risk assumptions found → validation was MANDATORY per discovery-kanban.md. Ran validate via council-advisor/tows-strategy-analyst/ts-ddd-tactical-validator role simulation (same reason — none of these sub-agents exist yet either). Result: feasibility=risky, ddd_validation=NEEDS_ATTENTION (not FAIL). DECIDE 2026-07-05: build. Single epic (not split) — the 4 bounded_contexts (discovery/delivery/packaging/orchestration) are one tightly-coupled change: the runbook's own T1-T12 sequence and single Spectra proposal (T11) assume they ship together; SKILL.md's new tables reference agents that only exist after T1, tests in T4/T5/T8 assume phase-routing.ts and hook are edited in the same change. Epic notes must carry forward 3 non-blocking follow-ups from validate: (1) add a JSON-shape/type check for sub-agent output, not just the existing non-empty check; (2) add a test asserting phase-routing.ts spines match SKILL.md/work-unit-profiles.md; (3) DDD model gap — Release/Iteration is under-modeled as its own aggregate, WorkflowStateInjected mis-classified as a domain event rather than a projection. Awaiting /ts-project plan --sync to add EPIC-DUAL-TRACK-ORCHESTRATION to backlog. SHIPPED 2026-07-05: Review→Test→Ship→Reflect completed, pushed origin/master 40d2b85..5f6537b, G2 signed off by ctony. Follow-up (2) fulfilled by T9.5 (spine-consistency.test.ts) but only for phase-routing.ts vs work-unit-profiles.md — Review phase found the broader claim in design.md D9 (hook vs SKILL.md lockstep 'enforced by tests') was false and corrected it; that specific gap remains open. Follow-ups (1) and (3) still open. New follow-up from Review: installer/build-script agents-category wiring is a rule-of-three copy-paste (install.sh/.ps1, build-release.mjs, dogfood.mjs) with no shared helper — refactor-scope, non-blocking. Retro: .agents/ts-project-planner/retrospectives/Iter1-retro.md."
+    },
+    {
+      "id": "idea-004",
+      "title": "PLDD portable enforcement kernel and consumer adapters",
+      "status": "ready",
+      "source_epic": null,
+      "keep_learning_count": 0,
+      "riskiest_assumptions": [
+        {
+          "assumption": "A zero-new-dependency Node checker can parse enough TypeScript and JavaScript import forms to provide credible Phase A architecture enforcement.",
+          "risk": "H",
+          "validated": true
+        },
+        {
+          "assumption": "Codex and Claude Code portability can be proven through identical commands, diagnostics, and fixture outcomes without modifying live host configuration during Phase A or Phase B.",
+          "risk": "H",
+          "validated": true
+        },
+        {
+          "assumption": "The discovery model can gain explicit command-to-aggregate and event relationships without breaking current consumers of exploration_output.",
+          "risk": "H",
+          "validated": true
+        },
+        {
+          "assumption": "Stable contract ids remain understandable enough that weak models create and maintain matching violation tests reliably.",
+          "risk": "M",
+          "validated": false
+        },
+        {
+          "assumption": "Cards, agents, and templates can reference canonical kernel rule ids without duplicating normative rules.",
+          "risk": "M",
+          "validated": false
+        },
+        {
+          "assumption": "Consumer adapters and installers can be fully tested against fixtures while remaining inactive in agenticToolset until Dogfood Activation approval.",
+          "risk": "M",
+          "validated": false
+        }
+      ],
+      "exploration_output": {
+        "domain_events": [
+          "LayerManifestDefined",
+          "ArchitectureCheckCompleted",
+          "ContractDeclared",
+          "ContractParityChecked",
+          "ScenarioSkeletonsCompiled",
+          "ConsumerAdaptersGenerated",
+          "DogfoodActivationRequested",
+          "DogfoodActivationApproved",
+          "DogfoodActivated",
+          "PatternFeedbackRecorded"
+        ],
+        "commands": [
+          "DefineLayerManifest",
+          "RunArchitectureCheck",
+          "DeclareContract",
+          "RunContractParityCheck",
+          "CompileScenarioSkeletons",
+          "GenerateConsumerAdapters",
+          "RequestDogfoodActivation",
+          "ApproveDogfoodActivation",
+          "ActivateDogfood",
+          "RecordPatternFeedback"
+        ],
+        "aggregates": [
+          "EnforcementKernel",
+          "ScenarioCompilation",
+          "ConsumerAdapterPackage",
+          "DogfoodActivation",
+          "PatternLanguage"
+        ],
+        "bounded_contexts": [
+          "Enforcement Kernel",
+          "Scenario Compilation",
+          "Consumer Integration",
+          "Adoption Governance",
+          "Pattern Evolution"
+        ],
+        "acpl_pattern_group": "G2+G5",
+        "ubiquitous_language_terms": [
+          "Enforcement Kernel",
+          "Layer Manifest",
+          "Architecture Check",
+          "Contract",
+          "Contract Parity",
+          "Scenario Compilation",
+          "Consumer Adapter Package",
+          "Dogfood Activation",
+          "Pattern Language",
+          "Pattern Feedback"
+        ],
+        "problem_frame": "Commanded",
+        "assumptions": [
+          "Phase A and Phase B modify only files below src.",
+          "Existing dual-track topology, router algorithm, state sovereignty, and G1/G2 remain unchanged.",
+          "Dogfood activation is a separate human approval after Phase A and Phase B evidence review.",
+          "Equipment Lending Board remains parked and outside this discovery idea."
+        ],
+        "ownership_relations_v1": [
+          {
+            "command": "DefineLayerManifest",
+            "aggregate": "EnforcementKernel",
+            "event": "LayerManifestDefined"
+          },
+          {
+            "command": "RunArchitectureCheck",
+            "aggregate": "EnforcementKernel",
+            "event": "ArchitectureCheckCompleted"
+          },
+          {
+            "command": "DeclareContract",
+            "aggregate": "EnforcementKernel",
+            "event": "ContractDeclared"
+          },
+          {
+            "command": "RunContractParityCheck",
+            "aggregate": "EnforcementKernel",
+            "event": "ContractParityChecked"
+          },
+          {
+            "command": "CompileScenarioSkeletons",
+            "aggregate": "ScenarioCompilation",
+            "event": "ScenarioSkeletonsCompiled"
+          },
+          {
+            "command": "GenerateConsumerAdapters",
+            "aggregate": "ConsumerAdapterPackage",
+            "event": "ConsumerAdaptersGenerated"
+          },
+          {
+            "command": "RequestDogfoodActivation",
+            "aggregate": "DogfoodActivation",
+            "event": "DogfoodActivationRequested"
+          },
+          {
+            "command": "ApproveDogfoodActivation",
+            "aggregate": "DogfoodActivation",
+            "event": "DogfoodActivationApproved"
+          },
+          {
+            "command": "ActivateDogfood",
+            "aggregate": "DogfoodActivation",
+            "event": "DogfoodActivated"
+          },
+          {
+            "command": "RecordPatternFeedback",
+            "aggregate": "PatternLanguage",
+            "event": "PatternFeedbackRecorded"
+          }
+        ],
+        "external_adapters_v1": [
+          {
+            "bounded_context": "Consumer Integration",
+            "external_system": "Codex",
+            "boundary": "HostAdapter"
+          },
+          {
+            "bounded_context": "Consumer Integration",
+            "external_system": "Claude Code",
+            "boundary": "HostAdapter"
+          },
+          {
+            "bounded_context": "Consumer Integration",
+            "external_system": "dependency-cruiser",
+            "boundary": "ToolAdapter"
+          }
+        ]
+      },
+      "validation_output": {
+        "feasibility": "risky",
+        "council_verdict": "DDD model is now internally complete: all 10 commands and 10 events have exactly one aggregate relation, all referenced aggregates exist, Consumer Integration declares Codex, Claude Code, and dependency-cruiser adapter boundaries, and ubiquitous-language coverage is 1.00. Remaining delivery risk is the Phase A parser subset: it must enumerate supported syntax and fail closed on unsupported forms.",
+        "decision_rationale": "Strategic fit remains high. Versioned additive relations preserve legacy arrays while enabling deterministic scenario compilation and DDD validation. Cross-host parity remains testable through portable commands. Proceeding to a build decision is permissible because DDD validation passes, but implementation must retain Phase A/B isolation and the later Dogfood Activation Gate.",
+        "ddd_validation": {
+          "mode": "A",
+          "recommendation": "PASS",
+          "violations": [],
+          "ubiquitous_language_coverage": 1.0
+        }
+      },
+      "decision": "build",
+      "ready_epics": [
+        "EPIC-PLDD-ENFORCEMENT-KERNEL",
+        "EPIC-PLDD-CONSUMER-ADAPTERS"
+      ],
+      "synced_to_plan": true,
+      "notes": "Explored from tasks/harnessPRD/PRD-PLDD-multi-scale-pattern-language.md. Phase A/B isolation and Dogfood Activation boundary are mandatory. VALIDATE 2026-07-13: feasibility=risky; DDD Mode A=FAIL. Build blocked pending explicit command/event ownership, host ACL boundaries, and vocabulary coverage >=0.5; re-run explore then validate. RE-EXPLORE 2026-07-13: added ownership_relations_v1 and external_adapters_v1 without changing legacy array types; aligned ubiquitous language with modeled names. REVALIDATE 2026-07-13: DDD Mode A PASS; ownership 10/10 commands and 10/10 events; 3 external adapters declared; ubiquitous-language coverage 1.00. Feasibility remains risky due fail-closed parser-scope requirement. DECIDE 2026-07-13: build. Ready epics split by rollout boundary: EPIC-PLDD-ENFORCEMENT-KERNEL (Phase A, src-only, zero new dependencies) then EPIC-PLDD-CONSUMER-ADAPTERS (Phase B, src-only, inactive fixture-tested adapters). Phase B depends on Phase A. Dogfood activation is excluded and still requires separate human approval. SYNC 2026-07-13: added Phase A and Phase B epics to Iter4; dependency Phase B -> Phase A; dogfood activation excluded."
     }
   ]
 }

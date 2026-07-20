@@ -1,0 +1,43 @@
+{
+  "$schema": "../../../../../node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "packageManager": "npm",
+  "testRunner": "vitest",
+  "reporters": ["clear-text", "progress", "json"],
+  "jsonReporter": {
+    "fileName": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-ENFORCEMENT-KERNEL/test/mutation-report.json"
+  },
+  "coverageAnalysis": "perTest",
+  "ignorePatterns": [
+    "**",
+    "!src/scripts/gen-scenarios.mjs",
+    "!src/scripts/pl-arch-check.mjs",
+    "!src/scripts/pl-contract-check.mjs",
+    "!src/scripts/pl-scope-guard.mjs",
+    "!src/utils/contracts.ts",
+    "!src/tests/unit/contracts.test.ts",
+    "!src/tests/unit/gen-scenarios.test.ts",
+    "!src/tests/unit/pl-arch-check.test.ts",
+    "!src/tests/unit/pl-contract-check.test.ts",
+    "!src/tests/unit/pl-scope-guard.test.ts",
+    "!src/tests/fixtures/**",
+    "!package.json",
+    "!tsconfig.json",
+    "!vitest.config.ts",
+    "!.agents/ts-deliver-router/artifacts/EPIC-PLDD-ENFORCEMENT-KERNEL/test/vitest.phase-a.config.ts"
+  ],
+  "mutate": [
+    "src/scripts/gen-scenarios.mjs",
+    "src/scripts/pl-arch-check.mjs",
+    "src/scripts/pl-contract-check.mjs",
+    "src/scripts/pl-scope-guard.mjs",
+    "src/utils/contracts.ts"
+  ],
+  "vitest": {
+    "configFile": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-ENFORCEMENT-KERNEL/test/vitest.phase-a.config.ts"
+  },
+  "thresholds": {
+    "high": 85,
+    "low": 85,
+    "break": 85
+  }
+}

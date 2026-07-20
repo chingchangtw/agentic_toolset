@@ -1,7 +1,7 @@
 {
   "project": "agenticToolset",
   "initialized": "2026-07-04",
-  "lifecycle_stage": "active",
+  "lifecycle_stage": "stabilizing",
   "core": {
     "spine": "gstack",
     "bdd": "spectra",
@@ -53,11 +53,11 @@
       "id": "ts-mutation-analyst",
       "type": "subagent",
       "phase": ["test"],
-      "tier": "pending-setup",
+      "tier": "active",
       "gate": "G2",
       "threshold": null,
-      "source": "src/skills/ts-deliver-router/references/sub-agents.md (build spec, .claude/agents/ts-mutation-analyst.md not yet created)",
-      "notes": null
+      "source": "src/skills/ts-deliver-router/references/sub-agents.md (build spec, .claude/agents/ts-mutation-analyst.md still not created) — EPIC-PLDD-ENFORCEMENT-KERNEL satisfied G2's mutation checklist via direct Stryker CLI invocation (rm -rf .stryker-tmp && npx stryker run <epic stryker.phase-a.conf.json>, survivor triage, targeted test authoring) rather than the dedicated subagent",
+      "notes": "Working substitute confirmed 2026-07-19: manual CLI + survivor review reached 86.22% across 5 files (all >=85%), no subagent build required. Promoted active on that basis; revisit if a future epic needs the subagent's automation instead of manual iteration."
     },
     {
       "id": "atlassian-rovo",
@@ -122,7 +122,7 @@
       "sign_off": "human"
     }
   },
-  "refinement_count": 0,
+  "refinement_count": 1,
   "next_refinement_trigger": "reflect",
   "extensions": {
     "agent_scaffold": false

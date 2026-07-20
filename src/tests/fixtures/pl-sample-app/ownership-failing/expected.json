@@ -1,0 +1,10 @@
+[
+  {
+    "version": "1",
+    "rule_id": "PL-SCENARIO-OWNERSHIP",
+    "severity": "error",
+    "file": "exploration.json",
+    "dependency": "",
+    "message": "Each command and event must have exactly one ownership relation"
+  }
+]
