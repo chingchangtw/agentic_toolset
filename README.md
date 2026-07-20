@@ -6,7 +6,7 @@ A distribution framework for Claude Code skills, hooks, and project scaffold tem
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 → **End-user workflow guide:** [`USER_GUIDE.md`](USER_GUIDE.md)
-→ **One-page command reference:** [`docs/solution_cheat_sheet.html`](docs/solution_cheat_sheet.html)
+→ **One-page command reference:** [`docs/dual-track-workflow.html`](docs/dual-track-workflow.html)
 → **Architecture deep-dive:** [`docs/architecture.md`](docs/architecture.md)
 → **Changelog:** [`release/CHANGELOG.md`](release/CHANGELOG.md)
 
