@@ -1,0 +1,11 @@
+{
+  "allowedPaths": [
+    ".claude/commands/pl-check.md"
+  ],
+  "targets": [
+    {
+      "path": ".claude/commands/pl-check.md",
+      "content": "# pl-check (Claude Code)\n\nRuns the portable PLDD enforcement kernel against the current project and\ndisplays its output unchanged.\n\n## Invocation\n\nThe kernel owns every rule, diagnostic, and exit-code decision. This command\nonly selects the kernel command to run and prints what it returns:\n\n- Architecture check: run the kernel's architecture command against the\n  project's layer manifest.\n- Contract check: run the kernel's contract command against the project's\n  source and violation-test files.\n- Scenario compilation: run the kernel's scenario command against the\n  project's exploration model.\n\nExit code and stdout/stderr come directly from the kernel command. This\nadapter does not remap exit codes or add host-specific advice on top of the\nkernel's diagnostics.\n\n## Display\n\nPassthrough — the kernel's JSON or text diagnostics are shown as-is.\n"
+    }
+  ]
+}

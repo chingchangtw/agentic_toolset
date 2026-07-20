@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "packageManager": "npm",
+  "testRunner": "vitest",
+  "reporters": ["clear-text", "progress", "json"],
+  "jsonReporter": {
+    "fileName": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/test-slice2/mutation-report.json"
+  },
+  "coverageAnalysis": "off",
+  "ignorePatterns": [
+    "**",
+    "!src/scripts/pl-dogfood-activate.mjs",
+    "!src/scripts/pl-dogfood-rollback.mjs",
+    "!src/scripts/pl-scope-guard.mjs",
+    "!src/tests/unit/pl-dogfood-activate.test.ts",
+    "!src/tests/unit/pl-dogfood-rollback.test.ts",
+    "!src/tests/unit/pl-scope-guard.test.ts",
+    "!src/tests/fixtures/**",
+    "!package.json",
+    "!tsconfig.json",
+    "!vitest.config.ts",
+    "!.agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/test-slice2/vitest.dogfood-activation.config.ts"
+  ],
+  "mutate": [
+    "src/scripts/pl-dogfood-activate.mjs",
+    "src/scripts/pl-dogfood-rollback.mjs",
+    "src/scripts/pl-scope-guard.mjs"
+  ],
+  "vitest": {
+    "configFile": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/test-slice2/vitest.dogfood-activation.config.ts"
+  },
+  "thresholds": {
+    "high": 85,
+    "low": 60,
+    "break": 60
+  }
+}
