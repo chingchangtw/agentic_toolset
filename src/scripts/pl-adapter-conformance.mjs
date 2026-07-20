@@ -177,7 +177,7 @@ export function rollbackAdapter(installManifest) {
   }
 }
 
-function baselineHash(root) {
+export function baselineHash(root) {
   if (!existsSync(root)) return '';
   const entries = [];
   const walk = (dir) => {
@@ -282,29 +282,40 @@ export function isMainModule(moduleUrl, argv1) {
   return moduleUrl === pathToFileURL(argv1 ?? '').href;
 }
 
-if (isMainModule(import.meta.url, process.argv[1])) {
+/**
+ * Pure CLI body: parses argv, runs boundary + conformance checks, and
+ * returns { exitCode, stdout, stderr } instead of touching process state.
+ * Exported so tests can drive every branch in-process; the isMainModule
+ * block below is the only piece that actually writes to the real process.
+ */
+export function runCli(argv, { tmpdir = process.env.TMPDIR ?? '/tmp', pid = process.pid } = {}) {
   try {
-    const options = parseArgs(process.argv.slice(2));
+    const options = parseArgs(argv);
     const fixtureRoot = resolve(dirname(options.manifest), '..');
     const manifest = loadManifest(options.manifest, { fixtureRoot });
     const descriptors = options.descriptors.map((path) => loadDescriptor(path));
     const boundaryViolations = checkAdapterBoundary([...options.descriptors, ...descriptors.map((d) => resolve(options.templatesRoot, d.host, d.entry))]);
     if (boundaryViolations.length) {
-      process.stdout.write(options.format === 'json' ? `${JSON.stringify(boundaryViolations, null, 2)}\n` : boundaryViolations.map((v) => `${v.rule_id} ${v.file}: ${v.message}`).join('\n') + '\n');
-      process.exitCode = 2;
-    } else {
-      let seq = 0;
-      const result = runConformance({
-        manifest,
-        descriptors,
-        templatesRoot: options.templatesRoot,
-        consumerRootFactory: (caseId, host) => join(process.env.TMPDIR ?? '/tmp', `pl-adapter-conformance-${process.pid}-${seq++}-${caseId}-${host}`),
-      });
-      process.stdout.write(options.format === 'json' ? `${JSON.stringify(result.diagnostics, null, 2)}\n` : result.diagnostics.map((d) => `${d.rule_id} ${d.file}: ${d.message}`).join('\n') + (result.diagnostics.length ? '\n' : ''));
-      process.exitCode = result.exitCode;
+      const stdout = options.format === 'json' ? `${JSON.stringify(boundaryViolations, null, 2)}\n` : boundaryViolations.map((v) => `${v.rule_id} ${v.file}: ${v.message}`).join('\n') + '\n';
+      return { exitCode: 2, stdout, stderr: '' };
     }
+    let seq = 0;
+    const result = runConformance({
+      manifest,
+      descriptors,
+      templatesRoot: options.templatesRoot,
+      consumerRootFactory: (caseId, host) => join(tmpdir, `pl-adapter-conformance-${pid}-${seq++}-${caseId}-${host}`),
+    });
+    const stdout = options.format === 'json' ? `${JSON.stringify(result.diagnostics, null, 2)}\n` : result.diagnostics.map((d) => `${d.rule_id} ${d.file}: ${d.message}`).join('\n') + (result.diagnostics.length ? '\n' : '');
+    return { exitCode: result.exitCode, stdout, stderr: '' };
   } catch (error) {
-    process.stderr.write(`${error.message}\n`);
-    process.exitCode = 2;
+    return { exitCode: 2, stdout: '', stderr: `${error.message}\n` };
   }
+}
+
+if (isMainModule(import.meta.url, process.argv[1])) {
+  const result = runCli(process.argv.slice(2));
+  if (result.stdout) process.stdout.write(result.stdout);
+  if (result.stderr) process.stderr.write(result.stderr);
+  process.exitCode = result.exitCode;
 }

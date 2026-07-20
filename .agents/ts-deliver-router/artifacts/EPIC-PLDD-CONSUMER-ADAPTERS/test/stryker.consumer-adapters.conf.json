@@ -1,0 +1,36 @@
+{
+  "$schema": "../../../../../node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "packageManager": "npm",
+  "testRunner": "vitest",
+  "reporters": ["clear-text", "progress", "json"],
+  "jsonReporter": {
+    "fileName": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/test/mutation-report.json"
+  },
+  "coverageAnalysis": "off",
+  "ignorePatterns": [
+    "**",
+    "!src/scripts/pl-adapter-conformance.mjs",
+    "!src/scripts/pl-arch-check.mjs",
+    "!src/scripts/pl-contract-check.mjs",
+    "!src/scripts/gen-scenarios.mjs",
+    "!src/tests/unit/pl-adapter-conformance.test.ts",
+    "!src/tests/unit/ts-pl-skill.test.ts",
+    "!src/tests/fixtures/**",
+    "!src/skills/ts-pl/**",
+    "!package.json",
+    "!tsconfig.json",
+    "!vitest.config.ts",
+    "!.agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/test/vitest.consumer-adapters.config.ts"
+  ],
+  "mutate": [
+    "src/scripts/pl-adapter-conformance.mjs"
+  ],
+  "vitest": {
+    "configFile": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/test/vitest.consumer-adapters.config.ts"
+  },
+  "thresholds": {
+    "high": 85,
+    "low": 60,
+    "break": 60
+  }
+}

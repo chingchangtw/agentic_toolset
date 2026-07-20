@@ -1,12 +1,12 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 
 // @ts-expect-error Phase-B conformance harness intentionally ships as portable JavaScript.
-import { checkAdapterBoundary, compareObservations, installAdapter, loadDescriptor, loadManifest, normalizeObservation, rollbackAdapter, runConformance } from '../../scripts/pl-adapter-conformance.mjs';
+import { baselineHash, checkAdapterBoundary, compareObservations, installAdapter, loadDescriptor, loadManifest, normalizeObservation, rollbackAdapter, runCli, runConformance } from '../../scripts/pl-adapter-conformance.mjs';
 
 const SCRIPT = fileURLToPath(new URL('../../scripts/pl-adapter-conformance.mjs', import.meta.url));
 const FIXTURES = fileURLToPath(new URL('../../tests/fixtures/pl-adapter-parity', import.meta.url));
@@ -35,6 +35,56 @@ describe('loadManifest', () => {
       'compliant-architecture', 'forbidden-import', 'invalid-manifest',
       'unsupported-syntax', 'contract-violation', 'ownership-failing',
     ]);
+  });
+
+  it('rejects a manifest that fails to parse as JSON', () => {
+    const dir = tempDir('pl-adapter-manifest-');
+    writeFileSync(join(dir, 'manifest.json'), '{ not valid json');
+    expect(() => loadManifest(join(dir, 'manifest.json'), { fixtureRoot: dir }))
+      .toThrow(/Unable to parse fixture manifest/);
+  });
+
+  it('rejects an unsupported manifest version', () => {
+    const dir = tempDir('pl-adapter-manifest-');
+    mkdirSync(join(dir, 'a'), { recursive: true });
+    writeFileSync(join(dir, 'a', 'expected.json'), '[]');
+    writeFileSync(join(dir, 'manifest.json'), JSON.stringify({
+      version: '2',
+      cases: [{ id: 'x', command: 'arch', fixture: 'a', args: [], expected: 'a/expected.json' }],
+    }));
+    expect(() => loadManifest(join(dir, 'manifest.json'), { fixtureRoot: dir }))
+      .toThrow(/Unsupported fixture manifest version/);
+  });
+
+  it('rejects an empty case list', () => {
+    const dir = tempDir('pl-adapter-manifest-');
+    writeFileSync(join(dir, 'manifest.json'), JSON.stringify({ version: '1', cases: [] }));
+    expect(() => loadManifest(join(dir, 'manifest.json'), { fixtureRoot: dir }))
+      .toThrow(/cases must be non-empty/);
+  });
+
+  it('rejects a case referencing an unknown command', () => {
+    const dir = tempDir('pl-adapter-manifest-');
+    mkdirSync(join(dir, 'a'), { recursive: true });
+    writeFileSync(join(dir, 'a', 'expected.json'), '[]');
+    writeFileSync(join(dir, 'manifest.json'), JSON.stringify({
+      version: '1',
+      cases: [{ id: 'x', command: 'nonexistent', fixture: 'a', args: [], expected: 'a/expected.json' }],
+    }));
+    expect(() => loadManifest(join(dir, 'manifest.json'), { fixtureRoot: dir }))
+      .toThrow(/references unknown command/);
+  });
+
+  it('rejects a case whose args is not an array of strings', () => {
+    const dir = tempDir('pl-adapter-manifest-');
+    mkdirSync(join(dir, 'a'), { recursive: true });
+    writeFileSync(join(dir, 'a', 'expected.json'), '[]');
+    writeFileSync(join(dir, 'manifest.json'), JSON.stringify({
+      version: '1',
+      cases: [{ id: 'x', command: 'arch', fixture: 'a', args: [42], expected: 'a/expected.json' }],
+    }));
+    expect(() => loadManifest(join(dir, 'manifest.json'), { fixtureRoot: dir }))
+      .toThrow(/args must be an array of strings/);
   });
 
   it('rejects duplicate case ids', () => {
@@ -89,6 +139,12 @@ describe('loadManifest', () => {
 });
 
 describe('loadDescriptor', () => {
+  it('rejects a descriptor that fails to parse as JSON', () => {
+    const dir = tempDir('pl-adapter-descriptor-');
+    writeFileSync(join(dir, 'descriptor.json'), '{ not valid json');
+    expect(() => loadDescriptor(join(dir, 'descriptor.json'))).toThrow(/Unable to parse host descriptor/);
+  });
+
   it('loads both host descriptors', () => {
     expect(loadDescriptor(CODEX_DESCRIPTOR)).toEqual({
       version: '1', host: 'codex', invocation: 'pl-kernel', entry: '.codex/commands/pl-check.md', display: 'passthrough',
@@ -166,9 +222,45 @@ describe('normalizeObservation', () => {
     expect(observation.stdout[0].dependency).toBe('src/b.ts');
   });
 
+  it('falls back to the trimmed raw string when stdout looks like JSON but fails to parse', () => {
+    const observation = normalizeObservation({ host: 'codex', case_id: 'c1', command: 'arch', exit_code: 2, stdout: '[not valid json', stderr: '' });
+    expect(observation.stdout).toBe('[not valid json');
+  });
+
+  it('parses a top-level JSON object (not array) without mapping over it', () => {
+    const observation = normalizeObservation({ host: 'codex', case_id: 'c1', command: 'scenario', exit_code: 0, stdout: '{"scenarios": "text"}', stderr: '' });
+    expect(observation.stdout).toEqual({ scenarios: 'text' });
+  });
+
   it('keeps non-JSON stdout as a trimmed string', () => {
     const observation = normalizeObservation({ host: 'codex', case_id: 'c1', command: 'arch', exit_code: 0, stdout: '  ok  \n', stderr: '' });
     expect(observation.stdout).toBe('ok');
+  });
+});
+
+describe('baselineHash', () => {
+  it('returns empty string for a root that does not exist', () => {
+    expect(baselineHash(join(tmpdir(), 'pl-adapter-nonexistent-root'))).toBe('');
+  });
+
+  it('walks nested directories and includes each file and directory entry', () => {
+    const root = tempDir('pl-adapter-hash-');
+    mkdirSync(join(root, 'a', 'b'), { recursive: true });
+    writeFileSync(join(root, 'a', 'b', 'file.txt'), 'hello');
+    const hash = baselineHash(root);
+    expect(hash).toContain('a:dir');
+    expect(hash.replace(/\\/g, '/')).toContain('a/b:dir');
+    expect(hash.replace(/\\/g, '/')).toContain('a/b/file.txt:5');
+  });
+
+  it('changes when a file is added and reverts when removed (used as the rollback baseline check)', () => {
+    const root = tempDir('pl-adapter-hash-');
+    const before = baselineHash(root);
+    writeFileSync(join(root, 'new.txt'), 'x');
+    const after = baselineHash(root);
+    expect(after).not.toBe(before);
+    rmSync(join(root, 'new.txt'));
+    expect(baselineHash(root)).toBe(before);
   });
 });
 
@@ -180,8 +272,23 @@ describe('installAdapter / rollbackAdapter', () => {
     const installedPath = join(consumerRoot, '.codex', 'commands', 'pl-check.md');
     expect(manifest.generated).toEqual([installedPath]);
     expect(readFileSync(installedPath, 'utf8')).toBe(readFileSync(join(TEMPLATES_ROOT, 'codex', '.codex', 'commands', 'pl-check.md'), 'utf8'));
+    expect(manifest.createdDirs).toEqual([join(consumerRoot, '.codex', 'commands'), join(consumerRoot, '.codex')]);
     rollbackAdapter(manifest);
     expect(() => readFileSync(installedPath, 'utf8')).toThrow();
+    expect(existsSync(join(consumerRoot, '.codex', 'commands'))).toBe(false);
+    expect(existsSync(join(consumerRoot, '.codex'))).toBe(false);
+    expect(existsSync(consumerRoot)).toBe(true);
+  });
+
+  it('does not remove a pre-existing directory during rollback (only removes directories it created)', () => {
+    const descriptor = loadDescriptor(CODEX_DESCRIPTOR);
+    const consumerRoot = tempDir('pl-adapter-consumer-');
+    mkdirSync(join(consumerRoot, '.codex'), { recursive: true });
+    const manifest = installAdapter(descriptor, TEMPLATES_ROOT, consumerRoot);
+    expect(manifest.createdDirs).toEqual([join(consumerRoot, '.codex', 'commands')]);
+    rollbackAdapter(manifest);
+    expect(existsSync(join(consumerRoot, '.codex', 'commands'))).toBe(false);
+    expect(existsSync(join(consumerRoot, '.codex'))).toBe(true);
   });
 
   it('rejects a hand-built descriptor whose entry escapes the host templates root (defense in depth, bypassing loadDescriptor)', () => {
@@ -292,7 +399,59 @@ describe('runConformance (full parity suite, in-process)', () => {
   });
 });
 
-describe('pl-adapter-conformance CLI', () => {
+describe('runCli (in-process, exercises every branch Stryker can attribute to this file)', () => {
+  it('exits 0 with empty JSON diagnostics for the full fixture suite', () => {
+    const result = runCli(['--manifest', MANIFEST_PATH, '--descriptor', CODEX_DESCRIPTOR, '--descriptor', CLAUDE_DESCRIPTOR, '--templates-root', TEMPLATES_ROOT, '--format', 'json']);
+    expect(result.exitCode).toBe(0);
+    expect(JSON.parse(result.stdout)).toEqual([]);
+    expect(result.stderr).toBe('');
+  });
+
+  it('exits 0 with empty text output (no trailing newline noise) in text format', () => {
+    const result = runCli(['--manifest', MANIFEST_PATH, '--descriptor', CODEX_DESCRIPTOR, '--descriptor', CLAUDE_DESCRIPTOR, '--templates-root', TEMPLATES_ROOT]);
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toBe('');
+  });
+
+  it('exits 2 and reports a boundary violation as text when format is not json', () => {
+    const dir = tempDir('pl-adapter-cli-boundary-');
+    const codexDir = join(dir, 'codex');
+    mkdirSync(join(codexDir, '.codex', 'commands'), { recursive: true });
+    writeFileSync(join(codexDir, 'descriptor.json'), readFileSync(CODEX_DESCRIPTOR, 'utf8'));
+    writeFileSync(join(codexDir, '.codex', 'commands', 'pl-check.md'), 'Emits PL-ARCH-FORBIDDEN-IMPORT directly.');
+    const claudeDir = join(dir, 'claude-code');
+    mkdirSync(join(claudeDir, '.claude', 'commands'), { recursive: true });
+    writeFileSync(join(claudeDir, 'descriptor.json'), readFileSync(CLAUDE_DESCRIPTOR, 'utf8'));
+    writeFileSync(join(claudeDir, '.claude', 'commands', 'pl-check.md'), readFileSync(join(TEMPLATES_ROOT, 'claude-code', '.claude', 'commands', 'pl-check.md'), 'utf8'));
+
+    const result = runCli(['--manifest', MANIFEST_PATH, '--descriptor', join(codexDir, 'descriptor.json'), '--descriptor', join(claudeDir, 'descriptor.json'), '--templates-root', dir]);
+    expect(result.exitCode).toBe(2);
+    expect(result.stdout).toContain('PL-ADAPTER-BOUNDARY');
+    expect(result.stdout).toMatch(/PL-ADAPTER-BOUNDARY .*:/);
+  });
+
+  it('exits 2 via the catch branch when --manifest points at a nonexistent file', () => {
+    const result = runCli(['--manifest', join(tmpdir(), 'pl-adapter-does-not-exist.json'), '--descriptor', CODEX_DESCRIPTOR, '--descriptor', CLAUDE_DESCRIPTOR, '--templates-root', TEMPLATES_ROOT]);
+    expect(result.exitCode).toBe(2);
+    expect(result.stdout).toBe('');
+    expect(result.stderr).not.toBe('');
+  });
+
+  it('rejects an unknown CLI argument (in-process)', () => {
+    const result = runCli(['--bogus']);
+    expect(result.exitCode).toBe(2);
+    expect(result.stderr).toContain('Unknown argument: --bogus');
+  });
+
+  it('rejects missing required arguments (in-process)', () => {
+    const result = runCli(['--manifest', MANIFEST_PATH]);
+    expect(result.exitCode).toBe(2);
+    expect(result.stderr).toContain('--manifest, exactly two --descriptor, and --templates-root are required');
+  });
+
+});
+
+describe('pl-adapter-conformance CLI (subprocess smoke tests)', () => {
   it('exits 0 for the full fixture suite with no parity or boundary violations', () => {
     const result = spawnSync(process.execPath, [
       SCRIPT,

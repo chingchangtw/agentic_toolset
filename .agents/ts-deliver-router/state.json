@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "current_phase": "build",
-  "phase_entered_at": "2026-07-20T02:40:00+08:00",
+  "current_phase": "ship",
+  "phase_entered_at": "2026-07-20T03:05:00+08:00",
   "phase_history": [
     {
       "phase": "think",
@@ -25,6 +25,38 @@
         "tasks": "openspec/changes/pl-consumer-adapter-parity/tasks.md",
         "notes": "Reused a pre-existing, already-validated, parked change instead of re-proposing (avoids duplicate/bundled scope). Scope = sub-deliverable 1 only (fixture-only Codex/Claude-Code adapter conformance); dogfood activation deliberately excluded here, to be proposed as a separate change (pl-dogfood-activation) after this slice ships, per G1 threat-model's fixture-first sequencing. spectra validate: pass."
       }
+    },
+    {
+      "phase": "build",
+      "entered_at": "2026-07-20T02:40:00+08:00",
+      "exited_at": "2026-07-20T02:55:00+08:00",
+      "artifacts_at_exit": {
+        "tasks_done": 13,
+        "tasks_total": 13,
+        "commits": ["eea488f", "b3714eb"],
+        "branch": "codex/pldd-consumer-adapter-parity",
+        "notes": "Not committed to master directly by mistake -- caught before Review and moved onto codex/pldd-consumer-adapter-parity, excluding a pre-existing unrelated uncommitted README.md change from the commit."
+      }
+    },
+    {
+      "phase": "review",
+      "entered_at": "2026-07-20T02:50:00+08:00",
+      "exited_at": "2026-07-20T02:55:00+08:00",
+      "artifacts_at_exit": {
+        "report": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/review/report.md",
+        "notes": "Adversarial subagent found 4 real findings (path traversal via descriptor entry, asymmetric containment in installAdapter, duplicate-host silent parity bypass, case-sensitive boundary regex). All 4 fixed, 5 new tests added, commit b3714eb. Full gstack multi-specialist review army not run -- not configured in this repo; single adversarial pass substituted."
+      }
+    },
+    {
+      "phase": "test",
+      "entered_at": "2026-07-20T02:55:00+08:00",
+      "exited_at": "2026-07-20T03:05:00+08:00",
+      "artifacts_at_exit": {
+        "mutation_score": "68.33%",
+        "threshold": 60,
+        "mutation_report": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/test/mutation-report.json",
+        "notes": "First Stryker run scored 47.23% -- root cause traced (not a tooling artifact as first suspected; genuine missing tests for loadManifest/loadDescriptor error branches, and the CLI main block was only reachable via subprocess spawnSync which Stryker cannot instrument). Fixed by (1) adding tests for every loadManifest/loadDescriptor throw branch and normalizeObservation's malformed-JSON fallback, (2) refactoring the CLI into a pure exported runCli(argv) function callable in-process, with in-process tests for every branch. Re-ran: 68.33% >= 60% break threshold. Remaining survivors/no-coverage are the isMainModule process-entry guard itself (lines 281-317, only exercisable by actually running the file as a subprocess -- same class of irreducible gap Phase A's own CLI blocks had) plus some low-value stdout-formatting mutants not pursued further given threshold met. npm audit --omit=dev: 0 vulnerabilities. Dependency tree unchanged (0 new deps)."
+      }
     }
   ],
   "epic_id": "EPIC-PLDD-CONSUMER-ADAPTERS",
@@ -32,7 +64,7 @@
   "prior_epic_archive": ".agents/ts-deliver-router/history.jsonl (EPIC-PLDD-ENFORCEMENT-KERNEL final state appended 2026-07-20)",
   "acpl_pattern_group": "G2+G5",
   "risks_file": ".agents/risks.md",
-  "branch_name": null,
+  "branch_name": "codex/pldd-consumer-adapter-parity",
   "artifacts": {
     "think": {
       "framing": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/think/framing.md",
@@ -43,6 +75,23 @@
       "spec": "openspec/changes/pl-consumer-adapter-parity/proposal.md",
       "complete": true,
       "notes": "Slice 1 of 2 (see phase_history.plan.artifacts_at_exit.notes). Slice 2 (pl-dogfood-activation) not yet proposed -- comes after this slice ships."
+    },
+    "build": {
+      "tasks_done": 13,
+      "tasks_total": 13,
+      "complete": true,
+      "notes": "src/scripts/pl-adapter-conformance.mjs + Codex/Claude Code descriptors+templates + fixture manifest (6 cases) + docs. src-only scope guard clean."
+    },
+    "review": {
+      "report": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/review/report.md",
+      "complete": true,
+      "notes": "4 findings fixed (see report.md), tests pass after fixes, type-check clean."
+    },
+    "test": {
+      "acceptance": "pass",
+      "mutation_score": "68.33%",
+      "complete": true,
+      "notes": "216/216 tests pass, type-check clean, src-only scope guard clean, npm audit clean. See phase_history.test.artifacts_at_exit.notes for the mutation-testing investigation."
     }
   },
   "gates": {
