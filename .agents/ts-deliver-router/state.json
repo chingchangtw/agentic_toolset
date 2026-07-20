@@ -1,98 +1,39 @@
 {
   "schema_version": "1",
-  "current_phase": "ship",
-  "phase_entered_at": "2026-07-20T03:05:00+08:00",
-  "phase_history": [
-    {
-      "phase": "think",
-      "entered_at": "2026-07-20T02:25:00+08:00",
-      "exited_at": "2026-07-20T02:35:00+08:00",
-      "artifacts_at_exit": {
-        "framing": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/think/framing.md",
-        "never_automate": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/think/never_automate.md",
-        "threat_model": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/think/g1-threat-model.md",
-        "G1_signed_by": "ctony"
-      }
-    },
-    {
-      "phase": "plan",
-      "entered_at": "2026-07-20T02:35:00+08:00",
-      "exited_at": "2026-07-20T02:40:00+08:00",
-      "artifacts_at_exit": {
-        "spec": "openspec/changes/pl-consumer-adapter-parity/proposal.md",
-        "design": "openspec/changes/pl-consumer-adapter-parity/design.md",
-        "scenarios": "openspec/changes/pl-consumer-adapter-parity/specs",
-        "tasks": "openspec/changes/pl-consumer-adapter-parity/tasks.md",
-        "notes": "Reused a pre-existing, already-validated, parked change instead of re-proposing (avoids duplicate/bundled scope). Scope = sub-deliverable 1 only (fixture-only Codex/Claude-Code adapter conformance); dogfood activation deliberately excluded here, to be proposed as a separate change (pl-dogfood-activation) after this slice ships, per G1 threat-model's fixture-first sequencing. spectra validate: pass."
-      }
-    },
-    {
-      "phase": "build",
-      "entered_at": "2026-07-20T02:40:00+08:00",
-      "exited_at": "2026-07-20T02:55:00+08:00",
-      "artifacts_at_exit": {
-        "tasks_done": 13,
-        "tasks_total": 13,
-        "commits": ["eea488f", "b3714eb"],
-        "branch": "codex/pldd-consumer-adapter-parity",
-        "notes": "Not committed to master directly by mistake -- caught before Review and moved onto codex/pldd-consumer-adapter-parity, excluding a pre-existing unrelated uncommitted README.md change from the commit."
-      }
-    },
-    {
-      "phase": "review",
-      "entered_at": "2026-07-20T02:50:00+08:00",
-      "exited_at": "2026-07-20T02:55:00+08:00",
-      "artifacts_at_exit": {
-        "report": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/review/report.md",
-        "notes": "Adversarial subagent found 4 real findings (path traversal via descriptor entry, asymmetric containment in installAdapter, duplicate-host silent parity bypass, case-sensitive boundary regex). All 4 fixed, 5 new tests added, commit b3714eb. Full gstack multi-specialist review army not run -- not configured in this repo; single adversarial pass substituted."
-      }
-    },
-    {
-      "phase": "test",
-      "entered_at": "2026-07-20T02:55:00+08:00",
-      "exited_at": "2026-07-20T03:05:00+08:00",
-      "artifacts_at_exit": {
-        "mutation_score": "68.33%",
-        "threshold": 60,
-        "mutation_report": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/test/mutation-report.json",
-        "notes": "First Stryker run scored 47.23% -- root cause traced (not a tooling artifact as first suspected; genuine missing tests for loadManifest/loadDescriptor error branches, and the CLI main block was only reachable via subprocess spawnSync which Stryker cannot instrument). Fixed by (1) adding tests for every loadManifest/loadDescriptor throw branch and normalizeObservation's malformed-JSON fallback, (2) refactoring the CLI into a pure exported runCli(argv) function callable in-process, with in-process tests for every branch. Re-ran: 68.33% >= 60% break threshold. Remaining survivors/no-coverage are the isMainModule process-entry guard itself (lines 281-317, only exercisable by actually running the file as a subprocess -- same class of irreducible gap Phase A's own CLI blocks had) plus some low-value stdout-formatting mutants not pursued further given threshold met. npm audit --omit=dev: 0 vulnerabilities. Dependency tree unchanged (0 new deps)."
-      }
-    }
-  ],
+  "current_phase": "build",
+  "phase_entered_at": "2026-07-20T04:20:00+08:00",
+  "phase_history": [],
   "epic_id": "EPIC-PLDD-CONSUMER-ADAPTERS",
   "epic_type": "epic",
-  "prior_epic_archive": ".agents/ts-deliver-router/history.jsonl (EPIC-PLDD-ENFORCEMENT-KERNEL final state appended 2026-07-20)",
+  "prior_epic_archive": ".agents/ts-deliver-router/history.jsonl (slice 1 pl-consumer-adapter-parity final state appended 2026-07-20)",
   "acpl_pattern_group": "G2+G5",
   "risks_file": ".agents/risks.md",
-  "branch_name": "codex/pldd-consumer-adapter-parity",
+  "branch_name": "codex/pldd-dogfood-activation",
+  "slice": "pl-dogfood-activation",
   "artifacts": {
     "think": {
       "framing": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/think/framing.md",
+      "threat_model": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/think/g1-threat-model.md",
+      "slice2_think": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/think/slice2-think.md",
       "complete": true,
-      "notes": "Scope expanded 2026-07-20 (ctony): dogfood activation in scope. Fixture-first, then live install into agenticToolset; only activation step may write outside src/*."
+      "notes": "Reused epic-level G1 threat model (already covers dogfood activation, signed by ctony 2026-07-20T02:35:00+08:00) -- no fresh G1 needed, no new unknowns found. Two open items carried forward to Plan: pl-scope-guard.mjs allowlist mechanism, activation task-tracking shape."
     },
     "plan": {
-      "spec": "openspec/changes/pl-consumer-adapter-parity/proposal.md",
+      "spec": "openspec/changes/pl-dogfood-activation/proposal.md",
+      "design": "openspec/changes/pl-dogfood-activation/design.md",
+      "scenarios": "openspec/changes/pl-dogfood-activation/specs/pl-dogfood-activation/spec.md",
+      "tasks": "openspec/changes/pl-dogfood-activation/tasks.md",
       "complete": true,
-      "notes": "Slice 1 of 2 (see phase_history.plan.artifacts_at_exit.notes). Slice 2 (pl-dogfood-activation) not yet proposed -- comes after this slice ships."
+      "notes": "Change proposed via /spectra-propose, both Think-deferred open items resolved in design.md Decisions (scope-guard allowlist: extend with allowedPaths param, not bypass; activation tracked as this full Spectra change with BDD scenarios, not a manual checklist). spectra analyze: Coverage/Consistency/Gaps clean after 1 fix iteration (5 false-positive capability-coverage findings from backticked path mentions inside Capabilities prose, 4 missing-task findings from requirement names wrapped across markdown line breaks); 3 Suggestion-severity findings remain (missing concrete examples on 3 scenarios) per workflow rule to not block on Suggestions. spectra validate: pass. Change parked -- /spectra-apply not run this session per spectra-propose workflow contract (workflow ends at park, never auto-invokes apply)."
     },
     "build": {
-      "tasks_done": 13,
-      "tasks_total": 13,
-      "complete": true,
-      "notes": "src/scripts/pl-adapter-conformance.mjs + Codex/Claude Code descriptors+templates + fixture manifest (6 cases) + docs. src-only scope guard clean."
+      "tasks_done": 6,
+      "tasks_total": 9,
+      "complete": false,
+      "notes": "Tasks 1.1-3.2 done: pl-scope-guard.mjs extended with allowedPaths param (regression + new tests pass, type-check clean); pl-dogfood-activate.mjs implemented (snapshot phase, atomic apply, manifest) with 4 fixture tests; pl-dogfood-rollback.mjs implemented (restore + post-restore verification) with 2 fixture tests. Remaining: 4.1/4.2 (real-tree manual verification against agenticToolset's own live tree -- paused for human input on real target-list content and branch confirmation before executing, since this is the epic's first-ever live write outside src/*), 5.1 (docs update)."
     },
-    "review": {
-      "report": ".agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/review/report.md",
-      "complete": true,
-      "notes": "4 findings fixed (see report.md), tests pass after fixes, type-check clean."
-    },
-    "test": {
-      "acceptance": "pass",
-      "mutation_score": "68.33%",
-      "complete": true,
-      "notes": "216/216 tests pass, type-check clean, src-only scope guard clean, npm audit clean. See phase_history.test.artifacts_at_exit.notes for the mutation-testing investigation."
-    }
+    "review": {},
+    "test": {}
   },
   "gates": {
     "G1": {
@@ -108,24 +49,7 @@
       },
       "signed_by": "ctony",
       "signed_at": "2026-07-20T02:35:00+08:00",
-      "notes": "Covers both fixture-only adapters and the dogfood-activation sub-deliverable. Dogfood is the first PLDD write outside src/* -- gated by manifest+snapshot+atomic-apply+tested-rollback per g1-threat-model.md. Open items (scope-guard allowlist mechanism, activation task tracking shape) deferred to Plan, not blocking G1."
-    },
-    "G2": {
-      "status": "signed_off",
-      "checklist_results": {
-        "owasp_top_10_per_category": "n/a -- fixture-only local dev tooling, no network/auth/LLM surface",
-        "external_urls_validated": "n/a -- none",
-        "input_validation_at_entry_points": true,
-        "no_hardcoded_credentials": true,
-        "logging_excludes_pii": true,
-        "rollback_path_tested": true,
-        "rate_limiting_circuit_breakers": "n/a -- single manual invocation, no auto-retry",
-        "irreversible_ops_require_confirmation": true,
-        "human_sign_off": true
-      },
-      "signed_by": "ctony",
-      "signed_at": "2026-07-20T03:10:00+08:00",
-      "notes": "Mutation score 68.33% >= 60% threshold (real tests, traced and fixed an initial 47.23% score rather than lowering the bar). 2 real security bugs found and fixed during Review (path traversal via descriptor entry, duplicate-host silent parity bypass). 216/216 tests pass, 0 dependency vulns, src-only scope guard clean. Rollback path verified by baselineHash before/after assertions in both unit tests and the full runConformance suite. Human approved."
+      "notes": "Carried forward from epic-level G1 (covers both slices per g1-threat-model.md title and Flow 2 STRIDE analysis). Re-validated this session against slice 1's actual Review/Test findings -- nothing surfaced that the existing threat model failed to anticipate."
     }
   }
 }

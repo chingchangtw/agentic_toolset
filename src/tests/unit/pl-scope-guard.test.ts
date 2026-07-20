@@ -47,6 +47,34 @@ describe('Phase A scope guard', () => {
     // 'src\\sub\\file.ts' still resolve to 'src/sub/file.ts' and pass the guard.
     expect(checkPhaseAScope(['src\\sub\\file.ts'])).toEqual([]);
   });
+
+  it('permits a declared allowedPaths entry and still rejects everything else outside src/', () => {
+    expect(checkPhaseAScope(
+      ['.agents/ts-deliver-router/registry.json', '.agents/other.json'],
+      ['.agents/ts-deliver-router/registry.json'],
+    )).toEqual(['.agents/other.json']);
+  });
+
+  it('treats an allowedPaths entry as a directory prefix, permitting nested paths beneath it', () => {
+    expect(checkPhaseAScope(
+      ['.claude/hooks/pldd/inject.mjs'],
+      ['.claude/hooks/pldd'],
+    )).toEqual([]);
+  });
+
+  it('keeps the zero-argument default behavior unchanged when allowedPaths is omitted', () => {
+    expect(checkPhaseAScope([
+      'package.json',
+      '.agents/registry.json',
+      'src-other/not-allowed.ts',
+      'scripts/dogfood.mjs',
+    ])).toEqual([
+      '.agents/registry.json',
+      'package.json',
+      'scripts/dogfood.mjs',
+      'src-other/not-allowed.ts',
+    ]);
+  });
 });
 
 describe('isMainModule', () => {
