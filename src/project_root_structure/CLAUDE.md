@@ -44,6 +44,15 @@ Cross-boundary rules:
 - <FILL IN: e.g. No business logic in UI components.>
 - <FILL IN: e.g. Static export only — no SSR.>
 
+## Tool preferences
+Never use Bash `find`, `grep`, `ls -R`, or `cat` for file discovery/search.
+Always use the Glob tool for filename/pattern search and the Grep tool for
+content search. This applies on every OS — not just Windows — for consistency.
+
+For `*.json` / `*.jsonl` content (values, filtering, structure) — use `jq`, never
+grep/cat/sed. Grep/Glob are for filename and text search only, not structured
+JSON extraction. Applies to `.agents/*.json*` state files in particular.
+
 ## Project File Structure
 ```text
 project-root/
