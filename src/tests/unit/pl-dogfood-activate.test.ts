@@ -1,10 +1,14 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { spawnSync } from 'node:child_process';
 
 // @ts-expect-error Phase-A command intentionally ships as portable JavaScript.
-import { activate } from '../../scripts/pl-dogfood-activate.mjs';
+import { activate, isMainModule, runCli } from '../../scripts/pl-dogfood-activate.mjs';
+
+const SCRIPT = fileURLToPath(new URL('../../scripts/pl-dogfood-activate.mjs', import.meta.url));
 
 function withTmpDir(fn: (dir: string) => void) {
   const dir = mkdtempSync(join(tmpdir(), 'pl-dogfood-activate-'));
@@ -172,5 +176,139 @@ describe('activate', () => {
       expect(thrown.partialManifest.targets[0].path).toBe(a);
       expect(readFileSync(a, 'utf8')).toBe('new-a');
     });
+  });
+});
+
+describe('isMainModule', () => {
+  it('is true only when the module URL matches argv[1] resolved to a file URL', () => {
+    expect(isMainModule('file:///a/b.mjs', '/a/b.mjs')).toBe(true);
+  });
+
+  it('is false when argv[1] points at a different file', () => {
+    expect(isMainModule('file:///a/b.mjs', '/a/other.mjs')).toBe(false);
+  });
+
+  it('is false when argv[1] is undefined', () => {
+    expect(isMainModule('file:///a/b.mjs', undefined)).toBe(false);
+  });
+
+  it('defaults the missing-argv1 case to the empty-string file URL, not an arbitrary string', () => {
+    expect(isMainModule(pathToFileURL('').href, undefined)).toBe(true);
+  });
+});
+
+describe('runCli', () => {
+  it('prints usage and returns exit code 2 when required args are missing', () => {
+    const writeSpy = vi.spyOn(process.stderr, 'write').mockImplementation(() => true);
+    try {
+      expect(runCli([])).toBe(2);
+      expect(writeSpy).toHaveBeenCalledWith(expect.stringContaining('usage:'));
+    } finally {
+      writeSpy.mockRestore();
+    }
+  });
+
+  it('runs activation end-to-end, writes stdout and --manifest-out, and returns 0', () => {
+    withTmpDir((dir) => {
+      const target = join(dir, 'a.txt');
+      const targetListPath = join(dir, 'target-list.json');
+      writeFileSync(
+        targetListPath,
+        JSON.stringify({ allowedPaths: [target], targets: [{ path: target, content: 'new-content' }] }),
+      );
+      const snapshotDir = join(dir, 'snapshot');
+      const manifestOut = join(dir, 'manifest.json');
+      const writeSpy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
+      try {
+        const code = runCli(['--manifest', targetListPath, '--snapshot-dir', snapshotDir, '--manifest-out', manifestOut]);
+        expect(code).toBe(0);
+      } finally {
+        writeSpy.mockRestore();
+      }
+      const manifest = JSON.parse(readFileSync(manifestOut, 'utf8'));
+      expect(manifest.targets[0].path).toBe(target);
+      expect(readFileSync(target, 'utf8')).toBe('new-content');
+    });
+  });
+
+  it('writes the partial manifest to --manifest-out and returns 1 when activation fails partway through', () => {
+    withTmpDir((dir) => {
+      const a = join(dir, 'a.txt');
+      const blockerFile = join(dir, 'blocker');
+      const b = join(dir, 'blocker', 'b.txt');
+      writeFileSync(blockerFile, '');
+      const targetListPath = join(dir, 'target-list.json');
+      writeFileSync(
+        targetListPath,
+        JSON.stringify({
+          allowedPaths: [a, b],
+          targets: [
+            { path: a, content: 'new-a' },
+            { path: b, content: 'new-b' },
+          ],
+        }),
+      );
+      const snapshotDir = join(dir, 'snapshot');
+      const manifestOut = join(dir, 'manifest.json');
+      const writeSpy = vi.spyOn(process.stderr, 'write').mockImplementation(() => true);
+      try {
+        const code = runCli(['--manifest', targetListPath, '--snapshot-dir', snapshotDir, '--manifest-out', manifestOut]);
+        expect(code).toBe(1);
+        expect(writeSpy).toHaveBeenCalledWith(expect.stringContaining('partial manifest written'));
+      } finally {
+        writeSpy.mockRestore();
+      }
+      const manifest = JSON.parse(readFileSync(manifestOut, 'utf8'));
+      expect(manifest.targets).toHaveLength(1);
+      expect(manifest.targets[0].path).toBe(a);
+    });
+  });
+});
+
+describe('activate CLI top-level entrypoint (in-process)', () => {
+  // Stryker's vitest runner activates mutants only within the same process;
+  // spawnSync-based tests run in a fresh process and can't see mutant
+  // activation, so the top-level `if (isMainModule(...))` block needs
+  // coverage from a dynamic import inside this process too.
+  async function importFresh(bustTag: string) {
+    return import(`${pathToFileURL(SCRIPT).href}?bust=${bustTag}`);
+  }
+
+  it('runs the CLI and sets exitCode when argv[1] resolves to this module', async () => {
+    const originalArgv = process.argv;
+    const originalExitCode = process.exitCode;
+    process.argv = [originalArgv[0], SCRIPT];
+    process.exitCode = undefined;
+    const writeSpy = vi.spyOn(process.stderr, 'write').mockImplementation(() => true);
+    try {
+      await importFresh('activate-main-true');
+      expect(process.exitCode).toBe(2);
+    } finally {
+      writeSpy.mockRestore();
+      process.argv = originalArgv;
+      process.exitCode = originalExitCode;
+    }
+  });
+
+  it('does not run the CLI when argv[1] resolves to a different module', async () => {
+    const originalArgv = process.argv;
+    const originalExitCode = process.exitCode;
+    process.argv = [originalArgv[0], '/not/this/module.mjs'];
+    process.exitCode = undefined;
+    try {
+      await importFresh('activate-main-false');
+      expect(process.exitCode).toBeUndefined();
+    } finally {
+      process.argv = originalArgv;
+      process.exitCode = originalExitCode;
+    }
+  });
+});
+
+describe('activate CLI entrypoint (subprocess)', () => {
+  it('exits 2 with a usage message when required args are missing', () => {
+    const result = spawnSync(process.execPath, [SCRIPT], { encoding: 'utf8' });
+    expect(result.stderr).toContain('usage:');
+    expect(result.status).toBe(2);
   });
 });

@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
-  "current_phase": "test",
-  "phase_entered_at": "2026-07-20T05:10:00+08:00",
+  "current_phase": "ship",
+  "phase_entered_at": "2026-07-20T05:35:00+08:00",
   "phase_history": [],
   "epic_id": "EPIC-PLDD-CONSUMER-ADAPTERS",
   "epic_type": "epic",
@@ -37,7 +37,12 @@
       "complete": true,
       "notes": "Adversarial subagent found 6 findings (1 HIGH, 2 MEDIUM, 3 LOW) in pl-dogfood-activate.mjs/pl-dogfood-rollback.mjs/pl-scope-guard.mjs. HIGH fixed: partial apply-phase failure produced no manifest, breaking the rollback recovery contract -- manifest now built incrementally with a partial-manifest attached to thrown errors. MEDIUM fixed: new_hash was computed but never verified (rollback now aborts on pre-restore divergence instead of silently overwriting an intervening edit); allowedPaths entries were unvalidated (now rejects '.', '..', '../'-prefixed entries). 3 LOW findings (no symlink/realpath check, non-unique tmp filenames, TOCTOU) accepted with rationale matching design.md's single-operator/manual-invocation threat model, same class as slice 1's accepted findings. 367/367 tests pass after fixes (3 new), type-check clean, real-tree round-trip re-verified against agenticToolset's own tree with the fixed scripts (still exactly one path changed, still empty diff after rollback)."
     },
-    "test": {}
+    "test": {
+      "acceptance": "pass",
+      "mutation_score": "88.03%",
+      "complete": true,
+      "notes": "394/394 tests pass, type-check clean, src-only scope guard clean on every implementation file changed by this slice, npm audit --omit=dev: 0 vulnerabilities. Mutation testing (Stryker, .agents/ts-deliver-router/artifacts/EPIC-PLDD-CONSUMER-ADAPTERS/test-slice2/): first run scored 53.42% -- same class of gap as slice 1 (CLI/isMainModule/runCli paths only reachable via subprocess, uninstrumented by Stryker's in-process runner). Fixed by adding in-process runCli/isMainModule/top-level-CLI-block tests (mirroring pl-scope-guard.test.ts's dynamic-import cache-busting pattern) plus targeted tests for the Review-phase security fixes (unsafe-allowedPaths-entry rejection per entry type, backslash-normalization in allowedPaths, post-restore-verify's independent mismatch detection, partial-manifest-on-failure). Re-ran: 88.03% >= 60% threshold (also clears the 85% high bar) -- not pursued further given threshold met, same stopping point as slice 1. All 7 spec scenarios in specs/pl-dogfood-activation/spec.md map to a passing test. spectra validate: still pass."
+    }
   },
   "gates": {
     "G1": {

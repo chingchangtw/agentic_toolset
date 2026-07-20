@@ -75,6 +75,28 @@ describe('Phase A scope guard', () => {
       'src-other/not-allowed.ts',
     ]);
   });
+
+  it('defaults allowedPaths to an empty array, not a permissive placeholder', () => {
+    // Guards against the default parameter value being weakened to something
+    // non-empty: a literal path matching that placeholder must still be rejected.
+    expect(checkPhaseAScope(['Stryker was here'])).toEqual(['Stryker was here']);
+  });
+
+  it.each([
+    ['', '.claude/x'],
+    ['.', '.claude/x'],
+    ['..', '.claude/x'],
+    ['../escape', '.claude/x'],
+  ])('rejects an unsafe allowedPaths entry %j instead of silently permitting everything', (unsafeEntry) => {
+    expect(() => checkPhaseAScope(['.claude/x'], [unsafeEntry])).toThrow(/unsafe allowedPaths entry/);
+  });
+
+  it('normalizes backslash separators in allowedPaths entries too, not just in the checked paths', () => {
+    expect(checkPhaseAScope(
+      ['.claude/hooks/pldd/inject.mjs'],
+      ['.claude\\hooks\\pldd'],
+    )).toEqual([]);
+  });
 });
 
 describe('isMainModule', () => {
