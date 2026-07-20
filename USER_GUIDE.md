@@ -3,7 +3,7 @@
 A structured workflow framework for developing software products with AI coding agents
 (Claude Code, Copilot, Gemini) — from first idea to shipped release.
 
-![version](https://img.shields.io/badge/version-0.1.2-blue)
+![version](https://img.shields.io/badge/version-0.1.8-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 > **Visual reference:** Open [`docs/solution_cheat_sheet.html`](docs/solution_cheat_sheet.html)
@@ -382,6 +382,13 @@ running in parallel — check `/ts-discover:status`" is built into the close flo
 ---
 
 ## Changelog
+
+### v0.1.8
+
+- Add `ts-event-storming-facilitator` and `ts-ddd-tactical-validator` sub-agents, installed to `<project>/.claude/agents/`
+- Add `feature`/`hotfix`/`chore`/`patch`/`spike`/`ops` work-type phase spines alongside existing `bugfix`/`refactor`/`epic`
+- Add YAML frontmatter `description` to all `ts-deliver`/`ts-discover`/`ts-iteration`/`ts-project` command stubs
+- Require `jq` for `.json`/`.jsonl` content instead of grep/cat/sed
 
 ### v0.1.7
 
